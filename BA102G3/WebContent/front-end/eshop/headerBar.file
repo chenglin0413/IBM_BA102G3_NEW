@@ -1,0 +1,89 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+ <!-- Navigation -->
+    <!-- <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a> -->
+    
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a href="<%=request.getContextPath()%>/index.jsp"><img src="<%=request.getContextPath()%>/front-end/img/logo3.png"></a>
+                <a class="navbar-brand page-scroll" href="<%=request.getContextPath()%>/index.jsp">Anytime Grip</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                    
+                    <li>
+                        <a class="page-scroll" href="<%=request.getContextPath()%>/front-end/member_interface/listAllProd.jsp">商品</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="../rest/rest__2.html">餐廳</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="">促銷</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="<%=request.getContextPath()%>/front-end/blog/trvl/listAllTrvl.jsp">旅遊日記<span class="badge">10</span></a>
+                    </li>
+                    
+                    <li>
+                        <a class="page-scroll" href="<%=request.getContextPath()%>/front-end/member_interface/schedule_index.jsp">交通運輸資訊</a>
+                    </li>
+                    
+                   <!-- <li>
+                        <a class="page-scroll" href="#contact"><i class="fa fa-question fa-fw"></i>檢舉管理</a>
+                    </li>
+                    <li>
+                        <a class="page-scroll" href="../about.html"><li>
+                        <i class="fa fa-tasks fa-fw"></i>關於我們</a>
+                    </li>-->
+                  	<c:if test="${empty userVO.user_account}" var="condition1" scope="session" > 
+
+						<li><a href='#modal-login' data-toggle="modal">
+						    <i class="glyphicon glyphicon-user"></i> 登入</a></li>
+
+					</c:if>		
+                    <c:if test="${not empty userVO.user_account}" var="condition2" scope="session" > 
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i></a>
+                    <ul class="dropdown-menu dropdown-user">
+                    	<li><a href="memberProfile.html"><i class="fa fa-info fa-fw"></i>${userVO.user_lastname}${userVO.user_firstname},您好</a>
+                        </li>
+				     	<li><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneUser_idAllWish.jsp"><i class="fa fa-arrow-circle-o-up"></i>追蹤商品</a></li>
+                        <li><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneUser_idAllOrd.jsp"><i class="fa fa-book fa-fw"></i></i>消費記錄</a>
+                        </li>
+                        <li><a href="memberReserveRecord.html"><i class="fa fa-book fa-fw"></i>餐廳訂位記錄</a>
+                        </li>
+                        <li><a href="memberProfile.html"><i class="fa fa-gear fa-fw"></i> 基本資訊修改</a>
+                        </li>
+                        <li class="divider"></li>
+                        <li><a href="<%= request.getContextPath() %>/front-end/UserLogoutHandler"><i class="fa fa-sign-out fa-fw"></i> 登出</a>
+                        </li>
+                        
+                    </ul>
+                    </li>
+                     <li>
+                        <a class="page-scroll " href="<%=request.getContextPath()%>/front-end/eshop/Cart.jsp"><i class="fa fa-shopping-cart"></i></a>
+                    </li>
+                    </c:if>	
+                   
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>
+<div class="callout" ></div>
+  
+<div class="container">
+
+<!--easy-sidebar-toggle-right -->
+
+</div>

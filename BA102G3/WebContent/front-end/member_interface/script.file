@@ -1,0 +1,226 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<!-- 登入表單 開始 --------------->
+	<div class="modal fade" id="modal-login">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title">會員登入</h4>
+				</div>
+				<div class="modal-body">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+							
+								<form action="<%= request.getContextPath() %>/front-end/UserLoginHandler" method="POST" id="loginForm">
+									<div class="form-group">
+										<label for="name">帳號</label> <input type="text"
+											class="form-control" name="username" id="username"
+											placeholder="請輸入您的帳號">
+									</div>
+									<div class="form-group">
+										<label for="pw">密碼</label> <input type="password"
+											class="form-control" name="password" id="password" placeholder="請輸入您的密碼">
+									</div>
+									 <div id="messageDiv" style="display:none;"></div>
+									<div>
+										<a href="#">忘記密碼</a>&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/front-end/user/newMember.jsp">加入會員</a>
+									</div>
+									
+									<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑-->
+
+								</form>								
+								
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button id="login" type="button" class="btn btn-primary">登入</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modal-sign-in">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">&times;</button>
+					<h4 class="modal-title">新生註冊</h4>
+				</div>
+				<div class="modal-body">註冊表單</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+					<button type="button" class="btn btn-primary">註冊</button>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- 登入表單 結束 --------------->
+
+
+    <!-- jQuery -->
+    
+    <script
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="<%= request.getContextPath() %>/front-end/js/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<%= request.getContextPath() %>/front-end/js/bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script>
+    // Closes the sidebar menu
+    $("#menu-close").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+    // Opens the sidebar menu
+    $("#menu-toggle").click(function(e) {
+        e.preventDefault();
+        $("#sidebar-wrapper").toggleClass("active");
+    });
+    // Scrolls to the selected menu item on the page
+    $(function() {
+        $('a[href*=#]:not([href=#],[data-toggle],[data-target],[data-slide])').click(function() {
+            if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') || location.hostname == this.hostname) {
+                var target = $(this.hash);
+                target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+                if (target.length) {
+                    $('html,body').animate({
+                        scrollTop: target.offset().top
+                    }, 1000);
+                    return false;
+                }
+            }
+        });
+    });
+    //#to-top button appears after scrolling
+    var fixed = false;
+    $(document).scroll(function() {
+        if ($(this).scrollTop() > 250) {
+            if (!fixed) {
+                fixed = true;
+                // $('#to-top').css({position:'fixed', display:'block'});
+                $('#to-top').show("slow", function() {
+                    $('#to-top').css({
+                        position: 'fixed',
+                        display: 'block'
+                    });
+                });
+            }
+        } else {
+            if (fixed) {
+                fixed = false;
+                $('#to-top').hide("slow", function() {
+                    $('#to-top').css({
+                        display: 'none'
+                    });
+                });
+            }
+        }
+    });
+    // Disable Google Maps scrolling
+    // See http://stackoverflow.com/a/25904582/1607849
+    // Disable scroll zooming and bind back the click event
+    var onMapMouseleaveHandler = function(event) {
+        var that = $(this);
+        that.on('click', onMapClickHandler);
+        that.off('mouseleave', onMapMouseleaveHandler);
+        that.find('iframe').css("pointer-events", "none");
+    }
+    var onMapClickHandler = function(event) {
+            var that = $(this);
+            // Disable the click handler until the user leaves the map area
+            that.off('click', onMapClickHandler);
+            // Enable scrolling zoom
+            that.find('iframe').css("pointer-events", "auto");
+            // Handle the mouse leave event
+            that.on('mouseleave', onMapMouseleaveHandler);
+        }
+        // Enable map zooming with mouse scroll when the user clicks the map
+    $('.map').on('click', onMapClickHandler);
+        
+//登入模組開始-------------------------------------------------        
+            $("#login").on('click', function(){
+                var username = $("#username").val();
+                var password = $("#password").val();
+                if(username == ""){
+                    $('#messageDiv').css("display","none");
+                    alert("Username is required");
+                    return;
+                }
+                if(password == ""){
+                    $('#messageDiv').css("display","none");
+                    alert("Password is required");
+                    return;
+                }
+                $.ajax({
+                    url : '<%= request.getContextPath() %>/front-end/UserLoginHandler',
+                    type : 'POST',
+                    data : {
+                        username : username,
+                        password : password
+                    },
+                    success : function(results, newurl){
+                        if(results != null && results != ""){
+                            showMessage(results);
+                            $('#messageDiv').css("display","block");
+                        }else{
+                            $('#messageDiv').css("display","none");
+                            $('#messageDiv').html("");
+                            alert("Some exception occurred! Please try again.");
+                        }
+                    }
+                });
+            });
+             
+            //function to display message to the user
+            function showMessage(results, newurl){
+                if(results == 'SUCCESS'){
+                    window.location='<%= request.getContextPath() %><%=request.getServletPath()%>'
+                }else if(results == 'SUCCESS_STORE'){
+                	window.location='<%= request.getContextPath() %>/front-end/store_interface/listOneStore_idAllProd.jsp'
+                }else if(results == 'SUCCESS_REST'){
+                	window.location='<%= request.getContextPath() %>/front-end/rest/'
+                }else if(results == 'FAILURE'){
+                    $('#messageDiv').html("<font color='red'>帳號或密碼不正確 </font>")
+                }else if(results == 'ACCOUNT SUSPENDED'){
+                    $('#messageDiv').html("<font color='red'>帳號被停權,請聯絡本公司</font>")
+                }
+            }
+//登入模組結束-------------------------------------------------  
+    </script>
+
+<script>
+    $('.carousel').carousel({
+        interval: 3000 //changes the speed
+    })
+    </script>
+    
+     <script>
+    //256色隨機:
+    	for(var i=0;i<12;i++){
+    	var twelve=document.getElementsByName("twelve")[i];
+    	twelve.style.color=color16();
+    	
+    	}
+    	
+    	function color16(){
+
+			var color=new Array(1);
+			color[0]='#';
+			for(var i=0;i<3;i++){
+				s=Math.floor(Math.random()*255+1);
+				sc=s.toString(16);
+				color.push(sc);
+			}
+			
+			 return color.join("");
+		}
+    </script>

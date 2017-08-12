@@ -1,0 +1,790 @@
+/********************** Font sizes **********************/
+@media print {
+html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    /* vertical-align: baseline; */
+}	
+user agent stylesheethr {
+    display: block;
+    -webkit-margin-before: 0.5em;
+    -webkit-margin-after: 0.5em;
+    -webkit-margin-start: auto;
+    -webkit-margin-end: auto;
+    border-style: inset;
+    border-width: 1px;
+}
+hr {
+    display: block;
+    border: none;
+    outline: none;
+    height: 1px;
+    width: 100%;
+    margin-bottom: 15px;
+    clear: both;
+    background-color: #cbcbcb;
+    color: #cbcbcb;
+}
+ul {
+    list-style: none outside;
+}
+
+ol, ul {
+    list-style: none;
+}
+h1, h2, h3, h4, h5, h6 {
+    text-transform: uppercase;
+}
+h4 {
+    display: inline-block;width:100%;
+    -webkit-margin-before: 1.33em;
+    -webkit-margin-after: 1.33em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    font-weight: bold;
+}
+h4 {
+    margin-bottom: 15px;
+}
+.column {
+    float: left;
+    display: inline;
+}
+.inner-padding {
+    padding: 20px !important;
+}
+.sixteen.columns,
+.one.column {
+    width: 900px;
+}
+.sixteen.columns,
+.one.column {
+    width: 100% !important;
+}
+.one-third.column {
+    width: 300px;
+}
+.one-third.column {
+    width: 33.33% !important;
+}
+
+.two-third.column {
+    width: 600px;
+}
+.two-third.column {
+    width: 66.66% !important;
+}
+
+.one-second.column {
+    width: 450px;
+}
+.one-second.column {
+    width: 50% !important;
+}
+img.scale-with-grid,
+.content img {
+    max-width: 100%;
+    height: auto;
+}
+
+ol {
+    display: block;
+    list-style-type: decimal;
+    -webkit-margin-before: 1em;
+    -webkit-margin-after: 1em;
+    -webkit-margin-start: 0px;
+    -webkit-margin-end: 0px;
+    -webkit-padding-start: 40px;
+}
+li {
+    display: list-item;
+    text-align: -webkit-match-parent;
+}
+
+/* Body */
+
+	body {
+		font-size: 1rem;
+		line-height: 1.5rem;		
+		color:#595757;
+	}
+	
+	#menu > ul > li > a {	
+		font-size: 0.9rem;
+	}
+	
+/* Headings */
+
+	h1 { 
+		font-size: 3rem;
+				line-height: 3rem;
+	}
+	
+	h2 { 
+		font-size: 2.6rem;
+				line-height: 2.6rem;
+	}
+	
+	h3 {
+		font-size: 1.4rem;
+				line-height: 1.6rem;
+				font-weight:normal;
+	}
+	
+	h4 {
+		font-size: 1.2rem;
+				line-height: 1.4rem;
+				font-weight:normal;
+	}
+	
+	h5 {
+		font-size: 1.4rem;
+				line-height: 1.2rem;
+	}
+	
+	h6 {
+		font-size: 1.3rem;
+		line-height: 1.5rem;
+	}
+/********************** Font sizes end**********************/
+a:hover{text-decoration:none;}
+img{width:100%;height:auto;}
+
+.float-l{float:left;margin-right:10px;}
+.float-r,.trans_set.float-r{float:right;margin-left:10px;}
+
+.table3 td.none{border:none;}
+/*---------------文字色---------------------------*/
+.font-y2{color:#EE9200;}/*黃字*/
+
+#Footer a:hover,
+#Footer .fdmenu a,
+.widget_mfn_menu h3,
+.index_event h3,
+.index_event .date,
+.font-y,
+caption.equip,
+caption.equip2
+{color:#fff000;}/*黃字*/
+
+.font-b,
+#Footer h4 a,
+.line-dotted h5 a:hover,
+.travel_txt li a:hover,
+.ss2 a.on,.ss2 a:hover,
+.ss2 a.on:hover,
+.content_form .agree .form-group label,
+.widget_mfn_menu li a:hover,
+.widget_mfn_menu li.current_page_item a{color:#009de6;}/*藍字*/
+
+.history_set .date,
+.font-b2,
+.table4 td a
+{color:#036EB3;}/*藍字*/
+.font-gl{color:#1eaa39;}/*綠字*/
+.font-ga,.iconbg_7 span{color:#4c1d59;}/*紫字*/
+.history_set .year,
+.news_txt h5 a,
+.agree h4,
+.table4 td a:hover
+{color:#5F1981;}/*紫字*/
+.font-ga2{color:#5F1984;}/*紫字2*/
+.line-dotted h5 a{color:#182951;}/*深藍字*/
+#Top_bar .phone a:hover,
+.index_news_txt a .date {color:#888;}
+#Top_bar .social li.facebook a,
+#Top_bar .social li.rss a,
+.trans_set a
+{color:#fff !important;}/*白字*/
+
+#Footer a,
+#Footer .copyrights p,
+.visitor,
+.footer_menu li a,
+.main-banner, 
+h2.ticket,
+.form-group button,
+.result a.btn,
+.feature_box .photo h3 a,
+.index_event .desc a,
+.btn_area a,
+.ssmenu a,
+.table th,
+.table2 th,
+.table4 th,
+.table5 th,
+.table6 th,
+.table7 th,
+.table8 th,
+.table5 h4,
+.mask,
+.trans_set,
+.travel_txt h4,
+.travel_pic h4,
+.travel_desc .more a,
+.bg4,
+.bgcolor_bl
+{color:#fff;}/*白字*/
+
+.result dl,
+.result dt,
+.result dd,
+.form-group label,
+.lose_type p
+{color:#000;}/*黑字*/
+.index_news_txt a .hot{color:#E3007F;}/*粉紅字*/
+.content h3,.web2 a{color:#3E3A39;}/*灰字*/
+.top_btn{color:#8C8C8C;}/*灰字*/
+table td,table th,
+ol.way>li>ul>li,
+.ss2 a,
+.accordion .answer,
+.faq .answer
+{color:#595757;}/*深灰字*/
+
+/*----------------背景色---------------------*/
+#Top_bar .social li.facebook a,
+.form-group button:hover,
+.index_event .desc
+{background-color:#036eb7;}/*fb藍底*/
+#Top_bar .social li.rss a{background-color:#f7b52c;}/*橘底*/
+.iconbg_7{background-color:#fff000;}/*黃底*/
+#Top_bar .social li.facebook a:hover,
+#Top_bar .social li.rss a:hover{background:#bac4c5;}/*灰底*/
+a.button,
+input[type="submit"],
+input[type="reset"], 
+input[type="button"] ,
+h2.ticket,
+.travel_desc .more a:hover{
+	background-color: #3E3A39;/*深灰底*/
+	}
+a:hover.button, 
+input[type="submit"]:hover, 
+input[type="reset"]:hover, 
+input[type="button"]:hover {
+    background-color: #191211;  
+}
+.form-group button{background-color:#1b95d4;}
+.index_vedio .photo{background-color:#231815;}/*深灰#231815*/
+.ticket_search,
+.history_set .year,
+.table5 td:first-child,
+.accordion .answer,
+.faq .answer
+ {background:#fff;}/*白底*/
+.result a.btn,
+.travel_desc .more a{background-color:#4c1d59;}/*紫底*/
+.result a.btn:hover,
+.ssmenu a.on,
+.ssmenu a:hover,
+.ssmenu a.on:hover,
+.bg3,
+.bg4,
+.table8 th,
+caption.equip2,
+.icon2bg_13,
+.travel_pic h4
+{background-color:#5f1985;}/*紫底2*/
+
+
+.accordion .question h5,
+.faq .question h5,
+.faq .active h5,
+.accordion .active h5,
+.bg7
+{background-color:#46a0d4}/*藍底*/
+
+.index_news .photo{ background-color:#1eaa39;}/*綠底*/
+.index_event .photo{background-color:#035690;}/*藍底*/
+.index_recruited .photo{background-color:#910782;}/*粉紅底*/
+.share_fb .photo{background-color:#f29600;}/*橘底*/
+.fontsize a{background-color:#f09400;}
+.fontsize a:hover{background-color:#999;}
+.ssmenu a{background-color:#B4B4B5}
+.history_area .line{background:#009de6;}
+
+.table tr:nth-child(odd),
+.table2 tr:nth-child(odd)
+{background:#F4F4F4;}
+
+.table tr:nth-child(even),
+.table2 tr:nth-child(even)
+{background:#EBEBEC;}
+
+.table4 tr:nth-child(even),
+.table5 tr:nth-child(even),
+.table6 tr:nth-child(even),
+.table7 tr:nth-child(even),
+.table8 tr:nth-child(even)
+{background:#EEEEEF;}/*淡灰1*/
+
+.table4 tr:nth-child(odd),
+.table5 tr:nth-child(odd),
+.table6 tr:nth-child(odd),
+.table7 tr:nth-child(odd),
+.table8 tr:nth-child(odd)
+{background:#F7F7F7;}/*淡灰2*/
+
+.travel_desc{background-color:#F5F5F5;}/*淡灰3*/
+
+.tt2 tr:nth-child(even){background:#FFFEEE;}/*淡黃*/
+.tt2 tr:nth-child(odd){background:#DFF2FC;}/*淡藍*/
+.page_prev a, .page_next a{background:#46a0d4;}
+.table th{background:#8E0780;}/*紫紅底*/
+.table2 th{background:#F29600;}/*橘底*/
+.table4 th{background-color:#3E3A39;}/*鐵灰*/
+.table5 th{background-color:#7B59A3;}/*淡紫*/
+.table6 th{background-color:#036EB7;}/*水藍*/
+.mask{background-color:#000;}
+
+/*選單底色*/
+.bg1{background-color:#002950}/*深藍*/
+.bg2{background-color:#3e3a39}/*深灰*/
+.bg5,.bg7{background-color:#231815}/*棕*/
+.bg6{background-color:#00516f}/*藍綠*/
+.recent_works { background-color:#2ca2dc;/*藍色*/}
+
+.bgcolor_bl,.iconbg_1,.travel_txt h4{background-color:#036EB7;}/*藍底*/
+
+.bgcolor_y,.iconbg_5{background-color:#F29600;}/*橘黃底*/
+.bgcolor_br{background-color:#604C3F;}/*棕底*/
+.bgcolor_pk{background-color:#E3007F;}/*粉紅底*/
+.bgcolor_dk,
+.iconbg_2,
+.ss2 a.on,
+.ss2 a:hover,
+.ss2 a.on:hover,
+caption.equip{background-color:#3E3A39;}/*鐵灰底*/
+.bgcolor_dbl,.iconbg_3,.table7 th{background-color:#182987;}/*深藍底*/
+.bgcolor_y2,.iconbg_4{background-color:#CAC218;/*#FACE00;*/}/*黃底*/
+.bgcolor_gn,.iconbg_6{background-color:#1EAA39;}/*綠底*/
+.ss2 a{background-color:#9E9E9F;}/*淺灰底深灰字*/
+.table5 h4{background-color:#009FE8;}
+.table5 .pic{background-color:#B5E8F5;}/*淺藍底*/
+
+.icon2bg_01,.btn input.icon2bg_01{background-color:#036eb6;}/*藍1*/
+.icon2bg_02{background-color:#009ee7;}/*藍2*/
+.icon2bg_03{background-color:#00a098;}/*藍綠*/
+.icon2bg_04{background-color:#00903a;}/*綠1*/
+.icon2bg_05{background-color:#1ea939;}/*綠2*/
+.icon2bg_06{background-color:#8cc11f;}/*黃綠*/
+.icon2bg_07{background-color:#f6b42c;}/*黃1*/
+.icon2bg_08{background-color:#f19500;}/*黃2*/
+.icon2bg_09{background-color:#e85513;}/*橘1*/
+.icon2bg_10{background-color:#ba2f22;}/*橘2*/
+.icon2bg_11{background-color:#e2007f;}/*粉紅1*/
+.icon2bg_12{background-color:#a30b5e;}/*紫紅*/
+.icon2bg_14{background-color:#182986;}/*藍3*/
+
+/*圓角-----------------------*/
+.form-group select,
+.form-group button,
+.result a.btn,
+.btn_area a,
+.ssmenu a,
+.table5 h4,
+.table5 .pic
+{-webkit-border-radius: 5px;
+-moz-border-radius: 5px;
+border-radius: 5px;}
+.fontsize a,
+.history_set .year,
+.service_set .pic
+{
+-webkit-border-radius: 50%;
+-moz-border-radius: 50%;
+border-radius: 50%;}
+
+.trans_set{-webkit-border-radius: 35px;
+-moz-border-radius: 35px;
+border-radius: 35px;}
+ 
+/*透明度-----------------------*/
+.ticket_search{
+ filter:alpha(opacity=90); /*IE,透明度80%*/
+-moz-opacity:0.9; /*Firefox,透明度80%*/
+opacity:0.9;/*其他浏览器,透明度80%*/ 
+}
+.mask,
+.index_recruited .photo,
+.recent_works a.slider_control,
+.trans_set:hover,
+.service_set:hover,
+.link a:hover
+{filter:alpha(opacity=80); /*IE,透明度80%*/
+-moz-opacity:0.8; /*Firefox,透明度80%*/
+opacity:0.8;/*其他浏览器,透明度80%*/ 
+}
+/*影像地圖for自適應*/
+ img[usemap] {
+		border: none;
+		height: auto;
+		max-width: 100%;
+		width: auto;
+	}
+/*選單----------------------*/
+#Header #menu ul li ul li {
+    width: 180px;
+}
+#Header #menu > ul > li > a {
+    padding: 15px 20px 15px;
+}
+#Top_bar .phone{
+    font-size: 1em;border:0;padding:10px 0;
+}
+.social li a {font-size:1em}
+
+input[type="text"], 
+input[type="password"], 
+input[type="email"], 
+textarea, 
+select, 
+a.button, 
+a.tp-button {
+	margin-bottom:0;
+	padding:8px;
+	font-size:1rem;
+	width:100%;
+}
+
+#search{float:right;display:inline-block;}
+#advanced{margin-left:20px;margin-bottom:0;}
+.search{position:relative;}
+.top_btn{position:absolute;top:4px;right:-6px;}
+
+#Header #logo img{width:70%;margin:0}
+#Header #logo{padding:20px 0;text-align:center;}
+
+#Header #menu ul li ul li a {border:0;font-size:0.9rem;}
+
+.float-l.main-banner{
+text-shadow: 0px 0px 10px #000, 0px 0px 10px #000;
+filter:progid:DXImageTransform.Microsoft.Shadow(color='#000000', Direction=135, Strength=3);
+}
+
+/*頁尾-----------------*/
+
+#Footer .container{
+	background-image:url(../images2/bg_logo.png);
+	background-repeat:no-repeat;
+	background-position: left 20px;
+}
+#Footer h4 a{font-size:1.4rem;line-height:normal;}
+#Footer h4{margin:0;}
+#Footer .copyrights p{width:100%;font-size:100%;clear:both;}
+.acc,.visitor{margin-top:4px;}
+.footer_menu li a{display:block;}
+.footer_menu .fmenu,
+.footer_menu .smenu{float:left;}
+.footer_menu .smenu{/*width:11%;*/width:130px;display:inline-block;}
+.footer_menu .smenu.end{width:160px;}
+.acc,.float-r{float:right;}
+.visitor,.float-l{float:left;}
+
+/*首頁banner文字*/
+ .main-banner{margin-right:20px;}
+ .main-banner p{font-size:1.5em;font-weight:normal;line-height:normal;}
+ .main-banner .ttitle{font-size:2.4em;font-weight:700;}
+
+ /*首頁-票價查詢區塊*/
+ .ticket_search{position:absolute;right:0;/*top:-43%;*/z-index:200;
+ margin-top:-480px;
+padding-bottom:20px;
+ }
+ .form-group{display:inline-block;width:100%;margin:auto;}
+ h2.ticket{font-size:1.5em;text-align:center;padding:10px 0;}
+.ticket_search .form-group,.ticket_search .result{padding:5px 3%;margin-bottom:2%;}
+.form-group label,.form-group select{float:left;}
+.form-group label{width:25%;font-size:1.2em;padding:5px 0;font-weight:normal;}
+.form-group select{width:75%;font-size:1em;}
+.form-group button{width:100%;}
+.btn_area{margin-top:0}
+.result dl,
+.result dt,
+.result dd{float:left;display:inline-block;font-size:1.1em;padding:0;}
+.result dd{text-align:right;width:28%;}
+.result dt{width:70%;}
+.result dl{margin-bottom:10px;width:48%;margin-right:2%;padding:10px 0px;}
+form{padding:0;margin:0;}
+.result a.btn{width:100%;padding:10px 0;text-align:center;display:inline-block;}
+.btn_area>button{width:90%!important;}
+/*首頁--最新消息*/
+/*.index_news_pic img{height:100%;}*/
+.feature_box .photo {border:0;padding:0.8em 1em 0 1em;}
+.feature_box .photo h3{color:#fff;font-size:1.4em;line-height:normal;display:inline-block;}
+.feature_box .photo h3 a{float:right;display:inline-block;margin-left:5px;padding-top:2px;}
+.index_news_pic,.index_news_txt{width:48%;float:left;position:relative;}
+.mask{position:absolute;bottom:0;display:inline-block;width:98%!important;padding:1%;left:0;}
+.feature_box .desc{padding:0;}
+.index_news_txt{padding:5px 0 0 20px;}
+.index_news_txt a .date{text-indent : 1em ;}
+
+/*首頁--影片*/
+
+/*首頁--活動*/
+.index_event .date{float:right;}
+.index_event .desc{padding:10px;display:inline-block;width:98%;height:100%;}
+.desc ul{width:98%;display:inline-block;}
+.desc ul li{margin-bottom:1%;margin:0 1% 1% 1%;}
+
+/*首頁--人才招募*/
+.index_recruited .feature_box{position:relative;}
+.index_recruited .photo{display:inline-block;width:100%;}
+.index_recruited .toppic{position:absolute;top:0;z-index:-1;}
+.index_recruited .toppic img{width:100%;}
+.index_recruited .desc{padding-top:50px;}
+
+/*首頁--FB*/
+ .fb-comments, .fb-comments iframe[style] {
+	 width:100%;
+	width: 100% !important;
+}
+
+._2p3a,
+.fb_iframe_widget,
+ .fb_iframe_widget span,
+ .fb_iframe_widget span iframe[style] {
+	 width:100%;
+	width: 100% !important;
+}
+
+/*內頁--------------*/
+/*字型大中小*/
+.fontsize{padding:1%;}
+.fontsize,.font_t{float:right;}
+.fontsize .fonts{font-size:90%;}
+.fontsize .fontm{font-size:100%;}
+.fontsize .fontb{font-size:110%;}
+.fontsize a{
+	display:block;
+	float:right;
+	line-height:20px;
+	width:20px;
+	text-align:center;
+	color:#fff;
+	margin-left:2px;
+	margin-top:2px;
+	text-decoration: none;
+font-size:0.8em;
+}
+.font_t{font-size:0.8em;}
+
+/*頁面主標題*/
+#Subheader .sixteen .title {
+	background-color:transparent;
+    color: #fff;
+	font-size:1.8em;
+	font-weight:400;
+	text-align:right;
+	right:0;
+	top:30%;
+}
+#Subheader .sixteen{	
+	background-image:url(../images2/logo_w2.png);
+	background-repeat:no-repeat;	
+	background-position: center 60px;	
+}
+/*左側選單*/
+.widget_mfn_menu h3{margin-bottom:40px;}
+.widget_mfn_menu{
+	background-image:url(../images2/logo_w3.png);
+	background-repeat:no-repeat;	
+	background-position: right top;
+}
+
+
+/*側欄跑馬燈*/
+.recent_works .photo img{width:70%;margin:10px auto;}
+.recent_works a.slider_control_next { right: 5px;}
+.recent_works a.slider_control_prev { left: 5px;}
+.recent_works a.slider_control { margin-top: -5px;}
+
+/*內頁主標*/
+.container h2{font-size:1.6em;border-bottom:1px solid #848484;font-weight:600;}
+.content h3{font-size:1.4em;font-weight:600;}
+.inner-padding,.content-padding {padding-top:0;}
+
+/*內文頁尾+web2.0*/
+.pagebottom{border-top:1px dotted #c9c9c9;/*border-bottom:1px dotted #c9c9c9;*/display:inline-block;width:100%;margin-top:2%;}
+.lastupdate,.web2 a{padding:5px 0;/*font-size:18px;*/}
+.lastupdate{float:left;/*color:#019fe8;*/}
+.web2{float:right;}
+.web2 a{display:blcok;/*background:#3E3A39;color:#fff;*/float:right;padding:5px 10px;}
+/*.web2 a.web2b{background:#595757;}*/
+.web2 a:hover,.btn_area a:hover{
+filter:alpha(opacity=70); /*IE*/
+-moz-opacity:0.7; /*Firefox*/
+opacity:0.7;/*其他浏览器*/}  
+
+/*子選單2*/
+.ssmenu{margin-bottom:15px;display:inline-block;}
+.btn_area a,.ssmenu a{display:inline-block;float:left;
+margin-right:5px;margin-bottom:10px; 
+}
+.ssmenu a{padding:5px 25px;}
+ .content .video .pic img {width:100%}
+
+/*列表頁圖片*/
+.equip_pic,
+.work_set .pic,
+.video .inner-padding .pic,
+.tt_pic
+{display:inline-block;width:100%;
+	background-repeat:no-repeat;
+	background-position: center center;
+	background-size:cover;}
+.equip_pic,
+.work_set .pic{margin:4px;}
+.img.scale-with-grid, .content .tt_pic img{width:100%;}
+
+/*公司沿革*/
+.history_area{position:relative;}
+.history_area .line{margin:auto;margin-top:25px;height:4px;}
+.line_area{position:absolute;width:80%;top:1%;left:10%;z-index:0;}
+.history_area:after{clear:both;}
+.history_set{width:20%;text-align:center;float:left;}
+
+.history_set .year{z-index:100;position:relative;
+	font-size:2.5em;text-align:center;
+	border:4px solid #009BE4;/*藍線*/
+	width:50px;line-height:50px;
+	margin:auto;
+}
+.history_set .txt{font-size:0.9em;}
+img.scale-with-grid, .content img {width: auto;}
+
+/*董事會成員(表格)*/
+/*caption{display:none;}*/
+caption{font-size:120%;margin:10px;}
+table td,table th{padding:5px;border:4px solid #fff;}
+.table th,.table2 th{font-size:110%;padding:4px;}
+
+/*大事紀要*/
+.tt_pic{float:right;margin-left:10px;}
+.tt_pic{max-width:40%;}
+
+/*最新消息*/
+.news_set{padding:20px auto 10px auto;border-bottom:1px solid #888;margin-bottom:20px;display:inline-block;width:100%;}
+.news_pic{max-width:20%;}
+.news_txt h5 a{font-weight:600;line-height:110%;}
+.line-dotted{border-bottom:1px dotted #888;}
+.line-dotted h5 a{font-size:1rem; font-weight:normal;}
+
+/*招募公告(表格)*/
+.table3 td,.table3 th{border:1px solid #ccc;}
+
+/*車站簡介*/
+.btn_area{margin:10px auto;display:inline-block;width:100%!important;}
+.btn_area a{width:24.4%;text-align:center;padding-top:10px;padding-bottom:10px;font-size:110%;}
+
+.table4 caption,.table5 caption,.table6 caption{font-weight:600;}
+
+/*乘車方法*/
+ol.way>li{color:#5F1985;font-weight:600;font-size:1.3em;margin-top:40px;}
+ol.way>li>ul>li{font-weight:normal;font-size:1rem;}
+
+/*票種與票價*/
+
+.table5 h4{font-size:1rem;font-weight:normal;padding:5px;text-align:center;margin:0;margin-bottom:5px;}
+.table5 td:first-child{padding:0;}
+.table5 .pic{padding:5px;}
+.hidden{display:none;}
+
+
+/*轉乘資訊*/
+.trans_set{float:left;width:16%;margin-right:2%;padding:1%;text-align:center;margin-bottom:2%;}
+.trans_set span{padding:0}
+
+/*安全設備*/
+caption.equip,caption.equip2{padding:10px;font-weight:normal;margin:0 4px;width:98%;
+width: 95%!important;}
+
+	
+.equip_pic img{width:100%;}
+.equip_set .table4,.equip_set .table8{margin-left:4px;}
+
+/*附屬事業*/
+.service_set{float:left;width:14%;margin-right:2%;margin-bottom:3%;text-align:center;}
+.service_set{text-align:center;}
+.service_set span{display:block;margin-top:5px;}
+.service_set .pic{display:inline-block;}
+.service_set .pic img{width:100%;}
+
+/*公共藝術*/
+.work_area{}
+.work_area:after{clear:both;}
+.work_set{display:inline-block;width:20%;float:left;padding:1%;width:18%!important;}
+.work_set a{display:block;width:100%;}
+.work_set a img{width:100%}
+
+/*沿線景點*/
+.travel_desc p{padding:20px 10px 0 10px;}
+.travel_txt li{float:left;margin-right:20px;}
+.travel_pic h4,.travel_txt h4{padding:10px;}
+.travel_pic h4{text-align:right;}
+.travel_desc .more a{display:inline-block;padding:5px 20px;float:right;text-align:right;}
+
+/*旅客信箱*/
+
+.content_form input[type="text"], 
+.content_form input[type="email"],
+.content_form textarea,
+.content_form select{
+    margin-bottom: 0;
+    padding: 8px;
+    font-size: 1rem;
+    width: 75%;float:left;
+}
+.content_form .form-group label {
+    width: 22%;
+    font-size: 1em;
+}
+.content_form .agree .form-group label{width:70%}
+.form-group.btn input{margin:auto;}
+.form-group.btn input:first-child{margin-left:45%;}
+
+.agree p{
+margin-left : 2em; 
+text-indent : -2em ;margin-bottom:0;}
+.content_form .form-group{width:100%}
+.agree .checkbox{padding-top:5px;}
+
+/*預辦登機*/
+.t_line td,.t_line th,.t_line tr:last-child{border:0;}
+.t_line tr{border-bottom:1px solid #C9C9C9;}
+
+/*常見問題*/
+.faq .active h5, .accordion .active h5{}
+.faq .question h5 {font-size:1rem}
+.form-group .faq{width:62%;float:left;}
+
+/*遺失物查詢*/
+.form-group .lose {
+    width: 33%;
+    float: left;
+    margin-right: 4px;
+}
+.content_form .form-group label.no_width{width:auto;}
+.lose_type{margin-bottom:20px;}
+.lose_type p{font-size:1.2rem;}
+.lose_type a{display:block;float:left;margin-right:5px;padding:0px 5px;border-right:1px solid #888;margin-bottom:10px;}
+.link a{display:block;float:left;margin-right:20px;}
+
+/*業務申請(縮排)*/
+.online>li{margin-bottom:10px;}
+.online>li>ul>li{margin-left : 2em; text-indent : -2em}
+.online>li>ul>li>ul>li{margin-left : 2.8em; text-indent : -2.8em}
+.online>li>ul>li>ul>li>ul>li{margin-left : 1.5em; text-indent : -1.5em}
+
+.online>li>ul>li,
+.online>li>ul>li>ul>li{margin-bottom:5px;}
+
+/*政府資訊公開--預決算*/
+.budget_area li{width:33%;float:left;}
+.budget_area2 li{width:25%;float:left;}
+
+}

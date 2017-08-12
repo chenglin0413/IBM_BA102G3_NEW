@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>BA102G3</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+  </welcome-file-list>
+  <resource-ref>
+    <description>DB Connection</description>
+    <res-ref-name>jdbc/BA102G3DB</res-ref-name>
+    <res-type>javax.sql.DataSource</res-type>
+    <res-auth>Container</res-auth>
+  </resource-ref>
+  
+  <!--  
+  <filter>
+    <filter-name>SysuLoginFilter</filter-name>
+    <filter-class>filters.SysuLoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>SysuLoginFilter</filter-name>
+    <url-pattern>/back-end/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+    <dispatcher>FORWARD</dispatcher>
+    <dispatcher>INCLUDE</dispatcher>
+    <dispatcher>ERROR</dispatcher>
+    <dispatcher>ASYNC</dispatcher>
+  </filter-mapping>
+-->  
+  <!-- 政達 -->
+  <servlet>
+		<servlet-name>UserServlet</servlet-name>
+		<servlet-class>com.user.controller.UserServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserServlet</servlet-name>
+		<url-pattern>/back-end/user/user.do</url-pattern>
+	</servlet-mapping>
+		<servlet-mapping>
+		<servlet-name>UserServlet</servlet-name>
+		<url-pattern>/front-end/user/user.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>StoreServlet</servlet-name>
+		<servlet-class>com.store.controller.StoreServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StoreServlet</servlet-name>
+		<url-pattern>/back-end/store/store.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>StoreServlet</servlet-name>
+		<url-pattern>/front-end/store/store.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>MfeeServlet</servlet-name>
+		<servlet-class>com.mfee.controller.MfeeServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MfeeServlet</servlet-name>
+		<url-pattern>/back-end/mfee/mfee.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MfeeServlet</servlet-name>
+		<url-pattern>/front-end/mfee/mfee.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>StoreServlet1</servlet-name>
+		<servlet-class>com.store.controller.StoreServlet1</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StoreServlet1</servlet-name>
+		<url-pattern>/back-end/store/store1.do</url-pattern>
+	</servlet-mapping>
+
+
+
+
+
+	
+	<servlet>
+		<servlet-name>UserStoreServlet</servlet-name>
+		<servlet-class>com.user.controller.UserStoreServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserStoreServlet</servlet-name>
+		<url-pattern>/back-end/user/userstore.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UserStoreServlet</servlet-name>
+		<url-pattern>/front-end/user/userstore.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>RestServlet</servlet-name>
+		<servlet-class>com.rest.controller.RestServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RestServlet</servlet-name>
+		<url-pattern>/back-end/rest/rest.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>RestServlet</servlet-name>
+		<url-pattern>/front-end/rest/rest.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>UserRestServlet</servlet-name>
+		<servlet-class>com.user.controller.UserRestServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserRestServlet</servlet-name>
+		<url-pattern>/back-end/user/userrest.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UserRestServlet</servlet-name>
+		<url-pattern>/front-end/rest/userrest.do</url-pattern>
+	</servlet-mapping>	
+
+
+
+	<servlet>
+		<servlet-name>UserDBGifReader</servlet-name>
+		<servlet-class>com.user.controller.UserDBGifReader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>UserDBGifReader</servlet-name>
+		<url-pattern>/back-end/user/userImg.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>UserDBGifReader</servlet-name>
+		<url-pattern>/front-end/user/userImg.do</url-pattern>
+	</servlet-mapping>
+	
+		
+
+
+	<servlet>
+		<servlet-name>SysuServlet</servlet-name>
+		<servlet-class>com.sysu.controller.SysuServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SysuServlet</servlet-name>
+		<url-pattern>/back-end/sysu/sysu.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>AuthServlet</servlet-name>
+		<servlet-class>com.auth.controller.AuthServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>AuthServlet</servlet-name>
+		<url-pattern>/back-end/auth/auth.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>FuncServlet</servlet-name>
+		<servlet-class>com.func.controller.FuncServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FuncServlet</servlet-name>
+		<url-pattern>/back-end/func/func.do</url-pattern>
+	</servlet-mapping>
+  <!-- 政達結尾 -->
+  
+  
+  
+  <!-- 政成 -->
+ 	<servlet>
+		<servlet-name>OrdServlet</servlet-name>
+		<servlet-class>com.ord.controller.OrdServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>OrdServlet</servlet-name>
+		<url-pattern>/front-end/ord/ord.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>memberAddOrd</servlet-name>
+		<servlet-class>com.ord.controller.OrdServlet_memberAddOrd</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>memberAddOrd</servlet-name>
+		<url-pattern>/front-end/ord/memberAO.do</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>ProdServlet</servlet-name>
+		<servlet-class>com.prod.controller.ProdServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ProdServlet</servlet-name>
+		<url-pattern>/front-end/prod/prod.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>ProdServlet</servlet-name>
+		<url-pattern>/front-end/store_interface/prod.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>WishServlet</servlet-name>
+		<servlet-class>com.wish.controller.WishServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>WishServlet</servlet-name>
+		<url-pattern>/front-end/wish/wish.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ItemServlet</servlet-name>
+		<servlet-class>com.item.controller.ItemServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ItemServlet</servlet-name>
+		<url-pattern>/front-end/item/item.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>StpiServlet</servlet-name>
+		<servlet-class>com.stpi.controller.StpiServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StpiServlet</servlet-name>
+		<url-pattern>/front-end/stpi/stpi.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>PrpiServlet</servlet-name>
+		<servlet-class>com.prpi.controller.PrpiServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>PrpiServlet</servlet-name>
+		<url-pattern>/front-end/store_interface/prpi.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>PrpiServlet</servlet-name>
+		<url-pattern>/front-end/prpi/prpi.do</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>ShoppingServlet</servlet-name>
+		<servlet-class>com.shopping.controller.ShoppingServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>ShoppingServlet</servlet-name>
+		<url-pattern>/front-end/eshop/ShoppingServlet</url-pattern>
+	</servlet-mapping>
+	<servlet>
+		<servlet-name>DBGifReader_store</servlet-name>
+		<servlet-class>com.stpi.controller.DBGifReader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DBGifReader_store</servlet-name>
+		<url-pattern>/front-end/stpi/DBGifReader</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DBGifReader_prod</servlet-name>
+		<servlet-class>com.prod.controller.DBGifReader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DBGifReader_prod</servlet-name>
+		<url-pattern>/front-end/prod/DBGifReader</url-pattern>
+	</servlet-mapping>
+
+	<servlet-mapping>
+		<servlet-name>DBGifReader_prod</servlet-name>
+		<url-pattern>/front-end/store_interface/DBGifReader</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>DBGifReader_prpi</servlet-name>
+		<servlet-class>com.prpi.controller.DBGifReader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>DBGifReader_prpi</servlet-name>
+		<url-pattern>/front-end/prpi/DBGifReader</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- 簡訊排程 -->
+	<!-- <servlet> -->
+	<!-- <servlet-name> -->
+	<!-- schedule -->
+	<!-- </servlet-name> -->
+	<!-- <servlet-class> -->
+	<!-- MessageScheduleServlet -->
+	<!-- </servlet-class> -->
+	<!-- <load-on-startup/> -->
+	<!-- </servlet> -->
+	<!-- 政成結尾 -->
+ 
+
+<!-- 李浩 -->
+
+<!-- 	<servlet> -->
+<!-- 		<servlet-name>StartCrawler</servlet-name> -->
+<!-- 		<servlet-class>com.init.controller.StartCrawler</servlet-class> -->
+<!-- 		<load-on-startup>10</load-on-startup> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!-- 		<servlet-name>StartCrawler</servlet-name> -->
+<!-- 		<url-pattern>/StartCrawler</url-pattern> -->
+<!-- 	</servlet-mapping> -->
+
+	<servlet>
+		<servlet-name>StpmServlet</servlet-name>
+		<servlet-class>com.stpm.controller.StpmServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>StpmServlet</servlet-name>
+		<url-pattern>/front-end/store_interface/stpm.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>FlscServlet</servlet-name>
+		<servlet-class>com.flsc.controller.FlscServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>FlscServlet</servlet-name>
+		<url-pattern>/front-end/member_interface/flsc.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>RepmServlet</servlet-name>
+		<servlet-class>com.repm.controller.RepmServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>RepmServlet</servlet-name>
+		<url-pattern>/front-end/restaurant/repm.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>PrpmServlet</servlet-name>
+		<servlet-class>com.prpm.controller.PrpmServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PrpmServlet</servlet-name>
+		<url-pattern>/front-end/store_interface/prpm.do</url-pattern>
+	</servlet-mapping>
+	
+	<!-- 李浩結尾 -->
+	<!-- 韋翔 開始-->
+	<servlet>
+    <servlet-name>TrvlServlet</servlet-name>
+    <servlet-class>com.trvl.controller.TrvlServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TrvlServlet</servlet-name>
+    <url-pattern>/front-end/trvl/trvl.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>TrpiServlet</servlet-name>
+    <servlet-class>com.trpi.controller.TrpiServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TrpiServlet</servlet-name>
+    <url-pattern>/front-end/trpi/trpi.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>TrpiDBGifReader</servlet-name>
+    <servlet-class>com.trpi.controller.DBGifReader</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TrpiDBGifReader</servlet-name>
+    <url-pattern>/front-end/trpi/DBGifReader.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>TlcmServlet</servlet-name>
+    <servlet-class>com.tlcm.controller.TlcmServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>TlcmServlet</servlet-name>
+    <url-pattern>/front-end/tlcm/tlcm.do</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>RpprServlet</servlet-name>
+    <servlet-class>com.rppr.controller.RpprServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RpprServlet</servlet-name>
+    <url-pattern>/back-end/report/rppr.do</url-pattern>
+  </servlet-mapping>
+   <servlet-mapping>
+    <servlet-name>RpprServlet</servlet-name>
+    <url-pattern>/front-end/report/rppr.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>RptlServlet</servlet-name>
+    <servlet-class>com.rptl.controller.RptlServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RptlServlet</servlet-name>
+    <url-pattern>/back-end/report/rptl.do</url-pattern>
+  </servlet-mapping>
+  <!-- 韋翔結尾 -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<servlet>
+		<servlet-name>HelloExcel</servlet-name>
+		<servlet-class>servlet_excel.HelloExcel</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>HelloExcel</servlet-name>
+		<url-pattern>/back-end/excel.do</url-pattern>
+	</servlet-mapping>
+	
+	<context-param>
+		<param-name>excel-file</param-name>
+		<param-value>/WEB-INF/data/emp2.xls</param-value>
+	</context-param>
+	
+	<context-param>
+		<param-name>excel-user</param-name>
+		<param-value>/WEB-INF/data/user.xls</param-value>
+	</context-param>
+
+
+
+
+
+
+</web-app>
