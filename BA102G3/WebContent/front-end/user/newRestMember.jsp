@@ -1,8 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.user.model.*"%>
+<%@ page import="com.rest.model.*"%>
 <%
 UserVO userVO = (UserVO) request.getAttribute("userVO");
+RestVO restVO = (RestVO) request.getAttribute("restVO");
 %>
 
 <!DOCTYPE html>
@@ -125,22 +127,24 @@ UserVO userVO = (UserVO) request.getAttribute("userVO");
 	
 	<br><br><br>
 
-<div class="container">
+
+
+<!--成為餐廳會員開始-->
+
+<div class="container">		<!-- container -->
 		
   <h3>成為會員</h3>
   <ul class="nav nav-tabs">
-    <li class="active"><a href="<%= request.getContextPath() %>/front-end/user/newMember.jsp"><b>一般會員</b></a></li>
+    <li><a href="<%= request.getContextPath() %>/front-end/user/newMember.jsp">一般會員</a></li>
     <li><a href="<%= request.getContextPath() %>/front-end/user/newStoreMember.jsp">商店會員</a></li>
-    <li><a href="<%= request.getContextPath() %>/front-end/user/newRestMember.jsp">餐廳會員</a></li>
+    <li class="active"><a href="<%= request.getContextPath() %>/front-end/user/newRestMember.jsp"><b>餐廳會員</b></a></li>
   </ul>
   <br>
-  
-<!--成為一般會員開始-->
-      
-  <form class="form-horizontal" id="reg_form" action="<%= request.getContextPath() %>/front-end/user/user.do" method="post" enctype="multipart/form-data">
+        
+  <form class="form-horizontal" id="reg_form" action="<%= request.getContextPath() %>/front-end/user/userrest.do" method="post" enctype="multipart/form-data">
    
-  <div class="container-fluid">
-  <div class="row">
+  <div class="container-fluid"> <!-- container-fluid -->
+  <div class="row">				<!-- row -->
 
   <div class="col-lg-6">
 					
@@ -157,7 +161,7 @@ UserVO userVO = (UserVO) request.getAttribute("userVO");
 
     <%-- 新增成功 --%>
     <c:if test="${not empty successMsgs}">
-    	<font color='red'>註冊成功	,將於E-mail中收到確認信</font><br><br>
+    	<font color='red'>收到申請了,本公司將與您聯絡後續事宜</font><br><br>
     </c:if>
 
       <div class="form-group">
@@ -170,64 +174,61 @@ UserVO userVO = (UserVO) request.getAttribute("userVO");
       </div>
       
       <div class="form-group">
-        <label class="col-md-4 control-label">E-Mail <span class="asteriskField">*</span> </label>
+        <label class="col-md-4 control-label">負責人E-Mail <span class="asteriskField">*</span> </label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-            <input name="user_email" placeholder="輸入E-mail" class="form-control"  type="email" value="<%= (userVO==null)? "" : userVO.getUser_email()%>">
+            <input name="user_email" placeholder="輸入負責人E-mail" class="form-control"  type="email" value="<%= (userVO==null)? "" : userVO.getUser_email()%>">
           </div>
         </div>
       </div>
 
       <div class="form-group">
-        <label class="col-md-4 control-label">姓 <span class="asteriskField">*</span> </label>
+        <label class="col-md-4 control-label">負責人姓 <span class="asteriskField">*</span> </label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input  name="user_lastname" placeholder="輸入姓" class="form-control"  type="text" value="<%= (userVO==null)? "" : userVO.getUser_lastname()%>">
+            <input  name="user_lastname" placeholder="輸入負責人姓" class="form-control"  type="text" value="<%= (userVO==null)? "" : userVO.getUser_lastname()%>">
           </div>
         </div>
       </div>
       
       <div class="form-group">
-        <label class="col-md-4 control-label" >名 <span class="asteriskField">*</span> </label>
+        <label class="col-md-4 control-label" >負責人名 <span class="asteriskField">*</span> </label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input name="user_firstname" placeholder="輸入名" class="form-control"  type="text" value="<%= (userVO==null)? "" : userVO.getUser_firstname()%>">
+            <input name="user_firstname" placeholder="輸入負責人名" class="form-control"  type="text" value="<%= (userVO==null)? "" : userVO.getUser_firstname()%>">
           </div>
         </div>
       </div>
       
       <div class="form-group">
-        <label class="col-md-4 control-label" >手機</label>
+        <label class="col-md-4 control-label" >負責人手機</label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-            <input name="user_mobile" placeholder="輸入手機" class="form-control" type="text" value="<%= (userVO==null)? "" : userVO.getUser_mobile()%>">
+            <input name="user_mobile" placeholder="輸入負責人手機" class="form-control" type="text" value="<%= (userVO==null)? "" : userVO.getUser_mobile()%>">
           </div>
         </div>
       </div>      
 
       <div class="form-group">
-        <label class="col-md-4 control-label" >電話</label>
+        <label class="col-md-4 control-label" >負責人電話</label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
-            <input name="user_phone" placeholder="輸入電話" class="form-control" type="text" value="<%= (userVO==null)? "" : userVO.getUser_phone()%>">
+            <input name="user_phone" placeholder="輸入負責人電話" class="form-control" type="text" value="<%= (userVO==null)? "" : userVO.getUser_phone()%>">
           </div>
         </div>
       </div>      
 
       <div class="form-group">
-        <label class="col-md-4 control-label">聯絡地址</label>
+        <label class="col-md-4 control-label">負責人聯絡地址</label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-            <input name="user_address" placeholder="輸入聯絡地址" class="form-control" type="text" value="<%= (userVO==null)? "" : userVO.getUser_address()%>">
+            <input name="user_address" placeholder="輸入負責人聯絡地址" class="form-control" type="text" value="<%= (userVO==null)? "" : userVO.getUser_address()%>">
           </div>
         </div>
       </div>
       
-  </div>
-  <div class="col-lg-4">
-      
       <div class="form-group">
-        <label class="col-md-4 control-label">上傳圖片</label>
+        <label class="col-md-4 control-label">負責人圖片上傳</label>
         <div class="col-md-8  inputGroupContainer">
 		  <div class="fileUpload btn btn-warning">
 		      <span>請拖拉圖片到這裡</span>
@@ -244,37 +245,135 @@ UserVO userVO = (UserVO) request.getAttribute("userVO");
           </div>
         </div>
       </div>      
-      <br>
-	  
-	  <div class="form-group">
-	     <label class="col-md-4 control-label"></label> 
-    	 <div class="col-md-8  inputGroupContainer">
-       	 <input class="btn btn-primary btn-lg" type="submit" value="我要加入">
-       	 &nbsp;&nbsp; <input class="btn btn-primary btn-lg" type="reset" value="重設">
-     	</div>                      
-  	  </div>
+      <br><br><br><br><br>
   </div>
+
+  <div class="col-lg-6">
+ 
+      <div class="form-group">
+        <label class="col-md-4 control-label">餐廳名稱 <span class="asteriskField">*</span> </label>
+        <div class="col-md-8  inputGroupContainer">
+          <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-cutlery"></i></span>
+            <input  name="rest_name" placeholder="輸入餐廳名稱" class="form-control"  type="text" value="<%= (restVO==null)? "" : restVO.getRest_name()%>">
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label class="col-md-4 control-label">餐廳營業時間 <span class="asteriskField"> </span> </label>
+        <div class="col-md-8  inputGroupContainer">
+          <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+            <input  name="rest_hours" placeholder="輸入餐廳營業時間" class="form-control"  type="text" value="<%= (restVO==null)? "" : restVO.getRest_hours()%>">
+          </div>
+        </div>
+      </div>      
+
+      <div class="form-group">
+        <label class="col-md-4 control-label" >餐廳電話</label>
+        <div class="col-md-8  inputGroupContainer">
+          <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
+            <input name="rest_phone" placeholder="輸入餐廳電話" class="form-control" type="text" value="<%= (restVO==null)? "" : restVO.getRest_phone()%>">
+          </div>
+        </div>
+      </div>  
+
+      <div class="form-group">
+        <label class="col-md-4 control-label">餐廳簡介 <span class="asteriskField">*</span> </label>
+        <div class="col-md-8  inputGroupContainer">
+          <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-cutlery"></i></span>
+            <textarea name="rest_detail" class="form-control" rows="3"  class="form-control"  type="text"> <%= (restVO==null)? "" : restVO.getRest_detail()%> </textarea>
+          </div>
+        </div>
+      </div>
+      
+                            <div>
+                                <div class="form-group">
+                                    <label class="col-md-4 control-label">餐廳種類 <span class="asteriskField">*</span> </label>
+                                    <div class="col-md-8  inputGroupContainer">
+                                    <select class="form-control" name="rest_type">
+                                    <option value="1" <c:if test="${restVO.rest_type == '1'}" var="condition" scope="page">selected</c:if> >台式</option>
+                                    <option value="2" <c:if test="${restVO.rest_type == '2'}" var="condition" scope="page">selected</c:if> >中式</option>
+                                    <option value="3" <c:if test="${restVO.rest_type == '3'}" var="condition" scope="page">selected</c:if> >西式</option>
+                                    <option value="4" <c:if test="${restVO.rest_type == '4'}" var="condition" scope="page">selected</c:if> >日式</option>
+                                    <option value="5" <c:if test="${restVO.rest_type == '5'}" var="condition" scope="page">selected</c:if> >穆斯林</option>
+                                    <option value="6" <c:if test="${restVO.rest_type == '6'}" var="condition" scope="page">selected</c:if> >印度</option>
+                                    <option value="7" <c:if test="${restVO.rest_type == '7'}" var="condition" scope="page">selected</c:if> >泰國</option>
+                                    <option value="8" <c:if test="${restVO.rest_type == '8'}" var="condition" scope="page">selected</c:if> >越南</option>
+                                    </select>
+                                    </div>
+                                </div>                               
+                            </div>
+      
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="form-group">
+                                    <label for="name">所在航廈*</label>
+                                    <select class="form-control" name="rest_ter">
+                                    <option <c:if test="${restVO.rest_ter == '2'}" var="condition" scope="page">selected</c:if> value="2">T2</option>
+                                    <option <c:if test="${restVO.rest_ter == '1'}" var="condition" scope="page">selected</c:if> value="1">T1</option>
+                                    </select>
+                                </div>                                
+                            </div>
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="form-group">
+                                    <label for="name">所在樓層*</label>
+                                    <select class="form-control" name="rest_floor">
+                                    <option value="3" <c:if test="${restVO.rest_floor == '3'}" var="condition" scope="page">selected</c:if> >3</option>
+                                    <option value="-2" <c:if test="${restVO.rest_floor == '-2'}" var="condition" scope="page">selected</c:if> >B2</option>
+                                    <option value="-1" <c:if test="${restVO.rest_floor == '-1'}" var="condition" scope="page">selected</c:if> >B1</option>
+                                    <option value="1" <c:if test="${restVO.rest_floor == '1'}" var="condition" scope="page">selected</c:if> >1</option>
+                                    <option value="2" <c:if test="${restVO.rest_floor == '2'}" var="condition" scope="page">selected</c:if> >2</option>
+                                    <option value="4" <c:if test="${restVO.rest_floor == '4'}" var="condition" scope="page">selected</c:if> >4</option>
+                                    </select>
+                                </div>                               
+                            </div>
+
+                            <div class="col-xs-12 col-sm-4">
+                                <div class="form-group">
+	                            	<label for="name">出入境位置*</label>
+    	                        	<select class="form-control" name="rest_inout">
+  									<option value="1" <c:if test="${restVO.rest_inout == '1'}" var="condition" scope="page">selected</c:if> >出境區</option>
+  									<option value="2" <c:if test="${restVO.rest_inout == '2'}" var="condition" scope="page">selected</c:if> >入境區</option>
+									</select>                            
+                    	    	</div>
+                    	    </div><br>
+
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="input-group">
+                                    <label class="input-group-addon" >所在經度</label>
+                                    <input type="text" name="rest_lon" value="<%= (restVO==null)? "" : restVO.getRest_lon()%>" class="form-control">
+                                </div>                                
+                            </div>
+                            <div class="col-xs-12 col-sm-6">
+                                <div class="input-group">
+                                    <label class="input-group-addon" >所在緯度</label>
+                                    <input type="text" name="rest_lat" value="<%= (restVO==null)? "" : restVO.getRest_lat()%>" class="form-control">
+                                </div><br>                                
+                            </div>
+  
+  			<div class="form-group"> 
+     			<label class="col-md-4 control-label"></label>
+     			<div class="col-md-8  inputGroupContainer">
+        			<input class="btn btn-primary btn-lg" type="submit" value="我要加入">
+        			&nbsp;&nbsp; <input class="btn btn-primary btn-lg" type="reset" value="重設">
+     			</div>                      
+  			</div>
+  
+  </div>
+ 
                       
 
   <input type="hidden" name="action" value="insert">
-  <input type="hidden" name="user_type" value="1">
-  <input type="hidden" name="user_status" value="1">
+  <input type="hidden" name="user_type" value="3">
+  <input type="hidden" name="user_status" value="2">
   <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"><!--送出本網頁的路徑-->
+  
+  
 
-  </div>
-  </div>
+  </div>	<!-- row -->
+  </div>	<!-- container-fluid -->
   </form>
 
-<!--成為一般會員結束-->
-
-</div> <!-- class="container" -->
-
-
-
-
-
-
-
+</div>		<!-- container -->
  
 <!-- 表單驗證用 --> 
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
@@ -317,6 +416,7 @@ function previewFile() {
                 validators: {
                         stringLength: {
                         min: 2,
+                        message: '至少打2個字吧'
                     },
                         notEmpty: {
                         message: '請輸入想用的帳號'
@@ -328,6 +428,7 @@ function previewFile() {
                 validators: {
                         stringLength: {
                         min: 1,
+                        message: '至少打1個字吧'
                     },
                         notEmpty: {
                         message: '請輸入您的名'
@@ -339,6 +440,7 @@ function previewFile() {
                 validators: {
                      stringLength: {
                         min: 1,
+                        message: '至少打1個字吧'
                     },
                     notEmpty: {
                         message: '請輸入您的姓'
@@ -355,7 +457,7 @@ function previewFile() {
             user_mobile: {
                 validators: {
                     notEmpty: {
-                        message: '請輸入您的手機'
+                        message: '請輸入您的手機號碼'
                     },
                     phone: {
                         country: 'US',
@@ -381,8 +483,32 @@ function previewFile() {
                     }
                 }
             },
-          
-                  
+                        
+            rest_name: {
+                validators: {
+                        stringLength: {
+                        min: 1,
+                        message: '至少打1個字吧'
+                    },
+                        notEmpty: {
+                        message: '請輸入商店名稱'
+                    }
+                }
+            },
+
+            rest_detail: {
+                validators: {
+                        stringLength: {
+                        min: 2,
+                        message: '至少打2個字吧'
+                    },
+                        notEmpty: {
+                        message: '請輸入店家描述'
+                    }
+                }
+            },
+
+            
             }
         })
       
@@ -408,6 +534,7 @@ function previewFile() {
  
  </script>
  
+<!--成為餐廳會員結束-->
  
  
  
