@@ -734,5 +734,97 @@ public class ProdServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
+		
+		if ("insert_prod".equals(action)) {
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/***********************
+				 * 1.接收請求參數 - 輸入格式的錯誤處理
+				 *************************/
+
+				/*************************** 產品資料 ***************************************/
+
+				Integer store_id = new Integer(req.getParameter("store_id").trim());
+				String prod_name = req.getParameter("prod_name").trim();
+				String prod_descript = req.getParameter("prod_descript").trim();
+				Integer prod_price = new Integer(req.getParameter("prod_price").trim());
+				String prod_sort = req.getParameter("prod_sort").trim();
+				String prod_format = req.getParameter("prod_format").trim();
+				String prod_brand = req.getParameter("prod_brand").trim();
+				java.sql.Date prod_updatetime = null;
+
+				try {
+					prod_updatetime = java.sql.Date.valueOf(req.getParameter("prod_updatetime").trim());
+				} catch (IllegalArgumentException e) {
+					prod_updatetime = new java.sql.Date(System.currentTimeMillis());
+					errorMsgs.add("請輸入上架日期!");
+				}
+
+				Integer prod_soldcount = new Integer(req.getParameter("prod_soldcount").trim());
+				Integer prod_status = new Integer(req.getParameter("prod_status").trim());
+				Integer prod_count = new Integer(req.getParameter("prod_count").trim());
+				Integer prod_score = new Integer(req.getParameter("prod_score").trim());
+
+				ProdVO prodVO = new ProdVO();
+				prodVO.setStore_id(store_id);
+				prodVO.setProd_name(prod_name);
+				prodVO.setProd_descript(prod_descript);
+				prodVO.setProd_price(prod_price);
+				prodVO.setProd_sort(prod_sort);
+				prodVO.setProd_format(prod_format);
+				prodVO.setProd_brand(prod_brand);
+				prodVO.setProd_updatetime(prod_updatetime);
+				prodVO.setProd_soldcount(prod_soldcount);
+				prodVO.setProd_status(prod_status);
+				prodVO.setProd_count(prod_count);
+				prodVO.setProd_score(prod_score);
+
+				if (!errorMsgs.isEmpty()) {
+					req.setAttribute("prodVO", prodVO);
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/store_interface/addProd.jsp");
+					failureView.forward(req, res);
+					return;
+				}
+
+				/*************************** 圖片資料 ***************************************/
+
+				List<PrpiVO> list = new ArrayList<PrpiVO>();
+
+				System.out.println(req.getParameter("prpi_name").trim());
+				
+				String prpi_name = req.getParameter("prpi_name").trim();
+
+				Part partpic = req.getPart("prpi_img");
+				BufferedInputStream bis = new BufferedInputStream(partpic.getInputStream());
+				byte[] img = new byte[bis.available()];
+				bis.read(img);
+				bis.close();
+
+				PrpiVO prpiVO = new PrpiVO();
+				prpiVO.setPrpi_name(prpi_name);
+				prpiVO.setPrpi_img(img);
+				list.add(prpiVO);
+
+				/*************************** 2.開始新增資料 ***************************************/
+				ProdService prodSvc = new ProdService();
+				prodSvc.insertWithPrpi(prodVO, list);
+
+				/***************************
+				 * 3.新增完成,準備轉交(Send the Success view)
+				 ***********/
+				String url = "/front-end/store_interface/listOneStore_idAllProd.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/store_interface/addProd.jsp");
+				failureView.forward(req, res);
+			}
+	}
 	}
 }
