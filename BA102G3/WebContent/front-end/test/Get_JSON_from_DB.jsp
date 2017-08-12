@@ -26,12 +26,9 @@ rs.next();
 //將資料轉成JSONObject		 
 JSONObject prod = new JSONObject();
 ProdService prodSvc=new ProdService();
-ProdVO prodVO=prodSvc.getOneProd(rs.getInt("prod_id"));
+
 List<ProdVO> list=prodSvc.getAll();
-for(int i=0;i<list.size();i++){
-	String str=new Integer(i).toString();
-	prod.put(str,list.get(i).getProd_id());
-}
+prod.put("list",list);
 
 
 //輸出JSONObject
