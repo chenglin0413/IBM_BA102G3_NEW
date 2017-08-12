@@ -1,6 +1,6 @@
 <%@page import="java.util.List"%>
 <%@page contentType="text/html;charset=Big5"  language="java" import="java.sql.*" errorPage=""%> 
-<%@page import="com.json.JSONObject,com.prod.model.*"%>
+<%@page import="org.json.JSONObject,com.prod.model.*"%>
 <%
 //取得前端送來的資料 
 int prod_id = Integer.valueOf(request.getParameter("prod_id"));
@@ -26,14 +26,16 @@ rs.next();
 //將資料轉成JSONObject		 
 JSONObject prod = new JSONObject();
 ProdService prodSvc=new ProdService();
+ProdVO prodVO=prodSvc.getOneProd(rs.getInt("prod_id"));
 List<ProdVO> list=prodSvc.getAll();
-prod.put("list",list);
-// prod.put("prod_id",rs.getString("PROD_ID"));
-// prod.put("prod_name",rs.getString("PROD_NAME"));
-// prod.put("prod_describe",rs.getString("PROD_DESCRIPT"));
-// prod.put("prod_count",rs.getString("PROD_COUNT"));
+for(int i=0;i<list.size();i++){
+	String str=new Integer(i).toString();
+	prod.put(str,list.get(i).getProd_id());
+}
+
+
 //輸出JSONObject
-out.print( prod.toString() );
+out.print( prod);
 //關閉ResultSet物件 	
 rs.close();
 //關閉Statement物件    

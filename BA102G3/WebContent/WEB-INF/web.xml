@@ -204,7 +204,8 @@
 		<servlet-name>ProdServlet</servlet-name>
 		<url-pattern>/front-end/store_interface/prod.do</url-pattern>
 	</servlet-mapping>
-
+	
+	
 	<servlet>
 		<servlet-name>WishServlet</servlet-name>
 		<servlet-class>com.wish.controller.WishServlet</servlet-class>

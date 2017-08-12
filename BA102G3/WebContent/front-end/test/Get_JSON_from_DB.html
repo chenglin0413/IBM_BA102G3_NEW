@@ -39,19 +39,19 @@ var xhr = null;
 function showEmployee(jsonStr){
   //剖析json字串,將其轉成jsob物件
   //剖析json字串,將其轉成jsob物件
-  var prod = JSON.parse(jsonStr);
+  var list = JSON.parse(jsonStr);
 console.log(jsonStr);
+console.log(list.length);
   //準備要輸出的網頁結構
-  for(var i=0;i<=prod.lenth;i++){
+  for(var i=1;i<100;i++){
+	  console.log(i);
 	  var str = "<div class='col-md-12'>";
-	  str += "<div class='col-md-3'>商家ID :"+ prod[i] +"</div>";
-	 str += "<div class='col-md-3'>商家名稱 :"+ prod[i] +"</div>";
-	 str += "<div class='col-md-3'>商家描述 :"+ prod[i] +"</div>";
-	 str += "<div class='col-md-3'>商家營業時間 :"+ prod[i] +"</div>";
-	 str += "</div>"; 
+	  str += "<div class='col-md-3'>商家ID :"+ list[i.toString()]+"</div>";
 	  //放入頁面
 	  document.getElementById("showPanel").innerHTML = str;
   }
+	
+
   
 }
 
