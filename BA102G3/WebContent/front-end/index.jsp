@@ -419,6 +419,7 @@ pageContext.setAttribute("trvllist", trvllist);
         </div>
         <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
          <!-- 聊天區塊 -->
+<%--          <c:if test="${userVO!=null}"> --%>
          <div id="messagearea" class="chatbox" style="display:none;" onload="connect(),showTime();" onunload="disconnect();">
          	<div class="chatBar" ><h3 id="test"></h3></div>
          	<div class="row">
@@ -432,18 +433,18 @@ pageContext.setAttribute("trvllist", trvllist);
             <input id="message"  class="text-field" type="text" placeholder="inputMessage Here" size="35px" onkeydown="if (event.keyCode == 13) sendMessage();"/>
            	</div>
            	</div>
-	        <div class="col-md-4 " ">${ userVO.user_lastname}${ userVO.user_firstname}
+	        <div class="col-md-4 ">${ userVO.user_lastname}${ userVO.user_firstname}
 	        	<input type="hidden" id="userName" value="${ userVO.user_lastname}${ userVO.user_firstname}" />
 	        </div>
            	<div class="col-md-8 " >
             <input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();"/>
-		    <input type="button" id="connect"     class="button" value="Online" onclick="connect();"/>
 		    <input type="button" id="disconnect"  class="button" value="offLine" onclick="disconnect();"/>
 		    </div>
 	    </div>
          </div>
          </div>
         <div id="messagebtn" class="chatbtn text-center btn-info" onclick="connect();">ChatBox</div>
+<%--        </c:if> --%>
         <!-- 聊天區塊結束 -->
     </footer>
     
@@ -497,10 +498,7 @@ pageContext.setAttribute("trvllist", trvllist);
 		};
 
 		webSocket.onclose = function(event) {
-			message = userName+"已離開聊天室!\r\n";
-	        messagesArea.value = messagesArea.value + message;
-	        webSocket.send(messagesArea.value);
-	        messagesArea.scrollTop = messagesArea.scrollHeight;
+			
 		};
 	}
 	
@@ -527,6 +525,11 @@ pageContext.setAttribute("trvllist", trvllist);
 
 	
 	function disconnect () {
+		message = "已離開聊天室!\r\n";
+        messagesArea.value = messagesArea.value + message;
+        messagesArea.scrollTop = messagesArea.scrollHeight;
+        var jsonObj = {"userName" : userName, "message" : message};
+        webSocket.send(JSON.stringify(jsonObj));
 		webSocket.close();
 		document.getElementById('sendMessage').disabled = true;
 		document.getElementById('connect').disabled = false;
