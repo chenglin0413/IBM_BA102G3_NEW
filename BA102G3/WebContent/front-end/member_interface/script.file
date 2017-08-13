@@ -113,6 +113,7 @@
                         display: 'block'
                     });
                 });
+                
             }
         } else {
             if (fixed) {
@@ -203,24 +204,4 @@
     })
     </script>
     
-     <script>
-    //256色隨機:
-    	for(var i=0;i<12;i++){
-    	var twelve=document.getElementsByName("twelve")[i];
-    	twelve.style.color=color16();
-    	
-    	}
-    	
-    	function color16(){
-
-			var color=new Array(1);
-			color[0]='#';
-			for(var i=0;i<3;i++){
-				s=Math.floor(Math.random()*255+1);
-				sc=s.toString(16);
-				color.push(sc);
-			}
-			
-			 return color.join("");
-		}
-    </script>
+    

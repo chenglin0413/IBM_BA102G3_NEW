@@ -69,7 +69,7 @@ pageContext.setAttribute("trvllist", trvllist);
 </head>
 
 <body >
-    
+   
      <!-- Navigation -->
     <!-- <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a> -->
     
@@ -162,21 +162,21 @@ pageContext.setAttribute("trvllist", trvllist);
         <div class="carousel-inner">
             <div class="item active">
                 <!-- Set the first background image using inline CSS below. -->
-                <img src="<%= request.getContextPath() %>/front-end/img/slidebg03.jpg">
+                <img src="<%= request.getContextPath() %>/front-end/img/slidebg13.jpg">
                 <div class="carousel-caption">
                   <!--   <h2>Caption 1</h2> -->
                 </div>
             </div>
             <div class="item">
                 <!-- Set the second background image using inline CSS below. -->
-                <img src="<%= request.getContextPath() %>/front-end/img/slidebg02.jpg">
+                <img src="<%= request.getContextPath() %>/front-end/img/slidebg12.jpg">
                 <div class="carousel-caption">
                   <!--   <h2>Caption 2</h2> -->
                 </div>
             </div>
             <div class="item">
                 <!-- Set the third background image using inline CSS below. -->
-                <img src="<%= request.getContextPath() %>/front-end/img/slidebg01.jpg">
+                <img src="<%= request.getContextPath() %>/front-end/img/slidebg11.jpg">
                 <div class="carousel-caption">
                     <!-- <h2>Caption 3</h2> -->
                 </div>
@@ -418,12 +418,134 @@ pageContext.setAttribute("trvllist", trvllist);
             </div>
         </div>
         <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
+         <!-- 聊天區塊 -->
+         <div id="messagearea" class="chatbox" style="display:none;" onload="connect(),showTime();" onunload="disconnect();">
+         	<div class="chatBar" ><h3 id="test"></h3></div>
+         	<div class="row">
+         	<div id="closechatbox" class="closechatbtn text-center btn-info" >X</div>
+	        <div class="col-md-12">
+	        <textarea id="messagesArea" class="message-area" readonly ></textarea>
+	        </div>
+	        <div class="input-area col-md-12">
+	        <div class="row">
+	         <div class="col-md-12">
+            <input id="message"  class="text-field" type="text" placeholder="inputMessage Here" size="35px" onkeydown="if (event.keyCode == 13) sendMessage();"/>
+           	</div>
+           	</div>
+	        <div class="col-md-4 " ">${ userVO.user_lastname}${ userVO.user_firstname}
+	        	<input type="hidden" id="userName" value="${ userVO.user_lastname}${ userVO.user_firstname}" />
+	        </div>
+           	<div class="col-md-8 " >
+            <input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();"/>
+		    <input type="button" id="connect"     class="button" value="Online" onclick="connect();"/>
+		    <input type="button" id="disconnect"  class="button" value="offLine" onclick="disconnect();"/>
+		    </div>
+	    </div>
+         </div>
+         </div>
+        <div id="messagebtn" class="chatbtn text-center btn-info" onclick="connect();">ChatBox</div>
+        <!-- 聊天區塊結束 -->
     </footer>
     
 
+<div></div>
 
  <%@ include file="/front-end/member_interface/script.file" %>
+ 
+<script type="text/javascript">
+	//聊天
+	function openMessage() {
+	    document.getElementById('messagebtn').style.display = 'none';
+	    document.getElementById('messagearea').style.display = '';
+	   
+	}
+	function closeMessage() {
+	    document.getElementById('messagebtn').style.display = '';
+	    document.getElementById('messagearea').style.display = 'none';
+	   
+	}
+	var MyPoint = "/MyEchoServer/peter/309";
+    var host = window.location.host;
+    var path = window.location.pathname;
+    var webCtx = path.substring(0, path.indexOf('/', 1));
+    var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+    
+	var webSocket;
+	var inputUserName = document.getElementById("userName");
+	var userName= inputUserName.value;
+	var messagesArea = document.getElementById("messagesArea")
+	var message = userName+"已加入聊天室!\r\n";
+	        messagesArea.value = messagesArea.value + message;
+	        messagesArea.scrollTop = messagesArea.scrollHeight;
+	function connect() {
+		// 建立 websocket 物件
+		webSocket = new WebSocket(endPointURL);
+		
+		webSocket.onopen = function(event) {
+			document.getElementById('sendMessage').disabled = false;
+			document.getElementById('connect').disabled = true;
+			document.getElementById('disconnect').disabled = false;
+			
+		};
 
+		webSocket.onmessage = function(event) {
+	        var jsonObj = JSON.parse(event.data);
+	        message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
+	        messagesArea.value = messagesArea.value + message;
+	        webSocket.send(messagesArea.value);
+	        messagesArea.scrollTop = messagesArea.scrollHeight;
+		};
+
+		webSocket.onclose = function(event) {
+			message = userName+"已離開聊天室!\r\n";
+	        messagesArea.value = messagesArea.value + message;
+	        webSocket.send(messagesArea.value);
+	        messagesArea.scrollTop = messagesArea.scrollHeight;
+		};
+	}
+	
+	//webSocket 區塊
+ 
+	function sendMessage() {
+		var time=new Date();
+		var currentDateTime=
+			'('+time.getHours()+':'+time.getMinutes()+')';
+	    var inputMessage = document.getElementById("message");
+	    console.log(currentDateTime);
+	    var message = inputMessage.value.trim()+'\r\n'+currentDateTime.toString();
+	    
+	    if (message === ""){
+	        alert ("訊息請勿空白!");
+	        inputMessage.focus();	
+	    }else{
+	        var jsonObj = {"userName" : userName, "message" : message};
+	        webSocket.send(JSON.stringify(jsonObj));
+	        inputMessage.value = "";
+	        inputMessage.focus();
+	    }
+	}
+
+	
+	function disconnect () {
+		webSocket.close();
+		document.getElementById('sendMessage').disabled = true;
+		document.getElementById('connect').disabled = false;
+		document.getElementById('disconnect').disabled = true;
+	}
+
+	
+	//webSocket 結束    
+		
+	
+		function init(){
+			var mBtn=document.getElementById("messagebtn");
+			var closechatbox=document.getElementById("closechatbox");
+			mBtn.addEventListener("click",openMessage, false);
+			closechatbox.addEventListener("click",closeMessage,false);
+		
+		}
+		 window.onload = init;
+</script>
 </body>
 
 </html>

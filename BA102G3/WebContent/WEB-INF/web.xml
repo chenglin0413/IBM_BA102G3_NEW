@@ -434,7 +434,11 @@
 		<param-name>excel-user</param-name>
 		<param-value>/WEB-INF/data/user.xls</param-value>
 	</context-param>
-
+	<!-- WebSocket -->
+	<context-param>
+	    <param-name>org.apache.tomcat.websocket.textBufferSize</param-name>
+	    <param-value>307200</param-value>
+    </context-param>
 
 
 
