@@ -13,11 +13,12 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 import com.item.model.ItemDAO;
 import com.item.model.ItemVO;
+import com.ord.controller.jdbcUtil_CompositeQuery_Ord;
 import com.prod.model.ProdDAO;
 import com.prod.model.ProdService;
 import com.prod.model.ProdVO;
 
-import jdbc.util.CompositeQuery.jdbcUtil_CompositeQuery_Ord;
+
 
 public class OrdDAO implements OrdDAO_interface {
 	// 一個應用程式中,針對一個資料庫 ,共用一個DataSource即可
