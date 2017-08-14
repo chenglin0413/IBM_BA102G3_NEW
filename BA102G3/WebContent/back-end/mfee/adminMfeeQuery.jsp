@@ -37,7 +37,7 @@
 	</font>
 </c:if>
    					                    	
-     					<FORM METHOD="post" ACTION="<%= request.getContextPath() %>/back-end/mfee/mfee.do" >
+     					<FORM METHOD="get" ACTION="<%= request.getContextPath() %>/back-end/mfee/mfee.do" >
      					<div class="input-group">
 
                                                                          查詢未繳費紀錄

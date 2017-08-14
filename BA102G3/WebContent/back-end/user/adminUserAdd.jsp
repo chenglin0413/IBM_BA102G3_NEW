@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.user.model.*"%>
 <%
-UserVO userVO = (UserVO) request.getAttribute("userVO");
+	UserVO userVO = (UserVO) request.getAttribute("userVO");
 %>
 
 <%@include file="includeHeadForUser.jsp" %>
@@ -72,9 +72,6 @@ UserVO userVO = (UserVO) request.getAttribute("userVO");
 
                     </div>                
                     
-                    
-                    
-                     
                     <div class="col-lg-6">
                                                                         選擇圖片
                         <input type="file" name="upfile1" id="file-input1" class="file" onchange="previewImages()">
@@ -84,11 +81,6 @@ UserVO userVO = (UserVO) request.getAttribute("userVO");
                     </div>
          
     </div>
-
-
-
-                    
-                    
                     
                 </div>
                 <!-- /.row -->

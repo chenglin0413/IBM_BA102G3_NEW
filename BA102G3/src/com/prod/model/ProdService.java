@@ -80,7 +80,9 @@ public class ProdService {
 		return dao.getOneProdSort(prod_sort);
 	}
 	public List<ProdVO> getOneStoreTer(Integer store_ter) {
+		System.out.println("service:"+store_ter);
 		return dao.getOneStoreTer(store_ter);
+		
 	}
 	public List<ProdVO> getOneStore_idAllProd(Integer store_id) {
 		return dao.getOneStore_idAllProd(store_id);

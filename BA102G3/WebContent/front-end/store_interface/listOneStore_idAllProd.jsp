@@ -6,7 +6,6 @@
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
-	if (session.getAttribute("userVO") != null) {
 		UserVO userVO = (UserVO) session.getAttribute("userVO");
 		String account = (String) session.getAttribute("account");
 		StoreService storeSvc = new StoreService();
@@ -14,7 +13,6 @@
 		ProdService prodSvc = new ProdService();
 		List<ProdVO> list = prodSvc.getOneStore_idAllProd(storeVO.getStore_id());
 		pageContext.setAttribute("list", list);
-	}
 %>
 
 
@@ -68,6 +66,12 @@ th {
 	text-align: center;
 	font-size: 14px;
 }
+td{
+ overflow : hidden;
+  text-overflow : ellipsis;
+  white-space : nowrap;
+  width : 240px;
+}
 </style>
 </head>
 
@@ -75,52 +79,43 @@ th {
 
 	<%@include file="headerBar.file"%>
 	<div class="callout"></div>
-	<!--     <header class="header"> -->
-	<!--         Indicators -->
+	        <div class="container" >
+	            <div class="row">
 
-	<!--         <div class="container" > -->
-	<!--             <div class="row"> -->
-
-	<!--                 <div class="col-md-3 col-xs-6"> -->
-	<!--                     <div class="panel panel-primary"> -->
-	<!--                         <div class="panel-heading"> -->
-	<!--                             <div class="row"> -->
-	<!--                                 <div class="col-xs-3"> -->
-	<!--                                     <i class="fa fa-comments fa-5x"></i> -->
-	<!--                                 </div> -->
-	<!--                                 <div class="col-xs-9 text-right"> -->
-	<!--                                     <div class="huge">26</div> -->
-	<!--                                     <div>查看商品留言</div> -->
-	<!--                                 </div> -->
-	<!--                             </div> -->
-	<!--                         </div> -->
-	<!--                     </div> -->
-	<!--                 </div> -->
-	<!--                 <div class="col-md-3 col-xs-6"> -->
-	<!--                     <div class="panel panel-primary"> -->
-	<!--                         <div class="panel-heading"> -->
-	<!--                             <div class="row"> -->
-	<!--                                 <div class="col-xs-3"> -->
-	<!--                                     <i class="fa fa-book fa-5x"></i> -->
-	<!--                                 </div> -->
-	<!--                                 <div class="col-xs-9 text-right"> -->
-	<!--                                     <div class="huge">124</div> -->
-	<!--                                     <div>查看待審核的訂單</div> -->
-	<!--                                 </div> -->
-	<!--                             </div> -->
-	<!--                         </div> -->
-	<!--                     </div> -->
-	<!--                 </div> -->
-	<!--                 </div> -->
+	                <div class="col-md-3 col-xs-6">
+	                    <div class="panel panel-primary">
+	                        <div class="panel-heading">
+	                            <div class="row">
+	                                <div class="col-xs-3">
+	                                    <i class="fa fa-comments fa-5x"></i>
+	                                </div>
+	                                <div class="col-xs-9 text-right">
+	                                    <div class="huge">26</div>
+	                                    <div>未審核訂單狀態:</div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                <div class="col-md-3 col-xs-6">
+	                    <div class="panel panel-primary">
+	                        <div class="panel-heading">
+	                            <div class="row">
+	                                <div class="col-xs-3">
+	                                    <i class="fa fa-book fa-5x"></i>
+	                                </div>
+	                                <div class="col-xs-9 text-right">
+	                                    <div class="huge">124</div>
+	                                    <div>查看待審核的訂單</div>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                </div>
+	                </div>
 
 
-	<!--                 </div> -->
-	<!--             </div> -->
-
-	<!--         Wrapper for Slides -->
-
-
-	<!--     </header> -->
+	                </div>
 
 
 	<div id="page-wrapper">
@@ -198,8 +193,8 @@ th {
 
 
 								</tr>
-
-								<c:forEach var="prodVO" items="${list}">
+								<%@ include file="page1.file" %>
+								<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 									<tr align='center' valign='middle'>
 										<div class="col-xs-12 col-md-10">
 
@@ -215,7 +210,7 @@ th {
 												<td><A HREF="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_id=${prodVO.prod_id}&action=getOne_prodChange">${prodVO.prod_id}</a></td>
 												<td>${prodVO.store_id}</td>
 												<td>${prodVO.prod_name}</td>
-												<td>${prodVO.prod_descript}</td>
+												<td >${prodVO.prod_descript}</td>
 												<td>$${prodVO.prod_price}</td>
 												<td>${prodVO.prod_sort}</td>
 												<td>${prodVO.prod_format}</td>
@@ -229,7 +224,7 @@ th {
 
 								</c:forEach>
 						</table>
-
+							<%@ include file="page2.file" %>
 						<div class="col-xs-12 col-md-8 col-md-offset-4"></div>
 					</div>
 				</div>
@@ -239,9 +234,8 @@ th {
 	</div>
 
 
-	<!-- 跳小視窗模組 -->
-
-
+	
+	
 	<script
 		src="<%=request.getContextPath()%>/front-end/js_store/jquery.js"></script>
 

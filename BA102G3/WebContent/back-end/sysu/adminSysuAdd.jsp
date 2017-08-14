@@ -59,9 +59,9 @@ SysuVO sysuVO = (SysuVO) request.getAttribute("sysuVO");
                     <div class="col-lg-6">                                     
 		                <div>
 		                                                        職務:
-        		             <input type="radio" name="sysu_type" value="1" <c:if test="${sysuVO.sysu_type == '1'}" var="condition" scope="page" >checked</c:if> > 系統管理 &nbsp;&nbsp; 
-                		     <input type="radio" name="sysu_type" value="0" <c:if test="${sysuVO.sysu_type == '2'}" var="condition" scope="page" >checked</c:if> > 客服 &nbsp;&nbsp;
-                		     <input type="radio" name="sysu_type" value="0" <c:if test="${sysuVO.sysu_type == '3'}" var="condition" scope="page" >checked</c:if> > 營運 &nbsp;&nbsp;
+        		             <input type="radio" name="sysu_type" value="1" id="radio1" <c:if test="${sysuVO.sysu_type == '1'}" var="condition" scope="page" >checked</c:if> > 系統管理 &nbsp;&nbsp; 
+                		     <input type="radio" name="sysu_type" value="2" id="radio2" <c:if test="${sysuVO.sysu_type == '2'}" var="condition" scope="page" >checked</c:if> > 客服 &nbsp;&nbsp;
+                		     <input type="radio" name="sysu_type" value="3" id="radio3" <c:if test="${sysuVO.sysu_type == '3'}" var="condition" scope="page" >checked</c:if> > 營運 &nbsp;&nbsp;
                     	</div><br>
                     		
                     	<div>

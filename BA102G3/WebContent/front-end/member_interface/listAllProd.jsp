@@ -91,12 +91,6 @@
 </div>
 
    
-   <div class="hero-text">
-            <h1 >Anytime login, anytime Grip</h1>
-            <p>Enjoy your life with our service </p>
-    </div>
-
-
      
     <!-- Portfolio -->
 <!-- Portfolio Grid Section -->
@@ -168,10 +162,10 @@
 	
 
 
-		<%@ include file="page1.file"%>
+		
 	
 
-
+<%@ include file="page1.file"%>
 
 	<div class="col-md-2">
 	<div class="row">
@@ -180,15 +174,19 @@
 	<%int x =1; %>
 	 <c:forEach var="prodVO" items="${ prodtwelvelist}">
 	
-					 <li class="list-group-item" ><h6><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_id=${prodVO.prod_id}&action=getOne_For_Display"><span class="badge" name="twelve" style="background:lightgray;"><%=x%>#</span>${prodVO.prod_name}</a></h6></li>
+					 <li class="list-group-item" ><h6><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_id=${prodVO.prod_id}&action=getOne_For_Display"><span class="badge" name="twelve" style="background:lightgray;">NO.<%=x%></span>${prodVO.prod_name}</a></h6></li>
 						
 	<%x+=1; %>
 	 </c:forEach>
 </ul>
+
 	
 	
 	</div>
 	</div>
+	
+		
+	
 	<div class="col-md-10">
 	<div class="row">
 	<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">

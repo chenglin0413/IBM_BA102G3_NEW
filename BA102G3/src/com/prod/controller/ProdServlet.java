@@ -216,11 +216,16 @@ public class ProdServlet extends HttpServlet {
 			 **********************/
 			Integer store_ter = new Integer(req.getParameter("store_ter"));
 			/*************************** 2.開始查詢資料 *****************************************/
-
+			ProdService prodSvc = new ProdService();
+			List<ProdVO> onestoreterlist = prodSvc.getOneStoreTer(store_ter);
+			if(onestoreterlist!=null){
+				System.out.println("yes");
+			}
 			/***************************
 			 * 3.查詢完成,準備轉交(Send the Success view)
 			 *************/
-			session.setAttribute("store_ter", store_ter);
+//			session.setAttribute("store_ter", store_ter);
+			session.setAttribute("onestoreterlist", onestoreterlist);
 			String url = "/front-end/member_interface/listOneStoreTer.jsp";// 顯示圖片的頁面
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交
 																			// listOneProd.jsp

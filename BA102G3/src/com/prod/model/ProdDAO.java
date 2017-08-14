@@ -39,8 +39,7 @@ public class ProdDAO implements ProdDAO_interface {
 	private static final String GET_ALL = "SELECT * FROM PROD ORDER BY PROD_ID DESC";
 	private static final String GET_ALL4member = "SELECT * FROM PROD WHERE PROD_STATUS='1' ORDER BY PROD_ID";
 	private static final String GET_ONE_PROD_SORT = "SELECT * FROM PROD WHERE PROD_SORT=? and PROD_STATUS='1'";
-	private static final String GET_ONE_STORE_TER = "SELECT p.prod_id,p.store_id,p.prod_name,p.prod_price,p.prod_sort"
-			+ "FROM PROD P JOIN STORE S ON P.STORE_ID = S.STORE_ID WHERE STORE_TER = ? and PROD_STATUS='1' ORDER BY PROD_ID DESC";
+	private static final String GET_ONE_STORE_TER = "SELECT p.prod_id,p.store_id,p.prod_name,p.prod_price,p.prod_sort FROM PROD P JOIN STORE S ON P.STORE_ID = S.STORE_ID WHERE STORE_TER = ? and PROD_STATUS='1' ORDER BY PROD_ID DESC";
 	private static final String GET_ONE_STORE_IDALLPROD = "SELECT * FROM PROD WHERE STORE_ID=? ORDER BY PROD_ID DESC";
 	private static final String GET_TOP_THREE = "select  * from(select * from prod order by prod_soldcount desc) where rownum <4";
 	private static final String GET_TOP_TWELVE = "select  * from(select * from prod order by prod_score desc) where rownum <13";
@@ -565,16 +564,19 @@ public class ProdDAO implements ProdDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STORE_TER);
 			pstmt.setInt(1, store_ter);
+			System.out.println("dao:"+store_ter);
 			rs = pstmt.executeQuery();
-
+			System.out.println("dao:"+store_ter);
 			while (rs.next()) {
+				System.out.println("1");
 				prodVO = new ProdVO();
-				prodVO.setProd_id(rs.getInt("prod_id"));
-				prodVO.setStore_id(rs.getInt("store_id"));
-				prodVO.setProd_name(rs.getString("prod_name"));
-				prodVO.setProd_price(rs.getInt("prod_price"));
-				prodVO.setProd_sort(rs.getString("prod_sort"));
+				prodVO.setProd_id(rs.getInt(1));
+				prodVO.setStore_id(rs.getInt(2));
+				prodVO.setProd_name(rs.getString(3));
+				prodVO.setProd_price(rs.getInt(4));
+				prodVO.setProd_sort(rs.getString(5));
 				list.add(prodVO); // Store the row in the List
+				System.out.println(prodVO.getProd_name());
 			}
 
 			// Handle any SQL errors

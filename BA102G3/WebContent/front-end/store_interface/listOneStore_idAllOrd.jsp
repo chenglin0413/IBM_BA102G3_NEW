@@ -131,7 +131,6 @@
 			<div class="row">
 		  <li>   
 		    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/ord/ord.do" name="form1">
-		        <b><font color=blue>萬用複合查詢:</font></b> <br>
 		        <div class="col-md-4">
 		        
 		        	<b>選擇訂單編號: <select size="1" name="ord_id" >
@@ -308,7 +307,7 @@
 		</tr>
 		<script>
          function presses${s.index}(){
-        	 document.open("<%=request.getContextPath()%>/front-end/item/item.do?ord_id=${ordVO.ord_id}&action=getOne_Ord_id_AllItem", "" ,"height=550,width=800,left=65,top=157,resizable=yes,scrollbars=yes");
+        	 document.open("'<%=request.getContextPath()%>/front-end/item/item.do?ord_id=${ordVO.ord_id}&action=getOne_Ord_id_AllItem', '' ,'height=550,width=800,left=65,top=157,resizable=yes,scrollbars=yes'");
          }
 		</script>
 	</c:forEach>

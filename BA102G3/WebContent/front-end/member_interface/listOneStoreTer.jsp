@@ -5,13 +5,12 @@
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%	
-	pageContext.removeAttribute("list");
-
-	ProdService prodSvc = new ProdService();
-	List<ProdVO> list = prodSvc.getAll();
-    Integer store_ter=(Integer)session.getAttribute("store_ter");
+	
+// 	ProdService prodSvc = new ProdService();
+	List<ProdVO> list = (List<ProdVO>)session.getAttribute("onestoreterlist");
+//     Integer store_ter=(Integer)session.getAttribute("store_ter");
     pageContext.setAttribute("list",list);
-    pageContext.setAttribute("store_ter",store_ter);
+//     pageContext.setAttribute("store_ter",store_ter);
     //提示檢舉的商品
     RpprVO rpprVO=(RpprVO)request.getAttribute("rpprVO");
     pageContext.setAttribute("rpprVO",rpprVO);
@@ -49,24 +48,7 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
    <style type="text/css">
-        .item img{
-            height: 250px;
-            width:100%;
-            
-        }
        
-        .content: {
-          position: relative;
-        }
-        .box{
-          width: 110px;
-          height: 50px;
-          
-          position: fixed;
-          top: 52px;
-          left: 5px;
-          margin: auto;
-        }
     </style>
 </head>
 
@@ -84,13 +66,6 @@
         </div>         
     </div>
 </div>
-    </div>
-   
-   <div class="hero-text">
-            <h1 >Anytime login, anytime Grip</h1>
-            <p>Enjoy your life with our service </p>
-           
-    </div>
 
     <!-- Callout間隔區 -->
     <div class="callout"></div>
@@ -111,11 +86,10 @@
        </header> 
 </div>
 </div>
-        
  <div class="container">	
 	<div class="row ">         
-            
-        <c:forEach var="prodVO" items="${list}">
+             
+        <c:forEach var="prodVO" items="${list}" >
 	        <c:if test="${rpprVO!=null }">    
 		        <c:if test="${prodVO.prod_id==rpprVO.prod_id}">
 		       		<div>檢舉產品:<font color='red'>${prodVO.prod_name}</font>,檢舉原因:<font color='red'>${rpprVO.rppr_tittle }</font>成功</div>
@@ -137,14 +111,6 @@
            </ol>
         
         <ul class="nav nav-tabs">
-<!--                             <div class="dropdown"> -->
-<!--                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">商品種類 <b class="caret"></b></a> -->
-<!--                               <ul class="dropdown-menu"> -->
-<!--                                 <li><a href="#">零食、點心</a></li> -->
-<!--                                 <li><a href="#">免稅菸酒</a></li> -->
-<!--                                 <li><a href="#">國際精品</a></li> -->
-<!--                               </ul> -->
-<!--                             </div> -->
                              <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?store_ter=1&action=getOneStoreTer_For_Display"><i class="fa fa-arrow-circle-o-up"></i>第一航廈</a></li>
                              <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?store_ter=2&action=getOneStoreTer_For_Display"><i class="fa fa-arrow-circle-o-up"></i>第二航廈</a></li>
                             <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=3&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>伴手禮</a></li>
@@ -155,16 +121,16 @@
                               <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=8&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>精品</a></li>
          </ul>
 
-
-	<c:forEach var="prodVO" items="${list}">
+  <%@ include file="page1.file"%>
+	<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >
 			<div class="col-xs-12 col-md-4">
                 <div class="item">
-                			<c:if test="${storeSvc.getOneStore(prodVO.store_id).store_ter==store_ter}">
-							<a href="<%=request.getContextPath()%>/front-end/member_interface/listOneStore_detail.jsp?store_id=${prodVO.store_id}"><h6><div>${storeSvc.getOneStore(prodVO.store_id).store_name}</div></h6></a>
+<%--                 			<c:if test="${storeSvc.getOneStore(prodVO.store_id).store_ter==store_ter}"> --%>
+							<div><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneStore_detail.jsp?store_id=${prodVO.store_id}">${storeSvc.getOneStore(prodVO.store_id).store_name}</a></div>
 	                    	 <div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
-							 <h3><div>${prodVO.prod_name}</div></h3>
-							 <h4><div>$${prodVO.prod_price}</div></h4>
-							 <h4><div>${prodVO.prod_sort}</div></h4>
+							 <div><h4>${prodVO.prod_name}</h4></div>
+							 <div><h4>$${prodVO.prod_price}</h4></div>
+							 <div><h4>${prodVO.prod_sort}</h4></div>
 							<a href='#${prodVO.prod_id}' data-toggle="modal" class="btn btn-info">瀏覽詳情</a>
 					<div class="modal fade" id="${prodVO.prod_id}">
 						<div class="modal-dialog">
@@ -176,7 +142,7 @@
 								<div class="modal-body">
 									<div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
 									<div class="col-md-6">
-									<div font-size="10px"><b>產品描述:</b><br> ${prodVO.prod_descript}</div>
+									<div ><b>產品描述:</b><br> ${prodVO.prod_descript}</div>
 									<div>評分次數: ${prodVO.prod_count}</div>
 									<div>評分總分: ${prodVO.prod_score}</div>
 									
@@ -247,13 +213,15 @@
 										</div>
 									</div>
 								</div>
-                   			</c:if>
+<%--                    			</c:if> --%>
 			</div>
 	        </div>
 	</c:forEach>
 	</div>
 	</div>
+	
 	<div class="col-xs-12 col-md-8 col-md-offset-4">
+	<%@ include file="page2.file"%>
 	</div>
 	
  

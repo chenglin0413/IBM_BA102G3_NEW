@@ -5,7 +5,7 @@
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%	
-	pageContext.removeAttribute("list");
+	
     List<ProdVO> list=(List<ProdVO>) session.getAttribute("oneprodsortlist");
     pageContext.setAttribute("list",list);
     
@@ -47,24 +47,9 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <style type="text/css">
-        .item img{
-            height: 250px;
-            width:100%;
-            
-        }
+        
        
-        .content: {
-          position: relative;
-        }
-        .box{
-          width: 110px;
-          height: 50px;
-          
-          position: fixed;
-          top: 52px;
-          left: 5px;
-          margin: auto;
-        }
+    
     </style>
 </head>
 
@@ -82,12 +67,6 @@
         </div>         
     </div>
 </div>
-    </div>
-   
-   <div class="hero-text">
-            <h1 >Anytime login, anytime Grip</h1>
-            <p>Enjoy your life with our service </p>
-    </div>
 
 
      
@@ -161,21 +140,21 @@
 		</font>
 	</c:if>
 
-
+<%@ include file="page1.file"%>
 	
-	<c:forEach var="prodVO" items="${list}">
+	<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 			<div class="col-xs-12 col-md-4">
               
                 <div class="item">
                 <c:forEach var="storeVO" items="${StoreSvc.all}">
 				<c:if test="${prodVO.store_id==storeVO.store_id}">
-					<a href="<%=request.getContextPath()%>/front-end/member_interface/listOneStore_detail.jsp?store_id=${prodVO.store_id}"><h6><div>${storeVO.store_name}</div></h6></a>
+					<div><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneStore_detail.jsp?store_id=${prodVO.store_id}">${storeVO.store_name}</a></div>
 				 </c:if>
 				 </c:forEach>
                 <div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
-				<h3><div>${prodVO.prod_name}</div></h3>
-				<h4><div>$${prodVO.prod_price}</div></h4>
-				<h4><div>${prodVO.prod_sort}</div></h4>
+				<div><h3>${prodVO.prod_name}</h3></div>
+				<div><h4>$${prodVO.prod_price}</h4></div>
+				<div><h4>${prodVO.prod_sort}</h4></div>
 					<a href='#${prodVO.prod_id}' data-toggle="modal" class="btn btn-info">瀏覽詳情</a>
 					<div class="modal fade" id="${prodVO.prod_id}">
 						<div class="modal-dialog">
@@ -187,7 +166,7 @@
 								<div class="modal-body">
 									<div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
 									<div class="col-md-6">
-									<div font-size="10px"><b>產品描述:</b><br> ${prodVO.prod_descript}</div>
+									<div><b>產品描述:</b><br> ${prodVO.prod_descript}</div>
 									<div>評分次數: ${prodVO.prod_count}</div>
 									<div>評分總分: ${prodVO.prod_score}</div>
 									
@@ -265,6 +244,7 @@
 	</div>
 	</div>
 	<div class="col-xs-12 col-md-8 col-md-offset-4">
+	<%@ include file="page2.file"%>
 	</div>
 	
 	

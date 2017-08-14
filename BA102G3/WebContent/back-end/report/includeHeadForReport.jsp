@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.auth.model.*"%>
 <%@ page import="com.sysu.model.*"%>
@@ -50,7 +50,10 @@ pageContext.setAttribute("listauth",listauth);
             text-decoration:none;
         }
 
-    </style>
+		td, th {
+			text-align: center;
+		}
+	</style>
 
 </head>
 
@@ -174,18 +177,10 @@ pageContext.setAttribute("listauth",listauth);
 
 		<c:forEach var="authVO1" items="${listauth}" >
 			<c:if test="${authVO1.func_id == '4100004'}" var="condition" scope="page" >
-
+			
                     <li class="active">
-                        <a href="javascript:;" data-toggle="collapse" data-target="#report"><i class="fa fa-fw fa-bomb"></i>  檢舉管理 <i class="fa fa-fw fa-caret-down"></i></a>
-                        <ul id="report" class="collapse in">
-                            <li>
-                                <a href="<%= request.getContextPath() %>/back-end/report/adminReportNew.jsp">未處理</a>
-                            </li>
-                            <li>
-                                <a href="<%= request.getContextPath() %>/back-end/report/adminReportQuery.jsp">查詢/修改</a>
-                            </li>
-                        </ul>
-                    </li>
+                        <a href="<%= request.getContextPath() %>/back-end/report/listAllReport.jsp"><i class="fa fa-fw fa-bomb"></i> 檢舉管理</a>
+                    </li>			
                     
 			</c:if>
 		</c:forEach>

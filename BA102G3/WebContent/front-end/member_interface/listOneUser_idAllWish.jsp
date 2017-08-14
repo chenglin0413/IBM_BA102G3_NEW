@@ -83,10 +83,6 @@
     <header id="myCarousel top" class="carousel slide">
     </header>
    
-   <div class="hero-text">
-            <h1 >Anytime login, anytime Grip</h1>
-            <p>Enjoy your life with our service </p>
-    </div>
 <div class="container content">
         
         <div class="row">
