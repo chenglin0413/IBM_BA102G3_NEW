@@ -203,5 +203,10 @@
         interval: 3000 //changes the speed
     })
     </script>
-    
+<script>
+		$(function() {
+			$("#accordion").accordion();
+		});
+</script>
+
     

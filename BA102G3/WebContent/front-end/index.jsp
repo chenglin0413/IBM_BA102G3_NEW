@@ -124,13 +124,13 @@ pageContext.setAttribute("trvllist", trvllist);
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i></a>
                     <ul class="dropdown-menu dropdown-user">
-                    	  <li><a href="<%= request.getContextPath() %>/front-end/user/memberProfile.html"><i class="fa fa-info fa-fw"></i>${userVO.user_lastname},您好</a></li>       
-				     	<li><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneUser_idAllWish.jsp"><i class="fa fa-arrow-circle-o-up"></i>追蹤商品</a></li>
-                        <li><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneUser_idAllOrd.jsp"><i class="fa fa-book fa-fw"></i></i>消費記錄</a></li>
+                    	  <li><a href="<%= request.getContextPath() %>/front-end/user/memberProfile.html"><i class="fa fa-user-md fa-fw"></i>${userVO.user_lastname},您好</a></li>       
+				     	<li><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneUser_idAllWish.jsp"><i class="fa fa-heart-o"></i>追蹤商品</a></li>
+                        <li><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneUser_idAllOrd.jsp"><i class="fa fa-bookmark-o fa-fw"></i></i>消費記錄</a></li>
                         <li><a href="memberReserveRecord.html"><i class="fa fa-book fa-fw"></i>餐廳訂位記錄</a></li>
-                        <li><a href="<%=request.getContextPath()%>/front-end/blog/listAllByUser.jsp"><i class="fa fa-gear fa-fw"></i> 個人遊記</a></li>
+                        <li><a href="<%=request.getContextPath()%>/front-end/blog/listAllByUser.jsp"><i class="fa fa-camera-retro fa-fw"></i> 個人遊記</a></li>
                         <li><a href="<%= request.getContextPath() %>/front-end/user/memberProfile.jsp"><i class="fa fa-gear fa-fw"></i> 基本資訊修改</a></li>
-                        <li><a href="<%= request.getContextPath() %>/front-end/user/memberPayFee.jsp"><i class="fa fa-gear fa-fw"></i> 繳費</a></li>
+                        <li><a href="<%= request.getContextPath() %>/front-end/user/memberPayFee.jsp"><i class="fa fa-money fa-fw"></i> 繳費</a></li>
                         <li class="divider"></li>
                         <li><a href="<%= request.getContextPath() %>/front-end/UserLogoutHandler"><i class="fa fa-sign-out fa-fw"></i> 登出</a></li>
                         
@@ -194,7 +194,6 @@ pageContext.setAttribute("trvllist", trvllist);
     </header>
    <div class="hero-text">
             <h1>Anytime login, anytime Grip</h1>
-            <p>Lorem ipsum dolor sit amet. </p>
             <button class="btn btn-lg btn-dark">Check Out Now!</button>
     </div>
 

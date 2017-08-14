@@ -59,20 +59,22 @@
 		</c:if>
 	</div>
 	<br>
-
+	<div class="container">
+	<div class="row">
+	
 	<table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
 		<tr height="79" style="background-color: rgb(255, 228, 139);">
 			<td height="79"
-				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(19, 101, 109);"><span
+				style="border-color: rgb(204, 204, 204); width: 168px; height: 79px; text-align: center; background-color: rgb(19, 101, 109);"><span
 				style="color: rgb(255, 228, 139);">終點站</span><br />
 			<td height="79"
-				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(19, 101, 109);"><span
+				style="border-color: rgb(204, 204, 204); width: 168px; height: 79px; text-align: center; background-color: rgb(19, 101, 109);"><span
 				style="color: rgb(255, 228, 139);">客運業者</span><br />
 			<td height="79"
-				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(19, 101, 109);"><span
+				style="border-color: rgb(204, 204, 204); width: 168px; height: 79px; text-align: center; background-color: rgb(19, 101, 109);"><span
 				style="color: rgb(255, 228, 139);">發車時間</span><br />
 			<td height="79"
-				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(19, 101, 109);"><span
+				style="border-color: rgb(204, 204, 204); width: 308px; height: 79px; text-align: center; background-color: rgb(19, 101, 109);"><span
 				style="color: rgb(255, 228, 139);">停靠站別</span><br />
 		</tr>
 		<%@ include file="schedule1.file"%>
@@ -86,7 +88,8 @@
 		</c:forEach>
 	</table>
 	<%@ include file="schedule2.file"%>
-
+	</div>
+	</div>
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>

@@ -33,7 +33,7 @@
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="<%=request.getContextPath() %>/front-end/css/bootstrap.css" rel="stylesheet">
-
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
     <!-- Custom CSS -->
     <link href="<%=request.getContextPath() %>/front-end/css/stylish-portfolio.css" rel="stylesheet">
 
@@ -65,6 +65,15 @@
           top: 52px;
           left: 5px;
           margin: auto;
+        }
+        #accordion{
+        font-size:12px;
+        }
+        .pop{
+        font-size:12px;
+        text-align:center;
+        border:1px solid lightgray;
+	    border-radius: 5px;
         }
     </style>
 </head>
@@ -122,8 +131,7 @@
 
 
 <!-- paneltitle -->
-<div class="panel panel-default">
-			  <div class="panel-title text-center "  >
+<div class="pop">
 						<div class="col-xs-12 col-sm-2">訂單編號</div>
 						<div class="col-xs-12 col-sm-2">會員姓名</div>
 						<div class="col-xs-12 col-sm-2">商家名稱</div>
@@ -133,25 +141,18 @@
 						<div class="col-xs-12 col-sm-1">商店審核訂單狀態</div>
 						<div class="col-xs-12 col-sm-1">訂單狀態</div>
 						<div class="col-xs-12 col-sm-1">買家對商店評分</div>
-
-			</div>
-			  
+</div>
+<br>		  
 <!-- paneltitleEND -->
 <!-- panelbodyStart -->
-<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="false">
+<div class="container">
+<div class="row">
+
+<div id="accordion">
 <c:forEach var="ordVO" items="${ordSvc.getOneUser_idAllOrd(user_id)}" varStatus="s">
  
- 
- <div class="panel panel-default">
-			    <div class="panel-heading " role="tab" id="panel">
-			      <h4 class="panel-title">訂單編號#
-			        <a class="text-center" href="#${ordVO.ord_id}" data-parent="#accordion2" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="aaa">
-			          	${ordVO.ord_id}
-			        </a>
-			      </h4>
-			    </div>
-			    <div id="${ordVO.ord_id}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="panel">
-			      <div class="panel-body text-center">
+ <div>訂單編號#${ordVO.ord_id}</div>
+ <div class="text-center">
 			       		<!-- 內容 -->
 			       		
 			       		<div class="col-xs-12 col-sm-2">
@@ -216,8 +217,8 @@
 									</select></div>
 									 <div class="col-xs-3"><input type="submit" value="給予評價:"></div>
 									 <input type="hidden" name="ord_id" value="${ordVO.ord_id }">
-									<input type="hidden" name="action"	value="update_ord_sscore"></FORM>
-								</c:if>
+									<input type="hidden" name="action"	value="update_ord_sscore">
+								</c:if></FORM>
 								<c:if test="${ordVO.ord_sscore !='0'}"> 
 								<h4>已給過評價。</h4>
 
@@ -231,33 +232,28 @@
 						</div>
 			       		<!-- 內容結束 -->
 			      </div>
+			      
+			      </c:forEach>
 			    </div>
 			  </div>
  
  
  
- 
-  <div class="panel-body text-center">
-  						
-</div>
-</c:forEach>
+
 <%-- 		<a href="<%=request.getContextPath()%>/front-end/item/item.do?ord_id=${ordVO.ord_id}&action=getOne_Ord_id_AllItem_formember">${ordVO.ord_id}</a></td> --%>
                    
 </div>
 </div>
-
+</div>
 			
 
-
-</div>
-</div>
 <div class="callout"></div>
  <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
  
 <%@ include file="/front-end/member_interface/script.file" %>	
 
-<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js'></script>
-
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 
 
 

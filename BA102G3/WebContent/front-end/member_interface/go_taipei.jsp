@@ -50,7 +50,8 @@ p {
 <body>
 
 	 <%@include file="/front-end/member_interface/headerBar.file" %>
-	
+	<div class="container">
+	<div class="row">
 
 	<div>
 		<h1>直達車(往台北)</h1>
@@ -992,7 +993,8 @@ p {
 			<col span="5" />
 		</colgroup>
 	</table>
-	
+	</div>
+	</div>
 	<%@ include file="/front-end/member_interface/script.file" %>
 	<script>
 		$(document).ready(function() {

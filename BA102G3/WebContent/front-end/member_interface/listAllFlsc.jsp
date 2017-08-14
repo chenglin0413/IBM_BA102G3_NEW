@@ -74,7 +74,9 @@
 	</div>
 	
 	<br>
-
+	<div class="container">
+	<div class="row">
+	
 	<table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
 		<tr height="79" style="background-color: rgb(255, 228, 139);">
 			<td height="79"
@@ -140,6 +142,8 @@
 			</tr>
 		</c:forEach>
 	</table>
+	</div>
+	</div>
 	<%@ include file="schedule2.file"%>
 
 	<script src="https://code.jquery.com/jquery.js"></script>

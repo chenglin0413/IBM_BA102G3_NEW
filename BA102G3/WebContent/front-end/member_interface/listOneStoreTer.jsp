@@ -121,7 +121,12 @@
                               <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=8&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>精品</a></li>
          </ul>
 
-  <%@ include file="page1.file"%>
+ <div class="container">
+<div class="row">
+<%@ include file="page1.file"%>
+</div>
+</div>
+
 	<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >
 			<div class="col-xs-12 col-md-4">
                 <div class="item">

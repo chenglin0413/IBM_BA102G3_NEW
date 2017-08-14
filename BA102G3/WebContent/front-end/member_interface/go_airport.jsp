@@ -51,7 +51,9 @@ p {
 
  <%@include file="/front-end/member_interface/headerBar.file" %>
 
-
+	<div class="container">
+	<div class="row">
+	
 	<div>
 		<h1>直達車(往機場)</h1>
 		<a href="<%=request.getContextPath() %>/front-end/member_interface/go_taipei.jsp" id="airc1" tabindex="110"><p>時刻表(往台北)</p></a>
@@ -1017,6 +1019,8 @@ p {
 			<col span="5">
 		</colgroup>
 	</table>
+	</div>
+	</div>
 	<%@ include file="/front-end/member_interface/script.file" %>
 
 	<script>

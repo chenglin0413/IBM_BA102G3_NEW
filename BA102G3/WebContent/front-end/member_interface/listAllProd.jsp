@@ -180,14 +180,8 @@
 	<%x+=1; %>
 	 </c:forEach>
 </ul>
-
-	
-	
 	</div>
 	</div>
-	
-		
-	
 	<div class="col-md-10">
 	<div class="row">
 	<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">

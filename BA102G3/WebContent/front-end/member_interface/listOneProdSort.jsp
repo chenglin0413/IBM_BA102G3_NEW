@@ -139,8 +139,12 @@
 			</ul>
 		</font>
 	</c:if>
-
+<div class="container">
+<div class="row">
 <%@ include file="page1.file"%>
+</div>
+</div>
+
 	
 	<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 			<div class="col-xs-12 col-md-4">
