@@ -83,7 +83,7 @@
 				<table border="0">
 					<tr>
 						<td><label>商店代號:&nbsp;&nbsp;</label></td>
-						<td><input type="TEXT" name="store_id" required="required"	size="15" value="${storeVO.store_id}" /></td>
+						<td>${storeVO.store_id}<input type="hidden" name="store_id" required="required"　size="15" value="${storeVO.store_id}" /></td>
 					</tr>
 					<tr>
 
@@ -120,11 +120,8 @@
 					</tr>
 
 					<tr>
-						<td><label>促銷狀態:&nbsp;&nbsp;</label></td>
-						<td><select name="stpm_status">
-								<option value="0">促銷資訊(off)</option>
-								<option value="1">促銷資訊(on)</option>
-						</select>
+<!-- <td><label>促銷狀態:&nbsp;&nbsp;</label></td> -->
+						<td><input type="hidden" name="stpm_status"	required="required" value="0"></td>
 						<td>
 					</tr>
 				</table>

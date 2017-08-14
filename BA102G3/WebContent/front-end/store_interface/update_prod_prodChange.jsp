@@ -6,12 +6,11 @@
 <%
 	ProdVO prodVO = (ProdVO) request.getAttribute("prodVO");
 	pageContext.setAttribute("prodVO", prodVO);
-
 	Integer prod_id = (Integer) prodVO.getProd_id();
-
 	PrpiService prpiSvc = new PrpiService();
 	PrpiVO prpiVO = prpiSvc.getOnePrpiByProd(prod_id);
 	pageContext.setAttribute("prpiVO", prpiVO);
+	session.setAttribute("prpiVO", prpiVO);
 %>
 
 <!DOCTYPE html>
@@ -107,9 +106,7 @@ th {
 				<FORM ACTION="<%=request.getContextPath()%>/front-end/store_interface/prod.do" method=post name="form1" enctype="multipart/form-data">
 					<div>
 							<label>圖片名稱:&nbsp;&nbsp;</label>
-							<input type="TEXT" name="prpi_name" required="required"	value="${prpiVO.prpi_name}" size="15" />
-
-
+							<input type="TEXT" name="prpi_name" required="required"	value="${prpiVO.prpi_name}" size="20" />
 							<img id="output" src="<%=request.getContextPath()%>/front-end/store_interface/DBGifReader?prod_id=${prodVO.prod_id}" height="350" width="400" />
 							<input type="file" name="prpi_img" multiple accept="image/*" onchange="loadFile(event)" />
 			</div>
@@ -182,11 +179,27 @@ th {
 								</tr>
 								<tr>
 									<td><label>產品狀態:&nbsp;&nbsp;</label></td>
-									<td><select name="prod_status"
-										value="${prodVO.prod_status }">
-											<option value="1">上架</option>
-											<option value="2">下架</option>
-									</select></td>
+
+									<%!String isTrue = "selected=\"true\"";%>
+									<%!String isFalse = "";%>
+									<%!String valueA = null;%>
+									<%!String valueB = null;%>
+
+									<%
+										if (prodVO.getProd_status() == 2) {
+											valueA = isFalse;
+											valueB = isTrue;
+										} else if (prodVO.getProd_status() == 1) {
+											valueA = isTrue;
+											valueB = isFalse;
+										}
+									%>
+
+									<td><select name="prod_status">
+											<option value="1" <%=valueA%>>販售</option>
+											<option value="2" <%=valueB%>>停售</option>
+									</select>
+									<td>
 								</tr>
 								
 								<input type="hidden" name="prod_id" value="${prodVO.prod_id }">

@@ -75,9 +75,8 @@
 				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(19, 101, 109);"><span
 				style="color: rgb(255, 228, 139);">停靠站別</span><br />
 		</tr>
-		<%@ include file="page1.file"%>
-		<c:forEach var="buscVO" items="${list}" begin="<%=pageIndex%>"
-			end="<%=pageIndex+rowsPerPage-1%>">
+		<%@ include file="schedule1.file"%>
+		<c:forEach var="buscVO" items="${list}" begin="<%=pageIndex%>"	end="<%=pageIndex+rowsPerPage-1%>">
 			<tr align='center' valign='middle'}>
 				<td>${buscVO.busc_end}</td>
 				<td>${buscVO.busc_line}</td>
@@ -86,15 +85,18 @@
 			</tr>
 		</c:forEach>
 	</table>
-	<%@ include file="page2.file"%>
-<%@ include file="/front-end/member_interface/script.file" %>
+	<%@ include file="schedule2.file"%>
+
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<script>
 		$(document).ready(function() {
 			$("tr:even").css("background-color", "#CFE0E1");
 			$("tr:odd").css("background-color", "#ffffff");
 		});
 	</script>
-	
+
 </body>
 
 </html>

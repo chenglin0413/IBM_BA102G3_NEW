@@ -104,17 +104,19 @@
                 <div class="row">
 						<div class="col-md-6">
 						<div class="row">
-							<div class="col-md-6">
+							<div class="col-md-3"></div>
+							<div class="col-md-8">
+							<div class="row">
 							<div><c:forEach var="userVO" items="${userSvc.all}">
 					                    <c:if test="${ordVO.user_id==userVO.user_id}">
-						                    <img  src="<%= request.getContextPath() %>/front-end/user/userImg.do?user_id=${userVO.user_id}" height="200" width="50%">
+						                    <img  src="<%= request.getContextPath() %>/front-end/user/userImg.do?user_id=${userVO.user_id}" height="150" width="120">
 					                    </c:if>
 					            </c:forEach>
 					        </div>
 							<div >會員姓名:
 							<c:forEach var="userVO" items="${userSvc.all}">
 					                    <c:if test="${ordVO.user_id==userVO.user_id}">
-						                    	【${userVO.user_lastname}-${userVO.user_firstname}-${userVO.user_id}】
+						                    	【${userVO.user_lastname}-${userVO.user_firstname}】
 					                    </c:if>
 					                </c:forEach>
 							</div>
@@ -126,7 +128,9 @@
 					                </c:forEach>
 							</div>
 							</div>
-							<div class="col-md-6">
+							</div>
+							<div class="col-md-3"></div>
+							<div class="col-md-12">
 								<div class="row">
 
 							                        <div class="panel panel-default">

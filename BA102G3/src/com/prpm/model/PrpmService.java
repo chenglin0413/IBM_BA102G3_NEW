@@ -61,7 +61,19 @@ public class PrpmService {
 	public List<PrpmVO> getAll() {
 		return dao.getAll();
 	}
-	public PrpmVO getOneRmPrice_prod(Integer prod_id){
+
+	public PrpmVO getOneRmPrice_prod(Integer prod_id) {
 		return dao.getOneRmPrice_prod(prod_id);
+	}
+
+	public PrpmVO updateStatus(Integer stpm_id, Integer prpm_status) {
+
+		PrpmVO prpmVO = new PrpmVO();
+
+		prpmVO.setPrpm_status(prpm_status);
+		prpmVO.setStpm_id(stpm_id);
+		dao.updateStatus(prpmVO);
+
+		return dao.findByPrimaryKey(stpm_id);
 	}
 }

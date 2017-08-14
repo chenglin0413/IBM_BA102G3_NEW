@@ -35,7 +35,7 @@ public class ProdServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-			HttpSession session=req.getSession();
+			HttpSession session = req.getSession();
 			// try {
 			/***************************
 			 * 1.接收請求參數 - 輸入格式的錯誤處理
@@ -218,13 +218,13 @@ public class ProdServlet extends HttpServlet {
 			/*************************** 2.開始查詢資料 *****************************************/
 			ProdService prodSvc = new ProdService();
 			List<ProdVO> onestoreterlist = prodSvc.getOneStoreTer(store_ter);
-			if(onestoreterlist!=null){
+			if (onestoreterlist != null) {
 				System.out.println("yes");
 			}
 			/***************************
 			 * 3.查詢完成,準備轉交(Send the Success view)
 			 *************/
-//			session.setAttribute("store_ter", store_ter);
+			// session.setAttribute("store_ter", store_ter);
 			session.setAttribute("onestoreterlist", onestoreterlist);
 			String url = "/front-end/member_interface/listOneStoreTer.jsp";// 顯示圖片的頁面
 			RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交
@@ -547,7 +547,8 @@ public class ProdServlet extends HttpServlet {
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/store_interface/listOneStore_idAllProd.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/store_interface/listOneStore_idAllProd.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -558,6 +559,8 @@ public class ProdServlet extends HttpServlet {
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+
+			HttpSession session = req.getSession();
 
 			/***************************
 			 * 1.接收請求參數 - 輸入格式的錯誤處理
@@ -603,7 +606,8 @@ public class ProdServlet extends HttpServlet {
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("prodVO", prodVO);
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/store_interface/update_prod_prodChange.jsp");
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/store_interface/update_prod_prodChange.jsp");
 					failureView.forward(req, res);
 					return;
 				}
@@ -611,24 +615,47 @@ public class ProdServlet extends HttpServlet {
 				String prpi_name = req.getParameter("prpi_name").trim();
 
 				Part partpic = req.getPart("prpi_img");
-				BufferedInputStream bis = new BufferedInputStream(partpic.getInputStream());
-				byte[] prpi_img = new byte[bis.available()];
-				bis.read(prpi_img);
-				bis.close();
 
-				PrpiVO prpiVO = new PrpiVO();
-				prpiVO.setPrpi_name(prpi_name);
-				prpiVO.setPrpi_img(prpi_img);
+				if (partpic.getSize() != 0) {
 
-				/*************************** 2.開始修改資料 *****************************************/
+					partpic = req.getPart("prpi_img");
+					BufferedInputStream bis = new BufferedInputStream(partpic.getInputStream());
+					byte[] prpi_img = new byte[bis.available()];
+					bis.read(prpi_img);
+					bis.close();
+
+					PrpiVO prpiVO = new PrpiVO();
+					prpiVO.setPrpi_name(prpi_name);
+					prpiVO.setPrpi_img(prpi_img);
+
+					/*************************** 2.開始修改資料 *****************************************/
+
+					PrpiService prpiSvc = new PrpiService();
+					PrpiVO getPrpiDate = prpiSvc.getOnePrpiByProd(prod_id);
+					Integer prpi_id = getPrpiDate.getPrpi_id();
+					prpiVO = prpiSvc.updatePrpi(prpi_id, prod_id, prpi_name, prpi_img);
+
+				} else if (partpic.getSize() == 0) {
+
+					PrpiVO img = (PrpiVO) session.getAttribute("prpiVO");
+
+					byte[] prpi_img = img.getPrpi_img();
+
+					PrpiVO prpiVO = new PrpiVO();
+					prpiVO.setPrpi_name(prpi_name);
+					prpiVO.setPrpi_img(prpi_img);
+
+					PrpiService prpiSvc = new PrpiService();
+					PrpiVO getPrpiDate = prpiSvc.getOnePrpiByProd(prod_id);
+					Integer prpi_id = getPrpiDate.getPrpi_id();
+					prpiVO = prpiSvc.updatePrpi(prpi_id, prod_id, prpi_name, prpi_img);
+
+					session.removeAttribute("prpiVO");
+				}
+
 				ProdService prodSvc = new ProdService();
 				prodVO = prodSvc.updateProd(prod_id, store_id, prod_name, prod_descript, prod_price, prod_sort,
 						prod_format, prod_brand, prod_updatetime, prod_soldcount, prod_status, prod_count, prod_score);
-
-				PrpiService prpiSvc = new PrpiService();
-				PrpiVO getPrpiDate = prpiSvc.getOnePrpiByProd(prod_id);
-				Integer prpi_id = getPrpiDate.getPrpi_id();
-				prpiVO = prpiSvc.updatePrpi(prpi_id, prod_id, prpi_name, prpi_img);
 
 				/***************************
 				 * 3.修改完成,準備轉交(Send the Success view)
@@ -647,7 +674,7 @@ public class ProdServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-		
+
 		if ("insert_prod".equals(action)) {
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -707,7 +734,7 @@ public class ProdServlet extends HttpServlet {
 				List<PrpiVO> list = new ArrayList<PrpiVO>();
 
 				System.out.println(req.getParameter("prpi_name").trim());
-				
+
 				String prpi_name = req.getParameter("prpi_name").trim();
 
 				Part partpic = req.getPart("prpi_img");
@@ -739,7 +766,6 @@ public class ProdServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-		
-		
+
 	}
 }

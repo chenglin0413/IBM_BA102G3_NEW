@@ -2,16 +2,30 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page
-	import="com.prod.model.*,com.store.model.*,com.item.model.*,com.user.model.*"%>
+	import="com.prod.model.*,com.store.model.*,com.item.model.*,com.user.model.*,com.ord.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
+		
 		UserVO userVO = (UserVO) session.getAttribute("userVO");
 		String account = (String) session.getAttribute("account");
 		StoreService storeSvc = new StoreService();
 		StoreVO storeVO = storeSvc.getOneStoreByUsed_Id(userVO.getUser_id());
 		ProdService prodSvc = new ProdService();
 		List<ProdVO> list = prodSvc.getOneStore_idAllProd(storeVO.getStore_id());
+		OrdService ordSvc = new OrdService();
+		List<OrdVO> ordlist=ordSvc.getOneStore_idAllOrd(storeVO.getStore_id());
+		//計算未審核訂單、未備貨_待取貨的狀態數量
+		Integer unCheckOrd_grant=0;
+		Integer unFinishOrd_status=0;
+		for(OrdVO ordVO:ordlist){
+			if(ordVO.getOrd_grant()==1){
+				unCheckOrd_grant+=1;
+			}
+			if(ordVO.getOrd_status()==1||ordVO.getOrd_status()==2){
+				unFinishOrd_status+=1;
+			}
+		}
 		pageContext.setAttribute("list", list);
 %>
 
@@ -79,10 +93,12 @@ td{
 
 	<%@include file="headerBar.file"%>
 	<div class="callout"></div>
-	        <div class="container" >
-	            <div class="row">
-
-	                <div class="col-md-3 col-xs-6">
+	<div class="container" >
+		<div class="row">
+			<div class="col-md-4 ">
+				<h3 class="page-header">商品列表</h3>
+			</div>
+			<div class="col-md-4 col-xs-6">
 	                    <div class="panel panel-primary">
 	                        <div class="panel-heading">
 	                            <div class="row">
@@ -90,14 +106,14 @@ td{
 	                                    <i class="fa fa-comments fa-5x"></i>
 	                                </div>
 	                                <div class="col-xs-9 text-right">
-	                                    <div class="huge">26</div>
-	                                    <div>未審核訂單狀態:</div>
+	                                    <div class="huge"><%=unFinishOrd_status %></div>
+	                                    <div>尚未完結訂單數:</div>
 	                                </div>
 	                            </div>
 	                        </div>
 	                    </div>
 	                </div>
-	                <div class="col-md-3 col-xs-6">
+	                <div class="col-md-4 col-xs-6">
 	                    <div class="panel panel-primary">
 	                        <div class="panel-heading">
 	                            <div class="row">
@@ -105,25 +121,13 @@ td{
 	                                    <i class="fa fa-book fa-5x"></i>
 	                                </div>
 	                                <div class="col-xs-9 text-right">
-	                                    <div class="huge">124</div>
-	                                    <div>查看待審核的訂單</div>
+	                                    <div class="huge"><%=unCheckOrd_grant%></div>
+	                                    <div>待審核的訂單數:</div>
 	                                </div>
 	                            </div>
 	                        </div>
 	                    </div>
 	                </div>
-	                </div>
-
-
-	                </div>
-
-
-	<div id="page-wrapper">
-		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
-				<h3 class="page-header">商品列表</h3>
-			</div>
-			<!-- /.col-lg-12 -->
 		</div>
 	</div>
 
@@ -197,7 +201,6 @@ td{
 								<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 									<tr align='center' valign='middle'>
 										<div class="col-xs-12 col-md-10">
-
 											<div class="item">
 												<td>
 													<!-- 點圖轉交修改 -->
@@ -220,12 +223,16 @@ td{
 												<td>${prodVO.prod_status}</td>
 												<td>${prodVO.prod_count}</td>
 												<td>${prodVO.prod_score}</td>
+												</div>
+												</div>
 									</tr>
 
 								</c:forEach>
 						</table>
-							<%@ include file="page2.file" %>
-						<div class="col-xs-12 col-md-8 col-md-offset-4"></div>
+							
+						<div class="col-xs-12 col-md-8 col-md-offset-4">
+						<%@ include file="page2.file" %>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -1,6 +1,9 @@
 package com.prpm.model;
 
 import java.util.*;
+
+import com.stpm.model.StpmVO;
+
 import java.sql.*;
 
 public class PrpmJDBCDAO implements PrpmDAO_interface {
@@ -15,6 +18,7 @@ public class PrpmJDBCDAO implements PrpmDAO_interface {
 	private static final String UPDATE = "UPDATE PRPM set prpm_price=?,prpm_status=? where stpm_id = ? and prod_id = ?";
 	private static final String GET_ONE = "SELECT * FROM PRPM WHERE STPM_ID = ?";
 	private static final String GET_PRICE = "SELECT PRPM_PRICE FROM PRPM WHERE STPM_ID = ?";
+	private static final String UPDATE_STATUS = "UPDATE PRPM set prpm_status=? where stpm_id = ?";
 
 	@Override
 	public void insert(PrpmVO prpmVO) {
@@ -340,7 +344,53 @@ public class PrpmJDBCDAO implements PrpmDAO_interface {
 		}
 		return prpmVO;
 	}
+	
+	@Override
+	public void updateStatus(PrpmVO prpmVO) {
 
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(UPDATE_STATUS);
+			
+			pstmt.setInt(1, prpmVO.getPrpm_status());
+			pstmt.setInt(2, prpmVO.getStpm_id());
+
+			pstmt.executeUpdate();
+
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. " + e.getMessage());
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+
+	@Override
+	public PrpmVO getOneRmPrice_prod(Integer prod_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 	public static void main(String[] args) {
 
 		PrpmJDBCDAO dao = new PrpmJDBCDAO();
@@ -358,14 +408,19 @@ public class PrpmJDBCDAO implements PrpmDAO_interface {
 		// s.setPrpm_price(10);
 		// s.setPrpm_status(0);
 		// dao.update(s);
+		
+		PrpmVO s = new PrpmVO();
+		s.setStpm_id(2500007);
+		s.setPrpm_status(5);
+		dao.updateStatus(s);
 
-//		 List<PrpmVO> list = dao.findByStpmID(2500344);
-//		 for(PrpmVO s : list){
-//		 System.out.println(s.getStpm_id());
-//		 System.out.println(s.getProd_id());
-//		 System.out.println(s.getPrpm_price());
-//		 System.out.println(s.getPrpm_status());
-//		 }
+//		List<PrpmVO> list = dao.findByStpmID(2500007);
+//		for (PrpmVO s : list) {
+//			System.out.println(s.getStpm_id());
+//			System.out.println(s.getProd_id());
+//			System.out.println(s.getPrpm_price());
+//			System.out.println(s.getPrpm_status());
+//		}
 
 		// List<PrpmVO> list = dao.getAll();
 		// for (PrpmVO s : list) {
@@ -378,8 +433,9 @@ public class PrpmJDBCDAO implements PrpmDAO_interface {
 	}
 
 	@Override
-	public PrpmVO getOneRmPrice_prod(Integer prod_id) {
+	public PrpmVO findByPrimaryKey(Integer stpm_id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

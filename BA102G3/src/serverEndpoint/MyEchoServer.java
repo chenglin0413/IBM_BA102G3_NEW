@@ -20,8 +20,8 @@ private static final Set<Session> allSessions = Collections.synchronizedSet(new 
 	public void onOpen(@PathParam("myName") String myName, @PathParam("myRoom") int myRoom, Session userSession) throws IOException {
 		allSessions.add(userSession);
 		System.out.println(userSession.getId() + ": 已連線");
-		System.out.println(myName + ": 已連線");
-		System.out.println(myRoom + ": 房號");
+		System.out.println(myName + ": 已連線");//取商店STORE_ID
+		System.out.println(myRoom + ": 商家名稱");//取商店USER_ID
 //		userSession.getBasicRemote().sendText("WebSocket 連線成功");
 	}
 

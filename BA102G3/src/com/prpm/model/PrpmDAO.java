@@ -27,7 +27,10 @@ public class PrpmDAO implements PrpmDAO_interface {
 	private static final String UPDATE = "UPDATE PRPM set prpm_price=?,prpm_status=? where stpm_id = ? and prod_id = ?";
 	private static final String GET_ONE = "SELECT * FROM PRPM WHERE STPM_ID = ?";
 	private static final String GET_PRICE = "SELECT PRPM_PRICE FROM PRPM WHERE STPM_ID = ?";
-	private static final String GET_RM_PRICE_FORPROD = "select prpm_price,prpm_status from(SELECT prpm_price,prpm_status from prpm where prod_id=? order by prod_id)where rownum<=1";
+	private static final String GET_RM_PRICE_FORPROD = "select stpm_id,prpm_price,prpm_status from(SELECT stpm_id,prpm_price,prpm_status from prpm where prod_id=? order by prod_id)where rownum<=1";
+	private static final String UPDATE_STATUS = "UPDATE PRPM set prpm_status=? where stpm_id = ?";
+	private static final String GET_ONE_PK = "SELECT stpm_id,prod_id,prpm_price,prpm_status FROM PRPM where stpm_id = ?";
+
 	@Override
 	public void insert(PrpmVO prpmVO) {
 
@@ -214,7 +217,7 @@ public class PrpmDAO implements PrpmDAO_interface {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public List<PrpmVO> findByStpmID(Integer stpm_id) {
 		List<PrpmVO> list = new ArrayList<PrpmVO>();
@@ -224,7 +227,7 @@ public class PrpmDAO implements PrpmDAO_interface {
 		ResultSet rs = null;
 
 		try {
-			
+
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE);
 
@@ -269,7 +272,7 @@ public class PrpmDAO implements PrpmDAO_interface {
 		}
 		return list;
 	}
-	
+
 	@Override
 	public PrpmVO findByPrice(Integer stpm_id) {
 		PrpmVO prpmVO = null;
@@ -320,8 +323,7 @@ public class PrpmDAO implements PrpmDAO_interface {
 		}
 		return prpmVO;
 	}
-	
-	
+
 	@Override
 	public PrpmVO getOneRmPrice_prod(Integer prod_id) {
 		PrpmVO prpmVO = null;
@@ -341,6 +343,7 @@ public class PrpmDAO implements PrpmDAO_interface {
 			while (rs.next()) {
 				// empVo 也稱為 Domain objects
 				prpmVO = new PrpmVO();
+				prpmVO.setStpm_id(rs.getInt("stpm_id"));
 				prpmVO.setPrpm_price(rs.getInt("prpm_price"));
 				prpmVO.setPrpm_status(rs.getInt("prpm_status"));
 
@@ -373,5 +376,96 @@ public class PrpmDAO implements PrpmDAO_interface {
 		}
 		return prpmVO;
 	}
-}
 
+	@Override
+	public void updateStatus(PrpmVO prpmVO) {
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_STATUS);
+
+			pstmt.setInt(1, prpmVO.getPrpm_status());
+			pstmt.setInt(2, prpmVO.getStpm_id());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+
+	@Override
+	public PrpmVO findByPrimaryKey(Integer stpm_id) {
+		
+		PrpmVO prpmVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_PK);
+
+			pstmt.setInt(1, stpm_id);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVo 也稱為 Domain objects
+				prpmVO = new PrpmVO();
+				prpmVO.setStpm_id(rs.getInt("stpm_id"));
+				prpmVO.setProd_id(rs.getInt("prod_id"));
+				prpmVO.setPrpm_price(rs.getInt("prpm_price"));
+				prpmVO.setPrpm_status(rs.getInt("prpm_status"));
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return prpmVO;
+	}
+}

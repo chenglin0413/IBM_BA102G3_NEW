@@ -121,8 +121,9 @@
                <li>
                    <a href="<%=request.getContextPath() %>/front-end/index.jsp">首頁</a>
                </li>
-               <li class="active">所有商品</a>
+               <li class="active">所有商品
                </li>
+               
                
            </ol>
         
@@ -195,13 +196,13 @@
                 <div class="item " >
                 <c:forEach var="storeVO" items="${StoreSvc.all}">
 				<c:if test="${prodVO.store_id==storeVO.store_id}">
-					<a href="<%=request.getContextPath()%>/front-end/member_interface/listOneStore_detail.jsp?store_id=${prodVO.store_id}"><h6><div>${storeVO.store_name}</div></h6></a>
+					<div><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneStore_detail.jsp?store_id=${prodVO.store_id}">${storeVO.store_name}</a></div>
 				 </c:if>
 				 </c:forEach>
                 <div id="boxshadow" ><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
-				<h3><div>${prodVO.prod_name}</div></h3>
-				<h4><div>$${prodVO.prod_price}</div></h4>
-				<h4><div>${prodVO.prod_sort}</div></h4>
+				<div><h3>${prodVO.prod_name}</h3></div>
+				<div><h4>$${prodVO.prod_price}</h4></div>
+				<div><h4>${prodVO.prod_sort}</h4></div>
 				
 <%-- 				 <div><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_id=${prodVO.prod_id}&action=getOne_For_Display">瀏覽詳情</a> --%>
 <!--                    </div>          -->
@@ -223,7 +224,7 @@
 								<div class="modal-body">
 									<div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
 									<div class="col-md-6">
-									<div font-size="10px"><b>產品描述:</b><br> ${prodVO.prod_descript}</div>
+									<div ><b>產品描述:</b><br> ${prodVO.prod_descript}</div>
 									<div>評分次數: ${prodVO.prod_count}</div>
 									<div>評分總分: ${prodVO.prod_score}</div>
 									

@@ -564,11 +564,8 @@ public class ProdDAO implements ProdDAO_interface {
 			con = ds.getConnection();
 			pstmt = con.prepareStatement(GET_ONE_STORE_TER);
 			pstmt.setInt(1, store_ter);
-			System.out.println("dao:"+store_ter);
 			rs = pstmt.executeQuery();
-			System.out.println("dao:"+store_ter);
 			while (rs.next()) {
-				System.out.println("1");
 				prodVO = new ProdVO();
 				prodVO.setProd_id(rs.getInt(1));
 				prodVO.setStore_id(rs.getInt(2));
@@ -576,7 +573,6 @@ public class ProdDAO implements ProdDAO_interface {
 				prodVO.setProd_price(rs.getInt(4));
 				prodVO.setProd_sort(rs.getString(5));
 				list.add(prodVO); // Store the row in the List
-				System.out.println(prodVO.getProd_name());
 			}
 
 			// Handle any SQL errors

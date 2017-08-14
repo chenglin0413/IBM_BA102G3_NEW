@@ -62,8 +62,7 @@ p {
 				<a href="<%=request.getContextPath()%>/front-end/member_interface/listAllBusc.jsp">
 					<div class="item">
 
-						<img
-							src="https://api.fnkr.net/testimg/700x400/00CED1/FFF/?text=img+placeholder">
+						<img src="<%=request.getContextPath()%>/front-end/img/schedule3.jpg">
 						<p>客運時刻表</p>
 					</div>
 				</a>
@@ -74,8 +73,7 @@ p {
 			<div class="col-xs-12 col-md-4">
 				<a href="<%=request.getContextPath()%>/front-end/member_interface/listAllFlsc.jsp">
 					<div class="item">
-						<img
-							src="https://api.fnkr.net/testimg/700x400/00CED1/FFF/?text=img+placeholder">
+						<img src="<%=request.getContextPath()%>/front-end/img/schedule2.jpg">
 						<p>航班時刻表</p>
 					</div>
 				</a>
@@ -86,8 +84,7 @@ p {
 				<a href="<%=request.getContextPath() %>/front-end/member_interface/go_airport.jsp">
 					<div class="item">
 
-						<img
-							src="https://api.fnkr.net/testimg/700x400/00CED1/FFF/?text=img+placeholder">
+						<img src="<%=request.getContextPath()%>/front-end/img/schedule4.jpg">
 						<p>捷運時刻表</p>
 					</div>
 				</a>
@@ -98,7 +95,10 @@ p {
 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14454.237853016903!2d121.22945339494773!3d25.082916358161672!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x34429fc062d215d5%3A0x70a3b690a9b5b109!2z6Ie654Gj5qGD5ZyS5ZyL6Zqb5qmf5aC0IChUUEUp!5e0!3m2!1szh-TW!2stw!4v1501479825287" width="100%" height="600" frameborder="0" style="border:0" allowfullscreen></iframe>
 </div>
 
-<%@ include file="/front-end/member_interface/script.file" %>	
+	
+
+	<%@ include file="/front-end/member_interface/script.file" %>
+	
 </body>
 
 </html>

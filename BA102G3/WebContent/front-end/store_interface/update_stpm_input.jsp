@@ -6,7 +6,6 @@
 <%
 	StpmVO stpmVO = (StpmVO) request.getAttribute("stpmVO");
 	Integer stpm_id = stpmVO.getStpm_id();
-
 	PrpmService prpmSvc = new PrpmService();
 	PrpmVO prpmChecked = prpmSvc.getPrice(stpm_id);
 	List<PrpmVO> list = prpmSvc.getStpmID(stpm_id);
@@ -62,19 +61,17 @@
 			<div align="center">
 				<%-- 錯誤表列 --%>
 				<c:if test="${not empty okMsgs}">
-					<font color='blue'>※<c:forEach var="message"
-							items="${okMsgs}">
+					<font color='blue'>※<c:forEach var="message" items="${okMsgs}">
 							<b>${message}</b>
 						</c:forEach>
 					</font>
 				</c:if>
+				
 				<%-- 錯誤表列 --%>
 				<c:if test="${not empty errorMsgs}">
-					<font color='red'>錯誤: <c:forEach var="message"
-							items="${errorMsgs}">
-							<a>${message}</a>
+					<font color='red'>※<c:forEach var="message" items="${errorMsgs}">
+							<b>${message}</b>
 						</c:forEach>
-
 					</font>
 				</c:if>
 			</div>
@@ -83,116 +80,122 @@
 
 
 
-<!-- 			<div id="page-wrapper"> -->
-<!-- 				<div class="row"> -->
-<!-- 					<div class="col-md-10 col-md-offset-1"> -->
-<!-- 						<h3 class="page-header">修改促銷專案</h3> -->
-<!-- 					</div> -->
-<!-- 					/.col-lg-12 -->
-<!-- 				</div> -->
-<!-- 			</div> -->
+			<!-- 			<div id="page-wrapper"> -->
+			<!-- 				<div class="row"> -->
+			<!-- 					<div class="col-md-10 col-md-offset-1"> -->
+			<!-- 						<h3 class="page-header">修改促銷專案</h3> -->
+			<!-- 					</div> -->
+			<!-- 					/.col-lg-12 -->
+			<!-- 				</div> -->
+			<!-- 			</div> -->
 
-<!-- 			<div id="page-wrapper col-md-12"> -->
-<!-- 				<div class="col-md-6"> -->
-<!-- 					<ol class="breadcrumb"> -->
-<!-- 						<li><a -->
-<%-- 							href="<%=request.getContextPath()%>/front-end/store_interface/listMyAllStpm.jsp">查詢所有促銷專案</a> --%>
-<!-- 						</li> -->
-<!-- 						<li class="active">修改促銷專案</li> -->
-<!-- 					</ol> -->
-<!-- 				</div> -->
+			<!-- 			<div id="page-wrapper col-md-12"> -->
+			<!-- 				<div class="col-md-6"> -->
+			<!-- 					<ol class="breadcrumb"> -->
+			<!-- 						<li><a -->
+			<%-- 							href="<%=request.getContextPath()%>/front-end/store_interface/listMyAllStpm.jsp">查詢所有促銷專案</a> --%>
+			<!-- 						</li> -->
+			<!-- 						<li class="active">修改促銷專案</li> -->
+			<!-- 					</ol> -->
+			<!-- 				</div> -->
 
-<!-- 			</div> -->
+			<!-- 			</div> -->
 
-				<FORM METHOD="post" ACTION="stpm.do" name="form1">
-					<table border="0">
-						<tr>
-							<td><label>促銷編號:&nbsp;&nbsp;</label><font color=red><b>＊</b></font></td>
-							<td><%=stpmVO.getStpm_id()%></td>
-						</tr>
-						<tr>
-							<td><label>商店代號:&nbsp;&nbsp;</label><font color=red><b>＊</b></font></td>
-							<td><%=stpmVO.getStore_id()%></td>
-						</tr>
+			<FORM METHOD="post" ACTION="stpm.do" name="form1">
+				<table border="0">
+					<tr>
+						<td><label>促銷編號:&nbsp;&nbsp;</label><font color=red><b>＊</b></font></td>
+						<td><%=stpmVO.getStpm_id()%></td>
+					</tr>
+					<tr>
+						<td><label>商店代號:&nbsp;&nbsp;</label><font color=red><b>＊</b></font></td>
+						<td><%=stpmVO.getStore_id()%></td>
+					</tr>
 
-						<tr>
-							<td><label>促銷名稱:&nbsp;&nbsp;</label></td>
-							<td><input type="TEXT" name="stpm_name" size="15"
-								value="<%=stpmVO.getStpm_name()%>" /></td>
-						</tr>
-						<tr>
-							<td><label>促銷說明:</label></td>
-							<td><textarea rows="4" cols="40" name="stpm_desc"
-									required="required"><%=stpmVO.getStpm_desc()%></textarea></td>
-						</tr>
+					<tr>
+						<td><label>促銷名稱:&nbsp;&nbsp;</label></td>
+						<td><input type="TEXT" name="stpm_name" size="15"
+							value="<%=stpmVO.getStpm_name()%>" /></td>
+					</tr>
+					<tr>
+						<td><label>促銷說明:</label></td>
+						<td><textarea rows="4" cols="40" name="stpm_desc"
+								required="required"><%=stpmVO.getStpm_desc()%></textarea></td>
+					</tr>
 
-						<tr>
-							<td><label>促銷文案:&nbsp;&nbsp;</label></td>
-							<td><textarea rows="4" cols="40" name="stpm_content"
-									required="required"><%=stpmVO.getStpm_content()%></textarea></td>
-						</tr>
-						<tr>
-							<td><label>開始日期:&nbsp;&nbsp;</label></td>
-							<td><input type="date" name="stpm_startdate" size="15" value="<%=stpmVO.getStpm_startdate()%>" /></td>
-						</tr>
-						<tr>
-							<td><label>結束日期:&nbsp;&nbsp;</label></td>
-							<td><input type="date" name="stpm_enddate" size="15" value="<%=stpmVO.getStpm_enddate()%>" /></td>
-						</tr>
+					<tr>
+						<td><label>促銷文案:&nbsp;&nbsp;</label></td>
+						<td><textarea rows="4" cols="40" name="stpm_content"
+								required="required"><%=stpmVO.getStpm_content()%></textarea></td>
+					</tr>
+					<tr>
+						<td><label>開始日期:&nbsp;&nbsp;</label></td>
+						<td><input type="date" name="stpm_startdate" size="15"
+							value="<%=stpmVO.getStpm_startdate()%>" /></td>
+					</tr>
+					<tr>
+						<td><label>結束日期:&nbsp;&nbsp;</label></td>
+						<td><input type="date" name="stpm_enddate" size="15"
+							value="<%=stpmVO.getStpm_enddate()%>" /></td>
+					</tr>
 
-						<tr>
-							<td><label>促銷狀態:&nbsp;&nbsp;</label></td>
+					<tr>
+						<td><label>促銷狀態:&nbsp;&nbsp;</label></td>
 
-							<%!String isTrue = "selected=\"true\"";%>
-							<%!String isFalse = "";%>
-							<%!String valueA = null;%>
-							<%!String valueB = null;%>
+						<%!String isTrue = "selected=\"true\"";%>
+						<%!String isFalse = "";%>
+						<%!String valueA = null;%>
+						<%!String valueB = null;%>
 
-							<%
-								if (stpmVO.getStpm_status() == 1) {
-									valueA = isFalse;
-									valueB = isTrue;
-								} else if (stpmVO.getStpm_status() == 0) {
-									valueA = isTrue;
-									valueB = isFalse;
-								}
-							%>
+						<%
+							if (stpmVO.getStpm_status() == 1) {
+								valueA = isFalse;
+								valueB = isTrue;
+							} else if (stpmVO.getStpm_status() == 0) {
+								valueA = isTrue;
+								valueB = isFalse;
+							}
+						%>
 
-							<td><select name="stpm_status">
-									<option value="0" <%=valueA%>>促銷資訊(off)</option>
-									<option value="1" <%=valueB%>>促銷資訊(on)</option>
-							</select>
-							<td>
-						</tr>
-					</table>
-					<br> <br> <input type="hidden" name="action" value="update"> <input type="hidden" name="stpm_id" value="<%=stpmVO.getStpm_id()%>"> <input type="submit" value="修改促銷資訊">
-				</FORM>
-			</div>
-		</div>
-
-
-		<div align="center">
-			<FORM METHOD="post" ACTION="prpm.do" name="form2">
-				<input type="hidden" name="stpm_id" value="<%=stpmVO.getStpm_id()%>" />
-				<input type="hidden" name="action" value="getAdd"> <input type="submit" value="新增促銷商品">
+						<td><select name="stpm_status">
+								<option value="0" <%=valueA%>>促銷資訊(off)</option>
+								<option value="1" <%=valueB%>>促銷資訊(on)</option>
+						</select>
+						<td>
+					</tr>
+				</table>
+				<br> <br> <input type="hidden" name="action" value="update"> 
+				<input type="hidden" name="stpm_id"	value="<%=stpmVO.getStpm_id()%>"> 
+				<input type="hidden" name="store_id" value="<%=stpmVO.getStore_id()%>"> 
+				<input type="submit" value="修改促銷資訊">
 			</FORM>
 		</div>
+	</div>
 
-		<div class="container">
-			<div class="row"></div>
-			<div class="col-xs-12 col-sm-12" align="center">
 
-				<%
-					if (prpmChecked != null) {
-						request.setAttribute("list", list);
-				%>
-				<jsp:include page="listMyPrpm.jsp" />
-				<%
-					}
-				%>
+	<div align="center">
+		<FORM METHOD="post" ACTION="prpm.do" name="form2">
+			<input type="hidden" name="stpm_id" value="<%=stpmVO.getStpm_id()%>" />
+			<input type="hidden" name="action" value="getAdd"> <input
+				type="submit" value="新增促銷商品">
+		</FORM>
+	</div>
 
-			</div>
+	<div class="container">
+		<div class="row"></div>
+		<div class="col-xs-12 col-sm-12" align="center">
+
+			<%
+				if (prpmChecked != null) {
+					request.setAttribute("list", list);
+			%>
+			<jsp:include page="listMyPrpm.jsp" />
+			<%
+				}
+			%>
+
 		</div>
+	</div>
 
 	<div class="callout"></div>
 

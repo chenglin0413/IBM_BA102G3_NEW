@@ -8,6 +8,8 @@ import javax.servlet.http.*;
 
 import com.stpm.model.StpmService;
 import com.stpm.model.StpmVO;
+import com.prpm.model.PrpmService;
+import com.prpm.model.PrpmVO;
 import com.stpm.model.*;
 
 public class StpmServlet extends HttpServlet {
@@ -154,7 +156,7 @@ public class StpmServlet extends HttpServlet {
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
-
+//			HttpSession session=req.getSession();
 			try {
 				/*************************** 1.接收請求參數 ****************************************/
 				Integer stpm_id = new Integer(req.getParameter("stpm_id"));
@@ -166,16 +168,17 @@ public class StpmServlet extends HttpServlet {
 				/***************************
 				 * 3.查詢完成,準備轉交(Send the Success view)
 				 ************/
-				req.setAttribute("stpmVO", stpmVO); // 資料庫取出的empVO物件,存入req
+				req.setAttribute("stpm_id", stpm_id);
+				req.setAttribute("stpmVO", stpmVO);
 				String url = "/front-end/store_interface/update_stpm_input.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交
-																				// update_emp_input.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/store/addStpm.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/store_interface/listMyAllStpm.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -194,10 +197,10 @@ public class StpmServlet extends HttpServlet {
 				 **********************/
 
 				Integer stpm_id = new Integer(req.getParameter("stpm_id").trim());
+				Integer store_id = new Integer(req.getParameter("store_id").trim());
 				String stpm_name = req.getParameter("stpm_name").trim();
 				String stpm_desc = req.getParameter("stpm_desc").trim();
 				String stpm_content = req.getParameter("stpm_content").trim();
-
 				java.sql.Date stpm_startdate = null;
 
 				try {
@@ -224,7 +227,8 @@ public class StpmServlet extends HttpServlet {
 				}
 
 				StpmVO stpmVO = new StpmVO();
-				// stpmVO.setStore_id(store_id);
+				stpmVO.setStpm_id(stpm_id);
+				stpmVO.setStore_id(store_id);
 				stpmVO.setStpm_name(stpm_name);
 				stpmVO.setStpm_desc(stpm_desc);
 				stpmVO.setStpm_content(stpm_content);
@@ -232,43 +236,90 @@ public class StpmServlet extends HttpServlet {
 				stpmVO.setStpm_enddate(stpm_enddate);
 				stpmVO.setStpm_status(stpm_status);
 
-				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("stpmVO", stpmVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/store/update_stpt_input.jsp");
+					req.setAttribute("stpmVO", stpmVO);
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/store_interface/update_stpm_input.jsp");
 					failureView.forward(req, res);
 					return; // 程式中斷
 				}
 
-				/*************************** 2.開始修改資料 *****************************************/
 				StpmService stpmSvc = new StpmService();
-				stpmVO = stpmSvc.updateStpm(stpm_name, stpm_desc, stpm_content, stpm_startdate, stpm_enddate,
-						stpm_status, stpm_id);
+				PrpmService prpmSvc = new PrpmService();
+				List<PrpmVO> list = prpmSvc.getStpmID(stpm_id);// 判斷有無產品
+
+				PrpmVO prpmVO = new PrpmVO();
+
+				Integer prpm_status = stpm_status;
+
+//				 System.out.println("size" + list.size());
+
+				if (stpm_status == 0) {// off
+					 System.out.println("0 - off");
+					if (list.size() == 0) {// 無產品
+//						 System.out.println("2 - noprpm 0");
+						stpmVO = stpmSvc.updateStpm(stpm_name, stpm_desc, stpm_content, stpm_startdate, stpm_enddate,
+								stpm_status, stpm_id);
+					} else if (list.size() > 0) {// 有產品
+//						 System.out.println("3 - prpm 0");
+						stpmVO = stpmSvc.updateStpm(stpm_name, stpm_desc, stpm_content, stpm_startdate, stpm_enddate,
+								stpm_status, stpm_id);
+						prpmVO = new PrpmVO();
+						prpmVO.setStpm_id(stpm_id);// PKFK
+						prpmVO.setPrpm_status(prpm_status);// Change
+						prpmVO = prpmSvc.updateStatus(stpm_id, prpm_status);
+					}
+
+				} else if (stpm_status == 1) {// on
+//					 System.out.println("4 - on");
+					if (list.size() == 0) {// 無產品
+						 System.out.println("5 - noprpm back");
+						errorMsgs.add("請先新增促銷商品");
+						if (!errorMsgs.isEmpty()) {
+							req.setAttribute("stpmVO", stpmVO);
+							String url = "/front-end/store_interface/update_stpm_input.jsp";
+							RequestDispatcher successView = req.getRequestDispatcher(url);
+							successView.forward(req, res);
+							return;
+						}
+					} else if (list.size() > 0) {// 有產品
+//						 System.out.println("6 - prpm 1");
+						stpmVO = stpmSvc.updateStpm(stpm_name, stpm_desc, stpm_content, stpm_startdate, stpm_enddate,
+								stpm_status, stpm_id);
+						prpmVO.setStpm_id(stpm_id);// PKFK
+						prpmVO.setPrpm_status(prpm_status);// Change
+						prpmVO = prpmSvc.updateStatus(stpm_id, prpm_status);
+					}
+				}
+
+//				 System.out.println("7 return ok");
+
 				okMsgs.add("促銷資訊修改成功");
 
-				/***************************
-				 * 3.修改完成,準備轉交(Send the Success view)
-				 *************/
 				if (!okMsgs.isEmpty()) {
-					req.setAttribute("stpmVO", stpmVO); // 資料庫update成功後,正確的的empVO物件,存入req
+					req.setAttribute("stpmVO", stpmVO);
 					String url = "/front-end/store_interface/update_stpm_input.jsp";
-					RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
+					RequestDispatcher successView = req.getRequestDispatcher(url);
 					successView.forward(req, res);
 				}
+
 				/*************************** 其他可能的錯誤處理 *************************************/
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:" + e.getMessage());
-				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/store/update_stpm_input.jsp");
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/store_interface/update_stpm_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
-		if ("insert".equals(action)) {
+		if ("insert".equals(action))
+
+		{
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
-			HttpSession session = req.getSession(); //防止重複新增
+			HttpSession session = req.getSession(); // 防止重複新增
 
 			Integer store_id = null;
 
@@ -333,7 +384,7 @@ public class StpmServlet extends HttpServlet {
 							stpm_status);
 
 					req.setAttribute("store_id", store_id);
-					
+
 					session.removeAttribute("key");
 
 				}

@@ -5,16 +5,17 @@
 
 
 <%	
+	StoreVO storeVO=null;
 	if(request.getParameter("store_id")!=null){
 		Integer store_id=new Integer(request.getParameter("store_id"));
 		session.setAttribute("store_id",store_id);//把store_id存起來
 		StoreService storeSvc=new StoreService();
-		StoreVO storeVO=storeSvc.getOneStore(store_id);
+		storeVO=storeSvc.getOneStore(store_id);
 	    pageContext.setAttribute("storeVO",storeVO);
 	}else{
 		Integer store_id=(Integer)session.getAttribute("store_id");
 		StoreService storeSvc=new StoreService();
-		StoreVO storeVO=storeSvc.getOneStore(store_id);
+		storeVO=storeSvc.getOneStore(store_id);
 	    pageContext.setAttribute("storeVO",storeVO);
 	}
 	
@@ -126,7 +127,8 @@
 			</div></div>
 			<div class="col-md-6">
 			<div class="row">
-			<div><h3>商店名稱: ${storeVO.store_name}</h3></div>
+<%-- 			<div id="store_id">${storeVO.store_id}</div> --%>
+			<div id="store_name"><h3>商店名稱: ${storeVO.store_name}</h3></div>
 			<div>商店描述: ${storeVO.store_describe}</div>
 			<div>商店評價總分: ${storeVO.store_score}</div>
 			<div><h4>本商店位於: ${storeVO.store_ter}航廈，${storeVO.store_floor}樓</h4></div>
@@ -152,13 +154,132 @@
 		
 		</div>
 		</div>
+		 <!-- 聊天區塊 -->
+<%--          <c:if test="${userVO!=null}"> --%>
+         <div id="messagearea" class="chatbox" style="display:none;" onload="connect(),showTime();" onunload="disconnect();">
+         	<div class="chatBar" ><h3 id="test"></h3></div>
+         	<div class="row">
+         	<div id="closechatbox" class="closechatbtn text-center btn-info" onclick="disconnect();" >X</div>
+	        <div class="col-md-12">
+	        <textarea id="messagesArea" class="message-area" readonly ></textarea>
+	        </div>
+	        <div class="input-area col-md-12">
+	        <div class="row">
+	         <div class="col-md-12">
+            <input id="message"  class="text-field" type="text" placeholder="inputMessage Here" size="35px" onkeydown="if (event.keyCode == 13) sendMessage();"/>
+           	</div>
+           	</div>
+	        <div class="col-md-4 ">${ userVO.user_lastname}${ userVO.user_firstname}
+	        	<input type="hidden" id="userName" value="${ userVO.user_lastname}${ userVO.user_firstname}" />
+	        </div>
+           	<div class="col-md-8 " >
+            <input type="submit" id="sendMessage" class="button" value="Send" onclick="sendMessage();"/>
+<!-- 		    <input type="button" id="disconnect"  class="button" value="offLine" onclick="disconnect();"/> -->
+		    </div>
+	    </div>
+         </div>
+         </div>
+        <div id="messagebtn" class="chatbtn text-center btn-info" onclick="connect();">ChatBox</div>
+<%--        </c:if> --%>
+        <!-- 聊天區塊結束 -->
 <%-- </c:forEach> --%>
 
 <div class="col-xs-12 col-md-8 col-md-offset-4">
 </div>
 
 <%@ include file="/front-end/member_interface/script.file" %>
+ <script type="text/javascript">
+	//聊天
+	function openMessage() {
+	    document.getElementById('messagebtn').style.display = 'none';
+	    document.getElementById('messagearea').style.display = '';
+	   
+	}
+	function closeMessage() {
+	    document.getElementById('messagebtn').style.display = '';
+	    document.getElementById('messagearea').style.display = 'none';
+	   
+	}
+	var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/"+<%=storeVO.getStore_id()%>;
+    var host = window.location.host;
+    var path = window.location.pathname;
+    var webCtx = path.substring(0, path.indexOf('/', 1));
+    var endPointURL = "ws://" + window.location.host + webCtx + MyPoint;
+    
+	var webSocket;
+	var inputUserName = document.getElementById("userName");
+	var userName= inputUserName.value;
+	function connect() {
+		// 建立 websocket 物件
+		webSocket = new WebSocket(endPointURL);
+		
+		webSocket.onopen = function(event) {
+			document.getElementById('sendMessage').disabled = false;
+			document.getElementById('connect').disabled = true;
+			document.getElementById('disconnect').disabled = false;
+			
+		};
+
+		webSocket.onmessage = function(event) {
+	        var jsonObj = JSON.parse(event.data);
+	        var message = jsonObj.userName + ": " + jsonObj.message + "\r\n";
+	        messagesArea.value = messagesArea.value + message;
+	        webSocket.send(messagesArea.value);
+	        messagesArea.scrollTop = messagesArea.scrollHeight;
+		};
+
+		webSocket.onclose = function(event) {
+			
+		};
+	}
+	
+	//webSocket 區塊
  
+	function sendMessage() {
+		var time=new Date();
+		var currentDateTime=
+			'('+time.getHours()+':'+time.getMinutes()+')';
+	    var inputMessage = document.getElementById("message");
+	    console.log(currentDateTime);
+	    var message = inputMessage.value.trim()+'\r\n'+currentDateTime.toString();
+	    
+	    if (message === ""){
+	        alert ("訊息請勿空白!");
+	        inputMessage.focus();	
+	    }else{
+	        var jsonObj = {"userName" : userName, "message" : message};
+	        webSocket.send(JSON.stringify(jsonObj));
+	        inputMessage.value = "";
+	        inputMessage.focus();
+	    }
+	}
+
+	
+	function disconnect () {
+		message = "已離開聊天室!\r\n";
+        messagesArea.value = messagesArea.value + message;
+        messagesArea.scrollTop = messagesArea.scrollHeight;
+        var jsonObj = {"userName" : userName, "message" : message};
+        webSocket.send(JSON.stringify(jsonObj));
+		webSocket.close();
+		document.getElementById('sendMessage').disabled = true;
+		document.getElementById('connect').disabled = false;
+		document.getElementById('disconnect').disabled = true;
+	}
+
+	
+	//webSocket 結束    
+		
+	
+		function init(){
+			var mBtn=document.getElementById("messagebtn");
+			var closechatbox=document.getElementById("closechatbox");
+			mBtn.addEventListener("click",openMessage, false);
+			closechatbox.addEventListener("click",closeMessage,false);
+		
+		}
+		 window.onload = init;
+</script>
 
 </body>
 </html>

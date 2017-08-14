@@ -26,7 +26,7 @@
                         <a class="page-scroll" href="../rest/rest__2.html">餐廳</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="">促銷</a>
+                        <a class="page-scroll" href="<%=request.getContextPath()%>/front-end/member_interface/listAllStpm.jsp">促銷</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="<%=request.getContextPath()%>/front-end/blog/listAllTrvl.jsp">旅遊日記</a>
