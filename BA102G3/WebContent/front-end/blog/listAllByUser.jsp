@@ -16,47 +16,28 @@
 
 %>
 
-<html>
+<!DOCTYPE html>
 <head>
-	  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Anytime Grip</title>
-
-    <!-- Bootstrap Core CSS -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="<%= request.getContextPath() %>/front-end/css/bootstrap.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="<%= request.getContextPath() %>/front-end/css/stylish-portfolio.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    
-    <link href="<%= request.getContextPath() %>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-   
-
     <title>個人遊記</title>
 
+        <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="<%=request.getContextPath()%>/front-end/css/bootstrap.css" rel="stylesheet">
-	
-    <!-- Custom CSS -->
-    <link href="<%=request.getContextPath()%>/front-end/blog/css/stylish-portfolio.css" rel="stylesheet">
-	
-    <!-- Custom Fonts -->
+    <link href="<%= request.getContextPath() %>/front-end/css/bootstrap.css" rel="stylesheet">
+    	<!-- Custom CSS -->
+    <link href="<%= request.getContextPath() %>/front-end/css/stylish-portfolio.css" rel="stylesheet">
+
+    	<!-- Custom Fonts -->
+    <link href="<%= request.getContextPath() %>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	
 	<style type="text/css">
-        .item img{
-            height: 250px;
-            width:100%;
-            
-        }
-       
-       
         .content: {
           position: relative;
         }
@@ -69,14 +50,23 @@
           left: 5px;
           margin: auto;
         }
+ 
 			      
     </style>
+
 
 </head>
 
 <body>
- <div class="callout"></div>
-    <%@include file="/front-end/member_interface/headerBar.file" %>
+<%@include file="/front-end/member_interface/headerBar.file" %>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-11 col-xs-12" >
+            <h3></h3>
+        </div>         
+    </div>
+</div>
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
 	<font color='red'>請修正以下錯誤:
@@ -88,19 +78,10 @@
 	</font>
 </c:if>	
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-11 col-xs-12" >
-            <h3>_</h3>
-        </div>         
-    </div>
-</div>
-
-
-<div class="callout"></div>
-
- <div class="container">	
-	<div class="row ">         
+ 	<div class="container">	
+		<div class="row ">         
+        
+        
             
           <ol class="breadcrumb">
                
@@ -114,66 +95,66 @@
                </li>
                
            </ol>
+       </div>
+	</div>        
+                   
+          
 	<div class="container>">
 		<div class="row">
+			<div class="col-sm-1 col-md-1 col-md-offset-1">
+				<a href="<%=request.getContextPath()%>/front-end/blog/addTrvl.jsp"><button class="btn btn-primary">新增遊記</button></a>
+			</div>
 		</div>
-			<h4><div class="btn btn-dark"><a href="<%=request.getContextPath()%>/front-end/blog/addTrvl.jsp">新增遊記</a></div></h4>
-		</div>
-		<div class="container>">
-		<div class="row">
+	</div>
+	<br>
+	<div class="col-md-10 col-md-offset-1">
+		<table class="table table-striped table-hover datatable">
+			<jsp:useBean id="trpiSvc" scope="page" class="com.trpi.model.TrpiService" />
+			<tr>
+				<th>遊記編號</th>
+				<th>撰寫日期</th>
+				<th>旅遊標題</th>
+				<th>旅遊地點</th>
+				<th>點擊量</th>
+				<th>修改</th>
+				<th>刪除</th>
+			</tr>
+			<%@ include file="page1.file"%>
+			<c:forEach var="trvlVO" items="${list}" begin="<%=pageIndex%>"
+				end="<%=pageIndex+rowsPerPage-1%>">
+				<tr>
+					<td>${trvlVO.trvl_id}</td>
+					<td>${trvlVO.trvl_date}</td>
+					<td><a href="<%=request.getContextPath()%>/front-end/trvl/trvl.do?trvl_id=${trvlVO.trvl_id}&action=getOne_For_Display">${trvlVO.trvl_tittle}</a></td>
+					<td>${trvlVO.trvl_loc}</td>
+					<td>${trvlVO.trvl_count}</td>
+					<td>
+						<FORM METHOD="post"
+							ACTION="<%=request.getContextPath()%>/front-end/trvl/trvl.do">
+							<input type="submit" value="修改"> <input type="hidden"
+								name="trvl_id" value="${trvlVO.trvl_id}"> <input
+								type="hidden" name="action" value="getOne_For_Update">
+						</FORM>
+					</td>
+					<td>
+						<FORM METHOD="post"
+							ACTION="<%=request.getContextPath()%>/front-end/trvl/trvl.do">
+							<input type="submit" value="刪除"> <input type="hidden"
+								name="trvl_id" value="${trvlVO.trvl_id}"> <input
+								type="hidden" name="action" value="delete">
+						</FORM>
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
+		<%@ include file="page2.file"%>
+	</div>	
 		
-			<div class="col-md-10 col-md-offset-1">
-				<table class="table table-striped table-hover datatable">
-					<jsp:useBean id="trpiSvc" scope="page" class="com.trpi.model.TrpiService" />
-					<tr>
-						<th>遊記編號</th>
-						<th>撰寫日期</th>
-						<th>旅遊標題</th>
-						<th>旅遊地點</th>
-						<th>點擊量</th>
-						<th>總分</th>
-						<th>修改</th>
-						<th>刪除</th>
-					</tr>
-					<%@ include file="page1.file"%>
-					<c:forEach var="trvlVO" items="${list}" begin="<%=pageIndex%>"
-						end="<%=pageIndex+rowsPerPage-1%>">
-						<tr>
-							<td>${trvlVO.trvl_id}</td>
-							<td>${trvlVO.trvl_date}</td>
-							<td><a href="<%=request.getContextPath()%>/front-end/trvl/trvl.do?trvl_id=${trvlVO.trvl_id}&action=getOne_For_Display">${trvlVO.trvl_tittle}</a></td>
-							<td>${trvlVO.trvl_loc}</td>
-							<td>${trvlVO.trvl_count}</td>
-							<td>${trvlVO.trvl_score}</td>
-							<td>
-								<FORM METHOD="post"
-									ACTION="<%=request.getContextPath()%>/front-end/trvl/trvl.do">
-									<input type="submit" value="修改"> <input type="hidden"
-										name="trvl_id" value="${trvlVO.trvl_id}"> <input
-										type="hidden" name="action" value="getOne_For_Update">
-								</FORM>
-							</td>
-							<td>
-								<FORM METHOD="post"
-									ACTION="<%=request.getContextPath()%>/front-end/trvl/trvl.do">
-									<input type="submit" value="刪除"> <input type="hidden"
-										name="trvl_id" value="${trvlVO.trvl_id}"> <input
-										type="hidden" name="action" value="delete">
-								</FORM>
-							</td>
-						</tr>
-					</c:forEach>
-				</table>
-			</div>	
-		</div>	
-	</div>			
-	<%@ include file="page2.file"%>
-</div>
-</div>
 
-
+	
+<%@ include file="/front-end/member_interface/script.file" %>	
  
-<%@ include file="/front-end/member_interface/script.file" %>
+
 
 </body>
 </html>

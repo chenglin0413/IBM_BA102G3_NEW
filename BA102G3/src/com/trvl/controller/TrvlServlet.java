@@ -11,7 +11,6 @@ import com.tlcm.model.TlcmService;
 import com.tlcm.model.TlcmVO;
 import com.trpi.model.TrpiService;
 import com.trpi.model.TrpiVO;
-import com.trvl.model.TrvlDAO;
 import com.trvl.model.TrvlService;
 import com.trvl.model.TrvlVO;
 import com.user.model.UserVO;
@@ -44,8 +43,7 @@ public class TrvlServlet extends HttpServlet {
 
 			try {
 				/************************ 1.接收請求參數 - 輸入格式的錯誤處理*************************/
-			//	UserVO userVO = (userVO)session.getAttribute("userVO");
-				Integer user_id = Integer.parseInt(request.getParameter("user_id"));
+				UserVO userVO = (UserVO)session.getAttribute("userVO");
 
 				java.sql.Date trvl_date = null;
 				try {
@@ -68,9 +66,18 @@ public class TrvlServlet extends HttpServlet {
 				if (trvl_content == null || trvl_content.trim().length() == 0) {
 					errorMsgs.add("內文請勿空白");
 				}
+				
+				TrvlVO trvlVO = new TrvlVO();
+				trvlVO.setUser_id(userVO.getUser_id());
+				trvlVO.setTrvl_tittle(trvl_tittle);
+				trvlVO.setTrvl_loc(trvl_loc);
+				trvlVO.setTrvl_date(trvl_date);
+				trvlVO.setTrvl_content(trvl_content);
+				
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
+					request.setAttribute("trvlVO", trvlVO);
 					RequestDispatcher failureView = request.getRequestDispatcher("/front-end/blog/addTrvl.jsp");
 					failureView.forward(request, response);
 					return;
@@ -78,20 +85,29 @@ public class TrvlServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 ***************************************/
 				TrvlService trvlSvc = new TrvlService();
-				Integer trvl_id = Integer.parseInt(trvlSvc.addTrvl(user_id, trvl_date, trvl_tittle, trvl_loc, trvl_content));
 				TrpiService trpiSvc = new TrpiService();
 				
 				Collection<Part> parts = request.getParts();
 				for (Part part : parts) {
 					if (getFileNameFromPart(part) != null && part.getContentType() != null) {
-						// 這裡只有IE能查出檔案實際內容，chrome檢查不出 只會秀出檔案的副檔名
-						InputStream data = part.getInputStream();
+						InputStream in = part.getInputStream();
 						String trpi_imgfmt = getFileNameFromPart(part);
-						byte[] trpi_img = new byte[data.available()];
-						data.read(trpi_img);
-						trpiSvc = new TrpiService();
+						byte[] trpi_img = new byte[in.available()];
+						in.read(trpi_img);
+						
+						//確認有圖片再新增遊記
+						Integer trvl_id = Integer.parseInt(trvlSvc.addTrvl(userVO.getUser_id(), trvl_date, trvl_tittle, trvl_loc, trvl_content));
 						trpiSvc.addTrpi(trvl_id, trpi_img, trpi_imgfmt);
-						data.close();
+						in.close();
+					}else if (getFileNameFromPart(part) == null) {
+						errorMsgs.add("請上傳一張圖片");
+						
+						if (!errorMsgs.isEmpty()) {
+							request.setAttribute("trvlVO", trvlVO);
+							RequestDispatcher failureView = request.getRequestDispatcher("/front-end/blog/addTrvl.jsp");
+							failureView.forward(request, response);
+							return;
+						}
 					}
 				}
 				
@@ -115,11 +131,10 @@ public class TrvlServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			request.setAttribute("errorMsgs", errorMsgs);
-			System.out.println("有了");
+			
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				Integer trvl_id = new Integer(request.getParameter("trvl_id").trim());
-				System.out.println(trvl_id);
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = request
@@ -177,7 +192,6 @@ public class TrvlServlet extends HttpServlet {
 				/*************************** 1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				
 				UserVO userVO = (UserVO)session.getAttribute("userVO");
-				Integer user_id = new Integer(request.getParameter("user_id"));
 				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
@@ -189,7 +203,7 @@ public class TrvlServlet extends HttpServlet {
 
 				/*************************** 2.開始查詢資料 *****************************************/
 				TrvlService trvlSvc = new TrvlService();
-				List<TrvlVO> list = trvlSvc.getTrvlByUserId(user_id);
+				List<TrvlVO> list = trvlSvc.getTrvlByUserId(userVO.getUser_id());
 				if (list == null) {
 					errorMsgs.add("查無資料");
 				}
@@ -228,28 +242,42 @@ public class TrvlServlet extends HttpServlet {
 			String whichPage = request.getParameter("whichPage");
 			request.setAttribute("whichPage", whichPage);   // 送出修改的來源網頁的第幾頁
 			
-
-			Integer trvl_id = Integer.parseInt(request.getParameter("trvl_id").trim());
 			
-			// Send the use back to the form, if there were errors
-			if (!errorMsgs.isEmpty()) {
-				RequestDispatcher failureView = request.getRequestDispatcher("/front-end/blog/select_page.jsp");
+			try{	
+				String str = request.getParameter("trvl_id").trim();
+				Integer trvl_id=null;
+				if (str == null ) {
+					errorMsgs.add("查無資料");
+				} else { 
+					trvl_id = new Integer(str);
+				}
+			
+			
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = request.getRequestDispatcher("/front-end/blog/select_page.jsp");
+					failureView.forward(request, response);
+					return;// 程式中斷
+				}
+			
+			/***************************查詢完成,準備轉交(Send the Success view)*************/
+				TrvlService trvlSvc = new TrvlService();
+				TrvlVO trvlVO = trvlSvc.getOneTrvl(trvl_id);
+								
+				List<TrpiVO> listTrpis = trvlSvc.getTrpisByTrvlId(trvl_id);
+				
+				request.setAttribute("trvlVO", trvlVO);
+				request.setAttribute("listTrpis", listTrpis);
+				String url = "/front-end/blog/updateTrvl_input.jsp";
+				RequestDispatcher successView = request.getRequestDispatcher(url); // 轉交updateTrvl_input.jsp
+				successView.forward(request, response);
+				/*************************** 其他可能的錯誤處理 **********************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = request.getRequestDispatcher("/front-end/blog/updateTrvl_input.jsp");
 				failureView.forward(request, response);
-				return;// 程式中斷
 			}
-			/*************************** 3.查詢完成,準備轉交(Send the Success view)*************/
-			TrvlService trvlSvc = new TrvlService();
-			TrvlVO trvlVO = trvlSvc.getOneTrvl(trvl_id);
-							
-			List<TrpiVO> listTrpis = trvlSvc.getTrpisByTrvlId(trvl_id);
-			
-			request.setAttribute("trvlVO", trvlVO);
-			request.setAttribute("listTrpis", listTrpis);
-			String url = "/front-end/blog/updateTrvl_input.jsp";
-			RequestDispatcher successView = request.getRequestDispatcher(url); // 轉交updateTrvl_input.jsp
-			successView.forward(request, response);
-		}
-
+		}		
 		if ("update".equals(action)) { // 來自updateTrvl_input.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -257,13 +285,11 @@ public class TrvlServlet extends HttpServlet {
 			// send the ErrorPage view.
 			request.setAttribute("errorMsgs", errorMsgs);
 
-//			try {
+		try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理*************************/
-			//	UserVO userVO = (userVO)session.getAttribute("userVO");
+				UserVO userVO = (UserVO)session.getAttribute("userVO");
 				
 				Integer trvl_id = Integer.parseInt(request.getParameter("trvl_id").trim());
-				Integer user_id = Integer.parseInt(request.getParameter("user_id").trim());
-				Integer trpi_id = Integer.parseInt(request.getParameter("trpi_id").trim());
 				
 				java.sql.Date trvl_date = null;
 				try {
@@ -290,48 +316,62 @@ public class TrvlServlet extends HttpServlet {
 				if (trvl_content == null || trvl_content.trim().length() == 0) {
 					errorMsgs.add("內文請勿空白");
 				}
-
+				
+				TrvlVO trvlVO = new TrvlVO();
+				trvlVO.setUser_id(userVO.getUser_id());
+				trvlVO.setTrvl_tittle(trvl_tittle);
+				trvlVO.setTrvl_loc(trvl_loc);
+				trvlVO.setTrvl_date(trvl_date);
+				trvlVO.setTrvl_content(trvl_content);
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
+					request.setAttribute("trvlVO", trvlVO);
 					RequestDispatcher failureView = request
 							.getRequestDispatcher("/front-end/blog/updateTrvl_input.jsp");
 					failureView.forward(request, response);
 					return;
 				}
-
-				/*************************** 2.開始新增資料 ***************************************/
-				TrvlService trvlSvc = new TrvlService();
-				TrpiService trpiSvc =null;
 				
-				TrvlVO trvlVO = trvlSvc.updateTrvl(trvl_id, user_id, trvl_date, trvl_tittle, trvl_loc, trvl_content);
+				Integer trpi_id = Integer.parseInt(request.getParameter("trpi_id").trim());
+				
+				TrvlService trvlSvc = new TrvlService();
+				TrpiService trpiSvc = new TrpiService(); 
+				
+				
+				/*************************** 2.開始新增資料 ***************************************/		
 				
 				Collection<Part> parts = request.getParts();
 				for (Part part : parts) {
 					if (getFileNameFromPart(part) != null && part.getContentType() != null) {
-						// 這裡只有IE能查出檔案實際內容，chrome檢查不出 只會秀出檔案的副檔名
 						String trpi_imgfmt = getFileNameFromPart(part);
-	System.out.println(trpi_imgfmt);					
-						InputStream data = part.getInputStream();
-						byte[] trpi_img = new byte[data.available()];
-						data.read(trpi_img);
-						trpiSvc = new TrpiService();
+						InputStream in = part.getInputStream();
+						byte[]trpi_img = new byte[in.available()];
+						in.read(trpi_img);
+						in.close();
+						
+						trvlVO = trvlSvc.updateTrvl(trvl_id, userVO.getUser_id(), trvl_date, trvl_tittle, trvl_loc, trvl_content);
 						trpiSvc.updateTrpi(trpi_id,trvl_id, trpi_img, trpi_imgfmt);
-						data.close();
+						
+					}else if (getFileNameFromPart(part)==null) { //無照片,只更新遊記
+						
+						trvlVO = trvlSvc.updateTrvl(trvl_id, userVO.getUser_id(), trvl_date, trvl_tittle, trvl_loc, trvl_content);
+						
 					}
 				}
-				
+	
 				/*************************** 3.新增完成,準備轉交(Send the Success view)***********/
 				request.setAttribute("trvlVO", trvlVO);
 				String url = "/front-end/blog/listAllByUser.jsp";
-				RequestDispatcher successView = request.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				RequestDispatcher successView = request.getRequestDispatcher(url);
 				successView.forward(request, response);
 				/*************************** 其他可能的錯誤處理 **********************************/
-//			} catch (Exception e) {
-//				errorMsgs.add("無法取得資料:" + e.getMessage());
-//				RequestDispatcher failureView = request
-//						.getRequestDispatcher("/front-end/b/updateTrvl_input.jsp");
-//				failureView.forward(request, response);
-//			}
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = request
+						.getRequestDispatcher("/front-end/blog/updateTrvl_input.jsp");
+				failureView.forward(request, response);
+			}
 
 		}
 

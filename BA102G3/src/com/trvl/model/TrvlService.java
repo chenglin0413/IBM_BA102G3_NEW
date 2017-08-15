@@ -78,6 +78,17 @@ public class TrvlService {
 		 return dao.getTopOfBlogs();
 	}
 	
-	
+//	public void addTrvlWithTrpis (TrvlVO trvlVO , List<TrpiVO> trpiList) {
+//
+//		TrvlVO trvlVO = new TrvlVO();
+//		trvlVO.setUser_id(user_id);
+//		trvlVO.setTrvl_date(trvl_date);
+//		trvlVO.setTrvl_tittle(trvl_tittle);
+//		trvlVO.setTrvl_loc(trvl_loc);
+//		trvlVO.setTrvl_content(trvl_content);
+//		dao.insertWithTrpis(trvlVO, list);
+//
+//		
+//	}
 
 }

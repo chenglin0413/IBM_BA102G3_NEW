@@ -1,6 +1,7 @@
 package com.trvl.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
@@ -13,6 +14,7 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import com.tlcm.model.TlcmVO;
+import com.trpi.model.TrpiDAO;
 import com.trpi.model.TrpiVO;
 
 public class TrvlDAO implements TrvlDAO_interface {
@@ -37,8 +39,8 @@ public class TrvlDAO implements TrvlDAO_interface {
 	private static final String DELETE = "DELETE FROM Trvl where trvl_id=?";
 
 	private static final String GET_ONE_STMT = "SELECT * FROM Trvl where trvl_id =?";
-	private static final String GET_ALL_STMT = "SELECT * FROM Trvl order by trvl_id desc";
-
+	private static final String GET_ALL_STMT = "SELECT * FROM Trvl WHERE trvl_id NOT IN (select trvl_id from rptl where rptl_status = 1) order by trvl_id desc";
+	
 	private static final String Get_BY_USERID = "SELECT * FROM Trvl where user_id = ? order by trvl_date desc";
 	
 	private static final String Get_Tlcms = "SELECT * FROM Tlcm where trvl_id=?";
@@ -78,7 +80,7 @@ public class TrvlDAO implements TrvlDAO_interface {
 				do {
 					for (int i = 1; i <= columnCount; i++) {
 						trvlid = rs.getString(i);
-						System.out.println("(" + i + ") = " + trvlid + "(新增的自增主鍵值號碼)");
+						System.out.println( "新增的自增主鍵值號碼 :" + trvlid );
 					}
 				} while (rs.next());
 			} else {
@@ -630,6 +632,85 @@ public class TrvlDAO implements TrvlDAO_interface {
 		return list;
 	}
 	
-	
+//	@Override
+//	public void insertWithTrpis(TrvlVO trvlVO , List<TrpiVO> list) {
+//
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//
+//		try {
+//
+//			con = ds.getConnection();
+//			// 1●設定於 pstm.executeUpdate()之前
+//    		con.setAutoCommit(false);
+//			
+//    		// 先新增遊記
+//			String cols[] = {"TRVL_ID"};
+//			pstmt = con.prepareStatement(INSERT_STMT , cols);			
+//			pstmt.setInt(1, trvlVO.getUser_id());
+//			pstmt.setDate(2, trvlVO.getTrvl_date());
+//			pstmt.setString(3, trvlVO.getTrvl_tittle());
+//			pstmt.setString(4, trvlVO.getTrvl_loc());
+//			pstmt.setString(5, trvlVO.getTrvl_content());
+//			pstmt.executeUpdate();
+//			//掘取對應的自增主鍵值
+//			String next_trvlno = null;
+//			ResultSet rs = pstmt.getGeneratedKeys();
+//			if (rs.next()) {
+//				next_trvlno = rs.getString(1);
+//				System.out.println("自增主鍵值= " + next_trvlno +"(剛新增成功的遊記編號)");
+//			} else {
+//				System.out.println("未取得自增主鍵值");
+//			}
+//			rs.close();
+//			// 再同時新增照片
+//			TrpiDAO dao = new TrpiDAO();
+//			System.out.println("list.size()-A="+list.size());
+//			for (TrpiVO aTrpi : list) {
+//				aTrpi.setTrvl_id(Integer.parseInt(next_trvlno));
+//				dao.insert(aTrpi);
+//			}
+//
+//			// 2●設定於 pstm.executeUpdate()之後
+//			con.commit();
+//			con.setAutoCommit(true);
+//			System.out.println("list.size()-B="+list.size());
+//			System.out.println("新增遊記編號" + next_trvlno + "時,共有照片" + list.size()
+//					+ "張同時被新增");
+//			
+//			// Handle any driver errors
+//		} catch (SQLException se) {
+//			if (con != null) {
+//				try {
+//					// 3●設定於當有exception發生時之catch區塊內
+//					System.err.print("Transaction is being ");
+//					System.err.println("rolled back-由-dept");
+//					con.rollback();
+//				} catch (SQLException excep) {
+//					throw new RuntimeException("rollback error occured. "
+//							+ excep.getMessage());
+//				}
+//			}
+//			throw new RuntimeException("A database error occured. "
+//					+ se.getMessage());
+//			// Clean up JDBC resources
+//		} finally {
+//			if (pstmt != null) {
+//				try {
+//					pstmt.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (Exception e) {
+//					e.printStackTrace(System.err);
+//				}
+//			}
+//		}
+//
+//	}
 	
 }

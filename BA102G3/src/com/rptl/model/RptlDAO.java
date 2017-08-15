@@ -26,8 +26,8 @@ public class RptlDAO implements RptlDAO_interface  {
 	}
 
 	
-	private static final String INSERT_STMT = "INSERT INTO Rptl (rptl_id,trvl_id,user_id,rptl_date,rptl_status,rptl_tittle,rptl_content)"
-			+ "VALUES (Rptl_ID_SEQ.NEXTVAL, ?, ?, ?, ?, ?, ?)";
+	private static final String INSERT_STMT = "INSERT INTO Rptl (rptl_id,trvl_id,user_id,rptl_date,rptl_tittle,rptl_content)"
+			+ "VALUES (Rptl_ID_SEQ.NEXTVAL, ?, ?, ?, ?, ?)";
 	private static final String UPDATE = "UPDATE Rptl set trvl_id=? ,user_id=?, rptl_date=?, rptl_status=?, rptl_tittle=?,rptl_content=? where rptl_id = ?";
 	private static final String DELETE = "DELETE FROM Rptl where rptl_id=?";
 	private static final String GET_ONE_STMT = "SELECT * FROM Rptl where rptl_id = ?";
@@ -48,9 +48,8 @@ public class RptlDAO implements RptlDAO_interface  {
 			pstmt.setInt(1,rptlVO.getTrvl_id());
 			pstmt.setInt(2,rptlVO.getUser_id());
 			pstmt.setTimestamp(3,rptlVO.getRptl_date());
-			pstmt.setInt(4,rptlVO.getRptl_status());
-			pstmt.setString(5,rptlVO.getRptl_tittle());
-			pstmt.setString(6,rptlVO.getRptl_content());
+			pstmt.setString(4,rptlVO.getRptl_tittle());
+			pstmt.setString(5,rptlVO.getRptl_content());
 			
 			pstmt.executeUpdate();
 			con.commit();

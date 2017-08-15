@@ -28,7 +28,7 @@ public class TrvlJDBCDAO implements TrvlDAO_interface {
 	private static final String DELETE = "DELETE FROM Trvl where trvl_id=?";
 	
 	private static final String GET_ONE_STMT = "SELECT * FROM Trvl where trvl_id =?";
-	private static final String GET_ALL_STMT = "SELECT * FROM Trvl order by trvl_date desc";
+	private static final String GET_ALL_STMT = "SELECT * FROM Trvl WHERE trvl_id NOT IN (select trvl_id from rptl where rptl_status = 1) order by trvl_id desc";	
 	
 	private static final String Get_BY_USERID = "SELECT * FROM Trvl where user_id = ? order by trvl_date desc";
 	

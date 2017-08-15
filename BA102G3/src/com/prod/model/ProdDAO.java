@@ -37,9 +37,9 @@ public class ProdDAO implements ProdDAO_interface {
 	private static final String DELETE_STMT = "DELETE FROM PROD WHERE PROD_ID=?";
 	private static final String GET_ONE_STMT = "SELECT * FROM PROD WHERE PROD_ID=?";
 	private static final String GET_ALL = "SELECT * FROM PROD ORDER BY PROD_ID DESC";
-	private static final String GET_ALL4member = "SELECT * FROM PROD WHERE PROD_STATUS='1' ORDER BY PROD_ID";
-	private static final String GET_ONE_PROD_SORT = "SELECT * FROM PROD WHERE PROD_SORT=? and PROD_STATUS='1'";
-	private static final String GET_ONE_STORE_TER = "SELECT p.prod_id,p.store_id,p.prod_name,p.prod_price,p.prod_sort FROM PROD P JOIN STORE S ON P.STORE_ID = S.STORE_ID WHERE STORE_TER = ? and PROD_STATUS='1' ORDER BY PROD_ID DESC";
+	private static final String GET_ALL4member = "SELECT * FROM prod WHERE prod_id NOT IN (select prod_id from rppr where rppr_status = 1)and prod_status=1 order by prod_id desc";
+	private static final String GET_ONE_PROD_SORT = "SELECT * FROM PROD WHERE prod_id NOT IN (select prod_id from rppr where rppr_status = 1)and prod_status=1 and PROD_SORT=?";
+	private static final String GET_ONE_STORE_TER = "SELECT p.prod_id,p.store_id,p.prod_name,p.prod_price,p.prod_sort FROM PROD P JOIN STORE S ON P.STORE_ID = S.STORE_ID WHERE prod_id NOT IN (select prod_id from rppr where rppr_status = 1) and STORE_TER = ? and PROD_STATUS='1' ORDER BY PROD_ID DESC";
 	private static final String GET_ONE_STORE_IDALLPROD = "SELECT * FROM PROD WHERE STORE_ID=? ORDER BY PROD_ID DESC";
 	private static final String GET_TOP_THREE = "select  * from(select * from prod order by prod_soldcount desc) where rownum <4";
 	private static final String GET_TOP_TWELVE = "select  * from(select * from prod order by prod_score desc) where rownum <13";

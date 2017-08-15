@@ -128,7 +128,9 @@
               
          <div class="item">
 			<div class="row">
-				<div class="col-md-6"><img src="https://api.fnkr.net/testimg/150x100/00CED1/FFF/?text=img+placeholder"></div>
+				<div class="col-md-6"><img
+								src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=<%=prod_id%>"
+								width="300" height="250"></div>
 				<div class="col-md-6">
 				<div class="panel panel-default"><%=prod_name%></div>
 				<div class="col-md-12">

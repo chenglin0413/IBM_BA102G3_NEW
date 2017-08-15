@@ -1,16 +1,15 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.trvl.model.*,com.user.model.*"%>
-
-<!-- 	UserVO userVO = (UserVO) session.getAttribute("userVO"); 會員id --> 
 <%	
 	UserVO userVO = (UserVO)session.getAttribute("userVO");
 	String account =(String) session.getAttribute("account");
 	Integer user_id =userVO.getUser_id();//取得會員ID
 	pageContext.setAttribute("user_id", user_id);
+	TrvlVO trvlVO = (TrvlVO)session.getAttribute("trvlVO");
 %>
 
-<html>
+<!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,7 +18,7 @@
     <meta name="author" content="">
 
     <title>Anytime Grip</title>
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	 <!-- ckeditor JS -->
 	<script src="https://cdn.ckeditor.com/4.7.1/standard/ckeditor.js"></script>
     <!-- Bootstrap Core CSS -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
@@ -36,22 +35,8 @@
 
     <title>個人遊記</title>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="<%=request.getContextPath()%>/front-end/css/bootstrap.css" rel="stylesheet">
-	
-    <!-- Custom CSS -->
-    <link href="<%=request.getContextPath()%>/front-end/blog/css/stylish-portfolio.css" rel="stylesheet">
-	
-    <!-- Custom Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 	<style type="text/css">
-        .item img{
-            height: 250px;
-            width:100%;
-            
-        }
-       
-       
+
         .content: {
           position: relative;
         }
@@ -64,35 +49,27 @@
           left: 5px;
           margin: auto;
         }
+        
+        .imgPreview {
+        	width:600px;
+        	height:auto;
+        }
 			      
     </style>
 
 </head>
 
 <body>
- <div class="callout"></div>
-    <%@include file="/front-end/member_interface/headerBar.file" %>
-<%-- 錯誤表列 --%>
-<c:if test="${not empty errorMsgs}">
-	<font color='red'>請修正以下錯誤:
-	<ul>
-		<c:forEach var="message" items="${errorMsgs}">
-			<li>${message}</li>
-		</c:forEach>
-	</ul>
-	</font>
-</c:if>	
+<%@include file="/front-end/member_interface/headerBar.file" %>
 
 <div class="container">
     <div class="row">
         <div class="col-md-11 col-xs-12" >
-            <h3>_</h3>
+            <h3></h3>
         </div>         
     </div>
 </div>
 
-
-<div class="callout"></div>
 
  <div class="container">	
 	<div class="row ">         
@@ -112,20 +89,18 @@
                </li>
                
            </ol>
-           
-           
-
+       </div>    
+  </div>    
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
-	<font color='red'>請修正以下錯誤:
 	<ul>
 		<c:forEach var="message" items="${errorMsgs}">
-			<li>${message}</li>
+			<font color='red'><li>${message}</li></font>
 		</c:forEach>
 	</ul>
-	</font>
-</c:if>
-
+</c:if>	
+    
+          
 <%	
 	java.sql.Date date_SQL = new java.sql.Date(System.currentTimeMillis());
 %>	
@@ -138,7 +113,7 @@
 							<h3 class="panel-title"><strong>遊記標題</strong></h3>
 						</div>
 						<div class="panel-body">
-							<input type="text" name="trvl_tittle" class="form-control">
+							<input type="text" name="trvl_tittle" class="form-control"  value="${trvlVO.trvl_tittle}" required>
 						</div>
 					</div>
 				</div>
@@ -148,8 +123,8 @@
 						<h3 class="panel-title"><strong>遊記地點</strong></h3>
 					</div>
 					<div class="panel-body">
-						<input type="text" name="trvl_loc" class="form-control">
-						</div>
+						<input type="text" name="trvl_loc" class="form-control" value="${trvlVO.trvl_loc}" required >
+					</div>
 					</div>
 				</div>
 				<div class="col-xs-12 col-md-4">
@@ -158,35 +133,46 @@
 							<h3 class="panel-title"><strong>遊記日期</strong></h3>
 						</div>
 						<div class="panel-body">
-							<input type="text" name="trvl_date" value="<%=date_SQL%>">
+							<input type="date" name="trvl_date" value="<%=date_SQL%>">
 						</div>
 					</div>
 				</div>
-		<input type="file" name="upfile" value="">
+			<input type="file" name="upfile" accept="image/*" onchange="loadFile(event)">
 			<div class="col xs-12 col-md-8 col-md-offset-2">	
-				<img class="img-thumbnail">
+				<img class="img-thumbnail" id="imgPreview">
 			</div>	
-	<br>	
-		<div class="col-xs-12 col-md-12">	
-			<textarea name="trvl_content"></textarea>
-		</div>
-			<div class="col-xs-12 col-md-push-12">	
-				<input type="hidden" name="user_id" value="${user_id}">   <!-- ${userVO.user_id} -->
+		<br>	
+			<div class="col-xs-12 col-md-12">	
+				<textarea name="trvl_content" required>${trvlVO.trvl_content}</textarea>
+			</div>
+			<div class="col-xs-12 col-md-push-11">	
+		
 				<input type="hidden" name="action" value="insert">
-				<input type="submit" class="btn btn-primary btn-sm btn" value="確認上傳遊記">
+				<input type="submit" class="btn btn-success btn-sm btn" value="發布遊記">
 			</div>	
 			</form>
 		</div>	<!-- row -->	
 	</div>  <!-- container -->
 
 <script>
- CKEDITOR.replace('trvl_content', { //關閉編輯器文末<p>
+ CKEDITOR.replace('trvl_content', { //轉換編輯器文末Tag
      uiColor: '#0066FF',
      enterMode:CKEDITOR.ENTER_BR,
      shiftEnterMode: CKEDITOR.ENTER_BR, 
  }); 
+ 
 </script>
 
+<script>
+  var loadFile = function(event) {
+    var reader = new FileReader();
+    reader.onload = function(){
+      var output = document.getElementById('imgPreview');
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  };
+</script>
 
 
 

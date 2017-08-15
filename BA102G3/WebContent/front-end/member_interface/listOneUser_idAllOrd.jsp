@@ -68,6 +68,10 @@
         }
         #accordion{
         font-size:12px;
+        
+        }
+        #accordion>div{
+        padding:5px;
         }
         .pop{
         font-size:12px;
@@ -151,7 +155,7 @@
 <div id="accordion">
 <c:forEach var="ordVO" items="${ordSvc.getOneUser_idAllOrd(user_id)}" varStatus="s">
  
- <div>訂單編號#${ordVO.ord_id}</div>
+ <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;訂單編號#${ordVO.ord_id}</div>
  <div class="text-center">
 			       		<!-- 內容 -->
 			       		
@@ -254,7 +258,11 @@
 
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
-
+<script>
+		$(function() {
+			$("#accordion").accordion();
+		});
+</script>
 
 
 </body>

@@ -31,7 +31,7 @@ public class RpprServlet extends HttpServlet {
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			request.setAttribute("errorMsgs", errorMsgs);
-
+			String requestURL = request.getParameter("requestURL"); 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				Integer prod_id = Integer.parseInt(request.getParameter("prod_id").trim());
@@ -77,7 +77,8 @@ public class RpprServlet extends HttpServlet {
 				rpprVO = rpprSvc.addRppr(prod_id, user_id, rppr_date, rppr_tittle, rppr_content);
 
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = "/back-end/report/listAllRppr.jsp";
+				String url = requestURL;
+				request.setAttribute("rpprVO", rpprVO);
 				RequestDispatcher successView = request.getRequestDispatcher(url); // 新增成功後轉交???????.jsp
 				successView.forward(request, response);
 

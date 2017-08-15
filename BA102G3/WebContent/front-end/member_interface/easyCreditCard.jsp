@@ -57,7 +57,6 @@
 
 <%@include file="/front-end/member_interface/headerBar.file" %>
 
-<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/ord/ord.do" >
 	<div class="container-fluid">
         <div class="creditCardForm">
             <div class="heading">
@@ -70,15 +69,15 @@
                
                     <div class="form-group owner">
                         <label for="owner">Owner</label>
-                        <input type="text" class="form-control" id="owner">
+                        <input type="text" class="form-control" id="owner" required="required">
                     </div>
                     <div class="form-group CVV">
                         <label for="cvv">CVV</label>
-                        <input type="text" class="form-control" id="cvv">
+                        <input type="text" class="form-control" id="cvv" required="required">
                     </div>
                     <div class="form-group" id="card-number-field">
                         <label for="cardNumber">Card Number</label>
-                        <input type="text" class="form-control" id="cardNumber">
+                        <input type="text" class="form-control" id="cardNumber" required="required">
                     </div>
                     <div class="form-group" id="expiration-date">
                         <label>Expiration Date</label>
@@ -146,12 +145,11 @@
     </div>
     <div class="col-md-6 col-md-offset-4" >
     <div class="row">
-
-		              <input type="hidden" name="action" value="decide_Ord_bill">
-		              <input type="submit" value="確認付款">
+					  <button class="btn btn-danger" onclick="magiclittlebtn();">MAGIC</button>
+					  &nbsp;&nbsp;&nbsp;&nbsp;	
+		              <a href="<%=request.getContextPath()%>/front-end/ord/ord.do?action=decide_Ord_bill"><button class="btn btn-info">確認付款</button></a>
 		              </div>
 		              </div>
-		          </form>
     
     
 <%@ include file="/front-end/member_interface/script.file" %>
@@ -170,7 +168,17 @@
 	   
 	}
 
-
+	
+		function magiclittlebtn(){
+			document.getElementById('owner').value = 'Cheng Lin';
+		    document.getElementById('cvv').value = 322;
+		    document.getElementById('cardNumber').value = '4556 6897 7316 0486';
+		}
+		
+	
+	
+	
+	
 	function init(){
 		var a=document.getElementById("cash");
 		var b=document.getElementById("credit");

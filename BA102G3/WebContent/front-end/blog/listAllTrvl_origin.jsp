@@ -34,10 +34,6 @@
     <link href="<%= request.getContextPath() %>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100italic,100,300,300italic,900italic,900,700,700italic,500italic,500,400italic" rel="stylesheet" type="text/css">
-	<link href="<%= request.getContextPath() %>/front-end/blog/listAllTrvl.css" rel="stylesheet">
-	
     <title>遊記瀏覽</title>
 
 	<style type="text/css">
@@ -55,11 +51,24 @@
           margin: auto;
         }
         
-        .pic {
-        	width:500px;
-        	height:auto;
-        }
-  
+        .overflowBox {
+			padding: 5px;
+		}
+
+		.ellipsis {
+			overflow:hidden;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+		.aReadMore {
+			margin-left:450px;
+		}
+		
+		.pic {
+			width:250px;
+			height:auto;
+		}
+		      
     </style>
 </head>
 <body>
@@ -92,50 +101,64 @@
   	</div>
 </div>         
            
-     
- <section class="publicaciones-blog-home">
-      <div class="container">
-        <div class="row">
-          <h2>Blog</h2>
-          <div class="row-page row">
-          
-          <%@ include file="page1.file"%>
-			<c:forEach var="trvlVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" step="1" varStatus="s">
-          
-			    <div class="col-page col-sm-4 col-md-3">
-              		<a href="<%=request.getContextPath()%>/front-end/trvl/trvl.do?trvl_id=${trvlVO.trvl_id}&action=getOne_For_Display"  class="fondo-publicacion-home">
-                <div class="img-publicacion-home">
-                  	<c:forEach var="trpiVO" items="${trpiSvc.all}">
-						<c:if test="${trvlVO.trvl_id==trpiVO.trvl_id}">
-							<img class="img-responsive pic" src="<%= request.getContextPath()%>/front-end/trpi/DBGifReader.do?trpi_id=${trpiVO.trpi_id}">
-						</c:if>
-					</c:forEach>
-                </div>
-                  	<h3>${trvlVO.trvl_tittle}</h3>
-                <div class="contenido-publicacion-home JQellipsis">
-                 	 <p>${trvlVO.trvl_content}</p>
-                </div>
-                <div class="mascara-enlace-blog-home">
-                  	<span>Read More</span>
-                </div>
-             		 </a>
-              </div>
-            </c:forEach>
-         </div>
-       </div>
-    </div>
- </section>
-<div class="row">
-	<div class="col-sm-6 col-md-8 col-md-offset-4">
-		<p><%@include file="page2.file"%></p>
-	</div>
-</div>	
-  <!--   -----------------------------------------------------------------------------------------------   - -->         	
+           	
+	<div class="container-fluid" >	
+		<div class="row">
+			<div class="col-md-10 col-md-push-1">
+				<ul>   			
+					<%@ include file="page1.file"%>
+						<c:forEach var="trvlVO" items="${list}" begin="<%=pageIndex%>"
+									end="<%=pageIndex+rowsPerPage-1%>">
+							<li>
+								<div class="row">
+									<div class="col-md-4">
+										<c:forEach var="trpiVO" items="${trpiSvc.all}">
+											<c:if test="${trvlVO.trvl_id==trpiVO.trvl_id}">
+												<img class="img-thumbnail pic" src="<%= request.getContextPath()%>/front-end/trpi/DBGifReader.do?trpi_id=${trpiVO.trpi_id}">
+						                    </c:if>
+										</c:forEach>
+									</div>
+									<div class="col-md-8 relative" >												
+										 <table class="table">
+										  	<tr>
+										  		<th class="sm-info"><h4>${trvlVO.trvl_tittle}</h4></th> 
+										  	</tr>
+										  	<tr>	
+										  		<td>
+										  			<div class="overflowBox">
+														<p class="JQellipsis">${trvlVO.trvl_content}</p>
+														<a class="btn-lg" href="<%=request.getContextPath()%>/front-end/trvl/trvl.do?trvl_id=${trvlVO.trvl_id}&action=getOne_For_Display">
+															<img class="aReadMore" src="<%=request.getContextPath()%>/front-end/blog/img/forward-arrow.png">&nbsp Read more
+														</a>
+													</div>
+										  		</td>
+											</tr>
+			
+										 </table>
+									</div> 
+								</div>	
+							</li>  <!-- 	一篇文章		 -->
+						</c:forEach>
+					</ul>
+					<div class="row">
+						<div class="col-sm-6 col-md-8 col-md-offset-4">
+							<p><%@include file="page2.file"%></p>
+						</div>
+					</div>	
+				</div>
+			</div> <!-- /.row -->
+		</div> <!-- /.container -->
 	
 	
+	
+	
+ <!-- jQuery -->
+    <script src="<%= request.getContextPath() %>/front-end/js/jquery.js"></script>
 
+    <!-- Bootstrap Core JavaScript -->
+    <script src="<%= request.getContextPath() %>/front-end/js/bootstrap.min.js"></script>
 
-    <%@ include file="/front-end/member_interface/script.file" %>	
+    <!-- Custom Theme JavaScript -->
 <script type="text/javascript">
 
 	

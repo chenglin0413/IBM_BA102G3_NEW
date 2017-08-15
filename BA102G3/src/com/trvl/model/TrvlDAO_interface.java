@@ -26,4 +26,7 @@ public interface TrvlDAO_interface {
     
     //取點擊數前三名
     public List<TrvlVO>	getTopOfBlogs();
+    
+    //同時新增遊記與照片 
+    //public void insertWithTrpis(TrvlVO trvlVO , List<TrpiVO> list);
 }

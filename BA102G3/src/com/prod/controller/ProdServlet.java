@@ -7,7 +7,9 @@ import javax.servlet.*;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
 import com.ord.model.OrdService;
 import com.ord.model.OrdVO;
 import com.prod.model.*;
@@ -28,7 +30,8 @@ public class ProdServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-
+		
+		
 		if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -765,6 +768,58 @@ public class ProdServlet extends HttpServlet {
 				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/store_interface/addProd.jsp");
 				failureView.forward(req, res);
 			}
+		}
+		
+		if ("test".equals(action)) { // 來自select_page.jsp的請求
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+			res.setHeader("content-type", "text/html;charset=UTF-8");
+			res.setCharacterEncoding("UTF-8");
+			PrintWriter out=res.getWriter();
+			/***************************
+			 * 1.接收請求參數 - 輸入格式的錯誤處理
+			 **********************/
+			String str = req.getParameter("prod_id");
+			System.out.println(str);
+			if (str == null || (str.trim()).length() == 0) {
+				errorMsgs.add("請輸入產品編號");
+			}
+			// Send the use back to the form, if there were errors
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/prod/select_page.jsp");
+				failureView.forward(req, res);
+				return;// 程式中斷
+			}
+
+			Integer prod_id = null;
+			try {
+				prod_id = new Integer(str);
+			} catch (Exception e) {
+				errorMsgs.add("產品編號格式不正確");
+			}
+			// Send the use back to the form, if there were errors
+			if (!errorMsgs.isEmpty()) {
+				RequestDispatcher failureView = req.getRequestDispatcher("/front-end/prod/select_page.jsp");
+				failureView.forward(req, res);
+				return;// 程式中斷
+			}
+
+			/*************************** 2.開始查詢資料 *****************************************/
+			ProdService prodSvc = new ProdService();
+			ProdVO prodVO = prodSvc.getOneProd(prod_id);
+			JSONObject jb=new JSONObject(prodVO);
+			
+			try {
+				jb.put("prodVO", prodVO);
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			out.print( jb);
+
 		}
 
 	}

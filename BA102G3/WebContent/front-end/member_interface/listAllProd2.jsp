@@ -130,11 +130,7 @@
                </li>
                <li class="active">所有商品
                </li>
-               
-				  
-               
            </ol>
-        
         <ul class="nav nav-tabs">
 <!--                             <div class="dropdown"> -->
 <!--                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">商品種類 <b class="caret"></b></a> -->
@@ -145,18 +141,22 @@
 <!--                               </ul> -->
 <!--                             </div> -->
                              <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?store_ter=1&action=getOneStoreTer_For_Display"><i class="fa fa-arrow-circle-o-up"></i>第一航廈</a></li>
-                             <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?store_ter=2&action=getOneStoreTer_For_Display"><i class="fa fa-arrow-circle-o-up"></i>第二航廈</a></li>
-                            <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=3&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>伴手禮</a></li>
-                            <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=4&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>酒類</a></li>
-							<li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=5&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>文具用品</a></li>   
-                            <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=6&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>生活用品</a></li>
-                             <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=7&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>化妝品</a></li>
-                              <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=8&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>精品</a></li>
+                             <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?store_ter=2&action=getOneStoreTer_For_Display" ><i class="fa fa-arrow-circle-o-up"></i>第二航廈</a></li>
+                            <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=3&action=getOneSort_For_Display" ><i class="fa fa-arrow-circle-o-up"></i>伴手禮</a></li>
+                            <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=4&action=getOneSort_For_Display" ><i class="fa fa-arrow-circle-o-up"></i>酒類</a></li>
+							<li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=5&action=getOneSort_For_Display" ><i class="fa fa-arrow-circle-o-up"></i>文具用品</a></li>   
+                            <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=6&action=getOneSort_For_Display" ><i class="fa fa-arrow-circle-o-up"></i>生活用品</a></li>
+                             <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=7&action=getOneSort_For_Display" ><i class="fa fa-arrow-circle-o-up"></i>化妝品</a></li>
+                              <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=8&action=getOneSort_For_Display" ><i class="fa fa-arrow-circle-o-up"></i>精品</a></li>
                             
-
-                           
+								
+								
+								
          </ul>
-
+						<input type="text" id="prod_id"><button type="button" id="load">LOAD</button>	
+                           
+                           <div class="showPanel"></div>
+                           
 
 	<%-- 錯誤表列 --%>
 	<c:if test="${not empty errorMsgs}">
@@ -331,7 +331,7 @@
 		<%@ include file="page2.file" %>
 	</div>
 
-	
+
  <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
  
 <%@ include file="/front-end/member_interface/script.file" %>	
@@ -356,12 +356,37 @@
 			 return color.join("");
 		}
     	
-    	$(document).ready(function(){
-    		  $(".btnReport").click(function(){
-    		  $(".rpprForm").toggle();
-    		  });
-    		  
-    		});
+    	</script>
+    	<!-- ajax 練習部分 -->
+    	<script type="text/javascript">
+    	
+		var $prod_id = $("#prod_id");
+		console.log($prod_id);
+		$("#load").click(function() {
+			$.ajax({
+				url : '<%= request.getContextPath() %>/front-end/prod/prod.do',
+				data : {
+					prod_id : $prod_id.val(),
+					action:'test'
+				},
+				type : 'POST',
+						
+						success : function(jsonStr) {
+							var prodVO = JSON.parse(jsonStr);
+							alert('date saved:'+prodVO);
+							console.log(prodVO);
+							$.each(prodVO,function( key, value ) {
+								  $('.showPanel').addClass("col-md-12").append(key+":").append(value);
+							});
+							},
+						error : function(xhr) {
+							alert("error");
+							alert(xhr.status); 
+							alert(thrownError); 
+						}
+					});
+				});
+	
     </script>
 
 

@@ -1,10 +1,11 @@
-
+<%@ page language="java" contentType="text/html; charset=BIG5"
+    pageEncoding="BIG5"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="utf-8" >
 <meta http-equiv="expires" content="0">
-<title>ä½¿ç”¨GETè«‹æ±‚æ–¹å¼å–å¾—JSONå›æ‡‰å­—ä¸²</title>         
+<title>¨Ï¥ÎGET½Ğ¨D¤è¦¡¨ú±oJSON¦^À³¦r¦ê</title>         
 <style> 
 .empTable { border-collapse:collapse}
 .empTable th{ background-color:#BFBFFF;
@@ -24,11 +25,11 @@
 </head>
 <body>
 <table align="center">
-<tr><td>å“¡å·¥å¸³è™Ÿ</td>
+<tr><td>­û¤u±b¸¹</td>
     <td><input type="text" name="prod_id" id="prod_id">( 7566 )</td> 
 </tr>
 <tr><td colspan="2" align="center">
-    <input type="button" value="å–å¾—å“¡å·¥è³‡æ–™" onClick="getEmployee();"> 
+    <input type="button" value="¨ú±o­û¤u¸ê®Æ" onClick="getEmployee();"/> 
     </td>
 </tr>
 </table>  
@@ -38,19 +39,19 @@
 var xhr = null;
 
 function showEmployee(jsonStr){
-  //å‰–æjsonå­—ä¸²,å°‡å…¶è½‰æˆjsobç‰©ä»¶
-  //å‰–æjsonå­—ä¸²,å°‡å…¶è½‰æˆjsobç‰©ä»¶
+  //­åªRjson¦r¦ê,±N¨äÂà¦¨jsobª«¥ó
+  //­åªRjson¦r¦ê,±N¨äÂà¦¨jsobª«¥ó
   var list = JSON.parse(jsonStr);
 console.log(jsonStr);
 console.log(list.list.length);
-  //æº–å‚™è¦è¼¸å‡ºçš„ç¶²é çµæ§‹
+  //·Ç³Æ­n¿é¥Xªººô­¶µ²ºc
 	  var str = "<div class='col-md-12'>";
   for(var i=1;i<list.list.length;i++){
-	  str += "<div class='col-md-3'>å•†å®¶ID :"+ list.list[i].prod_id+"</div>";
-	  str += "<div class='col-md-3'>å•†å®¶ID :"+ list.list[i].prod_name+"</div>";
-	  str += "<div class='col-md-3'>å•†å®¶ID :"+ list.list[i].prod_descript+"</div>";
-	  str += "<div id='boxshadow' ><img src='<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id="+list.list[i].prod_id+" width='300' height='250'></div>";
-	  //æ”¾å…¥é é¢
+	  str += "<div class='col-md-3'>°Ó®aID :"+ list.list[i].prod_id+"</div>";
+	  str += "<div class='col-md-3'>°Ó®aID :"+ list.list[i].prod_name+"</div>";
+	  str += "<div class='col-md-3'>°Ó®aID :"+ list.list[i].prod_descript+"</div>";
+	  str += "<div id='boxshadow'><img src=<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id="+list.list[i].prod_id+"></div>";
+	  //©ñ¤J­¶­±
 	  console.log(i);
 	  document.getElementById("showPanel").innerHTML = str;
   }
@@ -61,7 +62,7 @@ console.log(list.list.length);
 
 function getEmployee(){ 
   var xhr = new XMLHttpRequest();
-  //è¨­å®šå¥½å›å‘¼å‡½æ•¸   
+  //³]©w¦n¦^©I¨ç¼Æ   
   xhr.onreadystatechange = function (){
     if( xhr.readyState == 4){
       if( xhr.status == 200){
@@ -73,11 +74,11 @@ function getEmployee(){
     }//xhr.readyState == 4
   };//onreadystatechange 
   
-  //å»ºç«‹å¥½Geté€£æ¥
+  //«Ø¥ß¦nGet³s±µ
   var url= "Get_JSON_from_DB.jsp?prod_id=" + document.getElementById("prod_id").value;
   url+="&time="+new Date().getTime();
   xhr.open("Get",url,true); 
-  //é€å‡ºè«‹æ±‚ 
+  //°e¥X½Ğ¨D 
   xhr.send( null );
 }
 </script>
