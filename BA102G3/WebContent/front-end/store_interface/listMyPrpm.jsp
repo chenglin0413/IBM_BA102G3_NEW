@@ -21,6 +21,7 @@
 	request.setAttribute("prodList", prodList);
 %>
 
+<jsp:useBean id="prodSvcB" scope="page" class="com.prod.model.ProdService" />
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,30 +47,58 @@
 	type="text/css">
 <link rel="stylesheet" href="js/bootstrap-datepicker3.min.css" />
 
+<style type="text/css">
+th {
+	text-align: center;
+	font-size: 20px;
+}
+</style>
+
 </head>
 
 <body>
 
 	<br>
 
-	<table border="1" align="center">
-		<tr height="79" style="background-color: rgb(229, 246, 253);">
-			<td height="79"
-				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span
-				style="color: rgb(229, 246, 253);">促銷商品</span><br />
-			<td height="79"
-				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span
-				style="color: rgb(229, 246, 253);">商品原價</span><br />
-			<td height="79"
-				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span
-				style="color: rgb(229, 246, 253);">促銷價格</span><br />
-			<td height="79"
-				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span
-				style="color: rgb(229, 246, 253);">價格修改</span><br />
-		</tr>
+<!-- 	<table border="1" align="center"> -->
+<!-- 		<tr height="79" style="background-color: rgb(229, 246, 253);"> -->
+<!-- 			<td height="79" -->
+<!-- 				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span -->
+<!-- 				style="color: rgb(229, 246, 253);">促銷品項</span><br /> -->
+<!-- 			<td height="79" -->
+<!-- 				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span -->
+<!-- 				style="color: rgb(229, 246, 253);">商品原價</span><br /> -->
+<!-- 			<td height="79" -->
+<!-- 				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span -->
+<!-- 				style="color: rgb(229, 246, 253);">促銷價格</span><br /> -->
+<!-- 			<td height="79" -->
+<!-- 				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span -->
+<!-- 				style="color: rgb(229, 246, 253);">價格修改</span><br /> -->
+<!-- 			<td height="79" -->
+<!-- 				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span -->
+<!-- 				style="color: rgb(229, 246, 253);">移除品項</span><br /> -->
+<!-- 		</tr> -->
+
+						<table class="table table-bordered table-hover table-striped">
+							<thead>
+								<tr>
+									<th>促銷品項</th>
+									<th>商品原價</th>
+									<th>促銷價格</th>
+									<th>價格修改</th>
+									<th>移除品項</th>
+								</tr>
+		
 		<c:forEach var="prpmVO" items="${list}">
 			<tr align='center' valign='middle'>
-				<td>${prpmVO.prod_id}</td>
+			
+			<td>
+				<c:forEach var="prodVO" items="${prodSvcB.all}">
+                    <c:if test="${prodVO.prod_id==prpmVO.prod_id}">
+	                    ${prodVO.prod_name}
+                    </c:if>
+                </c:forEach>
+			</td>
 
 				<%-- 取得原始價格 --%>
 
@@ -84,15 +113,24 @@
 				<td>$${prpmVO.prpm_price}</td>
 				<td>
 
-					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/front-end/store_interface/prpm.do" name="form3">
-						<input type="submit" value="修改"> 
-						<input type="hidden" name="stpm_id" value="${prpmVO.stpm_id}">
-						<input type="hidden" name="prod_id" value="${prpmVO.prod_id}">
+					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/front-end/store_interface/prpm.do" name="form3">
+						<button type="submit" class="btn btn-default btn-sm">價格修改</button>
+						<input type="hidden" name="stpm_id" value="${prpmVO.stpm_id}"> 
+						<input type="hidden" name="prod_id" value="${prpmVO.prod_id}"> 
 						<input type="hidden" name="action" value="getOne_For_Update">
 					</FORM>
 				</td>
+				<td>
+					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/front-end/store_interface/prpm.do" name="form4">
+						<button type="submit" class="btn btn-default btn-sm">移除品項</button>
+						<input type="hidden" name="stpm_id" value="${prpmVO.stpm_id}"> 
+						<input type="hidden" name="prod_id" value="${prpmVO.prod_id}"> 
+						<input type="hidden" name="action" value="delete">
+					</FORM>
+				</td>
 			</tr>
+
+
 		</c:forEach>
 	</table>
 </body>

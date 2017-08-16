@@ -36,8 +36,8 @@
 	class="com.user.model.UserService" />
 <jsp:useBean id="storeSvc" scope="page"
 	class="com.store.model.StoreService" />
-<jsp:useBean id="prpmeSvc" scope="page"
-	class="com.prpm.model.PrpmService" />
+<jsp:useBean id="prodSvcB" scope="page"
+	class="com.prod.model.ProdService" />
 
 
 <!DOCTYPE html>
@@ -58,7 +58,8 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link href="<%=request.getContextPath()%>/front-end/css/bootstrap.css"
 	rel="stylesheet">
-
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <!-- Custom CSS -->
 <link
 	href="<%=request.getContextPath()%>/front-end/css/stylish-portfolio.css"
@@ -98,6 +99,10 @@
 	left: 5px;
 	margin: auto;
 }
+
+#accordion {
+	font-size: 12px;
+}
 </style>
 </head>
 
@@ -127,9 +132,6 @@
 	</div>
 	<header id="myCarousel top" class="carousel slide"> </header>
 
-	<!-- 	<div class="hero-text"> -->
-	<!-- 		<h1>Anytime login, anytime Grip</h1> -->
-	<!-- 	</div> -->
 	<div class="container content">
 		<div class="row">
 			<header class="header">
@@ -147,104 +149,173 @@
 			<ol class="breadcrumb">
 				<li><a href="<%=request.getContextPath()%>/front-end/index.jsp">首頁</a>
 				</li>
-				<li class="active">促銷資訊</a>
-				</li>
-
+				<li class="active"><a>促銷資訊</a></li>
 			</ol>
 
 
+			<%-- 			<c:forEach var="stpmVO" items="${list}" varStatus="count"> --%>
+			<%-- 				<c:if test="${stpmVO.stpm_status == 1}"> --%>
+			<!-- 					<div class="panel panel-default"> -->
+			<!-- 						<div class="panel-heading " role="tab" id="panel"></div> -->
+			<!-- 						<div class="panel-collapse collapse in" role="tabpanel" -->
+			<!-- 							aria-labelledby="panel"> -->
+			<!-- 							<div class="panel-body text-center"> -->
+			<!-- 								內容 -->
+			<!-- 								<div class="col-xs-12 col-sm-3"> -->
+			<%-- 									<b>${stpmVO.stpm_name}</b> --%>
+			<!-- 								</div> -->
+			<!-- 								<div class="col-xs-12 col-sm-3"> -->
+			<%-- 									<b>${stpmVO.stpm_desc}</b> --%>
+			<!-- 								</div> -->
+			<!-- 								<div class="col-xs-12 col-sm-3"> -->
+			<%-- 									<b>${stpmVO.stpm_startdate} ~ ${stpmVO.stpm_enddate}</b> --%>
+			<!-- 								</div> -->
+			<!-- 								<div class="col-xs-12 col-sm-3"> -->
+			<!-- 									<a href='#${stpmVO.stpm_id}' data-toggle="modal" -->
+			<!-- 										class="btn btn-primary btn-xs">顯示詳情</a> -->
+			<!-- 								</div> -->
+			<%-- 								<div class="modal fade" id="${stpmVO.stpm_id}"> --%>
+			<!-- 									<div class="modal-dialog"> -->
+			<!-- 										<div class="modal-content"> -->
+			<!-- 											<div class="modal-header"> -->
+			<!-- 												<button type="button" class="close" data-dismiss="modal" -->
+			<!-- 													aria-hidden="true">&times;</button> -->
+			<%-- 												<h4 class="modal-title">${stpmVO.stpm_content}</h4> --%>
+			<!-- 											</div> -->
+			<!-- 											<div class="modal-body"> -->
+			<!-- 												<table border="0" align="center"> -->
+			<%-- 													<c:forEach var="prpmVO" items="${prpmList}" --%>
+			<%-- 														varStatus="count"> --%>
+			<%-- 														<c:if test="${stpmVO.stpm_id == prpmVO.stpm_id}"> --%>
+			<!-- 															<tr> -->
+			<%-- 																<td width="30%"><b>促銷商品:</b><a>${prpmVO.prod_id}</a></td> --%>
 
-			<c:forEach var="stpmVO" items="${list}" varStatus="count">
-				<c:if test="${stpmVO.stpm_status == 1}">
-					<div class="panel panel-default">
-						<div class="panel-heading " role="tab" id="panel"></div>
-						<div class="panel-collapse collapse in" role="tabpanel"
-							aria-labelledby="panel">
-							<div class="panel-body text-center">
-								<!-- 內容 -->
-								<div class="col-xs-12 col-sm-3">
-									<b>${stpmVO.stpm_name}</b>
-								</div>
-								<div class="col-xs-12 col-sm-3">
-									<b>${stpmVO.stpm_desc}</b>
-								</div>
-								<div class="col-xs-12 col-sm-3">
-									<b>${stpmVO.stpm_startdate} ~ ${stpmVO.stpm_enddate}</b>
-								</div>
+			<!-- 																<td width="30%"><b>原價:</b><font color="blue"> -->
+			<%-- 																		<c:if test="${prodList != null}"> --%>
+			<%-- 																			<c:forEach var="prodVO" items="${prodList}"> --%>
+			<%-- 																				<c:if test="${prpmVO.prod_id == prodVO.prod_id}"> --%>
+			<!-- 																				$${prodVO.prod_price} -->
+			<%-- 																				</c:if> --%>
+			<%-- 																			</c:forEach> --%>
+			<%-- 																		</c:if> --%>
+			<!-- 																</font></td> -->
+			<%-- 																<td width="30%"><b>促銷特價:</b><font color="red">${prpmVO.prpm_price}</font></td> --%>
+			<!-- 															</tr> -->
+			<%-- 														</c:if> --%>
+			<%-- 													</c:forEach> --%>
+			<!-- 												</table> -->
+			<!-- 											</div> -->
+			<!-- 											<div class="modal-footer"> -->
+			<!-- 												<button type="button" class="btn btn-default" -->
+			<!-- 													data-dismiss="modal">close</button> -->
+			<!-- 											</div> -->
+			<!-- 										</div> -->
+			<!-- 									</div> -->
+			<!-- 								</div> -->
+			<!-- 								內容結束 -->
+			<!-- 							</div> -->
+			<!-- 						</div> -->
+			<!-- 					</div> -->
+			<%-- 				</c:if> --%>
+			<%-- 			</c:forEach> --%>
+			<!-- 		</div> -->
 
-								<div class="col-xs-12 col-sm-3">
-									<a href='#${stpmVO.stpm_id}' data-toggle="modal"
-										class="btn btn-primary btn-xs">顯示詳情</a>
-								</div>
+			<div id="accordion">
+				<c:forEach var="stpmVO" items="${list}" varStatus="count">
+					<c:if test="${stpmVO.stpm_status == 1}">
+						<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;促銷名稱&nbsp;-&nbsp;${stpmVO.stpm_name}</div>
+						<div class="text-center">
+							<!-- 內容 -->
 
-								<div class="modal fade" id="${stpmVO.stpm_id}">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-header">
-												<button type="button" class="close" data-dismiss="modal"
-													aria-hidden="true">&times;</button>
-												<h4 class="modal-title">${stpmVO.stpm_content}</h4>
-											</div>
-											<div class="modal-body">
+							<div class="col-xs-12 col-sm-3">
+								<b>${stpmVO.stpm_name}</b>
+							</div>
+							<div class="col-xs-12 col-sm-3">
+								<b>${stpmVO.stpm_desc}</b>
+							</div>
+							<div class="col-xs-12 col-sm-3">
+								<b>${stpmVO.stpm_startdate} ~ ${stpmVO.stpm_enddate}</b>
+							</div>
 
-												<table border="0" align="center">
+							<div class="col-xs-12 col-sm-3">
+								<a href='#${stpmVO.stpm_id}' data-toggle="modal"
+									class="btn btn-default btn-xs">顯示詳情</a>
+							</div>
 
-													<c:forEach var="prpmVO" items="${prpmList}"
-														varStatus="count">
 
-														<c:if test="${stpmVO.stpm_id == prpmVO.stpm_id}">
-															<tr>
+							<!-- modal -->
+							<div class="modal fade" id="${stpmVO.stpm_id}">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal"
+												aria-hidden="true">&times;</button>
+											<h4 class="modal-title">${stpmVO.stpm_content}</h4>
+										</div>
+										<div class="modal-body">
 
-																<td width="30%"><b>促銷商品:</b><a>${prpmVO.prod_id}</a></td>
-
-																<td width="30%"><b>原價:</b><font color="blue">
-																		<c:if test="${prodList != null}">
-																			<c:forEach var="prodVO" items="${prodList}">
-																				<c:if test="${prpmVO.prod_id == prodVO.prod_id}">
-																	$${prodVO.prod_price}
+											<table border="0" align="center">
+												<c:forEach var="prpmVO" items="${prpmList}"
+													varStatus="count">
+													<c:if test="${stpmVO.stpm_id == prpmVO.stpm_id}">
+														<tr>
+															<td width="20%"><b>促銷商品:</b>
+															<a>
+																<c:forEach var="prodVOB" items="${prodSvcB.all}" varStatus="count">
+																	<c:if test="${prodVOB.prod_id == prpmVO.prod_id}">
+																		${prodVOB.prod_name}
 																	</c:if>
-																			</c:forEach>
-																		</c:if>
-																</font></td>
+																</c:forEach>
+															</a>
+															</td>
 
-																<td width="30%"><b>促銷特價:</b><font color="red">${prpmVO.prpm_price}</font></td>
-
-															</tr>
-														</c:if>
-													</c:forEach>
-												</table>
-											</div>
-											<div class="modal-footer">
-												<button type="button" class="btn btn-default"
-													data-dismiss="modal">close</button>
-											</div>
+															<td width="20%"><b>原價:</b><font color="blue">
+																	<c:if test="${prodList != null}">
+																		<c:forEach var="prodVO" items="${prodList}">
+																			<c:if test="${prpmVO.prod_id == prodVO.prod_id}">
+																				$${prodVO.prod_price}
+																				</c:if>
+																		</c:forEach>
+																	</c:if>
+															</font></td>
+															<td width="20%"><b>促銷特價:</b><font color="red">${prpmVO.prpm_price}</font></td>
+															
+															<td width="20%">
+															<a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_id=${prpmVO.prod_id}&action=getOne_For_Display" class="btn btn-default btn-xs">商品詳情</a>
+															</td>
+														</tr>
+													</c:if>
+												</c:forEach>
+											</table>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default"
+												data-dismiss="modal">close</button>
 										</div>
 									</div>
 								</div>
-								<!-- 內容結束 -->
 							</div>
 						</div>
-					</div>
-				</c:if>
-			</c:forEach>
+						<!-- 內容結束 -->
+					</c:if>
+				</c:forEach>
+			</div>
 		</div>
 	</div>
 
-
-	</div>
-	</div>
 	<div class="callout"></div>
 	<a id="to-top" href="#top" class="btn btn-dark btn-lg"><i
 		class="fa fa-chevron-up fa-fw fa-1x"></i></a>
 
 
 	<!-- Custom Theme JavaScript -->
-	<%@ include file="/front-end/member_interface/script.file" %>
-	<script
-		src="<%=request.getContextPath()%>/front-end/js/jquery-1.11.0.min.js"></script>
-	<!-- Menu Toggle Script -->
-	<script
-		src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js'></script>
-
+	<%@ include file="/front-end/member_interface/script.file"%>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$("#accordion").accordion();
+		});
+	</script>
 </body>
 </html>

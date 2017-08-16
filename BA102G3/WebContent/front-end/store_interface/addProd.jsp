@@ -60,6 +60,13 @@
 
 <%@ include file="headerBar.file"%>
 
+    <div class="callout" ></div>
+    
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h3 class="page-header">新增商品</h3>
+                </div>
+            </div>
 
 	<br>
 	<div align="center">
@@ -73,15 +80,6 @@
 
 			</font>
 		</c:if>
-	</div>
-
-	<div id="page-wrapper">
-		<div class="row">
-			<div class="col-md-10 col-md-offset-1">
-				<h3 class="page-header">新增商品資料</h3>
-			</div>
-			<!-- /.col-lg-12 -->
-		</div>
 	</div>
 
 	<script>
@@ -98,7 +96,7 @@
 					<div>
 						<label>圖片名稱:&nbsp;&nbsp;</label><input type="TEXT"
 							name="prpi_name" required="required" size="15" /> <img
-							id="output" height="350" width="400" /> <input type="file" name="prpi_img" multiple accept="image/*" required="required" onchange="loadFile(event)" />
+							id="output" height="300" width="350" /> <input type="file" name="prpi_img" multiple accept="image/*" required="required" onchange="loadFile(event)" />
 
 					</div>
 				</div>
@@ -109,7 +107,7 @@
 								<table border="0">
 									<tr>
 										<td><label>商店代號:&nbsp;&nbsp;</label></td>
-										<td><%=storeVO.getStore_id()%></td>
+										<td><font color=red><b>＊</b></font><%=storeVO.getStore_id()%></td>
 										<td><input type="hidden" name="store_id" value="<%=storeVO.getStore_id()%>" /></td>
 									</tr>
 									<tr>
@@ -167,7 +165,7 @@
 									</tr>
 								</table>
 								<input type="hidden" name="action" value="insert_prod">
-								<input type="submit" value="新增商品">
+								<button type="submit" class="btn btn-default btn-sm">新增商品</button>
 							</div>
 						</div>
 					</div>

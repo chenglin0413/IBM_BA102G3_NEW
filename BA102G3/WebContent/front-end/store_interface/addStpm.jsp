@@ -59,15 +59,18 @@
 	<%@ include file="headerBar.file"%>
 
 	<div class="callout"></div>
+    
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h3 class="page-header">建立促銷專案</h3>
+                </div>
+            </div>
 
 	<div class="container">
 		<div class="row"></div>
 		<div class="col-xs-12 col-sm-12" align="center">
 
-			<br>
-
 			<div align="center">
-				<br>
 				<%-- 錯誤表列 --%>
 				<c:if test="${not empty errorMsgs}">
 					<font color='red'>錯誤: <c:forEach var="message"	items="${errorMsgs}">
@@ -83,7 +86,7 @@
 				<table border="0">
 					<tr>
 						<td><label>商店代號:&nbsp;&nbsp;</label></td>
-						<td>${storeVO.store_id}<input type="hidden" name="store_id" required="required"　size="15" value="${storeVO.store_id}" /></td>
+						<td><font color=red><b>＊</b></font>${storeVO.store_id}<input type="hidden" name="store_id" required="required"　size="15" value="${storeVO.store_id}" /></td>
 					</tr>
 					<tr>
 
@@ -125,7 +128,8 @@
 						<td>
 					</tr>
 				</table>
-				<br> <br> <input type="hidden" name="action" value="insert"> <input type="submit" value="建立專案">
+				<br> <input type="hidden" name="action" value="insert">
+				 <button type="submit" class="btn btn-default btn-sm">建立專案</button>
 			</FORM>
 
 			<br> <br>

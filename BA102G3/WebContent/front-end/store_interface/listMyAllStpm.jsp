@@ -16,6 +16,10 @@ if(session.getAttribute("userVO")!=null){
 		List<StpmVO> list = stpmSvc.findByStoreID(store_id);
 		pageContext.setAttribute("list", list);
 	}
+
+	String zero = "資訊關閉";
+	String one = "資訊開啟";
+	
 %>
 
 
@@ -43,59 +47,71 @@ if(session.getAttribute("userVO")!=null){
 	type="text/css">
 <link rel="stylesheet" href="<%=request.getContextPath() %>/front-end/js_store/bootstrap-datepicker3.min.css" />
 
+<style type="text/css">
+th {
+	text-align: center;
+	font-size: 20px;
+}
+td {
+	text-align: center;
+	font-size: 18px;
+}
+</style>
+
 </head>
 
 <body>
 
 <%@ include file="headerBar.file"%>
 
+
+
+
 	 <!-- Header -->
     <div class="callout" ></div>
-
+    
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h3 class="page-header">促銷專案列表</h3>
+                </div>
+            </div>
    
-	
-<!--    			<div id="page-wrapper"> -->
-<!--             <div class="row"> -->
-<!--                 <div class="col-md-10 col-md-offset-1"> -->
-<!--                     <h3 class="page-header">查詢所有促銷專案</h3> -->
-<!--                 </div> -->
-<!--                 /.col-lg-12 -->
-<!--             </div> -->
-<!--             </div> -->
-
-<!--  			<div id="page-wrapper col-md-12"> -->
-<!-- 				<div class="col-md-6"> -->
-<!--                 <ol class="breadcrumb"> -->
-<!--                     <li class="active">查詢所有促銷專案</li> -->
-<!--                 </ol> -->
-<!--                 </div> -->
-                
-<!-- 			</div> -->
-	
 	<br>
 	<br>
 	<div class="col-md-12">
-	<table border="1" align="center">
-		<tr height="79" style="background-color: rgb(229, 246, 253);">
-			<td height="79"
-				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span
-				style="color: rgb(229, 246, 253);">促銷編號</span><br />
-			<td height="79"
-				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span
-				style="color: rgb(229, 246, 253);">促銷名稱</span><br />
-			<td height="79"
-				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span
-				style="color: rgb(229, 246, 253);">促銷開始</span><br />
-			<td height="79"
-				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span
-				style="color: rgb(229, 246, 253);">促銷結束</span><br />
-			<td height="79"
-				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span
-				style="color: rgb(229, 246, 253);">目前狀態</span><br />
-			<td height="79"
-				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span
-				style="color: rgb(229, 246, 253);">詳情修改</span><br />
-		</tr>
+	
+<!-- 	<table border="1" align="center"> -->
+<!-- 		<tr height="79" style="background-color: rgb(229, 246, 253);"> -->
+<!-- 			<td height="79" -->
+<!-- 				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span -->
+<!-- 				style="color: rgb(229, 246, 253);">促銷編號</span><br /> -->
+<!-- 			<td height="79" -->
+<!-- 				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span -->
+<!-- 				style="color: rgb(229, 246, 253);">促銷名稱</span><br /> -->
+<!-- 			<td height="79" -->
+<!-- 				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span -->
+<!-- 				style="color: rgb(229, 246, 253);">促銷開始</span><br /> -->
+<!-- 			<td height="79" -->
+<!-- 				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span -->
+<!-- 				style="color: rgb(229, 246, 253);">促銷結束</span><br /> -->
+<!-- 			<td height="79" -->
+<!-- 				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span -->
+<!-- 				style="color: rgb(229, 246, 253);">目前狀態</span><br /> -->
+<!-- 			<td height="79" -->
+<!-- 				style="border-color: rgb(204, 204, 204); width: 208px; height: 79px; text-align: center; background-color: rgb(178, 32, 98);"><span -->
+<!-- 				style="color: rgb(229, 246, 253);">詳情修改</span><br /> -->
+<!-- 		</tr> -->
+
+						<table class="table table-bordered table-hover table-striped">
+							<thead>
+								<tr>
+									<th>促銷編號</th>
+									<th>促銷名稱</th>
+									<th>促銷開始</th>
+									<th>促銷結束</th>
+									<th>目前狀態</th>
+									<th>詳情修改</th>
+								</tr>
 
 		<c:forEach var="stpmVO" items="${list}">
 			<tr align='center' valign='middle'>
@@ -103,13 +119,18 @@ if(session.getAttribute("userVO")!=null){
 				<td>${stpmVO.stpm_name}</td>
 				<td>${stpmVO.stpm_startdate}</td>
 				<td>${stpmVO.stpm_enddate}</td>
-				<td>${stpmVO.stpm_status}</td>
-				<td>
-					<FORM METHOD="post"
-						ACTION="<%=request.getContextPath()%>/front-end/store_interface/stpm.do">
-						<input type="submit" value="修改"> <input type="hidden"
-							name="stpm_id" value="${stpmVO.stpm_id}"> <input
-							type="hidden" name="action" value="getOne_For_Update">
+					
+					<td><c:if test="${stpmVO.stpm_status == 0}">
+							<%=zero%>
+						</c:if> <c:if test="${stpmVO.stpm_status == 1}">
+							<%=one%>
+						</c:if></td>
+					<td>
+					
+					<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/front-end/store_interface/stpm.do">
+						<button type="submit" class="btn btn-default btn-sm">修改專案</button>
+						<input type="hidden" name="stpm_id" value="${stpmVO.stpm_id}">
+						<input type="hidden" name="action" value="getOne_For_Update">
 					</FORM>
 				</td>
 			</tr>

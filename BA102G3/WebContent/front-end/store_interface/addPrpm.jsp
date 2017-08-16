@@ -55,19 +55,22 @@
 	<%@ include file="headerBar.file"%>
 	
 	<div class="callout"></div>
+    
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h3 class="page-header">新增促銷商品</h3>
+                </div>
+            </div>
 
 	<div class="container">
 		<div class="row"></div>
 		<div class="col-xs-12 col-sm-12" align="center">
 
-			<br>
-			
-			<div class="callout"></div>
 			<div align="center">
 				<%-- 錯誤表列 --%>
-				<c:if test="${not empty ansMsgs}">
+				<c:if test="${not empty okMsgs}">
 					<font color='blue'>※<c:forEach var="message"
-							items="${ansMsgs}">
+							items="${okMsgs}">
 							<b>${message}</b>
 						</c:forEach>
 					</font>
@@ -83,26 +86,6 @@
 			
 			<div class="callout"></div>
 
-<!-- 			<div id="page-wrapper"> -->
-<!-- 				<div class="row"> -->
-<!-- 					<div class="col-md-10 col-md-offset-1"> -->
-<!-- 						<h3 class="page-header">新增促銷產品</h3> -->
-<!-- 					</div> -->
-<!-- 					/.col-lg-12 -->
-<!-- 				</div> -->
-<!-- 			</div> -->
-
-<!-- 			<div id="page-wrapper col-md-12"> -->
-<!-- 				<div class="col-md-6"> -->
-<!-- 					<ol class="breadcrumb"> -->
-<!-- 						<li><a -->
-<%-- 							href="<%=request.getContextPath()%>/front-end/store_interface/listMyAllStpm.jsp">查詢所有促銷專案</a> --%>
-<!-- 						</li> -->
-<!-- 						<li class="active">新增促銷商品</li> -->
-<!-- 					</ol> -->
-<!-- 				</div> -->
-
-<!-- 			</div> -->
 
 				<FORM METHOD="post" ACTION="prpm.do" name="form1">
 					<table border="0">
@@ -138,7 +121,8 @@
 							</td>
 						</tr>
 					</table>
-					<input type="hidden" name="action" value="insert"> <input type="submit" value="新增促銷商品">
+					<input type="hidden" name="action" value="insert"> 
+					<button type="submit" class="btn btn-default btn-sm">新增促銷品項</button>
 				</FORM>
 				<br> <br>
 			</div>

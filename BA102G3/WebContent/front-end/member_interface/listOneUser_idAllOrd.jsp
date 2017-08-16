@@ -74,10 +74,8 @@
         padding:5px;
         }
         .pop{
-        font-size:12px;
+        font-size:10px;
         text-align:center;
-        border:1px solid lightgray;
-	    border-radius: 5px;
         }
     </style>
 </head>
@@ -139,12 +137,12 @@
 						<div class="col-xs-12 col-sm-2">訂單編號</div>
 						<div class="col-xs-12 col-sm-2">會員姓名</div>
 						<div class="col-xs-12 col-sm-2">商家名稱</div>
-						<div class="col-xs-12 col-sm-1">訂單成立日期</div>
-						<div class="col-xs-12 col-sm-1">訂單總金額</div>
-						<div class="col-xs-12 col-sm-1">買家付款狀態</div>
-						<div class="col-xs-12 col-sm-1">商店審核訂單狀態</div>
+						<div class="col-xs-12 col-sm-1">訂單日期</div>
+						<div class="col-xs-12 col-sm-1">訂單金額</div>
+						<div class="col-xs-12 col-sm-1">付款狀態</div>
+						<div class="col-xs-12 col-sm-1">商店審核狀態</div>
 						<div class="col-xs-12 col-sm-1">訂單狀態</div>
-						<div class="col-xs-12 col-sm-1">買家對商店評分</div>
+						<div class="col-xs-12 col-sm-1">對商店評分</div>
 </div>
 <br>		  
 <!-- paneltitleEND -->
@@ -230,7 +228,7 @@
 						<script>
 						 	//跳窗
 						          function presses${s.index}(){
-						         	 document.open("<%=request.getContextPath()%>/front-end/item/item.do?ord_id=${ordVO.ord_id}&action=getOne_Ord_id_AllItem_formember", "" ,"height=600,width=1270,left=50,top=107,resizable=yes,scrollbars=yes"); 
+						         	 document.open("<%=request.getContextPath()%>/front-end/item/item.do?ord_id=${ordVO.ord_id}&action=getOne_Ord_id_AllItem_formember", "" ,"height=550,width=1270,left=50,top=107,resizable=yes,scrollbars=yes"); 
 						          }
 						 </script> 
 						</div>
@@ -256,8 +254,8 @@
  
 <%@ include file="/front-end/member_interface/script.file" %>	
 
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script>
 		$(function() {
 			$("#accordion").accordion();

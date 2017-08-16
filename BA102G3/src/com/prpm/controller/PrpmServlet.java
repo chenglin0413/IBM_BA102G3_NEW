@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.LinkedList;
 import java.util.List;
 
-import javax.management.StringValueExp;
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -68,18 +67,18 @@ public class PrpmServlet extends HttpServlet {
 
 				PrpmService prpmSvc = new PrpmService();
 				PrpmVO checkNull = prpmSvc.getOneStpm(stpm_id, prod_id); // 判斷include
-				PrpmVO checkPrpmNull = prpmSvc.getOneRmPrice_prod(prod_id);
-				String error = checkPrpmNull.getStpm_id().toString();
-				
+				PrpmVO checkPrpmNull = prpmSvc.getOneRmPrice_prod(prod_id); // 判斷商品已存在其他專案
+
 				if (checkPrpmNull != null) {
+					String error = checkPrpmNull.getStpm_id().toString();
 					errorMsgs.add("此產品已存在專案 " + error);
 				}
 
 				// System.out.println(checkNull);
 
-				 if (checkNull != null) {
-				 errorMsgs.add(" 請勿重複新增");
-				 }
+				if (checkNull != null) {
+					errorMsgs.add(" 請勿重複新增");
+				}
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("stpmVO", stpmVO);
@@ -204,6 +203,45 @@ public class PrpmServlet extends HttpServlet {
 						.getRequestDispatcher("/front-end/store_interface/update_prpm_input.jsp");
 				failureView.forward(req, res);
 			}
+		}
+
+		if ("delete".equals(action)) { // 來自listAllEmp.jsp
+
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			// try {
+			/*************************** 1.接收請求參數 ***************************************/
+
+			Integer stpm_id = new Integer(req.getParameter("stpm_id"));
+			Integer prod_id = new Integer(req.getParameter("prod_id"));
+			// System.out.println(stpm_id);
+			// System.out.println(prod_id);
+
+			/*************************** 2.開始刪除資料 ***************************************/
+			PrpmService prpmSvc = new PrpmService();
+			prpmSvc.delete(stpm_id, prod_id);
+
+			StpmService stpmSvc = new StpmService();
+			StpmVO stpmVO = stpmSvc.getOneStpm(stpm_id);
+
+			/***************************
+			 * 3.刪除完成,準備轉交(Send the Success view)
+			 ***********/
+			req.setAttribute("stpmVO", stpmVO);
+			String url = "/front-end/store_interface/update_stpm_input.jsp";
+			RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
+			successView.forward(req, res);
+
+			/*************************** 其他可能的錯誤處理 **********************************/
+			// } catch (Exception e) {
+			// errorMsgs.add("刪除資料失敗:" + e.getMessage());
+			// RequestDispatcher failureView = req
+			// .getRequestDispatcher("/front-end/store_interface/update_stpm_input.jsp");
+			// failureView.forward(req, res);
+			// }
 		}
 
 	}

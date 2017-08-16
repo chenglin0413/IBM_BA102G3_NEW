@@ -64,15 +64,6 @@ if (session.getAttribute("oneord_idAllItem") != null) {
 
      <%@include file="/front-end/member_interface/headerBar.file" %>
 
-    <!-- Header -->
-
-    
-   
-
-<!--   header -->
-
-<!--     </header> -->
-   
 	
    			<div id="page-wrapper">
             <div class="row">

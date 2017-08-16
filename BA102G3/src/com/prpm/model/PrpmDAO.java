@@ -30,6 +30,7 @@ public class PrpmDAO implements PrpmDAO_interface {
 	private static final String GET_RM_PRICE_FORPROD = "select stpm_id,prpm_price,prpm_status from(SELECT stpm_id,prpm_price,prpm_status from prpm where prod_id=? order by prod_id)where rownum<=1";
 	private static final String UPDATE_STATUS = "UPDATE PRPM set prpm_status=? where stpm_id = ?";
 	private static final String GET_ONE_PK = "SELECT stpm_id,prod_id,prpm_price,prpm_status FROM PRPM where stpm_id = ?";
+	private static final String DELETE_STMT = "DELETE FROM PRPM WHERE STPM_ID=? AND PROD_ID=?";
 
 	@Override
 	public void insert(PrpmVO prpmVO) {
@@ -416,7 +417,7 @@ public class PrpmDAO implements PrpmDAO_interface {
 
 	@Override
 	public PrpmVO findByPrimaryKey(Integer stpm_id) {
-		
+
 		PrpmVO prpmVO = null;
 		Connection con = null;
 		PreparedStatement pstmt = null;
@@ -468,4 +469,39 @@ public class PrpmDAO implements PrpmDAO_interface {
 		}
 		return prpmVO;
 	}
+
+	@Override
+	public void delete(Integer stpm_id, Integer prod_id) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(DELETE_STMT);
+			pstmt.setInt(1, stpm_id);
+			pstmt.setInt(2, prod_id);
+			pstmt.executeUpdate();
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+	}
+
 }

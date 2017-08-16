@@ -19,6 +19,7 @@ public class PrpmJDBCDAO implements PrpmDAO_interface {
 	private static final String GET_ONE = "SELECT * FROM PRPM WHERE STPM_ID = ?";
 	private static final String GET_PRICE = "SELECT PRPM_PRICE FROM PRPM WHERE STPM_ID = ?";
 	private static final String UPDATE_STATUS = "UPDATE PRPM set prpm_status=? where stpm_id = ?";
+	private static final String DELETE_STMT = "DELETE FROM PRPM WHERE STPM_ID AND PROD_ID=?";
 
 	@Override
 	public void insert(PrpmVO prpmVO) {
@@ -436,6 +437,12 @@ public class PrpmJDBCDAO implements PrpmDAO_interface {
 	public PrpmVO findByPrimaryKey(Integer stpm_id) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void delete(Integer stpm_id, Integer prod_id) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -76,4 +76,8 @@ public class PrpmService {
 
 		return dao.findByPrimaryKey(stpm_id);
 	}
+
+	public void delete(Integer stpm_id, Integer prod_id) {
+		dao.delete(stpm_id, prod_id);
+	}
 }

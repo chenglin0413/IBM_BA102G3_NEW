@@ -50,14 +50,19 @@
 <body>
 
 	<%@ include file="headerBar.file"%>
+	
+	    <div class="callout" ></div>
+    
+            <div class="row">
+                <div class="col-md-10 col-md-offset-1">
+                    <h3 class="page-header">修改促銷專案</h3>
+                </div>
+            </div>
 
 	<div class="container">
 		<div class="row"></div>
 		<div class="col-xs-12 col-sm-12" align="center">
 
-			<br>
-
-			<div class="callout"></div>
 			<div align="center">
 				<%-- 錯誤表列 --%>
 				<c:if test="${not empty okMsgs}">
@@ -77,29 +82,6 @@
 			</div>
 
 			<div class="callout"></div>
-
-
-
-			<!-- 			<div id="page-wrapper"> -->
-			<!-- 				<div class="row"> -->
-			<!-- 					<div class="col-md-10 col-md-offset-1"> -->
-			<!-- 						<h3 class="page-header">修改促銷專案</h3> -->
-			<!-- 					</div> -->
-			<!-- 					/.col-lg-12 -->
-			<!-- 				</div> -->
-			<!-- 			</div> -->
-
-			<!-- 			<div id="page-wrapper col-md-12"> -->
-			<!-- 				<div class="col-md-6"> -->
-			<!-- 					<ol class="breadcrumb"> -->
-			<!-- 						<li><a -->
-			<%-- 							href="<%=request.getContextPath()%>/front-end/store_interface/listMyAllStpm.jsp">查詢所有促銷專案</a> --%>
-			<!-- 						</li> -->
-			<!-- 						<li class="active">修改促銷專案</li> -->
-			<!-- 					</ol> -->
-			<!-- 				</div> -->
-
-			<!-- 			</div> -->
 
 			<FORM METHOD="post" ACTION="stpm.do" name="form1">
 				<table border="0">
@@ -164,10 +146,10 @@
 						<td>
 					</tr>
 				</table>
-				<br> <br> <input type="hidden" name="action" value="update"> 
+				<br> <input type="hidden" name="action" value="update"> 
 				<input type="hidden" name="stpm_id"	value="<%=stpmVO.getStpm_id()%>"> 
 				<input type="hidden" name="store_id" value="<%=stpmVO.getStore_id()%>"> 
-				<input type="submit" value="修改促銷資訊">
+				<button type="submit" class="btn btn-default btn-sm">修改專案資訊</button>
 			</FORM>
 		</div>
 	</div>
@@ -176,8 +158,8 @@
 	<div align="center">
 		<FORM METHOD="post" ACTION="prpm.do" name="form2">
 			<input type="hidden" name="stpm_id" value="<%=stpmVO.getStpm_id()%>" />
-			<input type="hidden" name="action" value="getAdd"> <input
-				type="submit" value="新增促銷商品">
+			<input type="hidden" name="action" value="getAdd"> 
+			<button type="submit" class="btn btn-default btn-sm">新增促銷品項</button>
 		</FORM>
 	</div>
 

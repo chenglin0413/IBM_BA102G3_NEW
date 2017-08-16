@@ -107,7 +107,7 @@ th {
 					<div>
 							<label>圖片名稱:&nbsp;&nbsp;</label>
 							<input type="TEXT" name="prpi_name" required="required"	value="${prpiVO.prpi_name}" size="20" />
-							<img id="output" src="<%=request.getContextPath()%>/front-end/store_interface/DBGifReader?prod_id=${prodVO.prod_id}" height="350" width="400" />
+							<img id="output" src="<%=request.getContextPath()%>/front-end/store_interface/DBGifReader?prod_id=${prodVO.prod_id}" height="300" width="350" />
 							<input type="file" name="prpi_img" multiple accept="image/*" onchange="loadFile(event)" />
 			</div>
 		</div>
@@ -214,7 +214,8 @@ th {
 								<input type="hidden" name="prod_count"	value="${prodVO.prod_count}">
 								<input type="hidden" name="prod_score"	value="${prodVO.prod_score}">
 								<input type="hidden" name="prod_status"	value="${prodVO.prod_status}">
-								<td><input type="hidden" name="action" value="update_prodChange"><input type="submit" value="送出修改"></td>
+								<td><input type="hidden" name="action" value="update_prodChange">
+								<button type="submit" class="btn btn-default btn-sm">送出修改</button></td>
 							</table>
 						</FORM>
 					</div>

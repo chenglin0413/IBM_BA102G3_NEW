@@ -16,6 +16,7 @@ public interface PrpmDAO_interface {
 	      
 	      public PrpmVO findByPrimaryKey(Integer stpm_id);
           public void updateStatus(PrpmVO prpmVO); //for status chang
+          public void delete(Integer stpm_id,Integer prod_id);
 	      //查詢某部門的員工(一對多)(回傳 Set)
 	//public Set<EmpVO> getEmpsByDeptno(Integer deptno);
 
