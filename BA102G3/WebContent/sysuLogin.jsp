@@ -23,7 +23,7 @@
 		<title>平台管理系統登入</title>
 
 	    <!-- Bootstrap Core CSS -->
-    	<link href="<%= request.getContextPath() %>/back-end/css/bootstrap.css" rel="stylesheet">
+    	<link href="<%= request.getContextPath() %>/front-end/css/bootstrap.css" rel="stylesheet">
 
 		<!--[if lt IE 9]>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -82,7 +82,5 @@
 		
 				<h4 class="text-center">測試用 account: admin &nbsp;&nbsp; passwd: ba102g3</h4>	
 
-		<script src="https://code.jquery.com/jquery.js"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</body>
 </html>

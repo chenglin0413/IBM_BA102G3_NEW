@@ -32,11 +32,9 @@
     <!-- Custom Fonts -->
     
     <link href="<%= request.getContextPath() %>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-	
-    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100italic,100,300,300italic,900italic,900,700,700italic,500italic,500,400italic" rel="stylesheet" type="text/css">
+	 <link href="https://fonts.googleapis.com/css?family=Roboto:400,100italic,100,300,300italic,900italic,900,700,700italic,500italic,500,400italic" rel="stylesheet" type="text/css">
 	<link href="<%= request.getContextPath() %>/front-end/blog/listAllTrvl.css" rel="stylesheet">
+	
 	
     <title>遊記瀏覽</title>
 
@@ -131,7 +129,6 @@
 	</div>
 </div>	
   <!--   -----------------------------------------------------------------------------------------------   - -->         	
-	
 	
 
 

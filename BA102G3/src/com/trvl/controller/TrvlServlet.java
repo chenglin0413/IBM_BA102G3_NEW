@@ -164,9 +164,9 @@ public class TrvlServlet extends HttpServlet {
 				}
 
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-				session.setAttribute("trvlVO", trvlVO); // 取出的物件,存入req
-				session.setAttribute("listTrpis", listTrpis);
-				session.setAttribute("listTlcms", listTlcms);
+				request.setAttribute("trvlVO", trvlVO); // 取出的物件,存入req
+				request.setAttribute("listTrpis", listTrpis);
+				request.setAttribute("listTlcms", listTlcms);
 
 				String url = "/front-end/blog/listOneTrvl.jsp";
 				RequestDispatcher successView = request.getRequestDispatcher(url); // 成功轉交

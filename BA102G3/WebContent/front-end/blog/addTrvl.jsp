@@ -154,6 +154,8 @@
 		</div>	<!-- row -->	
 	</div>  <!-- container -->
 
+
+<%@ include file="/front-end/member_interface/script.file" %>	
 <script>
  CKEDITOR.replace('trvl_content', { //轉換編輯器文末Tag
      uiColor: '#0066FF',

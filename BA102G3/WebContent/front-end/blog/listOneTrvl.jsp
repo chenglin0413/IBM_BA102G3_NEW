@@ -9,10 +9,10 @@
 	Integer user_id =userVO.getUser_id();//取得會員ID
 	pageContext.setAttribute("user_id",user_id);
 }
-	TrvlVO trvlVO = (TrvlVO) session.getAttribute("trvlVO");
+	TrvlVO trvlVO = (TrvlVO) request.getAttribute("trvlVO");
 	RptlVO rptlVO = (RptlVO) request.getAttribute("rptlVO");
-	List<TrpiVO> listTrpis = (List<TrpiVO>)session.getAttribute("listTrpis");
-	List<TlcmVO> listTlcms = (List<TlcmVO>) session.getAttribute("listTlcms");
+	List<TrpiVO> listTrpis = (List<TrpiVO>)request.getAttribute("listTrpis");
+	List<TlcmVO> listTlcms = (List<TlcmVO>) request.getAttribute("listTlcms");
 %>
 
 <!DOCTYPE html>
@@ -34,14 +34,15 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="<%= request.getContextPath() %>/front-end/css/bootstrap.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
+  <!-- Custom CSS -->
     <link href="<%= request.getContextPath() %>/front-end/css/stylish-portfolio.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     
     <link href="<%= request.getContextPath() %>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-   
+	 <link href="https://fonts.googleapis.com/css?family=Roboto:400,100italic,100,300,300italic,900italic,900,700,700italic,500italic,500,400italic" rel="stylesheet" type="text/css">
+	<link href="<%= request.getContextPath() %>/front-end/blog/listAllTrvl.css" rel="stylesheet">
+	
 
     <title>瀏覽單篇</title>
 

@@ -184,7 +184,7 @@
             //function to display message to the user
             function showMessage(results, newurl){
                 if(results == 'SUCCESS'){
-                    window.location='<%= request.getContextPath() %><%=request.getServletPath()%>'
+                     window.location='<%= request.getContextPath() %><%=request.getServletPath()%><c:if test="${request.queryString != null}" var="condition" scope="page">${request.queryString}</c:if>'
                 }else if(results == 'SUCCESS_STORE'){
                 	window.location='<%= request.getContextPath() %>/front-end/store_interface/listOneStore_idAllProd.jsp'
                 }else if(results == 'SUCCESS_REST'){
