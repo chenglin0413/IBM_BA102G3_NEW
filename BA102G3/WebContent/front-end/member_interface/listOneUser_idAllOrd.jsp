@@ -178,32 +178,32 @@
 						<div class="col-xs-12 col-sm-1">$${ordVO.ord_total}</div>
 						<div class="col-xs-12 col-sm-1">
 								 <c:if test="${ordVO.ord_bill == '1'}" var="condition" scope="page" > 
-					            <p>未付款</p>
+					            <span class="label label-danger">未付款</span>
 					            </c:if>
 					            <c:if test="${ordVO.ord_bill  == '2'}" var="condition" scope="page" > 
-					           <p>已付款</p>
+					           <span class="label label-warning">已付款</span>
 					           </c:if>
 					            <c:if test="${ordVO.ord_bill  == '3'}" var="condition" scope="page" > 
-					           	<p>已結案</p>
+					           	<span class="label label-success">已結案</span>
 					           </c:if>
 						</div>
 						<div class="col-xs-12 col-sm-1">
 								 <c:if test="${ordVO.ord_grant == '1'}" var="condition" scope="page" > 
-					            <p>未審核</p>
+					            <span class="label label-danger">未審核</span>
 					            </c:if>
 					            <c:if test="${ordVO.ord_grant  == '2'}" var="condition" scope="page" > 
-					           <p>已審核</p>
+					          	<span class="label label-success">已審核</span>
 					           </c:if>
 						</div>
 						<div class="col-xs-12 col-sm-1">
 								<c:if test="${ordVO.ord_status == '1'}" var="condition" scope="page" > 
-					            <p>備貨中</p>
+					            <span class="label label-danger">備貨中</span>
 					            </c:if>
 					            <c:if test="${ordVO.ord_status  == '2'}" var="condition" scope="page" > 
-					           <p>待取貨</p>
+					            <span class="label label-warning">待取貨</span>
 					           </c:if>
 					            <c:if test="${ordVO.ord_status  == '3'}" var="condition" scope="page" > 
-					           	<p>已取貨</p>
+					            <span class="label label-success">已取貨</span>
 					           </c:if>
 						
 						</div>

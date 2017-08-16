@@ -154,9 +154,13 @@
 								
          </ul>
 						<input type="text" id="prod_id"><button type="button" id="load">LOAD</button>	
+                           <div class="container222">
                            
-                           <div class="showPanel"></div>
-                            <div class="showPanel2"></div>
+		                           <div class="showPanel">
+		                           
+		                           </div>
+                            </div>
+                           
                            
 
 	<%-- 錯誤表列 --%>
@@ -377,8 +381,8 @@
 							alert('date saved:'+prodVO);
 							console.log(prodVO);
 // 							$.each(prodVO,function( key, value ) {
-								  $('.showPanel').addClass("col-md-4").append(prodVO.store_id);
-								  $('.showPanel2').addClass("col-md-4").appendTo(prodVO.prod_id);
+								  $('.container222').after(prodVO.store_id);
+								  $('.showPanel').append(prodVO.prod_id);
 							},
 						error : function(xhr) {
 							alert("error");

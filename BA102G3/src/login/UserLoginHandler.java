@@ -57,9 +57,9 @@ public class UserLoginHandler extends HttpServlet {
        			 return;
            		 
            	 } else if (userVO.getUser_type()==3) {
-           		 String url="/front-end/restaurant/";
-           		 RequestDispatcher successView = req.getRequestDispatcher(url);
-       			 successView.forward(req, res);         
+//           		 String url="/front-end/restaurant/";
+//           		 RequestDispatcher successView = req.getRequestDispatcher(url);
+//       			 successView.forward(req, res);         
 
            	     System.out.println("pass LoginServlet.java line.64");
            	     message = "SUCCESS_REST";

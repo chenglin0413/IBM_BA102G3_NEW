@@ -45,7 +45,7 @@
      
 		item img{
 		height: 250px;
-            width:70%;
+        align:center;
 		}
         .item{
           width: 100%px;
@@ -111,8 +111,8 @@
           
            <div class="col-xs-12 col-sm-4 ">
            		 	<div class="row">
-                    <div class="col-md-6"><h5><%=prodVO.getProd_name()%></h5></div>
-                    <div class="col-md-6 "><div class="item"> <img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=<%=prodVO.getProd_id()%>" height="180px" width="150px"></div></div>
+                    <div class="col-md-12 text-left"><h5><%=prodVO.getProd_name()%></h5></div>
+                    <div class="col-md-12 "><div class="item"> <img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=<%=prodVO.getProd_id()%>" width="180px" ></div></div>
            			</div>
            </div>
         <div class="col-xs-12 col-sm-8 ">
