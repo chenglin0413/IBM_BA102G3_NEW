@@ -39,7 +39,7 @@ public class ProdDAO implements ProdDAO_interface {
 	private static final String GET_ALL = "SELECT * FROM PROD ORDER BY PROD_ID DESC";
 	private static final String GET_ALL4member = "SELECT * FROM prod WHERE prod_id NOT IN (select prod_id from rppr where rppr_status = 1)and prod_status=1 order by prod_id desc";
 	private static final String GET_ONE_PROD_SORT = "SELECT * FROM PROD WHERE prod_id NOT IN (select prod_id from rppr where rppr_status = 1)and prod_status=1 and PROD_SORT=?";
-	private static final String GET_ONE_STORE_TER = "SELECT p.prod_id,p.store_id,p.prod_name,p.prod_price,p.prod_sort FROM PROD P JOIN STORE S ON P.STORE_ID = S.STORE_ID WHERE prod_id NOT IN (select prod_id from rppr where rppr_status = 1) and STORE_TER = ? and PROD_STATUS='1' ORDER BY PROD_ID DESC";
+	private static final String GET_ONE_STORE_TER = "SELECT p.prod_id,p.store_id,p.prod_name,p.prod_price,p.prod_sort,p.prod_descript,p.prod_count,p.prod_score FROM PROD P JOIN STORE S ON P.STORE_ID = S.STORE_ID WHERE prod_id NOT IN (select prod_id from rppr where rppr_status = 1) and STORE_TER = ? and PROD_STATUS='1' ORDER BY PROD_ID DESC";
 	private static final String GET_ONE_STORE_IDALLPROD = "SELECT * FROM PROD WHERE STORE_ID=? ORDER BY PROD_ID DESC";
 	private static final String GET_TOP_THREE = "select  * from(select * from prod order by prod_soldcount desc) where rownum <4";
 	private static final String GET_TOP_TWELVE = "select  * from(select * from prod order by prod_score desc) where rownum <13";
@@ -567,11 +567,13 @@ public class ProdDAO implements ProdDAO_interface {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
 				prodVO = new ProdVO();
-				prodVO.setProd_id(rs.getInt(1));
-				prodVO.setStore_id(rs.getInt(2));
-				prodVO.setProd_name(rs.getString(3));
-				prodVO.setProd_price(rs.getInt(4));
-				prodVO.setProd_sort(rs.getString(5));
+				prodVO.setProd_id(rs.getInt("prod_id"));
+				prodVO.setStore_id(rs.getInt("store_id"));
+				prodVO.setProd_name(rs.getString("prod_name"));
+				prodVO.setProd_price(rs.getInt("prod_price"));
+				prodVO.setProd_sort(rs.getString("prod_sort"));
+				prodVO.setProd_score(rs.getInt("prod_score"));
+				prodVO.setProd_count(rs.getInt("prod_count"));
 				list.add(prodVO); // Store the row in the List
 			}
 

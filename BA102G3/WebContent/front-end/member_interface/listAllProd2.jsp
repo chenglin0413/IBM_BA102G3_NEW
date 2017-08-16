@@ -156,6 +156,7 @@
 						<input type="text" id="prod_id"><button type="button" id="load">LOAD</button>	
                            
                            <div class="showPanel"></div>
+                            <div class="showPanel2"></div>
                            
 
 	<%-- 錯誤表列 --%>
@@ -375,9 +376,9 @@
 							var prodVO = JSON.parse(jsonStr);
 							alert('date saved:'+prodVO);
 							console.log(prodVO);
-							$.each(prodVO,function( key, value ) {
-								  $('.showPanel').addClass("col-md-12").append(key+":").append(value);
-							});
+// 							$.each(prodVO,function( key, value ) {
+								  $('.showPanel').addClass("col-md-4").append(prodVO.store_id);
+								  $('.showPanel2').addClass("col-md-4").appendTo(prodVO.prod_id);
 							},
 						error : function(xhr) {
 							alert("error");

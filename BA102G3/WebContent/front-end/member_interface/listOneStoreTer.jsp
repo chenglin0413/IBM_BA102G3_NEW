@@ -48,7 +48,12 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
    <style type="text/css">
-       
+        .rpprForm {
+        	display:none;
+        }
+        li {
+			list-style-type:none;
+			}
     </style>
 </head>
 
@@ -147,7 +152,7 @@
 								<div class="modal-body">
 									<div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
 									<div class="col-md-6">
-									<div ><b>產品描述:</b><br> ${prodVO.prod_descript}</div>
+									<div><b>產品描述:</b><br> ${prodVO.prod_descript}</div>
 									<div>評分次數: ${prodVO.prod_count}</div>
 									<div>評分總分: ${prodVO.prod_score}</div>
 									
@@ -198,14 +203,38 @@
 								       </form>
 								       
  													<!-- 	       檢舉區塊 -->
- 													<div class="btn btn-default"><a href="<%=request.getContextPath()%>/front-end/member_interface/addRppr.jsp?prod_id=${prodVO.prod_id}">檢舉商品</a></div>
-<!-- 								       <form name="reportForm" action="" method="POST"> -->
-<%-- 								       	  <input type="hidden" name="user_id" value="${userVO.user_id}">			 --%>
-<%-- 								       	  <input type="hidden" name="prod_id" value="${prodVO.prod_id}"> --%>
-<!-- 									       <div class="btn btn-default"><input type="submit" name="Submit" value="檢舉商品"></div> -->
-<%-- 									       <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑--> --%>
-<!-- 									       <input type="hidden" name="action" value="ADDTOReport"> -->
-<!-- 								       </form> -->
+<%--  					<div class="btn btn-default"><a href="<%=request.getContextPath()%>/front-end/member_interface/addRppr.jsp?prod_id=${prodVO.prod_id}">檢舉商品</a></div> --%>
+<!-- 					<!-- 檢舉btn,預設隱藏 -->
+              		<li>  								
+              		<%long seconds = new java.util.Date().getTime();%>
+             		 <!-- 檢舉btn,預設隱藏 -->
+	              		<button class="btn-danger btn-xs btnReport">檢舉遊記</button>	
+	              		<form action="<%=request.getContextPath()%>/back-end/report/rppr.do" method="post"  class="form-horizontal rpprForm">
+							<div class="form-group">
+								<label class="col-sm-3 control-label" >檢舉標題</label>
+								<div class="col-sm-9">
+									<input type="text" name="rppr_tittle" class="form-contrl" size="15" required>
+								</div>										
+							</div>
+							
+							<div class="form-group">
+								<label class="col-sm-3 control-label">檢舉內容</label>
+								<div class="col-sm-9">
+									<textarea  name="rppr_content" class="form-contrl" required></textarea>
+								</div>										
+							</div>
+							<div class="text-center">
+								<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"> 
+								<input type="hidden" name="user_id" value="${userVO.user_id}">
+								<input type="hidden" name="prod_id" value="${prodVO.prod_id}">
+								<input type="hidden" name="rppr_date" value="<%= seconds%>">
+								<input type="hidden" name="action" value="insert">
+								<input type="submit" class="btn btn-danger btn-sm" value="送出檢舉">
+							</div>
+						</form>
+              			</li>
+	              	<!-- 檢舉結尾 -->
+
 											      
 											       </c:if>
 												
@@ -232,6 +261,13 @@
  
    <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
 <%@ include file="/front-end/member_interface/script.file" %> 
-  
+  <script type="text/javascript">
+  $(document).ready(function(){
+    		  $(".btnReport").click(function(){
+    		  $(".rpprForm").toggle();
+    		  });
+    		  
+    		});
+  </script>
 </body>
 </html>

@@ -54,7 +54,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i></a>
                     <ul class="dropdown-menu dropdown-user">
-                    	  <li><a href="<%= request.getContextPath() %>/front-end/user/memberProfile.html"><i class="fa fa-user-md fa-fw"></i>${userVO.user_lastname},您好</a></li>       
+                    	  <li><a href="<%= request.getContextPath() %>/front-end/user/memberProfile.jsp"><i class="fa fa-user-md fa-fw"></i>${userVO.user_lastname},您好</a></li>       
 				     	<li><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneUser_idAllWish.jsp"><i class="fa fa-heart-o"></i>追蹤商品</a></li>
                         <li><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneUser_idAllOrd.jsp"><i class="fa fa-bookmark-o fa-fw"></i></i>消費記錄</a></li>
                         <li><a href="memberReserveRecord.html"><i class="fa fa-book fa-fw"></i>餐廳訂位記錄</a></li>

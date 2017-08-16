@@ -86,12 +86,16 @@ td{
   white-space : nowrap;
   width : 240px;
 }
+.AutoNewline{
+word-break: break-all;/*必須*/
+width:45px;
+}
 </style>
 </head>
 
 <body>
 
-	<%@include file="headerBar.file"%>
+	<%@include file="/front-end/store_interface/headerBar.file"%>
 	<div class="callout"></div>
 	<div class="container" >
 		<div class="row">
@@ -134,11 +138,10 @@ td{
 	<div id="page-wrapper col-md-12">
 		<div class="col-md-6">
 			<ol class="breadcrumb">
-				<!--                     <li> -->
-				<%--                         <a href="<%=request.getContextPath()%>/front-end/store_interface/listOneStore_idAllOrd.jsp">查看所有商品</a> --%>
-				<!--                     </li> -->
 				<li class="active">查看所有商品</li>
+				
 			</ol>
+			<%@ include file="page1.file" %>
 		</div>
 		<!-- 查詢訂單，待套用萬用搜尋 -->
 
@@ -178,13 +181,13 @@ td{
 								<tr>
 									<th>修改資料</th>
 									<th>產品編號</th>
-									<th>商家編號</th>
+<!-- 									<th>商家編號</th> -->
 									<th>產品名稱</th>
-									<th>產品描述</th>
+<!-- 									<th>產品描述</th> -->
 									<th>產品價格</th>
 									<th>產品種類</th>
-									<th>產品規格</th>
-									<th>產品品牌</th>
+<!-- 									<th>產品規格</th> -->
+<!-- 									<th>產品品牌</th> -->
 									<th>產品更新日期</th>
 									<th>產品售出數量</th>
 									<th>產品狀態</th>
@@ -197,7 +200,7 @@ td{
 
 
 								</tr>
-								<%@ include file="page1.file" %>
+								
 								<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 									<tr align='center' valign='middle'>
 										<div class="col-xs-12 col-md-10">
@@ -210,14 +213,55 @@ td{
 															<input	type="hidden" name="action" value="getOne_For_Update">
 													</FORM>
 												</td>
-												<td><A HREF="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_id=${prodVO.prod_id}&action=getOne_prodChange">${prodVO.prod_id}</a></td>
-												<td>${prodVO.store_id}</td>
+												<td>
+														<a href='#${prodVO.prod_id}' data-toggle="modal" class="btn btn-info">${prodVO.prod_id}</a>
+					<div class="modal fade" id="${prodVO.prod_id}">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title">${prodVO.prod_name}</h4>
+								</div>
+								<div class="modal-body">
+									<div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
+									<div class="col-md-12">
+									<div class="AutoNewline"><b>產品描述:</b><br> ${prodVO.prod_descript}</div>
+									<div>評分次數: ${prodVO.prod_count}</div>
+									<div>評分總分: ${prodVO.prod_score}</div>
+									
+									<c:if test="${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status=='1'}" >
+										<div><del><p>價格:$<font color="red">${prodVO.prod_price}</font></p></del></div> 
+										<div><p>促銷價格:$<font color="red">${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_price}</font></p></div>
+									</c:if>
+									<c:if test="${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status=='0'||PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status==null}" >
+										<div><p>價格:$<font color="red">${prodVO.prod_price}</font></p></div> 
+									</c:if>
+									</div>
+								</div>
+								
+								<div class="modal-footer">
+									
+								</div>
+							</div>
+						</div>
+					</div>
+												
+												
+												
+												
+												
+												
+												
+												
+												
+												</td>
+<%-- 												<td>${prodVO.store_id}</td> --%>
 												<td>${prodVO.prod_name}</td>
-												<td >${prodVO.prod_descript}</td>
+<%-- 												<td >${prodVO.prod_descript}</td> --%>
 												<td>$${prodVO.prod_price}</td>
 												<td>${prodVO.prod_sort}</td>
-												<td>${prodVO.prod_format}</td>
-												<td>${prodVO.prod_brand}</td>
+<%-- 												<td>${prodVO.prod_format}</td> --%>
+<%-- 												<td>${prodVO.prod_brand}</td> --%>
 												<td>${prodVO.prod_updatetime}</td>
 												<td>${prodVO.prod_soldcount}</td>
 												<td>${prodVO.prod_status}</td>
