@@ -6,20 +6,26 @@
 
 <%
 	
+	StoreVO storeVO=(StoreVO)session.getAttribute("storeVO");
+	pageContext.setAttribute("storeVO", storeVO);
+// 	StoreVO storeVO = null;
+// 	Integer store_id=null;
+// 	String store_no=null;
+// 	if (request.getParameter("store_id") != null) {
+// 		store_id = new Integer(request.getParameter("store_id"));
+// 		store_no=store_id.toString().substring(2,6);
+// 		session.setAttribute("store_id", store_id);//把store_id存起來
+// 		StoreService storeSvc = new StoreService();
+// 		storeVO = storeSvc.getOneStore(store_id);
+// 		pageContext.setAttribute("storeVO", storeVO);
+// 	} else {
+// 		store_id = (Integer) session.getAttribute("store_id");
+// 		store_no=store_id.toString().substring(2,6);
+// 		StoreService storeSvc = new StoreService();
+// 		storeVO = storeSvc.getOneStore(store_id);
+// 		pageContext.setAttribute("storeVO", storeVO);
+// 	}
 	
-	StoreVO storeVO = null;
-	if (request.getParameter("store_id") != null) {
-		Integer store_id = new Integer(request.getParameter("store_id"));
-		session.setAttribute("store_id", store_id);//把store_id存起來
-		StoreService storeSvc = new StoreService();
-		storeVO = storeSvc.getOneStore(store_id);
-		pageContext.setAttribute("storeVO", storeVO);
-	} else {
-		Integer store_id = (Integer) session.getAttribute("store_id");
-		StoreService storeSvc = new StoreService();
-		storeVO = storeSvc.getOneStore(store_id);
-		pageContext.setAttribute("storeVO", storeVO);
-	}
 %>
 <jsp:useBean id="prodSvc" class="com.prod.model.ProdService" />
 
@@ -88,13 +94,13 @@
 <div class="callout"></div>
 	<div class="container">
 		<div class="row">
-		${ddd }
+		<h4>::::頭上的storeid${storeVO.store_id}:::客廳的storeid${applicationScope.store_id}</h4><!-- 測試商店上線狀態 -->
 			<div class="col-md-12 ">
-				<c:if test="${ddd=='1'}" var="condition">  
-							           <img id="online" src="<%=request.getContextPath() %>/front-end/image/circleGreen2.png">
+				<c:if test="${applicationScope.store_id== storeVO.store_id}" var="condition">  
+							           <td>此商店上線狀態:&nbsp;<img id="online" src="<%=request.getContextPath() %>/front-end/image/circleGreen2.png"></td>
 				</c:if>
-				<c:if test="${ddd=='0'}" var="condition"> 
-							           <img id="online" src="<%=request.getContextPath() %>/front-end/image/circleRed2.png">
+				<c:if test="${applicationScope.store_id!= storeVO.store_id}" var="condition"> 
+							           <td>此商店上線狀態:&nbsp;<img id="online" src="<%=request.getContextPath() %>/front-end/image/circleRed2.png"></td>
 				</c:if>
 				<h3>商店詳情</h3>
 			</div>
@@ -241,7 +247,7 @@
 			document.getElementById('messagearea').style.display = 'none';
 
 		}
-		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_name()%>+"/"+<%=storeVO.getStore_id()%>;
+		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/"+<%=storeVO.getStore_id()%>;
 		var host = window.location.host;
 		var path = window.location.pathname;
 		var webCtx = path.substring(0, path.indexOf('/', 1));

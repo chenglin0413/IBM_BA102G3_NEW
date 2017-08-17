@@ -157,7 +157,7 @@
                 <div class="item">
                 <c:forEach var="storeVO" items="${StoreSvc.all}">
 				<c:if test="${prodVO.store_id==storeVO.store_id}">
-					<div><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneStore_detail.jsp?store_id=${prodVO.store_id}">${storeVO.store_name}</a></div>
+					<div><a href="<%=request.getContextPath()%>/front-end/store/store.do?store_id=${prodVO.store_id}&action=seeOneStoredetail">${storeVO.store_name}</a></div>
 				 </c:if>
 				 </c:forEach>
                 <div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>

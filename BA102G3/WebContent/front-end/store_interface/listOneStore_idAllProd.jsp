@@ -1,16 +1,21 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.util.*"%>
+<%@ page import="java.util.*,java.lang.*"%>
 <%@ page
 	import="com.prod.model.*,com.store.model.*,com.item.model.*,com.user.model.*,com.ord.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%
-		
 		UserVO userVO = (UserVO) session.getAttribute("userVO");
 		String account = (String) session.getAttribute("account");
 		StoreService storeSvc = new StoreService();
 		StoreVO storeVO = storeSvc.getOneStoreByUsed_Id(userVO.getUser_id());
+		//將商店別名和商店編號放入map內 ,開始
+// 		String store_no=storeVO.getStore_id().toString().substring(2,6);
+// 		Map<String,Integer> stores=new Hashtable<String,Integer>();
+// 		stores.put(store_no,storeVO.getStore_id());
+// 		application.setAttribute("stores",stores);
+		//將商店別名和商店編號放入map內 ,結束
 		ProdService prodSvc = new ProdService();
 		List<ProdVO> list = prodSvc.getOneStore_idAllProd(storeVO.getStore_id());
 		OrdService ordSvc = new OrdService();
@@ -27,8 +32,9 @@
 			}
 		}
 		pageContext.setAttribute("list", list);
+		
 %>
-
+		
 
 
 
@@ -360,14 +366,11 @@ width:45px;
 		function connect() {
 			// 建立 websocket 物件
 			webSocket = new WebSocket(endPointURL);
-
-			<%
-			application.setAttribute(" ddd","1"); 
-			%>
+			
 			webSocket.onopen = function(event) {
-				document.getElementById('sendMessage').disabled = false;
-				document.getElementById('connect').disabled = true;
-				document.getElementById('disconnect').disabled = false;
+// 				document.getElementById('sendMessage').disabled = false;
+// 				document.getElementById('connect').disabled = true;
+// 				document.getElementById('disconnect').disabled = false;
 
 			};
 
@@ -411,16 +414,12 @@ width:45px;
 		}
 
 		function disconnect() {
-			<%
-
-			application.setAttribute("ddd","0");			
 			
-		%> 
 			webSocket.close();
-			
-			document.getElementById('sendMessage').disabled = true;
-			document.getElementById('connect').disabled = false;
-			document.getElementById('disconnect').disabled = true;
+			console.log("已離線");
+// 			document.getElementById('sendMessage').disabled = true;
+// 			document.getElementById('connect').disabled = false;
+// 			document.getElementById('disconnect').disabled = true;
 		}
 
 		//webSocket 結束    
