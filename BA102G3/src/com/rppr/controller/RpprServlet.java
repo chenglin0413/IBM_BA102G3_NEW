@@ -1,6 +1,7 @@
 package com.rppr.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,7 +12,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.rppr.model.*;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import com.rppr.model.RpprService;
+import com.rppr.model.RpprVO;
 
 public class RpprServlet extends HttpServlet {
        
@@ -26,13 +31,13 @@ public class RpprServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF8");
 		
 		String action = request.getParameter("action");
-		
+		PrintWriter out=response.getWriter();
 		if ("insert".equals(action)) { // 來自addRppr.jsp的請求  
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			request.setAttribute("errorMsgs", errorMsgs);
 			String requestURL = request.getParameter("requestURL"); 
-			try {
+//			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				Integer prod_id = Integer.parseInt(request.getParameter("prod_id").trim());
 				Integer user_id = Integer.parseInt(request.getParameter("user_id").trim());
@@ -64,31 +69,18 @@ public class RpprServlet extends HttpServlet {
 				rpprVO.setRppr_tittle(rppr_tittle);
 				rpprVO.setRppr_content(rppr_content);
 
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					request.setAttribute("rpprVO", rpprVO); // 含有輸入格式錯誤的empVO物件,也存入req
-					RequestDispatcher failureView = request.getRequestDispatcher("/back-end/report/addRppr.jsp");
-					failureView.forward(request, response);
-					return;
-				}
 
 				/*************************** 2.開始新增資料 ***************************************/
 				RpprService rpprSvc = new RpprService();
 				rpprVO = rpprSvc.addRppr(prod_id, user_id, rppr_date, rppr_tittle, rppr_content);
-
+				JSONObject jb=new JSONObject(rpprVO);
+				System.out.println(jb);
+				out.print(jb);
+				out.close();
+		}
 				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				String url = requestURL;
-				request.setAttribute("rpprVO", rpprVO);
-				RequestDispatcher successView = request.getRequestDispatcher(url); // 新增成功後轉交???????.jsp
-				successView.forward(request, response);
 
 				/*************************** 其他可能的錯誤處理 **********************************/
-			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = request.getRequestDispatcher("/back-end/report/addRppr.jsp");
-				failureView.forward(request, response);
-			}
-		}
 		
 		
 		if ("getOne_For_Display".equals(action)) { // 來自listAllRppr.jsp的請求

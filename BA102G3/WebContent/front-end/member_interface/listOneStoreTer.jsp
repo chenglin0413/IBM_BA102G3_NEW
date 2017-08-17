@@ -91,7 +91,7 @@
        </header> 
 </div>
 </div>
- <div class="container">	
+ <div class="container" id="bb">	
 	<div class="row ">         
              
         <c:forEach var="prodVO" items="${list}" >
@@ -126,7 +126,7 @@
                               <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=8&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>精品</a></li>
          </ul>
 
- <div class="container">
+ <div class="container" >
 <div class="row">
 <%@ include file="page1.file"%>
 </div>
@@ -208,7 +208,7 @@
               		<li>  								
               		<%long seconds = new java.util.Date().getTime();%>
              		 <!-- 檢舉btn,預設隱藏 -->
-	              		<button class="btn-danger btn-xs btnReport">檢舉遊記</button>	
+	              		<button class="btn-danger btn-xs btnReport">檢舉產品</button>	
 	              		<form action="<%=request.getContextPath()%>/back-end/report/rppr.do" method="post"  class="form-horizontal rpprForm">
 							<div class="form-group">
 								<label class="col-sm-3 control-label" >檢舉標題</label>

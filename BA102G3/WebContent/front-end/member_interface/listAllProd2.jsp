@@ -72,9 +72,9 @@
           left: 5px;
           margin: auto;
         }
-         .rpprForm {
-        	display:none;
-        }
+/*          .rpprForm { */
+/*         	display:none; */
+/*         } */
         li {
 			list-style-type:none;
 			}
@@ -288,27 +288,28 @@
               		<%long seconds = new java.util.Date().getTime();%>
              		 <!-- 檢舉btn,預設隱藏 -->
 	              		<button class="btn-danger btn-xs btnReport">檢舉遊記</button>	
-	              		<form action="<%=request.getContextPath()%>/back-end/report/rppr.do" method="post"  class="form-horizontal rpprForm">
+	              		<form action="" method="post"  class="form-horizontal rpprForm">
 							<div class="form-group">
 								<label class="col-sm-3 control-label" >檢舉標題</label>
 								<div class="col-sm-9">
-									<input type="text" name="rppr_tittle" class="form-contrl" size="15" required>
+									<input type="text" id="rppr_tittle" name="rppr_tittle" class="form-contrl" size="15" required>
 								</div>										
 							</div>
 							
 							<div class="form-group">
 								<label class="col-sm-3 control-label">檢舉內容</label>
 								<div class="col-sm-9">
-									<textarea  name="rppr_content" class="form-contrl" required></textarea>
+									<textarea  id="rppr_content" name="rppr_content" class="form-contrl" required></textarea>
 								</div>										
 							</div>
 							<div class="text-center">
 								<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"> 
-								<input type="hidden" name="user_id" value="${userVO.user_id}">
-								<input type="hidden" name="prod_id" value="${prodVO.prod_id}">
-								<input type="hidden" name="rppr_date" value="<%= seconds%>">
+								<input type="hidden" id="user_id" name="user_id" value="${userVO.user_id}">
+								<input type="hidden" id="prod_id" name="prod_id" value="${prodVO.prod_id}">
+								<input type="hidden" id="rppr_date" name="rppr_date" value="<%= seconds%>">
 								<input type="hidden" name="action" value="insert">
-								<input type="submit" class="btn btn-danger btn-sm" value="送出檢舉">
+								<button id="rpprbtn">檢舉</button>
+<!-- 								<input type="submit" class="btn btn-danger btn-sm" value="送出檢舉"> -->
 							</div>
 						</form>
               			</li>
@@ -335,7 +336,7 @@
 	<div class="col-xs-12 col-md-8 col-md-offset-4">
 		<%@ include file="page2.file" %>
 	</div>
-
+ <div class="showRppr">我是檢舉區域</div>
 
  <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
  
@@ -364,25 +365,25 @@
     	</script>
     	<!-- ajax 練習部分 -->
     	<script type="text/javascript">
-    	
-		var $prod_id = $("#prod_id");
-		console.log($prod_id);
-		$("#load").click(function() {
+		$("#rpprbtn").click(function() {
 			$.ajax({
-				url : '<%= request.getContextPath() %>/front-end/prod/prod.do',
+				url : '<%=request.getContextPath()%>/front-end/report/rppr.do',
 				data : {
-					prod_id : $prod_id.val(),
-					action:'test'
+					rppr_tittle : $("#rppr_tittle").val(),
+					rppr_content : $("#rppr_content").val(),
+					user_id : $("#user_id").val(),
+					prod_id :  $("#prod_id").val(),
+					rppr_date : $("#rppr_date").val(),
+					action:'insert'
 				},
 				type : 'POST',
 						
 						success : function(jsonStr) {
-							var prodVO = JSON.parse(jsonStr);
-							alert('date saved:'+prodVO);
-							console.log(prodVO);
+							var rpprVO = JSON.parse(jsonStr);
+// 							alert('date saved:'+rpprVO);
+							console.log(rpprVO);
 // 							$.each(prodVO,function( key, value ) {
-								  $('.container222').after(prodVO.store_id);
-								  $('.showPanel').append(prodVO.prod_id);
+								  $('.showRppr').append(rpprVO.rppr_content);
 							},
 						error : function(xhr) {
 							alert("error");

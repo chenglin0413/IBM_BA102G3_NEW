@@ -60,6 +60,7 @@
 
 <body>
 
+                           
     
  <%@include file="headerBar.file" %>
     <!-- Header -->
@@ -237,7 +238,7 @@
 	     <c:if test="${ordVO.ord_bill  == '3'}" var="condition" scope="page" > 
 	           <h3><font color="green">已結案</font></h3>
 	    </c:if>
-			<select name="ord_bill" value="<%=ordVO.getOrd_bill()%>">
+			<select name="ord_bill" id="ord_bill" value="<%=ordVO.getOrd_bill()%>">
 			    <c:if test="${ordVO.ord_bill  == '1'}" var="condition" scope="page" > 
 			  <option value="1" selected>未付款</option>
 			  <option value="2" >已付款</option>
@@ -264,7 +265,7 @@
 	            <c:if test="${ordVO.ord_grant  == '2'}" var="condition" scope="page" > 
 	           <h3><font color="green">已審核</font></h3>
 	    </c:if>
-		<select name="ord_grant" value="<%=ordVO.getOrd_grant()%>">
+		<select name="ord_grant" id="ord_grant" value="<%=ordVO.getOrd_grant()%>">
 			    <c:if test="${ordVO.ord_grant  == '1'}" var="condition" scope="page" > 
 			  <option value="1" selected>未審核</option>
 			  <option value="2">已審核</option>
@@ -288,7 +289,7 @@
 	     <c:if test="${ordVO.ord_status  == '3'}" var="condition" scope="page" > 
 	           <h3><font color="green">已取貨</font></h3>
 	    </c:if>
-		<select name="ord_status" value="<%=ordVO.getOrd_status()%>">
+		<select name="ord_status" id="ord_status" value="<%=ordVO.getOrd_status()%>">
 			    <c:if test="${ordVO.ord_status  == '1'}" var="condition" scope="page" > 
 			  <option value="1" selected>備貨中</option>
 			  <option value="2" >待取貨</option>
@@ -309,15 +310,15 @@
 		</div>
 <br>
 <input type="hidden" name="action" value="update_changeStatus">
-<input type="hidden" name="ord_id" value="<%=ordVO.getOrd_id()%>">
-<input type="hidden" name="user_id" value="<%=ordVO.getUser_id()%>">
-<input type="hidden" name="store_id" value="<%=ordVO.getStore_id()%>">
-<input type="hidden" name="ord_date" value="<%=ordVO.getOrd_date()%>">
-<input type="hidden" name="ord_total" value="<%=ordVO.getOrd_total()%>">
-<input type="hidden" name="ord_sscore" value="<%=ordVO.getOrd_sscore()%>">
-<input type="hidden" name="ord_rpdate" value="<%=ordVO.getOrd_rpdate()%>">
-<input type="hidden" name="ord_rpcomm" value="<%=ordVO.getOrd_rpcomm()%>">
-<input type="hidden" name="ord_rpstatus" value="<%=ordVO.getOrd_rpstatus()%>">
+<input type="hidden" name="ord_id" id="ord_id" value="<%=ordVO.getOrd_id()%>">
+<input type="hidden" name="user_id" id="user_id" value="<%=ordVO.getUser_id()%>">
+<input type="hidden" name="store_id" id="store_id" value="<%=ordVO.getStore_id()%>">
+<input type="hidden" name="ord_date"  id="ord_date" value="<%=ordVO.getOrd_date()%>">
+<input type="hidden" name="ord_total" id="ord_total" value="<%=ordVO.getOrd_total()%>">
+<input type="hidden" name="ord_sscore" id="ord_sscore" value="<%=ordVO.getOrd_sscore()%>">
+<input type="hidden" name="ord_rpdate" id="ord_rpdate" value="<%=ordVO.getOrd_rpdate()%>">
+<input type="hidden" name="ord_rpcomm" id="ord_rpcomm" value="<%=ordVO.getOrd_rpcomm()%>">
+<input type="hidden" name="ord_rpstatus" id="ord_rpstatus" value="<%=ordVO.getOrd_rpstatus()%>">
 <input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>">
 <div class="col-md-12">
 <input type="submit" value="送出修改"></FORM>
@@ -342,16 +343,9 @@
     <script src="<%= request.getContextPath() %>/front-end/js_store/bootstrap.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
-  <script>
-//easy-sidebar-toggle-right
-$('.easy-sidebar-toggle').click(function(e) {
-e.preventDefault();
-//$('body').toggleClass('toggled-right');
-$('body').toggleClass('toggled');
-//$('.navbar.easy-sidebar-right').removeClass('toggled-right');
-$('.navbar.easy-sidebar').removeClass('toggled');
-});
-</script>
+
+
+
 
 
 </body>

@@ -812,14 +812,8 @@ public class ProdServlet extends HttpServlet {
 			ProdVO prodVO = prodSvc.getOneProd(prod_id);
 			JSONObject jb=new JSONObject(prodVO);
 			
-			try {
-				jb.put("prodVO", prodVO);
-			} catch (JSONException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			out.print( jb);
-
+			out.print(jb);
+			out.close();
 		}
 
 	}

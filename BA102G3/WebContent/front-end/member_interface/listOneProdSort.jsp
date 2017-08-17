@@ -231,7 +231,7 @@
               		<li>  								
               		<%long seconds = new java.util.Date().getTime();%>
              		 <!-- 檢舉btn,預設隱藏 -->
-	              		<button class="btn-danger btn-xs btnReport">檢舉遊記</button>	
+	              		<button class="btn-danger btn-xs btnReport">檢舉產品</button>	
 	              		<form action="<%=request.getContextPath()%>/back-end/report/rppr.do" method="post"  class="form-horizontal rpprForm">
 							<div class="form-group">
 								<label class="col-sm-3 control-label" >檢舉標題</label>
