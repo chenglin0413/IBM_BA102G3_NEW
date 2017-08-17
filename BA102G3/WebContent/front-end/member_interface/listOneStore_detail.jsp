@@ -241,7 +241,7 @@
 			document.getElementById('messagearea').style.display = 'none';
 
 		}
-		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/"+<%=storeVO.getStore_id()%>;
+		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_name()%>+"/"+<%=storeVO.getStore_id()%>;
 		var host = window.location.host;
 		var path = window.location.pathname;
 		var webCtx = path.substring(0, path.indexOf('/', 1));

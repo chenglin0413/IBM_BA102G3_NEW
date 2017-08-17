@@ -48,7 +48,6 @@ pageContext.setAttribute("trvllist", trvllist);
         .item img{
             height: 250px;
             width:100%;
-            
         }
        
        
@@ -199,28 +198,26 @@ pageContext.setAttribute("trvllist", trvllist);
 
     <!-- Callout間隔區 -->
     <div class="callout"></div>
-     
-    <!-- 商品 Section -->
-    <section id="portfolio" class="bg-light-gray">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
+    
+    
+     <div class="col-md-8">
+     			  <section id="portfolio" class="bg-light-gray"> <!-- 商品 /餐廳Section -->
+                <div class="col-md-12 text-center">
                     <h2 class="section-heading">熱門商品</h2>
                     <h3 class="section-subheading text-muted">Shopping area.</h3>
                 </div>
-            </div>
-       </div>
+                </section>	
             <jsp:useBean id="prodSvc" class="com.prod.model.ProdService"/>
             <%
-            List<ProdVO> list=prodSvc.getTopThree();
-            pageContext.setAttribute("list",list);
+            List<ProdVO> prodlist=prodSvc.getTopThree();
+            pageContext.setAttribute("prodlist",prodlist);
             %>
-            <c:forEach var="prodVO" items="${list}" >
+            <c:forEach var="prodVO" items="${prodlist}" >
                 <div class="col-md-4 col-sm-12 item text-left">
                      <div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
-					<h2><div>${prodVO.prod_name}</div></h2>
-					<h4><div>商品描述:${prodVO.prod_descript}</div></h4>
-					<h4><div>商品種類:${prodVO.prod_sort}</div></h4>
+					<div><h2>${prodVO.prod_name}</h2></div>
+					<div><h4>商品描述:${prodVO.prod_descript}</h4></div>
+					<div><h4>商品種類:${prodVO.prod_sort}</h4></div>
                     <div>
                     
                     <a href='#${prodVO.prod_id}' data-toggle="modal" class="btn btn-info">瀏覽詳情</a>
@@ -254,13 +251,6 @@ pageContext.setAttribute("trvllist", trvllist);
 									      <input type="hidden" name="prod_descript" value="${prodVO.prod_descript}">
 									      <input type="hidden" name="prod_price" value="${prodVO.prod_price}">
 									      <input type="hidden" name="prod_sort" value="${prodVO.prod_sort}">
-							<%--       	  <input type="hidden" name="prod_format" value="${prodVO.prod_format}"> --%>
-							<%-- 	      <input type="hidden" name="prod_brand" value="${prodVO.prod_brand}"> --%>
-							<%-- 	      <input type="hidden" name="prod_updatetime" value="${prodVO.prod_updatetime}"> --%>
-							<%-- 	      <input type="hidden" name="prod_soldcount" value="${prodVO.prod_soldcount}"> --%>
-							<%--       	  <input type="hidden" name="prod_status" value="${prodVO.prod_status}"> --%>
-							<%-- 	      <input type="hidden" name="prod_count" value="${prodVO.prod_count}"> --%>
-							<%-- 	      <input type="hidden" name="prod_score" value="${prodVO.prod_score}"> --%>
 								     		<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑-->
 								      		<input type="hidden" name="action" value="ADD">
 								       </form>
@@ -290,12 +280,12 @@ pageContext.setAttribute("trvllist", trvllist);
          <!-- 商品前三結尾 -->  
            
            
-                 <div class="row">
-                <div class="col-lg-12 text-center">
+                 <section class="row">
+                <div class="col-md-12 text-center">
                     <h2 class="section-heading">熱門餐廳</h2>
                     <h3 class="section-subheading text-muted">Restaurant area.</h3>
                 </div>
-                 </div>
+                </section>
                 <div class="col-md-4 col-sm-6 portfolio-item">
                     <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
                         
@@ -327,18 +317,17 @@ pageContext.setAttribute("trvllist", trvllist);
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-    
-     <!-- 遊記前四 -->
+     
+     
+     			
+     <div class="col-md-4">
+     			  <!-- 遊記前四 -->
     <section id="trvl" class="trvl">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12 text-center">
+        <div class="col-md-12">
+                <div class=" text-center">
                     <h2>熱門遊記</h2>
                     <p class="lead">The most popular blog in our website! 旅遊日記</p>
                 </div>
-            </div>
             <!-- /.row -->
         </div>
         <!-- /.container -->
@@ -347,15 +336,18 @@ pageContext.setAttribute("trvllist", trvllist);
 
 		
             <c:forEach var="trvlVO" items="${trvllist}">
-					<div class="col-sm-6 col-md-3">
-						<div class="ehdiv " id="boxshadow">							
+					<div class="col-sm-6 col-md-12">
+						<div class="ehdiv " >							
 							<c:forEach var="trpiVO" items="${trpiSvc.all}">
 								<c:if test="${trvlVO.trvl_id==trpiVO.trvl_id}">
+					            	<div class="item" id="boxshadow">
 					            	<a  href="<%=request.getContextPath()%>/front-end/trvl/trvl.do?trvl_id=${trvlVO.trvl_id}&action=getOne_For_Display">
-							        	<img class="img-thumbnail" src="<%= request.getContextPath()%>/front-end/trpi/DBGifReader.do?trpi_id=${trpiVO.trpi_id}">
+							        	<img  src="<%= request.getContextPath()%>/front-end/trpi/DBGifReader.do?trpi_id=${trpiVO.trpi_id}">
 							        </a>
+							        </div>
 							    </c:if>
 							</c:forEach>
+							<br>
 							<div class="row">
 								<div class="col-sm-6 col-md-6">
 									<strong>${trvlVO.trvl_tittle}</strong> 
@@ -366,9 +358,13 @@ pageContext.setAttribute("trvllist", trvllist);
 							</div><!-- row2 -->
 						</div>	
 					</div>
+					
 				</c:forEach>
-		
+	</div>
 		<!-- 遊記結尾 -->
+    
+    
+   
    
 <div class="callout"></div>
 
