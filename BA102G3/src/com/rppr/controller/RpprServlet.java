@@ -31,12 +31,14 @@ public class RpprServlet extends HttpServlet {
 		response.setContentType("text/html; charset=UTF8");
 		
 		String action = request.getParameter("action");
-		PrintWriter out=response.getWriter();
+		
 		if ("insert".equals(action)) { // 來自addRppr.jsp的請求  
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			request.setAttribute("errorMsgs", errorMsgs);
 			String requestURL = request.getParameter("requestURL"); 
+			PrintWriter out=response.getWriter();
+			System.out.println("rppr_40");
 //			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				Integer prod_id = Integer.parseInt(request.getParameter("prod_id").trim());
@@ -60,7 +62,7 @@ public class RpprServlet extends HttpServlet {
 				}
 				
 				String rppr_content = request.getParameter("rppr_content").trim();
-			System.out.println("檢舉日期"+ rppr_content);	
+			System.out.println("檢舉內容"+ rppr_content);	
 				if (rppr_content == null || (rppr_content.trim()).length() == 0) {
 					errorMsgs.add("請輸入檢舉內容");
 				}
@@ -72,7 +74,7 @@ public class RpprServlet extends HttpServlet {
 
 				/*************************** 2.開始新增資料 ***************************************/
 				RpprService rpprSvc = new RpprService();
-				rpprVO = rpprSvc.addRppr(prod_id, user_id, rppr_date, rppr_tittle, rppr_content);
+				rpprSvc.addRppr(prod_id, user_id, rppr_date, rppr_tittle, rppr_content);
 				JSONObject jb=new JSONObject(rpprVO);
 				System.out.println(jb);
 				out.print(jb);

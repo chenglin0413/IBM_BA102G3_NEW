@@ -153,7 +153,7 @@
 								
 								
          </ul>
-						<input type="text" id="prod_id"><button type="button" id="load">LOAD</button>	
+<!-- 						<input type="text" id="prod_id"><button type="button" id="load">LOAD</button>	 -->
                            <div class="container222">
                            
 		                           <div class="showPanel">
@@ -180,7 +180,8 @@
 	
 
 <%@ include file="page1.file"%>
-
+<div class="showRppr1"></div>
+<div class="showRppr2"></div>
 	<div class="col-md-2">
 	<div class="row">
 	<ul class="list-group">
@@ -288,7 +289,7 @@
               		<%long seconds = new java.util.Date().getTime();%>
              		 <!-- 檢舉btn,預設隱藏 -->
 	              		<button class="btn-danger btn-xs btnReport">檢舉遊記</button>	
-	              		<form action="" method="post"  class="form-horizontal rpprForm">
+	              		<form  method="post"  class="form-horizontal rpprForm">
 							<div class="form-group">
 								<label class="col-sm-3 control-label" >檢舉標題</label>
 								<div class="col-sm-9">
@@ -307,9 +308,9 @@
 								<input type="hidden" id="user_id" name="user_id" value="${userVO.user_id}">
 								<input type="hidden" id="prod_id" name="prod_id" value="${prodVO.prod_id}">
 								<input type="hidden" id="rppr_date" name="rppr_date" value="<%= seconds%>">
-								<input type="hidden" name="action" value="insert">
-								<button id="rpprbtn">檢舉</button>
-<!-- 								<input type="submit" class="btn btn-danger btn-sm" value="送出檢舉"> -->
+<!-- 								<button type="button" id="rpprbtn">檢舉</button> -->
+								  
+								<button type="button" id="rpprbtn"  onClick="messageGo();">送出檢舉</button>
 							</div>
 						</form>
               			</li>
@@ -336,7 +337,7 @@
 	<div class="col-xs-12 col-md-8 col-md-offset-4">
 		<%@ include file="page2.file" %>
 	</div>
- <div class="showRppr">我是檢舉區域</div>
+ 
 
  <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
  
@@ -365,15 +366,20 @@
     	</script>
     	<!-- ajax 練習部分 -->
     	<script type="text/javascript">
-		$("#rpprbtn").click(function() {
+    	
+//     	var $prod_id = $("#prod_id"); 
+//     	console.log(prod_id);
+		function messageGo() {
 			$.ajax({
 				url : '<%=request.getContextPath()%>/front-end/report/rppr.do',
 				data : {
-					rppr_tittle : $("#rppr_tittle").val(),
-					rppr_content : $("#rppr_content").val(),
-					user_id : $("#user_id").val(),
-					prod_id :  $("#prod_id").val(),
-					rppr_date : $("#rppr_date").val(),
+					
+					
+					prod_id :  $('#prod_id').val(),
+					user_id : $('#user_id').val(),
+					rppr_date : $('#rppr_date').val(),
+					rppr_tittle : $('#rppr_tittle').val(),
+					rppr_content : $('#rppr_content').val(),
 					action:'insert'
 				},
 				type : 'POST',
@@ -381,9 +387,10 @@
 						success : function(jsonStr) {
 							var rpprVO = JSON.parse(jsonStr);
 // 							alert('date saved:'+rpprVO);
-							console.log(rpprVO);
+							console.log(jsonStr);
 // 							$.each(prodVO,function( key, value ) {
-								  $('.showRppr').append(rpprVO.rppr_content);
+								  $('.showRppr1').append('檢舉內容'+rpprVO.rppr_content);
+								  $('.showRppr2').append('檢舉標題'+rpprVO.rppr_tittle);
 							},
 						error : function(xhr) {
 							alert("error");
@@ -391,7 +398,7 @@
 							alert(thrownError); 
 						}
 					});
-				});
+				};
 	
     </script>
 
