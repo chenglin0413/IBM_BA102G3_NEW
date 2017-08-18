@@ -51,17 +51,21 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <style type="text/css">
-        .item img{
-            height: 300px;
-            width: 100%;
-        }
-        th{
-       text-align:center;
-       font-size:14px;
-       
-        }
-    </style>
+<style type="text/css">
+.item img {
+	height: 300px;
+	width: 100%;
+}
+
+th {
+	text-align: center;
+	font-size: 14px;
+}
+
+li {
+	list-style-type: none;
+}
+</style>
 </head>
 
 <body>
@@ -83,30 +87,61 @@
             </div>
 
  			<div id="page-wrapper col-md-12">
-				<div class="col-md-6">
+				<div class="col-md-3">
                 <ol class="breadcrumb">
                 	<li>
                         <a href="<%=request.getContextPath()%>/front-end/store_interface/listOneStore_idAllProd.jsp">查看所有商品</a>
                     </li>
-                    <li>
-                        <a href="<%=request.getContextPath()%>/front-end/store_interface/listOneStore_idAllOrdselect.jsp">訂單管理</a>
-                    </li>
-                    <li class="active">查看訂單列表</li>
+                   
+                    <li class="active">訂單管理</li>
                 </ol>
-                <ul class="nav nav-tabs">
-<!--                             <div class="dropdown"> -->
-<!--                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">商品種類 <b class="caret"></b></a> -->
-<!--                               <ul class="dropdown-menu"> -->
-<!--                                 <li><a href="#">零食、點心</a></li> -->
-<!--                                 <li><a href="#">免稅菸酒</a></li> -->
-<!--                                 <li><a href="#">國際精品</a></li> -->
-<!--                               </ul> -->
-<!--                             </div> -->
-                            
-
-                           
-        		 </ul>
+                
                 </div>
+                <div class="col-md-6">
+						<FORM METHOD="post"
+							ACTION="<%=request.getContextPath()%>/front-end/ord/ord.do"
+							name="form1">
+							<div class="col-md-12">
+			
+								選擇訂單編號: <select size="1" name="ord_id">
+									<option name="ord_id" value="">
+										<c:forEach var="ordVO"
+											items="${ordSvc.getOneStore_idAllOrd(storeVO.store_id)}">
+											<option name="ord_id" value="${ordVO.ord_id}">${ordVO.ord_id}
+										</c:forEach>
+								</select><br> <input type="hidden" name="store_id"
+									value="${storeVO.store_id }">
+								買家付款狀態:&nbsp;&nbsp;&nbsp;&nbsp; <select name="ord_bill" value="1">
+									<option name="ord_bill" value="">
+									<option value="1">未付款</option>
+									<option value="2">已付款</option>
+									<option value="3">已結案</option>
+								</select><br>
+							</div>
+							<div class="col-md-12">
+								商店審核訂單狀態:&nbsp;<select name="ord_grant" value="1">
+									<option name="ord_grant" value="">
+									<option value="1">未審核</option>
+									<option value="2">審核</option>
+								</select><br>
+			
+								訂單狀態:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name="ord_status"
+									value="1">
+									<option name="ord_status" value="">
+									<option value="1">備貨中</option>
+									<option value="2">待取貨</option>
+									<option value="3">已取貨</option>
+								</select>
+							</div>
+							<div>
+								<button class="btn btn-default">送出</button>
+								<!-- 		        <input type="submit" value="送出"> -->
+								<input type="hidden" name="action"
+									value="listOrds_ByCompositeQuery">
+							</div>
+						</FORM>
+				</div>
+				<div class="col-md-3"></div>
                 <!-- 查詢訂單，待套用萬用搜尋 -->
                 
 			</div>
@@ -126,56 +161,6 @@
 </c:if>
 
 
-
-			<div class="container-fluid col-md-12">
-			<div class="row">
-		  <li>   
-		    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/ord/ord.do" name="form1">
-		        <div class="col-md-4">
-		        
-		        	<b>選擇訂單編號: <select size="1" name="ord_id" >
-		        					<option name="ord_id" value="">	
-		        					<c:forEach var="ordVO" items="${ordSvc.getOneStore_idAllOrd(storeVO.store_id)}" >
-						          		<option name="ord_id" value="${ordVO.ord_id}">${ordVO.ord_id}
-				         			</c:forEach>  
-				         			 
-      							 </select><br>
-		        	
-		        	<input type="hidden" name="store_id" value="${storeVO.store_id }"><br>
-		       </div>
-		    
-		       <div class="col-md-4">   
-		       	買家原付款狀態:&nbsp;&nbsp;&nbsp;&nbsp; <select name="ord_bill" value="1">
-			 <option name="ord_bill" value="">
-			  <option value="1">未付款</option>
-			  <option value="2">已付款</option>
-			  <option value="3">已結案</option>
-				</select>
-				
-				<br>
-				商店審核訂單狀態:&nbsp;<select name="ord_grant" value="1">
-					   <option name="ord_grant" value="">
-					  <option value="1">未審核</option>
-					  <option value="2">審核</option>
-				</select>
-				
-				<br>
-				
-				訂單狀態:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name="ord_status" value="1">
-					  <option name="ord_status" value="">
-					  <option value="1">備貨中</option>
-					  <option value="2">待取貨</option>
-					  <option value="3">已取貨</option>
-				</select>
-				</div>
-				 <div class="col-md-4">        
-		        <input type="submit" value="送出">
-		        <input type="hidden" name="action" value="listOrds_ByCompositeQuery">
-		        </div>
-		     </FORM>
-		  </li>
-	</div>  
-	</div>
 			
             <div class="container-fluid col-md-12">
 
@@ -192,17 +177,12 @@
                                             <tr>
 												<th>訂單編號</th>
 												<th>會員名稱</th>
-												<th>商店編號</th>
+												<th>商店名稱</th>
 												<th>訂單日期</th>
 												<th>訂單總額</th>
 												<th>買家付款狀態</th>
 												<th>商家審核訂單狀態</th>
 												<th>訂單狀態</th>
-<!-- 												<th>買家對商店評分</th> -->
-<!-- 												<th>商家檢舉訂單日期</th> -->
-<!-- 												<th>檢舉訂單理由</th> -->
-<!-- 												<th>商家檢舉訂單狀態</th> -->
-<!-- 												<th>商家檢舉訂單狀態</th> -->
 												<th >操作</th>
 											</tr>
 											</thead>	
@@ -246,32 +226,32 @@
 			<td>$${ordVO.ord_total}</td>
 			<td>                                                    
 	            <c:if test="${ordVO.ord_bill == '1'}" var="condition" scope="page" > 
-	            <p>未付款</p>
+	            <span class="label label-danger">未付款</span>
 	            </c:if>
 	            <c:if test="${ordVO.ord_bill  == '2'}" var="condition" scope="page" > 
-	           <p>已付款</p>
+	           <span class="label label-warning">已付款</span>
 	           </c:if>
 	            <c:if test="${ordVO.ord_bill  == '3'}" var="condition" scope="page" > 
-	           	<p>已結案</p>
+	           	<span class="label label-success">已結案</span>
 	           </c:if>
            </td>
 			<td>                                                    
 	            <c:if test="${ordVO.ord_grant == '1'}" var="condition" scope="page" > 
-	            <p>未審核</p>
+	             <span class="label label-danger">未審核</span>
 	            </c:if>
 	            <c:if test="${ordVO.ord_grant  == '2'}" var="condition" scope="page" > 
-	           <p>已審核</p>
+	           <span class="label label-success">已審核</span>
 	           </c:if>
            </td>
            <td>                                                    
 	            <c:if test="${ordVO.ord_status == '1'}" var="condition" scope="page" > 
-	            <p>備貨中</p>
+	            <span class="label label-danger">備貨中</span>
 	            </c:if>
 	            <c:if test="${ordVO.ord_status  == '2'}" var="condition" scope="page" > 
-	           <p>待取貨</p>
+	           <span class="label label-warning">待取貨</span>
 	           </c:if>
 	            <c:if test="${ordVO.ord_status  == '3'}" var="condition" scope="page" > 
-	           	<p>已取貨</p>
+	           	<span class="label label-success">已取貨</span>
 	           </c:if>
            </td>
 <%-- 			<td>${ordVO.ord_sscore}</td> --%>

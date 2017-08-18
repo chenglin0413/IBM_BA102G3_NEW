@@ -582,3 +582,11 @@ list-style-type:none;
     border-radius: 8px;
     margin-right: 10px;margin-left:10px;
 }
+
+
+/*過長的文字變成以...顯示*/
+.AutoSkip {
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+   }

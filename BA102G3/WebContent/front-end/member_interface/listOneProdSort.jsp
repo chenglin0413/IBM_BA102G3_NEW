@@ -161,7 +161,7 @@
 				 </c:if>
 				 </c:forEach>
                 <div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
-				<div><h3>${prodVO.prod_name}</h3></div>
+				<div class="AutoSkip"><h3>${prodVO.prod_name}</h3></div>
 				<div><h4>$${prodVO.prod_price}</h4></div>
 				<div><h4>${prodVO.prod_sort}</h4></div>
 					<a href='#${prodVO.prod_id}' data-toggle="modal" class="btn btn-info">瀏覽詳情</a>

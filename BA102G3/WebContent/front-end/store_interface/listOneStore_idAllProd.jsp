@@ -80,6 +80,7 @@
 .item img {
 	height: 300px;
 	width: 100%;
+	
 }
 
 th {
@@ -92,10 +93,6 @@ td{
   white-space : nowrap;
   width : 240px;
 }
-.AutoNewline{
-word-break: break-all;/*必須*/
-width:45px;
-}
 </style>
 </head>
 
@@ -103,13 +100,30 @@ width:45px;
 
 	<%@include file="/front-end/store_interface/headerBar.file"%>
 	<div class="callout"></div>
-	<div class="container" >
+	<div class="container headBar1" >
 		<div class="row">
 			<div class="col-md-4 ">
+				<div class="row">
 				<h3 class="page-header">商品列表</h3>
+				<img  id="boxshadow" src="<%=request.getContextPath()%>/front-end/user/userImg.do?user_id=${userVO.user_id}" height="150" width="120">
+				<h4>目前登入人員:${userVO.user_lastname}${userVO.user_firstname}</h4>
+				</div>
 			</div>
-			<div class="col-md-4 col-xs-6">
-	                    <div class="panel panel-primary">
+			<div class="col-md-4  col-xs-6 text-left">
+			<div class="callout"></div>
+				<div>
+					<strong>商店名稱:<%=storeVO.getStore_name()%></strong></div>
+				<div>
+					<b>商店描述:</b></div>
+					<div><%=storeVO.getStore_describe()%></div>
+				<div>
+					商店營業時間:<%=storeVO.getStore_time()%></div>
+				<div>
+					商店營業電話:<%=storeVO.getStore_phone()%></div>
+			</div>
+			<div class="col-md-4  col-xs-6">
+			<div class="callout"></div>
+	                	<div class="panel panel-primary">
 	                        <div class="panel-heading">
 	                            <div class="row">
 	                                <div class="col-xs-3">
@@ -122,8 +136,7 @@ width:45px;
 	                            </div>
 	                        </div>
 	                    </div>
-	                </div>
-	                <div class="col-md-4 col-xs-6">
+	                	
 	                    <div class="panel panel-primary">
 	                        <div class="panel-heading">
 	                            <div class="row">
@@ -231,7 +244,6 @@ width:45px;
 								<div class="modal-body">
 									<div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
 									<div class="col-md-12">
-									<div class="AutoNewline"><b>產品描述:</b><br> ${prodVO.prod_descript}</div>
 									<div>評分次數: ${prodVO.prod_count}</div>
 									<div>評分總分: ${prodVO.prod_score}</div>
 									

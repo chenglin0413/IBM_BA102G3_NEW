@@ -138,7 +138,7 @@
 <%--                 			<c:if test="${storeSvc.getOneStore(prodVO.store_id).store_ter==store_ter}"> --%>
 							<div><a href="<%=request.getContextPath()%>/front-end/store/store.do?store_id=${prodVO.store_id}&action=seeOneStoredetail">${storeVO.store_name}</a></div>
 	                    	 <div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
-							 <div><h4>${prodVO.prod_name}</h4></div>
+							 <div class="AutoSkip"><h4>${prodVO.prod_name}</h4></div>
 							 <div><h4>$${prodVO.prod_price}</h4></div>
 							 <div><h4>${prodVO.prod_sort}</h4></div>
 							<a href='#${prodVO.prod_id}' data-toggle="modal" class="btn btn-info">瀏覽詳情</a>

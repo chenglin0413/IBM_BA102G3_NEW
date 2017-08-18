@@ -68,7 +68,7 @@
     
     <script
 		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="<%= request.getContextPath() %>/front-end/js/jquery.js"></script>
+    <script src="<%= request.getContextPath() %>/front-end/js/jquery-1.9.1.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="<%= request.getContextPath() %>/front-end/js/bootstrap.min.js"></script>

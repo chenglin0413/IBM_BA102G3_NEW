@@ -34,6 +34,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.css">
 
     <title>OneStore_idAllOrdselect.jsp</title>
 
@@ -42,17 +44,10 @@
 
     <!-- Custom CSS -->
     <link href="<%=request.getContextPath() %>/front-end/css_store/stylish-portfolio.css" rel="stylesheet">
-
     <!-- Custom Fonts -->
     <link href="<%=request.getContextPath() %>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     <style type="text/css">
         .item img{
             height: 300px;
@@ -63,10 +58,13 @@
        font-size:14px;
        
         }
+        li {
+			list-style-type:none;
+			}
     </style>
 </head>
 
-<body>
+<body id="weather-background" class="default-weather">
 
     <%@include file="headerBar.file" %>
 
@@ -78,6 +76,7 @@
    			<div id="page-wrapper">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
+                	<h1>${storeVO.store_name}</h1>
                     <h3 class="page-header">訂單列表</h3>
                 </div>
                 <!-- /.col-lg-12 -->
@@ -85,29 +84,65 @@
             </div>
 
  			<div id="page-wrapper col-md-12">
-				<div class="col-md-6">
+				<div class="col-md-4">
                 <ol class="breadcrumb">
                 	<li>
                         <a href="<%=request.getContextPath()%>/front-end/store_interface/listOneStore_idAllProd.jsp">查看所有商品</a>
                     </li>
-                   
                     <li class="active">訂單管理</li>
                 </ol>
-                <ul class="nav nav-tabs">
-<!--                             <div class="dropdown"> -->
-<!--                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">商品種類 <b class="caret"></b></a> -->
-<!--                               <ul class="dropdown-menu"> -->
-<!--                                 <li><a href="#">零食、點心</a></li> -->
-<!--                                 <li><a href="#">免稅菸酒</a></li> -->
-<!--                                 <li><a href="#">國際精品</a></li> -->
-<!--                               </ul> -->
-<!--                             </div> -->
-                            
-
-                           
-        		 </ul>
+                
+							<img
+								 src="<%=request.getContextPath()%>/front-end/stpi/DBGifReader?store_id=${storeVO.store_id}"
+								width="300" height="200">
                 </div>
-                <!-- 查詢訂單，待套用萬用搜尋 -->
+                <div class="col-md-4">
+						<FORM METHOD="post"
+							ACTION="<%=request.getContextPath()%>/front-end/ord/ord.do"
+							name="form1">
+							<div class="col-md-12">
+			
+								選擇訂單編號: <select size="1" name="ord_id">
+									<option name="ord_id" value="">
+										<c:forEach var="ordVO"
+											items="${ordSvc.getOneStore_idAllOrd(storeVO.store_id)}">
+											<option name="ord_id" value="${ordVO.ord_id}">${ordVO.ord_id}
+										</c:forEach>
+								</select><br> <input type="hidden" name="store_id"
+									value="${storeVO.store_id }">
+								買家付款狀態:&nbsp;&nbsp;&nbsp;&nbsp; <select name="ord_bill" value="1">
+									<option name="ord_bill" value="">
+									<option value="1">未付款</option>
+									<option value="2">已付款</option>
+									<option value="3">已結案</option>
+								</select><br>
+							</div>
+							<div class="col-md-12">
+								商店審核訂單狀態:&nbsp;<select name="ord_grant" value="1">
+									<option name="ord_grant" value="">
+									<option value="1">未審核</option>
+									<option value="2">審核</option>
+								</select><br>
+			
+								訂單狀態:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name="ord_status"
+									value="1">
+									<option name="ord_status" value="">
+									<option value="1">備貨中</option>
+									<option value="2">待取貨</option>
+									<option value="3">已取貨</option>
+								</select>
+							</div>
+							<div>
+								<button class="btn btn-default">送出</button>
+								<!-- 		        <input type="submit" value="送出"> -->
+								<input type="hidden" name="action"
+									value="listOrds_ByCompositeQuery">
+							</div>
+						</FORM>
+				</div>
+						<div class="col-md-4 ">
+				
+						</div>
                 
 			</div>
 								
@@ -128,55 +163,6 @@
 
 
 			
-			<div class="container-fluid col-md-12">
-			<div class="row">
-		  <li>   
-		    <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/ord/ord.do" name="form1">
-		        <div class="col-md-4">
-		        
-		        	<b>選擇訂單編號: <select size="1" name="ord_id" >
-		        					<option name="ord_id" value="">	
-		        					<c:forEach var="ordVO" items="${ordSvc.getOneStore_idAllOrd(storeVO.store_id)}" >
-						          		<option name="ord_id" value="${ordVO.ord_id}">${ordVO.ord_id}
-				         			</c:forEach>  
-				         			 
-      							 </select><br>
-		        	
-		        	<input type="hidden" name="store_id" value="${storeVO.store_id }"><br>
-		       </div>
-		    
-		       <div class="col-md-4">   
-		       	買家付款狀態:&nbsp;&nbsp;&nbsp;&nbsp; <select name="ord_bill" value="1">
-			 <option name="ord_bill" value="">
-			  <option value="1">未付款</option>
-			  <option value="2">已付款</option>
-			  <option value="3">已結案</option>
-				</select>
-				
-				<br>
-				商店審核訂單狀態:&nbsp;<select name="ord_grant" value="1">
-					   <option name="ord_grant" value="">
-					  <option value="1">未審核</option>
-					  <option value="2">審核</option>
-				</select>
-				
-				<br>
-				
-				訂單狀態:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name="ord_status" value="1">
-					  <option name="ord_status" value="">
-					  <option value="1">備貨中</option>
-					  <option value="2">待取貨</option>
-					  <option value="3">已取貨</option>
-				</select>
-				</div>
-				 <div class="col-md-4">        
-		        <input type="submit" value="送出">
-		        <input type="hidden" name="action" value="listOrds_ByCompositeQuery">
-		        </div>
-		     </FORM>
-		  </li>
-	</div>  
-	</div>
             <div class="container-fluid col-md-12">
 
                 <div class="row">
@@ -197,11 +183,6 @@
 												<th>買家付款狀態</th>
 												<th>商家審核訂單狀態</th>
 												<th>訂單狀態</th>
-<!-- 												<th>買家對商店評分</th> -->
-<!-- 												<th>商家檢舉訂單日期</th> -->
-<!-- 												<th>檢舉訂單理由</th> -->
-<!-- 												<th>商家檢舉訂單狀態</th> -->
-<!-- 												<th>商家檢舉訂單狀態</th> -->
 												<th >操作</th>
 												</tr>
 											</thead>
@@ -217,10 +198,8 @@
 
 
 <script src="<%= request.getContextPath() %>/front-end/js_store/jquery.js"></script>
-
     <!-- Bootstrap Core JavaScript -->
 <script src="<%= request.getContextPath() %>/front-end/js_store/bootstrap.min.js"></script>
-
     <!-- Custom Theme JavaScript -->
 
 </body>

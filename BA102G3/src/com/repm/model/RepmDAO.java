@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 import java.sql.*;
 
 public class RepmDAO implements RepmDAO_interface {
+
 	private static DataSource ds = null;
 	static {
 		try {
@@ -27,7 +28,8 @@ public class RepmDAO implements RepmDAO_interface {
 	private static final String GET_ONE_STMT = "SELECT repm_id,rest_id,repm_name,repm_desc,"
 			+ "repm_content,to_char(repm_startdate,'yyyy-mm-dd') repm_startdate,to_char(repm_enddate,'yyyy-mm-dd') repm_enddate,repm_status FROM repm where repm_id = ?";
 	private static final String UPDATE = "UPDATE repm set repm_name=?,repm_desc=?,repm_content=?,repm_startdate=?,repm_enddate=?,repm_status= ? where repm_id = ?";
-	
+	private static final String MYSTPM = "SELECT repm_id,rest_id,repm_name,to_char(repm_startdate,'yyyy-mm-dd') repm_startdate,to_char(repm_enddate,'yyyy-mm-dd') repm_enddate,repm_status FROM repm WHERE rest_id = ? order by repm_id desc";
+
 	@Override
 	public void insert(RepmVO repmVO) {
 
@@ -129,7 +131,7 @@ public class RepmDAO implements RepmDAO_interface {
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVo ¤]ºÙ¬° Domain objects
+				// empVo ï¿½]ï¿½Ù¬ï¿½ Domain objects
 				repmVO = new RepmVO();
 				repmVO.setRepm_id(rs.getInt("repm_id"));
 				repmVO.setRest_id(rs.getInt("rest_id"));
@@ -143,7 +145,6 @@ public class RepmDAO implements RepmDAO_interface {
 
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
-			// Clean up JDBC resources
 		} finally {
 			if (rs != null) {
 				try {
@@ -196,6 +197,62 @@ public class RepmDAO implements RepmDAO_interface {
 				repmVO.setRepm_enddate(rs.getDate("repm_enddate"));
 				repmVO.setRepm_status(rs.getInt("repm_status"));
 				list.add(repmVO); // Rest the row in the list
+			}
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<RepmVO> findByRestID(Integer rest_id) {
+		List<RepmVO> list = new ArrayList<RepmVO>();
+		RepmVO repmVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(MYSTPM);
+
+			pstmt.setInt(1, rest_id);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				repmVO = new RepmVO();
+				repmVO.setRepm_id(rs.getInt("repm_id"));
+				repmVO.setRest_id(rs.getInt("rest_id"));
+				repmVO.setRepm_name(rs.getString("repm_name"));
+				repmVO.setRepm_startdate(rs.getDate("repm_startdate"));
+				repmVO.setRepm_enddate(rs.getDate("repm_enddate"));
+				repmVO.setRepm_status(rs.getInt("repm_status"));
+				list.add(repmVO);
 			}
 
 		} catch (SQLException se) {

@@ -60,4 +60,8 @@ public class RepmService {
 	public List<RepmVO> getAll() {
 		return dao.getAll();
 	}
+
+	public List<RepmVO> findByRestID(Integer rest_id) {
+		return dao.findByRestID(rest_id);
+	}
 }

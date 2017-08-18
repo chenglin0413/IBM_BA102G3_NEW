@@ -46,7 +46,7 @@ pageContext.setAttribute("trvllist", trvllist);
 
 <style type="text/css">
         .item img{
-            height: 250px;
+            height: auto;
             width:100%;
         }
        
@@ -95,7 +95,7 @@ pageContext.setAttribute("trvllist", trvllist);
                         <a class="page-scroll" href="../rest/rest__2.html">餐廳</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="<%=request.getContextPath()%>/front-end/member_interface/listAllStpm.jsp">促銷</a>
+                        <a class="page-scroll" href="<%=request.getContextPath()%>/front-end/member_interface/pm_index.jsp">促銷</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="<%=request.getContextPath()%>/front-end/blog/listAllTrvl.jsp">旅遊日記</a>

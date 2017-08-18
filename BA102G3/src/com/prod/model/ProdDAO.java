@@ -37,7 +37,7 @@ public class ProdDAO implements ProdDAO_interface {
 	private static final String DELETE_STMT = "DELETE FROM PROD WHERE PROD_ID=?";
 	private static final String GET_ONE_STMT = "SELECT * FROM PROD WHERE PROD_ID=?";
 	private static final String GET_ALL = "SELECT * FROM PROD ORDER BY PROD_ID DESC";
-	private static final String GET_ALL4member = "SELECT * FROM prod WHERE prod_id NOT IN (select prod_id from rppr where rppr_status = 1)and prod_status=1 order by prod_id desc";
+	private static final String GET_ALL4member = "SELECT * FROM prod WHERE prod_id NOT IN (select prod_id from rppr where rppr_status = 1)and prod_status=1 order by PROD_UPDATETIME desc";
 	private static final String GET_ONE_PROD_SORT = "SELECT * FROM PROD WHERE prod_id NOT IN (select prod_id from rppr where rppr_status = 1)and prod_status=1 and PROD_SORT=?";
 	private static final String GET_ONE_STORE_TER = "SELECT p.prod_id,p.store_id,p.prod_name,p.prod_price,p.prod_sort,p.prod_descript,p.prod_count,p.prod_score FROM PROD P JOIN STORE S ON P.STORE_ID = S.STORE_ID WHERE prod_id NOT IN (select prod_id from rppr where rppr_status = 1) and STORE_TER = ? and PROD_STATUS='1' ORDER BY PROD_ID DESC";
 	private static final String GET_ONE_STORE_IDALLPROD = "SELECT * FROM PROD WHERE STORE_ID=? ORDER BY PROD_ID DESC";

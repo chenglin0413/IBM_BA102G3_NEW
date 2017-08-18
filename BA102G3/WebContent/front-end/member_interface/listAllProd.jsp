@@ -55,7 +55,7 @@
     	<style> 
 
         .item img{
-            height: 250px;
+            height: 300px;
             width:100%;
             
         }
@@ -78,6 +78,7 @@
         li {
 			list-style-type:none;
 			}
+   
     </style>
     
 </head>
@@ -201,8 +202,8 @@
 					<div><a href="<%=request.getContextPath()%>/front-end/store/store.do?store_id=${prodVO.store_id}&action=seeOneStoredetail">${storeVO.store_name}</a></div>
 				 </c:if>
 				 </c:forEach>
-                <div id="boxshadow" ><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
-				<div><h3>${prodVO.prod_name}</h3></div>
+                <div id="boxshadow" ><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="270" height="200"></div>
+				<div class="AutoSkip"><b>${prodVO.prod_name}</b></div>
 				<div><h4>$${prodVO.prod_price}</h4></div>
 				<div><h4>${prodVO.prod_sort}</h4></div>
 				
