@@ -6,9 +6,8 @@
 
 <%
 	
-// 	StoreVO storeVO=(StoreVO)session.getAttribute("storeVO");
-	UserVO userVO=(UserVO)session.getAttribute("UserVO");
-// 	pageContext.setAttribute("storeVO", storeVO);
+	UserVO userVO=null;
+	userVO=(UserVO)session.getAttribute("UserVO");
 	StoreVO storeVO = null;
 	Integer store_id=null;
 	String store_no=null;
@@ -87,7 +86,7 @@
 </style>
 </head>
 
-<body>
+<body onunload="disconnect();">
 
 	<%@include file="/front-end/member_interface/headerBar.file"%>
 <div class="callout"></div>
@@ -191,9 +190,9 @@
 				</div>
 			</div>
 			<!-- 聊天區塊 -->
-			<%--          <c:if test="${userVO!=null}"> --%>
+			         <c:if test="${userVO!=null}">
 			<div id="messagearea" class="chatbox" style="display: none;"
-				onload="connect(),showTime();" onunload="disconnect();">
+				onload="connect(),showTime();" >
 				<div class="chatBar">
 					<h3 id="test"></h3>
 				</div>
@@ -224,7 +223,7 @@
 			<div id="messagebtn" class="chatbtn text-center btn-info"
 				onclick="connect();">ChatBox</div>
 		           
-			<%--        </c:if> --%>
+			       </c:if>
 			<!-- 聊天區塊結束 -->
 			<%-- </c:forEach> --%>
 
@@ -244,7 +243,7 @@
 			document.getElementById('messagearea').style.display = 'none';
 
 		}
-		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/"+<%=userVO.getUser_id()%>;
+		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/202";
 		var host = window.location.host;
 		var path = window.location.pathname;
 		var webCtx = path.substring(0, path.indexOf('/', 1));

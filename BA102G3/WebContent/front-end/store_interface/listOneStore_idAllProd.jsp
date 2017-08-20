@@ -10,6 +10,10 @@
 		String account = (String) session.getAttribute("account");
 		StoreService storeSvc = new StoreService();
 		StoreVO storeVO = storeSvc.getOneStoreByUsed_Id(userVO.getUser_id());
+		//將store_id存在session中
+		Integer store_id=new Integer(storeVO.getStore_id());
+		session.setAttribute("store_id",store_id);
+		
 		ProdService prodSvc = new ProdService();
 		List<ProdVO> list = prodSvc.getOneStore_idAllProd(storeVO.getStore_id());
 		OrdService ordSvc = new OrdService();
@@ -90,7 +94,7 @@ td{
 </style>
 </head>
 
-<body>
+<body onunload="disconnect();">
 
 	<%@include file="/front-end/store_interface/headerBar.file"%>
 	<div class="callout"></div>
@@ -299,9 +303,8 @@ td{
 	<div class="row">
 	
 <!-- 聊天區塊 -->
-			<%--          <c:if test="${userVO!=null}"> --%>
 			<div id="messagearea" class="chatbox" style="display: none;"
-				onload="connect(),showTime();" >
+				onload="connect(),showTime();"  >
 				<div class="chatBar">
 					<h3 id="test"></h3>
 				</div>
@@ -333,7 +336,6 @@ td{
 			<div id="messagebtn" class="chatbtn text-center btn-info"
 				onclick="connect();">ChatBox</div>
 		           
-			<%--        </c:if> --%>
 			<!-- 聊天區塊結束 -->
 </div>
 </div>
@@ -352,15 +354,14 @@ td{
 		function openMessage() {
 			document.getElementById('messagebtn').style.display = 'none';
 			document.getElementById('messagearea').style.display = '';
-			
+
 		}
 		function closeMessage() {
 			document.getElementById('messagebtn').style.display = '';
 			document.getElementById('messagearea').style.display = 'none';
-			
 
 		}
-		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/"+<%=userVO.getUser_id()%>;
+		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/202";
 		var host = window.location.host;
 		var path = window.location.pathname;
 		var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -372,7 +373,7 @@ td{
 		function connect() {
 			// 建立 websocket 物件
 			webSocket = new WebSocket(endPointURL);
-			
+
 			webSocket.onopen = function(event) {
 				document.getElementById('sendMessage').disabled = false;
 				document.getElementById('connect').disabled = true;
@@ -420,9 +421,7 @@ td{
 		}
 
 		function disconnect() {
-			
 			webSocket.close();
-			console.log("已離線");
 			document.getElementById('sendMessage').disabled = true;
 			document.getElementById('connect').disabled = false;
 			document.getElementById('disconnect').disabled = true;
