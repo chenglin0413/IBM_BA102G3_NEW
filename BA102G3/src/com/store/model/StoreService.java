@@ -78,5 +78,9 @@ public class StoreService {
 		System.out.println("pass service");
 		return dao.findByAllProd(store_id);
 	}
+	///政成，更新商店分數
+	public void update_count_score(Integer store_count,Integer store_score,Integer store_id){
+		dao.update_count_score(store_count,store_score, store_id);
+	}
 	
 }

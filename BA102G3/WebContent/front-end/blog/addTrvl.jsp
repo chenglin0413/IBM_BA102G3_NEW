@@ -6,7 +6,7 @@
 	String account =(String) session.getAttribute("account");
 	Integer user_id =userVO.getUser_id();//取得會員ID
 	pageContext.setAttribute("user_id", user_id);
-	TrvlVO trvlVO = (TrvlVO)session.getAttribute("trvlVO");
+	TrvlVO trvlVO = (TrvlVO)request.getAttribute("addTrvl");
 %>
 
 <!DOCTYPE html>
@@ -106,14 +106,14 @@
 %>	
 	<div class="container">
 		<div class="row">
-			<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="<%=request.getContextPath()%>/front-end/trvl/trvl.do" name="form1">
+			<form class="form-horizontal" enctype="multipart/form-data" method="POST"  action="<%=request.getContextPath()%>/front-end/trvl/trvl.do" name="form1" onsubmit="return validateForm()">
 			 	<div class="col-xs-12 col-md-4">
 					<div class="panel panel-primary">
 						<div class="panel-heading">
 							<h3 class="panel-title"><strong>遊記標題</strong></h3>
 						</div>
 						<div class="panel-body">
-							<input type="text" name="trvl_tittle" class="form-control"  value="${trvlVO.trvl_tittle}" required>
+							<input type="text" name="trvl_tittle" class="form-control"  value="" required>
 						</div>
 					</div>
 				</div>
@@ -123,7 +123,7 @@
 						<h3 class="panel-title"><strong>遊記地點</strong></h3>
 					</div>
 					<div class="panel-body">
-						<input type="text" name="trvl_loc" class="form-control" value="${trvlVO.trvl_loc}" required >
+						<input type="text" name="trvl_loc" class="form-control" value="" required >
 					</div>
 					</div>
 				</div>
@@ -143,7 +143,7 @@
 			</div>	
 		<br>	
 			<div class="col-xs-12 col-md-12">	
-				<textarea name="trvl_content" required>${trvlVO.trvl_content}</textarea>
+				<textarea name="trvl_content"  required></textarea>
 			</div>
 			<div class="col-xs-12 col-md-push-11">	
 		
@@ -153,15 +153,24 @@
 			</form>
 		</div>	<!-- row -->	
 	</div>  <!-- container -->
-
-
-<%@ include file="/front-end/member_interface/script.file" %>	
+<%@ include file="/front-end/member_interface/script.file" %>
 <script>
  CKEDITOR.replace('trvl_content', { //轉換編輯器文末Tag
      uiColor: '#0066FF',
      enterMode:CKEDITOR.ENTER_BR,
      shiftEnterMode: CKEDITOR.ENTER_BR, 
  }); 
+ 
+ 
+ function validateForm(){
+	  if(CKEDITOR.instances.trvl_content.getData()==""){
+		  alert("留言請勿空白！");
+		  return false;
+	}else {
+		
+		return true;
+	}
+}
  
 </script>
 

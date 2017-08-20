@@ -402,6 +402,10 @@
     <servlet-name>RptlServlet</servlet-name>
     <url-pattern>/back-end/report/rptl.do</url-pattern>
   </servlet-mapping>
+   <servlet-mapping>
+    <servlet-name>RptlServlet</servlet-name>
+    <url-pattern>/front-end/report/rptl.do</url-pattern>
+  </servlet-mapping>
   <!-- 韋翔結尾 -->
 
 

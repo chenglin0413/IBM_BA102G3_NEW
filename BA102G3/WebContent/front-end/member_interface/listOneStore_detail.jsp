@@ -86,7 +86,7 @@
 </style>
 </head>
 
-<body onunload="disconnect();">
+<body onload="connect(),showTime();" onunload="disconnect();">
 
 	<%@include file="/front-end/member_interface/headerBar.file"%>
 <div class="callout"></div>
@@ -197,8 +197,7 @@
 					<h3 id="test"></h3>
 				</div>
 				<div class="row">
-					<div id="closechatbox" class="closechatbtn text-center btn-info"
-						onclick="disconnect();">X</div>
+					<div id="closechatbox" class="closechatbtn text-center btn-info">X</div>
 					<div class="col-md-12">
 						<textarea id="messagesArea" class="message-area" readonly></textarea>
 					</div>
@@ -222,7 +221,6 @@
 			</div>
 			<div id="messagebtn" class="chatbtn text-center btn-info"
 				onclick="connect();">ChatBox</div>
-		           
 			       </c:if>
 			<!-- 聊天區塊結束 -->
 			<%-- </c:forEach> --%>
@@ -243,7 +241,7 @@
 			document.getElementById('messagearea').style.display = 'none';
 
 		}
-		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/202";
+		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/"+<%=storeVO.getStore_id()%>;
 		var host = window.location.host;
 		var path = window.location.pathname;
 		var webCtx = path.substring(0, path.indexOf('/', 1));

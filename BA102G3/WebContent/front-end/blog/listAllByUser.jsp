@@ -35,7 +35,6 @@
     	<!-- Custom Fonts -->
     <link href="<%= request.getContextPath() %>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	
 	<style type="text/css">
         .content: {

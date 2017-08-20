@@ -94,7 +94,7 @@ td{
 </style>
 </head>
 
-<body onunload="disconnect();">
+<body onload="connect(),showTime();" onunload="disconnect();">
 
 	<%@include file="/front-end/store_interface/headerBar.file"%>
 	<div class="callout"></div>
@@ -232,44 +232,35 @@ td{
 												</td>
 												<td>
 														<a href='#${prodVO.prod_id}' data-toggle="modal" class="btn btn-info">${prodVO.prod_id}</a>
-					<div class="modal fade" id="${prodVO.prod_id}">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title">${prodVO.prod_name}</h4>
-								</div>
-								<div class="modal-body">
-									<div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
-									<div class="col-md-12">
-									<div>評分次數: ${prodVO.prod_count}</div>
-									<div>評分總分: ${prodVO.prod_score}</div>
-									
-									<c:if test="${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status=='1'}" >
-										<div><del><p>價格:$<font color="red">${prodVO.prod_price}</font></p></del></div> 
-										<div><p>促銷價格:$<font color="red">${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_price}</font></p></div>
-									</c:if>
-									<c:if test="${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status=='0'||PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status==null}" >
-										<div><p>價格:$<font color="red">${prodVO.prod_price}</font></p></div> 
-									</c:if>
-									</div>
-								</div>
-								
-								<div class="modal-footer">
-									
-								</div>
-							</div>
-						</div>
-					</div>
-												
-												
-												
-												
-												
-												
-												
-												
-												
+												<div class="modal fade" id="${prodVO.prod_id}">
+													<div class="modal-dialog">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																<h4 class="modal-title">${prodVO.prod_name}</h4>
+															</div>
+															<div class="modal-body">
+																<div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
+																<div class="col-md-12">
+																<div>評分次數: ${prodVO.prod_count}</div>
+																<div>評分總分: ${prodVO.prod_score}</div>
+																
+																<c:if test="${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status=='1'}" >
+																	<div><del><p>價格:$<font color="red">${prodVO.prod_price}</font></p></del></div> 
+																	<div><p>促銷價格:$<font color="red">${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_price}</font></p></div>
+																</c:if>
+																<c:if test="${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status=='0'||PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status==null}" >
+																	<div><p>價格:$<font color="red">${prodVO.prod_price}</font></p></div> 
+																</c:if>
+																</div>
+															</div>
+															
+															<div class="modal-footer">
+																
+															</div>
+														</div>
+													</div>
+												</div>
 												</td>
 <%-- 												<td>${prodVO.store_id}</td> --%>
 												<td>${prodVO.prod_name}</td>
@@ -303,8 +294,7 @@ td{
 	<div class="row">
 	
 <!-- 聊天區塊 -->
-			<div id="messagearea" class="chatbox" style="display: none;"
-				onload="connect(),showTime();"  >
+			<div id="messagearea" class="chatbox" style="display: none;" >
 				<div class="chatBar">
 					<h3 id="test"></h3>
 				</div>
@@ -361,7 +351,7 @@ td{
 			document.getElementById('messagearea').style.display = 'none';
 
 		}
-		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/202";
+		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/"+<%=userVO.getUser_id()%>;
 		var host = window.location.host;
 		var path = window.location.pathname;
 		var webCtx = path.substring(0, path.indexOf('/', 1));

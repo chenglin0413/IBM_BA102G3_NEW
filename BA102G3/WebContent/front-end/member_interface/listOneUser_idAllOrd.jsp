@@ -33,19 +33,13 @@
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="<%=request.getContextPath() %>/front-end/css/bootstrap.css" rel="stylesheet">
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+	<link rel="stylesheet" href="<%=request.getContextPath() %>/front-end/css/jquery-ui.css" />
     <!-- Custom CSS -->
     <link href="<%=request.getContextPath() %>/front-end/css/stylish-portfolio.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="<%=request.getContextPath() %>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 	
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     <style type="text/css">
         .item img{
             height: 250px;
@@ -68,10 +62,10 @@
         }
         #accordion{
         font-size:12px;
-        
         }
         #accordion>div{
         padding:5px;
+        
         }
         .pop{
         font-size:10px;

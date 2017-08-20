@@ -76,6 +76,7 @@ body {
     font-weight: 300;
 }
 .publicaciones-blog-home .fondo-publicacion-home .contenido-publicacion-home {
+    font-size: 14px;
     padding: 0 10px;
 }
 .publicaciones-blog-home .fondo-publicacion-home .contenido-publicacion-home h3 {

@@ -10,7 +10,7 @@
 	
 %>
 <jsp:useBean id="trpiSvc" scope="page" class="com.trpi.model.TrpiService" />
-
+<jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService"/>  
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,9 +32,10 @@
     <!-- Custom Fonts -->
     
     <link href="<%= request.getContextPath() %>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	 <link href="https://fonts.googleapis.com/css?family=Roboto:400,100italic,100,300,300italic,900italic,900,700,700italic,500italic,500,400italic" rel="stylesheet" type="text/css">
-	<link href="<%= request.getContextPath() %>/front-end/blog/listAllTrvl.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 	
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,100italic,100,300,300italic,900italic,900,700,700italic,500italic,500,400italic" rel="stylesheet" type="text/css">
+	<link href="<%= request.getContextPath() %>/front-end/blog/listAllTrvl.css" rel="stylesheet">
 	
     <title>遊記瀏覽</title>
 
@@ -57,7 +58,15 @@
         	width:500px;
         	height:auto;
         }
-  
+  		#trvl_tittle{
+        	position: relative;
+        }
+        #user_information {
+        	position: absolute;
+        	margin-left:0;
+    		bottom: 0;
+        }
+  		
     </style>
 </head>
 <body>
@@ -91,12 +100,11 @@
 </div>         
            
      
- <section class="publicaciones-blog-home">
+  <section class="publicaciones-blog-home">
       <div class="container">
+          <h2></h2>
         <div class="row">
-          <h2>Blog</h2>
           <div class="row-page row">
-          
           <%@ include file="page1.file"%>
 			<c:forEach var="trvlVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" step="1" varStatus="s">
           
@@ -113,6 +121,7 @@
                 <div class="contenido-publicacion-home JQellipsis">
                  	 <p>${trvlVO.trvl_content}</p>
                 </div>
+                <p id="user_information">${userSvc.getOneUser(trvlVO.user_id).user_account}&nbsp;&nbsp;<small>(${trvlVO.trvl_date})</small></p>
                 <div class="mascara-enlace-blog-home">
                   	<span>Read More</span>
                 </div>
@@ -124,15 +133,16 @@
     </div>
  </section>
 <div class="row">
-	<div class="col-sm-6 col-md-8 col-md-offset-4">
+	<div class="col-sm-6 col-md-4 col-md-offset-4">
 		<p><%@include file="page2.file"%></p>
 	</div>
 </div>	
   <!--   -----------------------------------------------------------------------------------------------   - -->         	
 	
+	
 
 
-    <%@ include file="/front-end/member_interface/script.file" %>	
+<%@ include file="/front-end/member_interface/script.file" %>	
 <script type="text/javascript">
 
 	

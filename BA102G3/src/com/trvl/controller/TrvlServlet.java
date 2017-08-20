@@ -145,12 +145,8 @@ public class TrvlServlet extends HttpServlet {
 
 				/*************************** 2.開始查詢資料 *****************************************/
 				TrvlService trvlSvc = new TrvlService();
-				TlcmService tlcmSvc = new TlcmService();
-				TrpiService trpiSvc = new TrpiService();
 				trvlSvc.addTrvlCount(trvl_id); 								//瀏覽數+1
 				TrvlVO trvlVO = trvlSvc.getOneTrvl(trvl_id);				
-				List<TlcmVO> listTlcms= tlcmSvc.getAllTlcm_For_OneTrvl(trvl_id);
-				List<TrpiVO> listTrpis = trpiSvc.getTrpiForOneTrvl(trvl_id);
 				
 				if (trvlVO == null) {
 					errorMsgs.add("查無資料");
@@ -164,9 +160,7 @@ public class TrvlServlet extends HttpServlet {
 				}
 
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-				request.setAttribute("trvlVO", trvlVO); // 取出的物件,存入req
-				request.setAttribute("listTrpis", listTrpis);
-				request.setAttribute("listTlcms", listTlcms);
+				session.setAttribute("trvlVO", trvlVO); // 取出的物件,存入req
 
 				String url = "/front-end/blog/listOneTrvl.jsp";
 				RequestDispatcher successView = request.getRequestDispatcher(url); // 成功轉交

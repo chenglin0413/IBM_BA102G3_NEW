@@ -106,7 +106,7 @@
 
 <div class="container">
 	<div class="row">
-		<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="<%=request.getContextPath()%>/front-end/trvl/trvl.do" name="form1">
+		<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="<%=request.getContextPath()%>/front-end/trvl/trvl.do" name="form1" onsubmit="return validateForm()">
 		 	<div class="col-xs-12 col-md-4">
 				<div class="panel panel-primary">
 					<div class="panel-heading">
@@ -266,7 +266,9 @@
 		});
 	});
 
-    </script>	
+    </script>
+    
+    	
 	<script>
 	  var loadFile = function(event) {
 	    var reader = new FileReader();
@@ -276,6 +278,16 @@
 	    };
 	    reader.readAsDataURL(event.target.files[0]);
 	  };
+	  
+	  function validateForm(){
+		  if(CKEDITOR.instances.trvl_content.getData()==""){
+			  alert("留言請勿空白！");
+			  return false;
+		}else {
+			
+			return true;
+		}
+	}
 	</script>
     
     

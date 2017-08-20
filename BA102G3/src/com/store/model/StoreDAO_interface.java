@@ -13,4 +13,5 @@ public interface StoreDAO_interface {
 	public List<StoreVO> getAll();
 	public List<StoreVO> getAllbyStatus(Integer user_status);
 	public List<ProdVO> findByAllProd(Integer stroe_id); //store_id_getProd 李浩
+	public void update_count_score(Integer store_count, Integer store_score, Integer store_id);//update storeCount_score 政成
 }

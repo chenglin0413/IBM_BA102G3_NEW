@@ -77,15 +77,10 @@ public class TlcmServlet extends HttpServlet {
 				TlcmService tlcmSvc = new TlcmService();
 				tlcmSvc.addTlcm(trvl_id, user_id, tlcm_date, tlcm_content); //新增留言
 				TrvlService trvlSvc = new TrvlService();
-				TrpiService trpiSvc = new TrpiService();
 				TrvlVO trvlVO = trvlSvc.getOneTrvl(trvl_id);
-				List<TlcmVO> listTlcms = tlcmSvc.getAllTlcm_For_OneTrvl(trvl_id); //取出所有留言
-				List<TrpiVO> listTrpis = trpiSvc.getTrpiForOneTrvl(trvl_id);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				request.setAttribute("trvlVO", trvlVO); // 取出的物件,存入req
-				request.setAttribute("listTrpis", listTrpis);
-				request.setAttribute("listTlcms", listTlcms);
 				
 				String url = "/front-end/blog/listOneTrvl.jsp";
 				RequestDispatcher successView = request.getRequestDispatcher(url); // 新增成功後轉交listOneTrvl.jsp

@@ -48,7 +48,7 @@ public class TrvlDAO implements TrvlDAO_interface {
 	
 	private static final String add_trvl_count = "update trvl set trvl_count=(trvl_count+1) where trvl_id=?";
 	
-	private static final String Get_TOP_BLOGS = "SELECT * FROM (select * from trvl order by trvl_count desc) where rownum <=4";
+	private static final String Get_TOP_BLOGS = "SELECT * FROM (select * from trvl order by trvl_count desc) where rownum <=3";
 
 	@Override
 	public String insert(TrvlVO trvlVO) {

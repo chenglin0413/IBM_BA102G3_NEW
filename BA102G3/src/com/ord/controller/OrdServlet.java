@@ -12,6 +12,7 @@ import com.item.model.ItemVO;
 import com.ord.model.*;
 import com.prod.model.ProdService;
 import com.prod.model.ProdVO;
+import com.store.model.StoreService;
 import com.user.model.UserService;
 import com.user.model.UserVO;
 
@@ -593,13 +594,15 @@ public class OrdServlet extends HttpServlet {
 				Integer ord_id = new Integer(req.getParameter("ord_id"));
 				/***************************2.開始更新資料***************************************/
 				OrdService ordSvc = new OrdService();
+				Integer store_id=ordSvc.getOneOrd(ord_id).getStore_id();
 				ProdService prodSvc=new ProdService();
 				ItemService itemSvc=new ItemService();
+				StoreService storeSvc=new StoreService();
 				List<ItemVO> itemList=itemSvc.getOneOrd_idAllItem(ord_id);
 				List<ProdVO> prodList=prodSvc.getAll();
 				
 				ordSvc.update_sscore(ord_sscore, ord_id);
-				
+				storeSvc.update_count_score(1+storeSvc.getOneStore(store_id).getStore_count(), ord_sscore+storeSvc.getOneStore(store_id).getStore_score(), store_id);
 				/***************************3.更新完成,準備轉交(Send the Success view)***********/								
 				String url = "/front-end/member_interface/listOneUser_idAllOrd.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);

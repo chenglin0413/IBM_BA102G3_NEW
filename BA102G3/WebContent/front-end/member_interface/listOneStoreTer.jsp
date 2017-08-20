@@ -6,17 +6,14 @@
 
 <%	
 	
-// 	ProdService prodSvc = new ProdService();
 	List<ProdVO> list = (List<ProdVO>)session.getAttribute("onestoreterlist");
-//     Integer store_ter=(Integer)session.getAttribute("store_ter");
     pageContext.setAttribute("list",list);
-//     pageContext.setAttribute("store_ter",store_ter);
     //提示檢舉的商品
     RpprVO rpprVO=(RpprVO)request.getAttribute("rpprVO");
     pageContext.setAttribute("rpprVO",rpprVO);
 %>
 
-<jsp:useBean id="storeSvc" scope="page" class="com.store.model.StoreService" />
+<jsp:useBean id="StoreSvc" scope="page" class="com.store.model.StoreService" />
 <jsp:useBean id="PrpmSvc" class="com.prpm.model.PrpmService"/>
 <!DOCTYPE html>
 <html lang="en" class="easy-sidebar-active">
@@ -135,9 +132,16 @@
 	<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >
 			<div class="col-xs-12 col-md-4">
                 <div class="item">
-<%--                 			<c:if test="${storeSvc.getOneStore(prodVO.store_id).store_ter==store_ter}"> --%>
-							<div><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneStore_detail.jsp?store_id=${prodVO.store_id}">${storeVO.store_name}</a></div>
-	                    	 <div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
+						<c:forEach var="storeVO" items="${StoreSvc.all}">
+							<c:if test="${prodVO.store_id==storeVO.store_id}">
+								<div>
+									<a
+										href="<%=request.getContextPath()%>/front-end/member_interface/listOneStore_detail.jsp?store_id=${prodVO.store_id}">${storeVO.store_name}</a>
+								</div>
+							</c:if>
+						</c:forEach>
+
+						<div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
 							 <div class="AutoSkip"><h4>${prodVO.prod_name}</h4></div>
 							 <div><h4>$${prodVO.prod_price}</h4></div>
 							 <div><h4>${prodVO.prod_sort}</h4></div>

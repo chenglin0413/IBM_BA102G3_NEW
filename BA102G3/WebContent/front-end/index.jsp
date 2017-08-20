@@ -337,7 +337,12 @@ pageContext.setAttribute("trvllist", trvllist);
 		
             <c:forEach var="trvlVO" items="${trvllist}">
 					<div class="col-sm-6 col-md-12">
-						<div class="ehdiv " >							
+						<div class="ehdiv " >	
+									<div class="row">
+										<div class="col-md-8 ">
+											<h3>${trvlVO.trvl_tittle}</h3> 
+										</div>
+									</div>				
 							<c:forEach var="trpiVO" items="${trpiSvc.all}">
 								<c:if test="${trvlVO.trvl_id==trpiVO.trvl_id}">
 					            	<div class="item" id="boxshadow">
@@ -348,14 +353,7 @@ pageContext.setAttribute("trvllist", trvllist);
 							    </c:if>
 							</c:forEach>
 							<br>
-							<div class="row">
-								<div class="col-sm-6 col-md-6">
-									<strong>${trvlVO.trvl_tittle}</strong> 
-								</div>
-								<div class="col-sm-6 col-md-4 col-md-push-4">
-									${trvlVO.trvl_count}
-								</div>
-							</div><!-- row2 -->
+							
 						</div>	
 					</div>
 					
