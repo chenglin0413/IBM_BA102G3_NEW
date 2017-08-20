@@ -333,42 +333,42 @@ public class StoreServlet extends HttpServlet {
 		}
 		
 		
-		if ("seeOneStoredetail".equals(action)) { // 靘select_page.jsp�����
-
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-			HttpSession session=req.getSession();
-			try {
-				String str = req.getParameter("store_id");
-				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("隢撓���振蝺刻��");
-				}
-				// Send the use back to the form, if there were errors
-				Integer store_id = null;
-				try {
-					store_id = new Integer(str);
-				} catch (Exception e) {
-					errorMsgs.add("��振蝺刻�撘�迤蝣�");
-				}
-				// Send the use back to the form, if there were errors
-				
-				/***************************2.���閰Ｚ���*****************************************/
-				StoreService storeSvc = new StoreService();
-				StoreVO storeVO = storeSvc.getOneStore(store_id);
-				
-				/***************************3.�閰Ｗ���,皞��漱(Send the Success view)*************/
-				session.setAttribute("storeVO", storeVO); // 鞈�澈����mpVO�隞�,摮req
-				String url = "/front-end/member_interface/listOneStore_detail.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ����漱 listOneEmp.jsp
-				successView.forward(req, res);
-
-				/***************************�隞���隤方���*************************************/
-			} catch (Exception e) {
-				errorMsgs.add("�瘜�����:" + e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/store/adminStoreQuery.jsp");
-				failureView.forward(req, res);
-			}
-		}
+//		if ("seeOneStoredetail".equals(action)) { // 靘select_page.jsp�����
+//
+//			List<String> errorMsgs = new LinkedList<String>();
+//			req.setAttribute("errorMsgs", errorMsgs);
+//			HttpSession session=req.getSession();
+//			try {
+//				String str = req.getParameter("store_id");
+//				if (str == null || (str.trim()).length() == 0) {
+//					errorMsgs.add("隢撓���振蝺刻��");
+//				}
+//				// Send the use back to the form, if there were errors
+//				Integer store_id = null;
+//				try {
+//					store_id = new Integer(str);
+//				} catch (Exception e) {
+//					errorMsgs.add("��振蝺刻�撘�迤蝣�");
+//				}
+//				// Send the use back to the form, if there were errors
+//				
+//				/***************************2.���閰Ｚ���*****************************************/
+//				StoreService storeSvc = new StoreService();
+//				StoreVO storeVO = storeSvc.getOneStore(store_id);
+//				
+//				/***************************3.�閰Ｗ���,皞��漱(Send the Success view)*************/
+//				session.setAttribute("storeVO", storeVO); // 鞈�澈����mpVO�隞�,摮req
+//				String url = "/front-end/member_interface/listOneStore_detail.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url); // ����漱 listOneEmp.jsp
+//				successView.forward(req, res);
+//
+//				/***************************�隞���隤方���*************************************/
+//			} catch (Exception e) {
+//				errorMsgs.add("�瘜�����:" + e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/back-end/store/adminStoreQuery.jsp");
+//				failureView.forward(req, res);
+//			}
+//		}
 	}
 }

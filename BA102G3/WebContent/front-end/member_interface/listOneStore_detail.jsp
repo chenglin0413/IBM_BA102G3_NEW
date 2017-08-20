@@ -6,25 +6,24 @@
 
 <%
 	
-	StoreVO storeVO=(StoreVO)session.getAttribute("storeVO");
-	pageContext.setAttribute("storeVO", storeVO);
-// 	StoreVO storeVO = null;
-// 	Integer store_id=null;
-// 	String store_no=null;
-// 	if (request.getParameter("store_id") != null) {
-// 		store_id = new Integer(request.getParameter("store_id"));
-// 		store_no=store_id.toString().substring(2,6);
-// 		session.setAttribute("store_id", store_id);//把store_id存起來
-// 		StoreService storeSvc = new StoreService();
-// 		storeVO = storeSvc.getOneStore(store_id);
-// 		pageContext.setAttribute("storeVO", storeVO);
-// 	} else {
-// 		store_id = (Integer) session.getAttribute("store_id");
-// 		store_no=store_id.toString().substring(2,6);
-// 		StoreService storeSvc = new StoreService();
-// 		storeVO = storeSvc.getOneStore(store_id);
-// 		pageContext.setAttribute("storeVO", storeVO);
-// 	}
+// 	StoreVO storeVO=(StoreVO)session.getAttribute("storeVO");
+	UserVO userVO=(UserVO)session.getAttribute("UserVO");
+// 	pageContext.setAttribute("storeVO", storeVO);
+	StoreVO storeVO = null;
+	Integer store_id=null;
+	String store_no=null;
+	if (request.getParameter("store_id") != null) {
+		store_id = new Integer(request.getParameter("store_id"));
+		session.setAttribute("store_id", store_id);//把store_id存起來
+		StoreService storeSvc = new StoreService();
+		storeVO = storeSvc.getOneStore(store_id);
+		pageContext.setAttribute("storeVO", storeVO);
+	} else {
+		store_id = (Integer) session.getAttribute("store_id");
+		StoreService storeSvc = new StoreService();
+		storeVO = storeSvc.getOneStore(store_id);
+		pageContext.setAttribute("storeVO", storeVO);
+	}
 	
 %>
 <jsp:useBean id="prodSvc" class="com.prod.model.ProdService" />
@@ -155,7 +154,6 @@
 							<%-- 			<div id="store_id">${storeVO.store_id}</div> --%>
 							<div id="store_name">
 								<h3>商店名稱: ${storeVO.store_name}</h3>			
-									
 								</div>
 							<div>商店描述: ${storeVO.store_describe}</div>
 							<div>商店評價總分: ${storeVO.store_score}</div>
@@ -214,8 +212,7 @@
 							</div>
 						</div>
 						<div class="col-md-4 ">${ userVO.user_lastname}${ userVO.user_firstname}
-							<input type="hidden" id="userName"
-								value="${ userVO.user_lastname}${ userVO.user_firstname}" />
+							<input type="hidden" id="userName" value="${ userVO.user_id}" />
 						</div>
 						<div class="col-md-8 ">
 							<input type="submit" id="sendMessage" class="button" value="Send"
@@ -247,7 +244,7 @@
 			document.getElementById('messagearea').style.display = 'none';
 
 		}
-		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/"+<%=storeVO.getStore_id()%>;
+		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/"+<%=userVO.getUser_id()%>;
 		var host = window.location.host;
 		var path = window.location.pathname;
 		var webCtx = path.substring(0, path.indexOf('/', 1));

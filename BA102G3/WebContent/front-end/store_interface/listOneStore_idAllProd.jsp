@@ -10,12 +10,6 @@
 		String account = (String) session.getAttribute("account");
 		StoreService storeSvc = new StoreService();
 		StoreVO storeVO = storeSvc.getOneStoreByUsed_Id(userVO.getUser_id());
-		//將商店別名和商店編號放入map內 ,開始
-// 		String store_no=storeVO.getStore_id().toString().substring(2,6);
-// 		Map<String,Integer> stores=new Hashtable<String,Integer>();
-// 		stores.put(store_no,storeVO.getStore_id());
-// 		application.setAttribute("stores",stores);
-		//將商店別名和商店編號放入map內 ,結束
 		ProdService prodSvc = new ProdService();
 		List<ProdVO> list = prodSvc.getOneStore_idAllProd(storeVO.getStore_id());
 		OrdService ordSvc = new OrdService();
@@ -366,7 +360,7 @@ td{
 			
 
 		}
-		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/"+<%=storeVO.getStore_id()%>;
+		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/"+<%=userVO.getUser_id()%>;
 		var host = window.location.host;
 		var path = window.location.pathname;
 		var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -380,9 +374,9 @@ td{
 			webSocket = new WebSocket(endPointURL);
 			
 			webSocket.onopen = function(event) {
-// 				document.getElementById('sendMessage').disabled = false;
-// 				document.getElementById('connect').disabled = true;
-// 				document.getElementById('disconnect').disabled = false;
+				document.getElementById('sendMessage').disabled = false;
+				document.getElementById('connect').disabled = true;
+				document.getElementById('disconnect').disabled = false;
 
 			};
 
@@ -429,9 +423,9 @@ td{
 			
 			webSocket.close();
 			console.log("已離線");
-// 			document.getElementById('sendMessage').disabled = true;
-// 			document.getElementById('connect').disabled = false;
-// 			document.getElementById('disconnect').disabled = true;
+			document.getElementById('sendMessage').disabled = true;
+			document.getElementById('connect').disabled = false;
+			document.getElementById('disconnect').disabled = true;
 		}
 
 		//webSocket 結束    
