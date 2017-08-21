@@ -91,19 +91,19 @@
 					<tr>
 
 						<td><label>促銷名稱:&nbsp;&nbsp;</label></td>
-						<td><input type="TEXT" name="stpm_name" required="required"	size="15" /></td>
+						<td><input type="TEXT" id="name" name="stpm_name" required="required" size="15" /></td>
 
 					</tr>
 
 					<tr>
 						<td><label>促銷說明:&nbsp;&nbsp;</label></td>
-						<td><textarea rows="4" cols="40" name="stpm_desc"	required="required"></textarea></td>
+						<td><textarea rows="4" cols="40" id="desc" name="stpm_desc"	required="required"></textarea></td>
 
 					</tr>
 
 					<tr>
 						<td><label>促銷文案:&nbsp;&nbsp;</label></td>
-						<td><textarea rows="4" cols="40" name="stpm_content"></textarea></td>
+						<td><textarea rows="4" cols="40" id="content" name="stpm_content"></textarea></td>
 					</tr>
 
 					<tr>
@@ -130,13 +130,34 @@
 				</table>
 				<br> <input type="hidden" name="action" value="insert">
 				 <button type="submit" class="btn btn-default btn-sm">建立專案</button>
+				 <br><br>
+
 			</FORM>
+			
+				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn1();">預設1</button>
+				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn2();">預設2</button>
 
 			<br> <br>
 		</div>
 	</div>
 
 	<div class="callout"></div>
+	
+	<script type="text/javascript">
+
+		function magiclittlebtn1() {
+			document.getElementById('name').value = '航站最便宜';
+			document.getElementById('desc').value = '期間限定折扣滿滿';
+			document.getElementById('content').value = '期間折扣專案';
+		}
+		
+		function magiclittlebtn2() {
+			document.getElementById('name').value = '熱門伴手禮';
+			document.getElementById('desc').value = '最優質人氣伴手禮';
+			document.getElementById('content').value = '期間折扣專案';
+		}
+		
+	</script>
 
 	<script
 		src="<%=request.getContextPath()%>/front-end/js_store/jquery.js"></script>

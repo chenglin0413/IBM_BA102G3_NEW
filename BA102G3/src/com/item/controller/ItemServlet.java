@@ -368,12 +368,16 @@ public class ItemServlet extends HttpServlet {
 		// Store this set in the request scope, in case we need to
 		// send the ErrorPage view.
 		req.setAttribute("errorMsgs", errorMsgs);
+		res.setHeader("content-type", "text/html;charset=UTF-8");
+		res.setCharacterEncoding("UTF-8");
+		PrintWriter out=res.getWriter();
 //		try {
 			/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 		Integer ord_id = new Integer(req.getParameter("ord_id").trim());
 		Integer prod_id = new Integer(req.getParameter("prod_id").trim());
 		Integer item_qty = new Integer(req.getParameter("item_qty").trim());
 		Integer item_score = new Integer(req.getParameter("item_score").trim());
+		System.out.println(item_score);
 		String item_review = "";
 		java.sql.Date item_reviewdate = null;
 		ItemVO itemVO = new ItemVO();

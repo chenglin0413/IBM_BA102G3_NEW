@@ -101,19 +101,19 @@ pageContext.setAttribute("restVO", restVO);
 					<tr>
 
 						<td><label>促銷名稱:&nbsp;&nbsp;</label></td>
-						<td><input type="TEXT" name="repm_name" required="required"	size="15" /></td>
+						<td><input type="TEXT" id="name" name="repm_name" required="required"	size="15" /></td>
 
 					</tr>
 
 					<tr>
 						<td><label>促銷說明:&nbsp;&nbsp;</label></td>
-						<td><textarea rows="4" cols="40" name="repm_desc"	required="required"></textarea></td>
+						<td><textarea rows="4" cols="40" id="desc" name="repm_desc"	required="required"></textarea></td>
 
 					</tr>
 
 					<tr>
 						<td><label>促銷文案:&nbsp;&nbsp;</label></td>
-						<td><textarea rows="4" cols="40" name="repm_content"></textarea></td>
+						<td><textarea rows="4" cols="40" id="content" name="repm_content"></textarea></td>
 					</tr>
 
 					<tr>
@@ -140,13 +140,33 @@ pageContext.setAttribute("restVO", restVO);
 				</table>
 				<br> <input type="hidden" name="action" value="insert">
 				 <button type="submit" class="btn btn-default btn-sm">建立專案</button>
+				 <br><br>
 			</FORM>
+			
+				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn1();">預設1</button>
+				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn2();">預設2</button>
 
 			<br> <br>
 		</div>
 	</div>
 
 	<div class="callout"></div>
+	
+		<script type="text/javascript">
+
+		function magiclittlebtn1() {
+			document.getElementById('name').value = '最棒的台灣味';
+			document.getElementById('desc').value = '來店免消費滿百送湯品一份';
+			document.getElementById('content').value = '送餐+促銷';
+		}
+		
+		function magiclittlebtn2() {
+			document.getElementById('name').value = '簡餐同行大折扣';
+			document.getElementById('desc').value = '周年活動 - 兩人同行一人免費';
+			document.getElementById('content').value = '期間折扣專案';
+		}
+		
+	</script>
 
 	<script
 		src="<%=request.getContextPath()%>/front-end/js_store/jquery.js"></script>

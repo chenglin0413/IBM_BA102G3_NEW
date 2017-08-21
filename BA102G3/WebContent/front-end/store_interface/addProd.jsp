@@ -89,8 +89,9 @@
 		};
 	</script>
 
-	<FORM ACTION="<%=request.getContextPath()%>/front-end/store_interface/prod.do" method=post name="form1"	enctype="multipart/form-data">
+	
 		<div class="container">
+		<FORM ACTION="<%=request.getContextPath()%>/front-end/store_interface/prod.do" method=post name="form1"	enctype="multipart/form-data">
 			<div class="row">
 				<div class="col-md-6 col-xs-12">
 					<div>
@@ -112,27 +113,27 @@
 									</tr>
 									<tr>
 										<td><label>產品名稱:&nbsp;&nbsp;</label></td>
-										<td><input type="TEXT" name="prod_name"	required="required" size="15" /></td>
+										<td><input type="TEXT" id="name" name="prod_name"	required="required" size="15" /></td>
 									</tr>
 									<tr>
 										<td><label>產稱描述:&nbsp;&nbsp;</label></td>
-										<td><textarea rows="4" cols="40" name="prod_descript" required="required"></textarea></td>
+										<td><textarea rows="4" id="descript" cols="40" name="prod_descript" required="required"></textarea></td>
 									</tr>
 									<tr>
 										<td><label>產品價格:&nbsp;&nbsp;</label></td>
-										<td><input type="number" name="prod_price"	required="required" size="15" /></td>
+										<td><input type="number" id="price" name="prod_price"	required="required" size="15" /></td>
 									</tr>
 									<tr>
 										<td><label>產品類別:&nbsp;&nbsp;</label></td>
-										<td><input type="TEXT" name="prod_sort"	required="required" size="15" /></td>
+										<td><input type="TEXT" id="sort" name="prod_sort"	required="required" size="15" /></td>
 									</tr>
 									<tr>
 										<td><label>產品規格:&nbsp;&nbsp;</label></td>
-										<td><input type="TEXT" name="prod_format" size="15" /></td>
+										<td><input type="TEXT" id="format" name="prod_format" size="15" /></td>
 									</tr>
 									<tr>
 										<td><label>產品品牌:&nbsp;&nbsp;</label></td>
-										<td><input type="TEXT" name="prod_brand" size="15" /></td>
+										<td><input type="TEXT" id="brand" name="prod_brand" size="15" /></td>
 									</tr>
 									<tr>
 										<%
@@ -171,12 +172,42 @@
 					</div>
 				</div>
 			</div>
+			</FORM>
+		
+				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn1();">預設1</button>
+				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn2();">預設2</button>
 		</div>
-	</FORM>
+	
+	
+	<br><br>
+	
+
 
 <% } %>
 
 	<div class="callout"></div>
+	
+		<script type="text/javascript">
+
+		function magiclittlebtn1() {
+			document.getElementById('name').value = '精選鳳梨酥';
+			document.getElementById('descript').value = '台灣優質鳳梨所製，口感絕佳！';
+			document.getElementById('price').value = 500;
+			document.getElementById('sort').value = '伴手禮';
+			document.getElementById('format').value = '禮盒包裝*12入';
+			document.getElementById('brand').value = '航站精品館';
+		}
+		
+		function magiclittlebtn2() {
+			document.getElementById('name').value = '精選花生糖';
+			document.getElementById('descript').value = '綜合口味／香菜、海苔、原味、芝麻';
+			document.getElementById('price').value = 400;
+			document.getElementById('sort').value = '伴手禮';
+			document.getElementById('format').value = '禮盒包裝*10入';
+			document.getElementById('brand').value = '航站精品館';
+		}
+		
+	</script>
 
 	<script
 		src="<%=request.getContextPath()%>/front-end/js_store/jquery.js"></script>

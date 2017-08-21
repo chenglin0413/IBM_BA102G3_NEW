@@ -130,14 +130,14 @@
 <!-- paneltitle -->
 <div class="pop">
 						<div class="col-xs-12 col-sm-2">訂單編號</div>
-						<div class="col-xs-12 col-sm-2">會員姓名</div>
+<!-- 						<div class="col-xs-12 col-sm-2">會員姓名</div> -->
 						<div class="col-xs-12 col-sm-2">商家名稱</div>
-						<div class="col-xs-12 col-sm-1">訂單日期</div>
+						<div class="col-xs-12 col-sm-2">訂單日期</div>
 						<div class="col-xs-12 col-sm-1">訂單金額</div>
 						<div class="col-xs-12 col-sm-1">付款狀態</div>
 						<div class="col-xs-12 col-sm-1">商店審核狀態</div>
 						<div class="col-xs-12 col-sm-1">訂單狀態</div>
-						<div class="col-xs-12 col-sm-1">對商店評分</div>
+						<div class="col-xs-12 col-sm-2">對商店評分</div>
 </div>
 <br>		  
 <!-- paneltitleEND -->
@@ -155,13 +155,13 @@
 			       		<div class="col-xs-12 col-sm-2">
   						【<A HREF="javascript:presses${s.index}()">${ordVO.ord_id}</a>】
   						</div>
-						<div class="col-xs-12 col-sm-2">
-						<c:forEach var="userVO" items="${userSvc.all}">
-				                    <c:if test="${ordVO.user_id==userVO.user_id}">
-					                    	【${userVO.user_lastname}-${userVO.user_firstname}】
-				                    </c:if>
-				                </c:forEach>
-						</div>
+<!-- 						<div class="col-xs-12 col-sm-2"> -->
+<%-- 						<c:forEach var="userVO" items="${userSvc.all}"> --%>
+<%-- 				                    <c:if test="${ordVO.user_id==userVO.user_id}"> --%>
+<%-- 					                    	【${userVO.user_lastname}-${userVO.user_firstname}】 --%>
+<%-- 				                    </c:if> --%>
+<%-- 				                </c:forEach> --%>
+<!-- 						</div> -->
 						<div class="col-xs-12 col-sm-2">
 						<c:forEach var="storeVO" items="${storeSvc.all}">
 		                    <c:if test="${ordVO.store_id==storeVO.store_id}">
@@ -169,7 +169,7 @@
 		                    </c:if>
 		                </c:forEach>
 						</div>
-						<div class="col-xs-12 col-sm-1">${ordVO.ord_date}</div>
+						<div class="col-xs-12 col-sm-2">${ordVO.ord_date}</div>
 						<div class="col-xs-12 col-sm-1">$${ordVO.ord_total}</div>
 						<div class="col-xs-12 col-sm-1">
 								 <c:if test="${ordVO.ord_bill == '1'}" var="condition" scope="page" > 
@@ -202,22 +202,22 @@
 					           </c:if>
 						
 						</div>
-						<div class="col-xs-12 col-sm-1">
+						<div class="col-xs-12 col-sm-2">
 							 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/ord/ord.do">
 							   <c:if test="${ordVO.ord_sscore =='0'}">
-								    <div class="col-xs-9"><select name="ord_sscore" value="${ordVO.ord_sscore }">
+								    <div class="col-xs-6"><select name="ord_sscore" value="${ordVO.ord_sscore }">
 																	  <option value="1">負評</option>
 																	  <option value="2">還行。</option>
 																	  <option value="3">沒Fu。</option>
 																	  <option value="4">不錯。</option>
 																	  <option value="5">優質。</option>
 									</select></div>
-									 <div class="col-xs-3"><input type="submit" value="給予評價:"></div>
+									 <div class="col-xs-6"><input type="submit" value="給予評價:"></div>
 									 <input type="hidden" name="ord_id" value="${ordVO.ord_id }">
 									<input type="hidden" name="action"	value="update_ord_sscore">
 								</c:if></FORM>
 								<c:if test="${ordVO.ord_sscore !='0'}"> 
-								<h4>已給過評價。</h4>
+								<b>已給過評價。</b>
 
 								</c:if>		
 						<script>
@@ -246,11 +246,10 @@
 
 <div class="callout"></div>
  <a id="to-top" href="#top" class="btn btn-dark btn-lg"><i class="fa fa-chevron-up fa-fw fa-1x"></i></a>
- 
 <%@ include file="/front-end/member_interface/script.file" %>	
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
 
-	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
 <script>
 		$(function() {
 			$("#accordion").accordion();
