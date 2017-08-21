@@ -452,24 +452,7 @@
 
 
 
-	<servlet>
-		<servlet-name>HelloExcel</servlet-name>
-		<servlet-class>servlet_excel.HelloExcel</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>HelloExcel</servlet-name>
-		<url-pattern>/back-end/excel.do</url-pattern>
-	</servlet-mapping>
 	
-	<context-param>
-		<param-name>excel-file</param-name>
-		<param-value>/WEB-INF/data/emp2.xls</param-value>
-	</context-param>
-	
-	<context-param>
-		<param-name>excel-user</param-name>
-		<param-value>/WEB-INF/data/user.xls</param-value>
-	</context-param>
 	<!-- WebSocket -->
 	<context-param>
 	    <param-name>org.apache.tomcat.websocket.textBufferSize</param-name>

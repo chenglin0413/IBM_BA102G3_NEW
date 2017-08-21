@@ -197,7 +197,7 @@
 					<h3 id="test"></h3>
 				</div>
 				<div class="row">
-					<div id="closechatbox" class="closechatbtn text-center btn-info">X</div>
+					<div id="closechatbox" class="closechatbtn text-center btn-info" onclick="disconnect();">X</div>
 					<div class="col-md-12">
 						<textarea id="messagesArea" class="message-area" readonly></textarea>
 					</div>
@@ -239,7 +239,7 @@
 		function closeMessage() {
 			document.getElementById('messagebtn').style.display = '';
 			document.getElementById('messagearea').style.display = 'none';
-
+			
 		}
 		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/"+<%=storeVO.getStore_id()%>;
 		var host = window.location.host;

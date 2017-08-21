@@ -75,6 +75,9 @@
                     <li>
                         <a href="<%=request.getContextPath()%>/front-end/member_interface/listOneUser_idAllOrd.jsp">消費記錄</a>
                     </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/front-end/member_interface/listOneOrd_idAllItem_formember.jsp">訂單明細</a>
+                    </li>
                     
                     <li class="active">給予產品評價</li>
                 </ol>

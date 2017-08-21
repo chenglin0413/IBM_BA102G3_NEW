@@ -9,7 +9,9 @@
 
 if (session.getAttribute("oneord_idAllItem") != null) {
 	List<ItemVO> list = (List<ItemVO>) session.getAttribute("oneord_idAllItem");
-    pageContext.setAttribute("list",list);
+	Integer ord_id=list.get(0).getOrd_id();
+	pageContext.setAttribute("ord_id",ord_id);
+	pageContext.setAttribute("list",list);
     
 }
 %>
@@ -81,7 +83,7 @@ if (session.getAttribute("oneord_idAllItem") != null) {
                         <a href="<%=request.getContextPath()%>/front-end/index.jsp">首頁</a>
                     </li>
                     <li>
-                        <a href="<%=request.getContextPath()%>/front-end/member_interface/listOneUser_idAllOrd.jsp">消費記錄</a>
+                        <a href="<%=request.getContextPath()%>/front-end/item/item.do?ord_id=${ItemVO.ord_id}&action=getOne_Ord_id_AllItem_formember">消費記錄</a>
                     </li>
                     <li class="active">訂單明細</li>
                 </ol>

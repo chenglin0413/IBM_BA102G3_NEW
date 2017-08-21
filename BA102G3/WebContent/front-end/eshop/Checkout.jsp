@@ -119,7 +119,7 @@
 // 			Integer  prod_count=prodVO.getProd_count();
 // 			Integer  prod_score=prodVO.getProd_score();
 			%>
-			<td><%=prod_id%>
+<%-- 			<td><%=prod_id%> --%>
 			
 <!-- 	%> -->
 	<div class="container">
