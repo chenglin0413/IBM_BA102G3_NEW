@@ -92,7 +92,8 @@ public class UploadImgStpiTable  {
 			stpiVO1.setStore_id(stid);
 			int stpi_name=1000+i;
 			 stpiVO1.setStpi_name(stpi_name);
-			 byte [] pic=getPictureByteArray("D://Dropbox//三組//Oracle建表格指令//store_icon//"+i+".jpg");
+//			 byte [] pic=getPictureByteArray("D://Dropbox//三組//Oracle建表格指令//store_icon//"+i+".jpg");
+			 byte [] pic=getPictureByteArray("C:\\Users\\mjdtsay\\Dropbox//三組//Oracle建表格指令//store_icon//"+i+".jpg");
 			 stpiVO1.setStpi_img(pic);
 			 stpiVO1.setStpi_imgfmt("jpg");
 			 

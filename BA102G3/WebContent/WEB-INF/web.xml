@@ -72,6 +72,28 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>PathServlet</servlet-name>
+		<servlet-class>com.path.controller.PathServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PathServlet</servlet-name>
+		<url-pattern>/back-end/path/path.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>PathServlet</servlet-name>
+		<url-pattern>/front-end/path/path.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>CreateMyMapServlet</servlet-name>
+		<servlet-class>com.map.controller.createMyMap</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateMyMapServlet</servlet-name>
+		<url-pattern>/front-end/map/createMyMap.do</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
 		<servlet-name>StoreServlet1</servlet-name>
 		<servlet-class>com.store.controller.StoreServlet1</servlet-class>
 	</servlet>
@@ -139,8 +161,18 @@
 		<url-pattern>/front-end/user/userImg.do</url-pattern>
 	</servlet-mapping>
 	
-		
-
+	<servlet>
+		<servlet-name>PathDBGifReader</servlet-name>
+		<servlet-class>com.path.controller.PathDBGifReader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PathDBGifReader</servlet-name>
+		<url-pattern>/back-end/path/pathImg.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>PathDBGifReader</servlet-name>
+		<url-pattern>/front-end/path/pathImg.do</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>SysuServlet</servlet-name>

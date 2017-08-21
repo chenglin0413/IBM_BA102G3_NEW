@@ -1,10 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
   response.setHeader("Cache-Control","no-store"); //HTTP 1.1
   response.setHeader("Pragma","no-cache");        //HTTP 1.0
   response.setDateHeader ("Expires", 0);
 %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page import="com.auth.model.*"%>
 <%@ page import="com.sysu.model.*"%>
@@ -35,7 +35,7 @@ pageContext.setAttribute("list",list);
                 </ol>
 
 
-            <FORM METHOD="post" ACTION="sysu.do" name="form1">
+            <form class="form-horizontal" id="reg_form" METHOD="post" ACTION="<%= request.getContextPath() %>/back-end/sysu/sysu.do" name="form1">
 
             <div class="container-fluid">
                 <div class="row">
@@ -51,10 +51,23 @@ pageContext.setAttribute("list",list);
 	</ul>
 	</font>
 </c:if>                        
+
                             <div class="input-group">
                                 <label class="input-group-addon">帳號</label>
                                 <input type="text" name="sysu_account" value="<%= (sysuVO==null)? "" : sysuVO.getSysu_account()%>" class="form-control">
                             </div><br>
+                            
+                            
+                            <div class="input-group">
+                                <label class="input-group-addon">更新密碼</label>
+                                <input type="text" name="sysu_passwd" value="<%= (sysuVO==null)? "" : sysuVO.getSysu_passwd()%>" class="form-control">
+                            </div><br>
+                            
+                            <div class="input-group">
+                                <label class="input-group-addon">確認密碼</label>
+                                <input type="text" name="sysu_passwd" value="<%= (sysuVO==null)? "" : sysuVO.getSysu_passwd()%>" class="form-control">
+                            </div><br>
+                            
 
                             <div class="input-group">
                                 <label class="input-group-addon">姓</label>
@@ -144,11 +157,10 @@ pageContext.setAttribute("list",list);
     <!-- Bootstrap Core JavaScript -->
     <script src="<%= request.getContextPath() %>/back-end/js/bootstrap.min.js"></script>
 
-    <!-- Morris Charts JavaScript -->
-    <script src="<%= request.getContextPath() %>/back-end/js/plugins/morris/raphael.min.js"></script>
-    <script src="<%= request.getContextPath() %>/back-end/js/plugins/morris/morris.min.js"></script>
-    <script src="<%= request.getContextPath() %>/back-end/js/plugins/morris/morris-data.js"></script>
 
 </body>
 
 </html>
+
+
+ 

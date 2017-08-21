@@ -78,11 +78,14 @@
 												</td>
 												<td>
 													<c:if test="${rpprVO.rppr_status==0}">
-														<input type="submit" class="btn btn-xs btn-danger" value="未處理">
+														 <a href="#" class="btn btn-xs btn-danger " role="button">待審檢舉</a>
 													</c:if>		
 													<c:if test="${rpprVO.rppr_status==1}">
-														<input type="submit" class="btn btn-xs btn-success" disabled="disabled" value="已處理">
+														 <a href="#" class="btn btn-xs btn-warning " role="button">檢舉審核通過,已下架產品</a>
 													</c:if>	
+													<c:if test="${rpprVO.rppr_status==2}">
+														 <a href="#" class="btn  btn-xs btn-success " role="button">檢舉審核未通過,保留產品</a>
+													</c:if>		
 												</td>	
 											</tr>
 										</c:forEach>
@@ -136,11 +139,14 @@
 												</td>
 												<td>
 													<c:if test="${rptlVO.rptl_status==0}">
-														<input type="submit" class="btn btn-xs btn-danger" value="未處理">
+														 <a href="#" class="btn btn-xs btn-danger" role="button">待審檢舉</a>
 													</c:if>		
 													<c:if test="${rptlVO.rptl_status==1}">
-														<input type="submit" class="btn btn-xs btn-success" disabled="disabled" value="已處理">
+														 <a href="#" class="btn btn-xs btn-warning" role="button">檢舉審核通過,已移除遊記</a>
 													</c:if>	
+													<c:if test="${rptlVO.rptl_status==2}">
+														 <a href="#" class="btn btn-xs btn-success" role="button">檢舉審核未通過,保留遊記</a>
+													</c:if>		
 												</td>
 											</tr>
 										</c:forEach>

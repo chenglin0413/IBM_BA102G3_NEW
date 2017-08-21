@@ -38,8 +38,8 @@ public class UploadImgUserTable {
 						
 			// 1. setBlob				
 				Blob blob = con.createBlob();
-//				byte[] pic2 = getPictureByteArray("C:/Users/mjdtsay/Dropbox/Project/user_icon/"+String.valueOf(i)+".jpg");
-				byte[] pic2 = getPictureByteArray("D://Dropbox//三組//Oracle建表格指令//user_icon//"+String.valueOf(i)+".jpg");		
+				byte[] pic2 = getPictureByteArray("C:/Users/mjdtsay/Dropbox/Project/user_icon/"+String.valueOf(i)+".jpg");
+//				byte[] pic2 = getPictureByteArray("C://Dropbox//三組//Oracle建表格指令//user_icon//"+String.valueOf(i)+".jpg");		
 				blob.setBytes(1, pic2);
 						
 				System.out.println("pass4");

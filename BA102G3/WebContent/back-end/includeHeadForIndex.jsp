@@ -31,7 +31,6 @@ pageContext.setAttribute("listauth",listauth);
     <link href="<%= request.getContextPath() %>/back-end/css/sb-admin.css" rel="stylesheet">
 
     <!-- Morris Charts CSS -->
-    <link href="<%= request.getContextPath() %>/back-end/css/plugins/morris.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     <link href="<%= request.getContextPath() %>/back-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -97,7 +96,7 @@ pageContext.setAttribute("listauth",listauth);
                     </li>
 
 		<c:forEach var="authVO1" items="${listauth}" >
-			<c:if test="${authVO1.func_id == '4100001'}" var="condition" scope="page" >
+			<c:if test="${authVO1.func_id == '4100001'}" var="condition1" scope="page" >
 
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#sysu"><i class="fa fa-fw fa-users"></i>  平台員工管理 <i class="fa fa-fw fa-caret-down"></i></a>
@@ -118,7 +117,7 @@ pageContext.setAttribute("listauth",listauth);
 		</c:forEach>
 
 		<c:forEach var="authVO1" items="${listauth}" >
-			<c:if test="${authVO1.func_id == '4100002'}" var="condition" scope="page" >
+			<c:if test="${authVO1.func_id == '4100002'}" var="condition2" scope="page" >
                     
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#shop"><i class="fa fa-fw fa-shopping-cart"></i>  商家會員管理 <i class="fa fa-fw fa-caret-down"></i></a>
@@ -156,7 +155,7 @@ pageContext.setAttribute("listauth",listauth);
 		</c:forEach>
 
 		<c:forEach var="authVO1" items="${listauth}" >
-			<c:if test="${authVO1.func_id == '4100003'}" var="condition" scope="page" >
+			<c:if test="${authVO1.func_id == '4100003'}" var="condition3" scope="page" >
 
                     <li>
                         <a href="javascript:;" data-toggle="collapse" data-target="#user"><i class="fa fa-fw fa-child"></i>  一般會員管理 <i class="fa fa-fw fa-caret-down"></i></a>
@@ -174,7 +173,7 @@ pageContext.setAttribute("listauth",listauth);
 		</c:forEach>
 
 		<c:forEach var="authVO1" items="${listauth}" >
-			<c:if test="${authVO1.func_id == '4100004'}" var="condition" scope="page" >
+			<c:if test="${authVO1.func_id == '4100004'}" var="condition4" scope="page" >
 
                     <li>
                         <a href="<%= request.getContextPath() %>/back-end/report/listAllReport.jsp"><i class="fa fa-fw fa-bomb"></i> 檢舉管理</a>
@@ -184,7 +183,7 @@ pageContext.setAttribute("listauth",listauth);
 		</c:forEach>
 
 		<c:forEach var="authVO1" items="${listauth}" >
-			<c:if test="${authVO1.func_id == '4100005'}" var="condition" scope="page" >
+			<c:if test="${authVO1.func_id == '4100005'}" var="condition5" scope="page" >
 
                     <li>
                         <a href="<%= request.getContextPath() %>/back-end/mfee/adminMfeeQuery.jsp"><i class="fa fa-usd"></i> 月費管理</a>
@@ -194,19 +193,23 @@ pageContext.setAttribute("listauth",listauth);
 		</c:forEach>
 
 		<c:forEach var="authVO1" items="${listauth}" >
-			<c:if test="${authVO1.func_id == '4100006'}" var="condition" scope="page" >
-
+			<c:if test="${authVO1.func_id == '4100006'}" var="condition4" scope="page" >
+		
                     <li>
-                        <a href="<%= request.getContextPath() %>/back-end/blog/adminBlog.jsp"><i class="fa fa-fw fa-picture-o"></i> 旅遊日誌管理</a>
-                    </li>
-
-                    <li>
-                        <a href="<%= request.getContextPath() %>/back-end/scheduler/adminScheduler.jsp"><i class="fa fa-fw fa-dashboard"></i> 排程器管理</a>
+                        <a href="javascript:;" data-toggle="collapse" data-target="#path"><i class="fa fa-fw fa-map-marker"></i>  導引圖資管理 <i class="fa fa-fw fa-caret-down"></i></a>
+                        <ul id="path" class="collapse">
+                            <li>
+                                <a href="<%= request.getContextPath() %>/back-end/path/adminPathAdd.jsp">新增</a>
+                            </li>
+                            <li>
+                                <a href="<%= request.getContextPath() %>/back-end/path/adminPathQuery.jsp">查詢/修改</a>
+                            </li>
+                        </ul>
                     </li>
 
 			</c:if>
 		</c:forEach>
-
+		
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

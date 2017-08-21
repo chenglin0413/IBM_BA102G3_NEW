@@ -444,4 +444,22 @@ public class FlscJDBCDAO implements FlscDAO_interface {
 		System.out.println(f2.getFlsc_bag());
 		System.out.println(f2.getFlsc_checkin());
 	}
+
+	@Override
+	public List<FlscVO> findByArrive() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public FlscVO findByPK(Integer flsc_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<FlscVO> findByOut() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

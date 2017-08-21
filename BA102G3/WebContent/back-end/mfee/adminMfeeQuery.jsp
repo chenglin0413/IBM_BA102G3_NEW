@@ -47,18 +47,18 @@
 							年
 
 							<select name="mfee_month">
-  								<option value="JAN">1</option>
-  								<option value="FEB">2</option>
-  								<option value="MAR">3</option>
-  								<option value="APR">4</option>
-  								<option value="MAY">5</option>
-  								<option value="JUN">6</option>
-  								<option value="JUL">7</option>
-  								<option value="AUG" selected>8</option>
-  								<option value="SEP">9</option>
-  								<option value="OCT">10</option>
-  								<option value="NOV">11</option>
-  								<option value="DEC">12</option>
+  								<option value="01">1</option>
+  								<option value="02">2</option>
+  								<option value="03">3</option>
+  								<option value="04">4</option>
+  								<option value="05">5</option>
+  								<option value="06">6</option>
+  								<option value="07">7</option>
+  								<option value="08" selected>8</option>
+  								<option value="09">9</option>
+  								<option value="10">10</option>
+  								<option value="11">11</option>
+  								<option value="12">12</option>
 							</select>
 							月
 

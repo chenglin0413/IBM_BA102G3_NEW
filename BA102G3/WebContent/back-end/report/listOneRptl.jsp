@@ -7,14 +7,8 @@
 	RptlVO rptlVO=(RptlVO)request.getAttribute("RptlVO");
 %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+<%@include file="includeHeadForReport.jsp" %>
 
- <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 <!-- jQuery library -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -24,11 +18,14 @@
 </head>
 <body>
 
+<div id="page-wrapper">
+
+<jsp:useBean id="trvlSvc" scope="page" class="com.trvl.model.TrvlService" />
 	<div class="container-fluid">
 		<div class="row">
 			<div class="row">
 				<div class="col-lg-8">
-					<div class="panel panel-default">
+					<div class="panel panel-danger">
 						<div class="panel-heading">
 							<h3 class="panel-title">
 								<i class="fa fa-money fa-fw"></i><b>檢舉編號:${rptlVO.rptl_id}</b>
@@ -39,16 +36,15 @@
 								<b>檢舉日期:</b> ${rptlVO.rptl_date}
 							</p>
 							<p>
-								<b>檢舉人:</b> ${rptlVO.user_id}
+								<b>檢舉人編號:</b> ${rptlVO.user_id}
 							</p>
 							<p>
-								<b>被檢舉遊記:</b> 山東承受不見受傷課程
+								<b>被檢舉遊記:</b>${trvlSvc.getOneTrvl(rptlVO.trvl_id).trvl_tittle}
 							</p>
 							<p>
-								<b>被檢舉帳號:</b> 安全科研
-							</p>
+								<b>被檢舉帳號:</b> ${trvlSvc.getOneTrvl(rptlVO.trvl_id).user_id}
 							<p>
-								<b>內文:</b><br>
+								<b>檢舉內文:</b><br>
 								${rptlVO.rptl_content}
 						</div>
 					</div>
@@ -57,24 +53,28 @@
 			<div class="container">
 				<div class="row">
 					<c:if test="${rptlVO.rptl_status==0}">
-						<div class="col-xs-12 col-md-2 col-md-offset-6">
+						<div class="col-xs-12 col-md-1 col-md-push-4">
 							<form method="POST" action="<%=request.getContextPath()%>/back-end/report/rptl.do" name="form1">
 								<input type="hidden" name="rptl_status" value="1">
 								<input type="hidden" name="rptl_id" value="${rptlVO.rptl_id}">
 								<input type="hidden" name="action" value="update">
-								<input type="submit" class="btn btn-danger" value="處理">
+								<input type="submit" class="btn btn-sm btn-danger" value="移除遊記">
+							</form>
+						</div>	
+						<div class="col-xs-12 col-md-1 col-md-push-5">	
+							<form method="POST" action="<%=request.getContextPath()%>/back-end/report/rptl.do" name="form2">
+								<input type="hidden" name="rptl_status" value="2">
+								<input type="hidden" name="rptl_id" value="${rptlVO.rptl_id}">
+								<input type="hidden" name="action" value="update">
+								<input type="submit" class="btn btn-sm btn-danger" value="保留遊記">
 							</form>
 						</div>
 					</c:if>		
-					<c:if test="${rptlVO.rptl_status==1}">
-						<div class="col-xs-12 col-md-2 col-md-offset-6">
-							<input type="submit" class="btn btn-success" value="遊記已處理">
-						</div>
-					</c:if>	
 				</div>
 			</div>
 		</div><!-- /.row -->
 	</div>
+</div>	
 
 </body>
 </html>

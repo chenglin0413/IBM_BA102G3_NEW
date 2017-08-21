@@ -9,6 +9,7 @@ SysuVO sysuVOLogin = (SysuVO) session.getAttribute("sysuVOLogin");
 List<AuthVO> listauth = (List<AuthVO>) session.getAttribute("authVOLogin");
 pageContext.setAttribute("listauth",listauth);
 
+int check=0;
 %>
 
 <!DOCTYPE html>
@@ -98,6 +99,8 @@ pageContext.setAttribute("listauth",listauth);
 
 		<c:forEach var="authVO1" items="${listauth}" >
 			<c:if test="${authVO1.func_id == '4100001'}" var="condition" scope="page" >
+			
+					<%check=1;%>
 
                     <li class="active">
                         <a href="javascript:;" data-toggle="collapse" data-target="#sysu"><i class="fa fa-fw fa-users"></i>  平台員工管理 <i class="fa fa-fw fa-caret-down"></i></a>
@@ -219,6 +222,11 @@ pageContext.setAttribute("listauth",listauth);
             </div>
             <!-- /.navbar-collapse -->
         </nav>
+
+<% if (check==0){
+    String redirectURL = "../index.jsp";
+    response.sendRedirect(redirectURL);
+} %>
         
 <!-- 以上是拉進來的 -->
 
