@@ -53,6 +53,11 @@ public class MfeeService {
 		return dao.findUnpay(year, month);
 	}
 	
+//	public List<MfeeVO> findUnpayCurrent() {
+////		System.out.println("year:"+year+" ,month:"+month);
+////		return dao.findUnpay(year, month);
+//	}
+	
 	public List<MfeeVO> getOneByUser_id(Integer user_id) {
 		return dao.findByUserId(user_id);
 	}

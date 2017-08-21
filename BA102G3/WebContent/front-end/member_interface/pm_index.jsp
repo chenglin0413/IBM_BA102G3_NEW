@@ -106,10 +106,10 @@ p {
 					</a>
 				</div>
 				<div class="col-xs-12 col-sm-8">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam quod modi vitae esse, molestiae quo dolor optio, voluptatem ex culpa deleniti inventore incidunt autem iste facilis cumque obcaecati, doloremque soluta?</p>
-					<p>Vel dolores, corporis itaque delectus architecto aperiam blanditiis debitis animi, facere accusamus nostrum eveniet, praesentium necessitatibus suscipit cupiditate veritatis error iste, culpa ea placeat rerum magnam explicabo reprehenderit labore. Dolore.</p>
-					<p>Similique dolore mollitia consequuntur vel libero inventore iure, incidunt repellendus, eaque error ipsum omnis ullam ipsa, officia. Ea eligendi tenetur reiciendis itaque hic qui, consectetur, necessitatibus sit eos, illum minus.</p>
-				
+				<br><br><br>
+					<p>合作店家精選促銷商品！</p>
+					<p>送禮自用兩相宜，走過路過別錯過～！</p>
+					
 				</div>
 			</div>
 			<div class="row">
@@ -121,9 +121,9 @@ p {
 					</a>
 				</div>
 				<div class="col-xs-12 col-sm-8 col-sm-pull-4">
-					<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam quod modi vitae esse, molestiae quo dolor optio, voluptatem ex culpa deleniti inventore incidunt autem iste facilis cumque obcaecati, doloremque soluta?</p>
-					<p>Vel dolores, corporis itaque delectus architecto aperiam blanditiis debitis animi, facere accusamus nostrum eveniet, praesentium necessitatibus suscipit cupiditate veritatis error iste, culpa ea placeat rerum magnam explicabo reprehenderit labore. Dolore.</p>
-					<p>Similique dolore mollitia consequuntur vel libero inventore iure, incidunt repellendus, eaque error ipsum omnis ullam ipsa, officia. Ea eligendi tenetur reiciendis itaque hic qui, consectetur, necessitatibus sit eos, illum minus.</p>
+				<br><br><br>
+					<p>旅途累了？適時後休息一下吧！</p>
+					<p>看看合作餐廳所提供優惠吧</p>
 				</div>
 			</div>
 		</div>

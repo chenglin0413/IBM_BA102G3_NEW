@@ -6,8 +6,7 @@
 
 <%
 	
-	UserVO userVO=null;
-	userVO=(UserVO)session.getAttribute("UserVO");
+	UserVO userVO=(UserVO)session.getAttribute("UserVO");
 	StoreVO storeVO = null;
 	Integer store_id=null;
 	String store_no=null;
@@ -86,7 +85,7 @@
 </style>
 </head>
 
-<body onload="connect(),showTime();" onunload="disconnect();">
+<body  onunload="disconnect();">
 
 	<%@include file="/front-end/member_interface/headerBar.file"%>
 <div class="callout"></div>
@@ -192,12 +191,12 @@
 			<!-- 聊天區塊 -->
 			         <c:if test="${userVO!=null}">
 			<div id="messagearea" class="chatbox" style="display: none;"
-				onload="connect(),showTime();" >
+				>
 				<div class="chatBar">
 					<h3 id="test"></h3>
 				</div>
 				<div class="row">
-					<div id="closechatbox" class="closechatbtn text-center btn-info" onclick="disconnect();">X</div>
+					<div id="closechatbox" class="closechatbtn text-center btn-info" >X</div>
 					<div class="col-md-12">
 						<textarea id="messagesArea" class="message-area" readonly></textarea>
 					</div>
@@ -270,9 +269,8 @@
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			};
 
-			webSocket.onclose = function(event) {
-
-			};
+// 			webSocket.onclose = function(event) {
+// 			};
 		}
 
 		//webSocket 區塊

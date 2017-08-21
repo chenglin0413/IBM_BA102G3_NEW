@@ -64,7 +64,7 @@
 <body>
  
 <%--     <%@include file="/front-end/member_interface/headerBar.file" %> --%>
-
+<jsp:useBean id="PrpmSvc" class="com.prpm.model.PrpmService"/>
 <div class="container">
     <div class="row">
         <div class="callout"></div>
@@ -121,7 +121,15 @@
 			<div>產品描述: ${prodVO.prod_descript}</div>
 			<div>評分次數: ${prodVO.prod_count}</div>
 			<div>評分總分: ${prodVO.prod_score}</div>
-			<div><p>$<font color="red">${prodVO.prod_price}</font></p></div>
+			<c:if test="${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status=='1'}" >
+			<div><del><p>價格:$<font color="red">${prodVO.prod_price}</font></p></del></div> 
+				<div><p>促銷價格:$<font color="red">${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_price}</font></p></div>
+			</c:if>
+			<c:if test="${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status=='0'||PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status==null}" >
+				<div><p>價格:$<font color="red">${prodVO.prod_price}</font></p></div> 
+			</c:if>
+			
+<%-- 			<div><p>$<font color="red">${prodVO.prod_price}</font></p></div> --%>
 			<c:if test="${empty userVO.user_account}" var="condition1" scope="session" > 
 					<div class="btn btn-info"><a href='#modal-login' data-toggle="modal">請先登入</a></div>
 				

@@ -103,7 +103,7 @@
 
 					<tr>
 						<td><label>促銷文案:&nbsp;&nbsp;</label></td>
-						<td><textarea rows="4" cols="40" name="stpm_content" required="required"></textarea></td>
+						<td><textarea rows="4" cols="40" name="stpm_content"></textarea></td>
 					</tr>
 
 					<tr>

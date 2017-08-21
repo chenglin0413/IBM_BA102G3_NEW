@@ -318,11 +318,12 @@ public class MfeeDAO implements MfeeDAO_interface {
 		Connection con = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-
+				
 		String fIND_UNPAY_STMT =
 				"select u.user_id "
 			+ "from mfee m right outer join user_table u on m.user_id=u.user_id "
-  		    + "where (u.user_joindate < '01-"+month+"-"+year+"' and u.user_type>=2 ) and (m.mfee_date is null) order by m.pay_date";
+//  		    + "where (u.user_joindate < '01-"+month+"-"+year+"' and u.user_type>=2 ) and (m.mfee_date is null) order by m.pay_date";
+  		    + "where (u.user_joindate < TO_DATE('"+year+"-"+month+"01','YYYY-MM-DD') and u.user_type>=2 ) and (m.mfee_date is null) order by m.pay_date";
 		
 		try {
 			

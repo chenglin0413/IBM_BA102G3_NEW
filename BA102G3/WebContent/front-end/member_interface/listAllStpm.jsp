@@ -223,21 +223,18 @@
 			<div id="accordion">
 				<c:forEach var="stpmVO" items="${list}" varStatus="count">
 					<c:if test="${stpmVO.stpm_status == 1}">
-						<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;促銷名稱&nbsp;-&nbsp;${stpmVO.stpm_name}</div>
+						<div>&nbsp;&nbsp;&nbsp;&nbsp;${stpmVO.stpm_name}</div>
 						<div class="text-center">
 							<!-- 內容 -->
 
-							<div class="col-xs-12 col-sm-3">
-								<b>${stpmVO.stpm_name}</b>
-							</div>
-							<div class="col-xs-12 col-sm-3">
+							<div class="col-xs-12 col-sm-4">
 								<b>${stpmVO.stpm_desc}</b>
 							</div>
-							<div class="col-xs-12 col-sm-3">
+							<div class="col-xs-12 col-sm-4">
 								<b>${stpmVO.stpm_startdate} ~ ${stpmVO.stpm_enddate}</b>
 							</div>
 
-							<div class="col-xs-12 col-sm-3">
+							<div class="col-xs-12 col-sm-4">
 								<a href='#${stpmVO.stpm_id}' data-toggle="modal"
 									class="btn btn-default btn-xs">顯示詳情</a>
 							</div>
@@ -259,17 +256,16 @@
 													varStatus="count">
 													<c:if test="${stpmVO.stpm_id == prpmVO.stpm_id}">
 														<tr>
-															<td width="20%"><b>促銷商品:</b>
-															<a>
-																<c:forEach var="prodVOB" items="${prodSvcB.all}" varStatus="count">
-																	<c:if test="${prodVOB.prod_id == prpmVO.prod_id}">
+															<td width="20%"><b>促銷商品:&nbsp;</b><a> <c:forEach
+																		var="prodVOB" items="${prodSvcB.all}"
+																		varStatus="count">
+																		<c:if test="${prodVOB.prod_id == prpmVO.prod_id}">
 																		${prodVOB.prod_name}
 																	</c:if>
-																</c:forEach>
-															</a>
-															</td>
+																	</c:forEach>
+															</a></td>
 
-															<td width="20%"><b>原價:</b><font color="blue">
+															<td width="20%"><b>原價:&nbsp;</b><font color="blue">
 																	<c:if test="${prodList != null}">
 																		<c:forEach var="prodVO" items="${prodList}">
 																			<c:if test="${prpmVO.prod_id == prodVO.prod_id}">
@@ -278,19 +274,16 @@
 																		</c:forEach>
 																	</c:if>
 															</font></td>
-															<td width="20%"><b>促銷特價:</b><font color="red">${prpmVO.prpm_price}</font></td>
-															
+															<td width="20%"><b>促銷特價:&nbsp;</b><font color="red">$${prpmVO.prpm_price}</font></td>
 															<td width="20%">
-															<a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_id=${prpmVO.prod_id}&action=getOne_For_Display" class="btn btn-default btn-xs">商品詳情</a>
-															</td>
+															<a	href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_id=${prpmVO.prod_id}&action=getOne_For_Display"	class="btn btn-default btn-xs">商品詳情</a></td>
 														</tr>
 													</c:if>
 												</c:forEach>
 											</table>
 										</div>
 										<div class="modal-footer">
-											<button type="button" class="btn btn-default"
-												data-dismiss="modal">close</button>
+											<button type="button" class="btn btn-default" data-dismiss="modal">close</button>
 										</div>
 									</div>
 								</div>

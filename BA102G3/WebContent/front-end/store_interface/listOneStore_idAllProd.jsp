@@ -13,12 +13,17 @@
 		//將store_id存在session中
 		Integer store_id=new Integer(storeVO.getStore_id());
 		session.setAttribute("store_id",store_id);
-		
+		//將上線的store_id用set存起來
+		Set<Integer> store_ids=new HashSet<Integer>();
+		store_ids.add(store_id);
+		application.setAttribute("store_ids", store_ids);
+		//取得該商店會員所擁有的prod
 		ProdService prodSvc = new ProdService();
 		List<ProdVO> list = prodSvc.getOneStore_idAllProd(storeVO.getStore_id());
+		pageContext.setAttribute("list", list);
+		//計算未審核訂單、未備貨_待取貨的狀態數量
 		OrdService ordSvc = new OrdService();
 		List<OrdVO> ordlist=ordSvc.getOneStore_idAllOrd(storeVO.getStore_id());
-		//計算未審核訂單、未備貨_待取貨的狀態數量
 		Integer unCheckOrd_grant=0;
 		Integer unFinishOrd_status=0;
 		for(OrdVO ordVO:ordlist){
@@ -29,7 +34,7 @@
 				unFinishOrd_status+=1;
 			}
 		}
-		pageContext.setAttribute("list", list);
+		
 		
 %>
 		
@@ -94,7 +99,7 @@ td{
 </style>
 </head>
 
-<body onload="connect(),showTime();" onunload="disconnect();">
+<body  onunload="disconnect();">
 
 	<%@include file="/front-end/store_interface/headerBar.file"%>
 	<div class="callout"></div>
@@ -300,7 +305,7 @@ td{
 				</div>
 				<div class="row">
 					<div id="closechatbox" class="closechatbtn text-center btn-info"
-						onclick="disconnect();">X</div>
+						>X</div>
 					<div class="col-md-12">
 						<textarea id="messagesArea" class="message-area" readonly></textarea>
 					</div>
@@ -325,7 +330,6 @@ td{
 			</div>
 			<div id="messagebtn" class="chatbtn text-center btn-info"
 				onclick="connect();">ChatBox</div>
-		           
 			<!-- 聊天區塊結束 -->
 </div>
 </div>
@@ -380,9 +384,8 @@ td{
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			};
 
-			webSocket.onclose = function(event) {
-
-			};
+// 			webSocket.onclose = function(event) {
+// 			};
 		}
 
 		//webSocket 區塊
@@ -428,7 +431,6 @@ td{
 		}
 		window.onload = init;
 	</script>
-
 </body>
 
 </html>

@@ -208,21 +208,18 @@
 			<div id="accordion">
 				<c:forEach var="repmVO" items="${list}" varStatus="count">
 					<c:if test="${repmVO.repm_status == 1}">
-						<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;促銷名稱&nbsp;-&nbsp;${repmVO.repm_name}</div>
+						<div>&nbsp;&nbsp;&nbsp;&nbsp;${repmVO.repm_name}</div>
 						<div class="text-center">
 							<!-- 內容 -->
 
-							<div class="col-xs-12 col-sm-3">
-								<b>${repmVO.repm_name}</b>
-							</div>
-							<div class="col-xs-12 col-sm-3">
+							<div class="col-xs-12 col-sm-4">
 								<b>${repmVO.repm_desc}</b>
 							</div>
-							<div class="col-xs-12 col-sm-3">
+							<div class="col-xs-12 col-sm-4">
 								<b>${repmVO.repm_startdate} ~ ${repmVO.repm_enddate}</b>
 							</div>
 
-							<div class="col-xs-12 col-sm-3">
+							<div class="col-xs-12 col-sm-4">
 								<a href='#${repmVO.repm_id}' data-toggle="modal" class="btn btn-default btn-xs">顯示詳情</a>
 								<a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_id=${prpmVO.prod_id}&action=getOne_For_Display" class="btn btn-default btn-xs">餐廳詳情</a>
 							</div>

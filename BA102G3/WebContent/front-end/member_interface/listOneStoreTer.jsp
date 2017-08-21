@@ -5,9 +5,14 @@
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%	
+	//產品動畫
+	String [] animateds= {"animated slideInDown","animated  fadeInUp","animated  fadeIn","animated  shake","animated  swing","animated rotateIn","animated slideInRight"};
+	int number=0;
 	
 	List<ProdVO> list = (List<ProdVO>)session.getAttribute("onestoreterlist");
     pageContext.setAttribute("list",list);
+    
+    
     //提示檢舉的商品
     RpprVO rpprVO=(RpprVO)request.getAttribute("rpprVO");
     pageContext.setAttribute("rpprVO",rpprVO);
@@ -37,13 +42,7 @@
     <!-- Custom Fonts -->
     <link href="<%=request.getContextPath()%>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
    <style type="text/css">
         .rpprForm {
         	display:none;
@@ -141,7 +140,7 @@
 							</c:if>
 						</c:forEach>
 
-						<div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
+						<div id="boxshadow"><img class="<%=animateds[number%7]%> src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
 							 <div class="AutoSkip"><h4>${prodVO.prod_name}</h4></div>
 							 <div><h4>$${prodVO.prod_price}</h4></div>
 							 <div><h4>${prodVO.prod_sort}</h4></div>
@@ -254,6 +253,7 @@
 <%--                    			</c:if> --%>
 			</div>
 	        </div>
+	        <%number+=1; %>
 	</c:forEach>
 	</div>
 	</div>
