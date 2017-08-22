@@ -106,12 +106,13 @@ td{
 
 	<%@include file="/front-end/store_interface/headerBar.file"%>
 	<div class="callout"></div>
-	<div class="container headBar1 areaColor" >
+	<div class="areaColor">
+	<div class="container headBar1 " >
 		<div class="row">
 			<div class="col-md-4 ">
 				<div class="row">
 				<h3 class="page-header">商品列表</h3>
-				<img  id="boxshadow" src="<%=request.getContextPath()%>/front-end/user/userImg.do?user_id=${userVO.user_id}" height="150" width="120">
+				<img class="img-rounded" id="boxshadow" src="<%=request.getContextPath()%>/front-end/user/userImg.do?user_id=${userVO.user_id}" height="150" width="120">
 				<h4>目前登入人員:${userVO.user_lastname}${userVO.user_firstname}</h4>
 				</div>
 			</div>
@@ -159,7 +160,7 @@ td{
 	                </div>
 		</div>
 	</div>
-
+	</div>
 	<div id="page-wrapper col-md-12">
 		<div class="col-md-6">
 			<ol class="breadcrumb">

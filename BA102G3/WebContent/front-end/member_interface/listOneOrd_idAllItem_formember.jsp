@@ -59,6 +59,7 @@ if (session.getAttribute("oneord_idAllItem") != null) {
        font-size:14px;
        
         }
+        
     </style>
 </head>
 
@@ -83,7 +84,7 @@ if (session.getAttribute("oneord_idAllItem") != null) {
                         <a href="<%=request.getContextPath()%>/front-end/index.jsp">首頁</a>
                     </li>
                     <li>
-                        <a href="<%=request.getContextPath()%>/front-end/item/item.do?ord_id=${ItemVO.ord_id}&action=getOne_Ord_id_AllItem_formember">消費記錄</a>
+                        <a href="<%=request.getContextPath()%>/front-end/member_interface/listOneUser_idAllOrd.jsp">消費記錄</a>
                     </li>
                     <li class="active">訂單明細</li>
                 </ol>
@@ -155,7 +156,7 @@ if (session.getAttribute("oneord_idAllItem") != null) {
 		<input onclick="window.close();" value="關閉視窗" type="button">	
 		
 	</div>
-	
+	</div>
 	            
 <%-- 	            <c:if test="${empty itemVO.item_review}" var="condition1" scope="page" >  --%>
 <!-- 	            <p>暫無評論</p> -->

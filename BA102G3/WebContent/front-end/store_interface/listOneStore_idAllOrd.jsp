@@ -65,6 +65,10 @@ th {
 li {
 	list-style-type: none;
 }
+
+.areaColor{
+	background-color:#E2A8B7;
+	}
 </style>
 </head>
 
@@ -74,12 +78,13 @@ li {
 
     <!-- Header -->
     <div class="callout" ></div>
-
+	<div class="areaColor">
    
 	
    			<div id="page-wrapper">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
+                	<h2>${storeVO.store_name}</h2>
                     <h3 class="page-header">訂單列表</h3>
                 </div>
                 <!-- /.col-lg-12 -->
@@ -87,17 +92,19 @@ li {
             </div>
 
  			<div id="page-wrapper col-md-12">
-				<div class="col-md-3">
+				<div class="col-md-4">
                 <ol class="breadcrumb">
                 	<li>
                         <a href="<%=request.getContextPath()%>/front-end/store_interface/listOneStore_idAllProd.jsp">查看所有商品</a>
                     </li>
-                   
                     <li class="active">訂單管理</li>
                 </ol>
                 
+							<img class="img-rounded"
+								 src="<%=request.getContextPath()%>/front-end/stpi/DBGifReader?store_id=${storeVO.store_id}"
+								width="300" height="200">
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
 						<FORM METHOD="post"
 							ACTION="<%=request.getContextPath()%>/front-end/ord/ord.do"
 							name="form1">
@@ -125,7 +132,7 @@ li {
 									<option value="2">審核</option>
 								</select><br>
 			
-								訂單狀態:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name="ord_status"
+								訂單狀態:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name="ord_status"
 									value="1">
 									<option name="ord_status" value="">
 									<option value="1">備貨中</option>
@@ -141,8 +148,9 @@ li {
 							</div>
 						</FORM>
 				</div>
-				<div class="col-md-3"></div>
-                <!-- 查詢訂單，待套用萬用搜尋 -->
+						<div class="col-md-4 ">
+				
+						</div>
                 
 			</div>
 								
@@ -298,7 +306,7 @@ li {
 						</div>
 </div>
 </div>
-
+</div>
 
 <!-- 跳小視窗模組 -->
 

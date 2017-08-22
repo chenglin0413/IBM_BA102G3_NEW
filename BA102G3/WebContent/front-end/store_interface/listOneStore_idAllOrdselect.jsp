@@ -61,29 +61,32 @@
         li {
 			list-style-type:none;
 			}
+		.areaColor{
+	background-color:#E2A8B7;
+	}
     </style>
 </head>
 
-<body id="weather-background" class="default-weather">
+<body >
 
     <%@include file="headerBar.file" %>
-
+	
     <!-- Header -->
     <div class="callout" ></div>
-
+	<div class="areaColor">
    
-	
+			
    			<div id="page-wrapper">
             <div class="row">
                 <div class="col-md-10 col-md-offset-1">
-                	<h1>${storeVO.store_name}</h1>
+                	<h2>${storeVO.store_name}</h2>
                     <h3 class="page-header">訂單列表</h3>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             </div>
 
- 			<div id="page-wrapper col-md-12">
+ 			<div id="page-wrapper col-md-12 ">
 				<div class="col-md-4">
                 <ol class="breadcrumb">
                 	<li>
@@ -92,7 +95,7 @@
                     <li class="active">訂單管理</li>
                 </ol>
                 
-							<img
+							<img class="img-rounded"
 								 src="<%=request.getContextPath()%>/front-end/stpi/DBGifReader?store_id=${storeVO.store_id}"
 								width="300" height="200">
                 </div>
@@ -168,8 +171,6 @@
                 <div class="row">
 
                         <div class="panel panel-default">
-                            <div class="panel-heading">
-                            </div>
                             <div class="panel-body">
                                 <div class="table-responsive">
                                     <table class="table table-bordered table-hover table-striped">
@@ -194,7 +195,7 @@
 </div>
 </div>
 
-
+</div>
 
 
 <script src="<%= request.getContextPath() %>/front-end/js_store/jquery.js"></script>

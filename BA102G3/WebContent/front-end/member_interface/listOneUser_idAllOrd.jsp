@@ -68,7 +68,7 @@
         
         }
         .pop{
-        font-size:10px;
+        font-size:14px;
         text-align:center;
         }
         
@@ -135,9 +135,9 @@
 						<div class="col-xs-12 col-sm-2">訂單日期</div>
 						<div class="col-xs-12 col-sm-1">訂單金額</div>
 						<div class="col-xs-12 col-sm-1">付款狀態</div>
-						<div class="col-xs-12 col-sm-1">商店審核狀態</div>
+						<div class="col-xs-12 col-sm-1">審核狀態</div>
 						<div class="col-xs-12 col-sm-1">訂單狀態</div>
-						<div class="col-xs-12 col-sm-2">對商店評分</div>
+						<div class="col-xs-12 col-sm-2">評價商店</div>
 </div>
 <br>		  
 <!-- paneltitleEND -->

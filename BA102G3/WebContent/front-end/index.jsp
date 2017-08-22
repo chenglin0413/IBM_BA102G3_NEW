@@ -46,8 +46,8 @@ pageContext.setAttribute("trvllist", trvllist);
 
 <style type="text/css">
         .item img{
-            height: auto;
-            width:100%;
+            height: 100%;
+            margin-bottom:1px;
         }
        
        
@@ -213,8 +213,8 @@ pageContext.setAttribute("trvllist", trvllist);
             pageContext.setAttribute("prodlist",prodlist);
             %>
             <c:forEach var="prodVO" items="${prodlist}" >
-                <div class="col-md-4 col-sm-12 item text-left">
-                     <div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
+                <div class="col-md-4 col-sm-12 item text-center">
+                     <div class="img-rounded" id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
 					<div><h2>${prodVO.prod_name}</h2></div>
 					<div><h4>商品描述:${prodVO.prod_descript}</h4></div>
 					<div><h4>商品種類:${prodVO.prod_sort}</h4></div>

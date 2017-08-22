@@ -24,39 +24,22 @@
 
 	    <!-- Bootstrap Core CSS -->
     	<link href="<%= request.getContextPath() %>/front-end/css/bootstrap.css" rel="stylesheet">
-		 <link href="<%= request.getContextPath() %>/front-end/css/stylish-portfolio.css" rel="stylesheet">
-   
+		<link href="<%=request.getContextPath()%>/front-end/css/stylish-portfolio.css" rel="stylesheet">
 		<!--[if lt IE 9]>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 	</head>
-	<body>
+	<body class="hero-image" >
 		
 		<br>
 		
 		<h1 class="text-center">Anytime Grip</h1><br>
-		<img src="<%=request.getContextPath()%>/front-end/img/slidebg14.jpg">
-	<div class="container">
-	<div class="row">
-		<div class="hero-text">
-			<div class="row">
-				<div class="col-xs-12 col-sm-4">
-					<a href="./front-end/">前端</a>
-					</div>
-					
-				</div>
+
+        <center >
+        <h1><a href="./front-end/">前端</a></h1><br>
+        <h1><a href="./back-end/">後端</a></h1><br><br>
+		</center>
 			
-			<div class="row">
-				<div class="col-xs-12 col-sm-4 col-sm-push-8">
-					<a href="./back-end/">後端</a>
-					</div>
-					
-				</div>
-				</div>
-		</div>
-		</div>
-
-
-</body>
+	</body>
 </html>

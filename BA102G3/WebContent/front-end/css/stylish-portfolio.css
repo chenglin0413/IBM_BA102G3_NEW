@@ -443,8 +443,9 @@ body, html {
 /* The hero image */
 .hero-image {
     /* The image used */
-    background-image: url("../img/team.jpg");
-
+    opacity: 0.8;
+    background-image: url("../img/slidebg14.jpg");
+    
     /* Set a specific height */
     height: 100%;
 
@@ -453,6 +454,8 @@ body, html {
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
+
+
 }
 
 /* Place text in the middle of the image */
