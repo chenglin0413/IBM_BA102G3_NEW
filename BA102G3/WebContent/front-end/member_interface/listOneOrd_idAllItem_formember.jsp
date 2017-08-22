@@ -132,7 +132,7 @@ if (session.getAttribute("oneord_idAllItem") != null) {
 						<div class="col-xs-12 col-md-2">
 							<c:forEach var="prodVO" items="${prodSvc.all}">
 							<c:if test="${itemVO.prod_id==prodVO.prod_id}">
-							<a href="<%=request.getContextPath() %>/front-end/item/item.do?prod_id=${itemVO.prod_id}&ord_id=${itemVO.ord_id}&action=getOne_prod_id_upate_count_score">${prodVO.prod_name}</a>
+							<a href="<%=request.getContextPath() %>/front-end/item/item.do?prod_id=${itemVO.prod_id}&ord_id=${itemVO.ord_id}&action=getOne_prod_id_upate_count_score"><h6>${prodVO.prod_name}</h6></a>
 							 </c:if>
 							 </c:forEach>
 						</div>

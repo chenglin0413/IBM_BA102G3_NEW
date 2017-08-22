@@ -99,7 +99,7 @@ td{
 </style>
 </head>
 
-<body  onunload="disconnect();">
+<body  onload="connect();" onunload="disconnect();">
 
 	<%@include file="/front-end/store_interface/headerBar.file"%>
 	<div class="callout"></div>
@@ -203,13 +203,9 @@ td{
 								<tr>
 									<th>修改資料</th>
 									<th>產品編號</th>
-<!-- 									<th>商家編號</th> -->
 									<th>產品名稱</th>
-<!-- 									<th>產品描述</th> -->
 									<th>產品價格</th>
 									<th>產品種類</th>
-<!-- 									<th>產品規格</th> -->
-<!-- 									<th>產品品牌</th> -->
 									<th>產品更新日期</th>
 									<th>產品售出數量</th>
 									<th>產品狀態</th>
@@ -267,13 +263,9 @@ td{
 													</div>
 												</div>
 												</td>
-<%-- 												<td>${prodVO.store_id}</td> --%>
 												<td>${prodVO.prod_name}</td>
-<%-- 												<td >${prodVO.prod_descript}</td> --%>
 												<td>$${prodVO.prod_price}</td>
 												<td>${prodVO.prod_sort}</td>
-<%-- 												<td>${prodVO.prod_format}</td> --%>
-<%-- 												<td>${prodVO.prod_brand}</td> --%>
 												<td>${prodVO.prod_updatetime}</td>
 												<td>${prodVO.prod_soldcount}</td>
 												<td>${prodVO.prod_status}</td>
@@ -304,7 +296,7 @@ td{
 					<h3 id="test"></h3>
 				</div>
 				<div class="row">
-					<div id="closechatbox" class="closechatbtn text-center btn-info"
+					<div id="closechatbox" class="closechatbtn text-center btn-info"  onclick="disconnect();"
 						>X</div>
 					<div class="col-md-12">
 						<textarea id="messagesArea" class="message-area" readonly></textarea>
@@ -383,9 +375,11 @@ td{
 				webSocket.send(messagesArea.value);
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			};
-
+			
 // 			webSocket.onclose = function(event) {
+// 				updateStatus("WebSocket 已離線");
 // 			};
+
 		}
 
 		//webSocket 區塊
@@ -415,9 +409,9 @@ td{
 
 		function disconnect() {
 			webSocket.close();
-			document.getElementById('sendMessage').disabled = true;
-			document.getElementById('connect').disabled = false;
-			document.getElementById('disconnect').disabled = true;
+// 			document.getElementById('sendMessage').disabled = true;
+// 			document.getElementById('connect').disabled = false;
+// 			document.getElementById('disconnect').disabled = true;
 		}
 
 		//webSocket 結束    

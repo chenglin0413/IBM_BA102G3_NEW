@@ -140,7 +140,7 @@
 							</c:if>
 						</c:forEach>
 
-						<div id="boxshadow"><img class="<%=animateds[number%7]%> src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
+						<div id="boxshadow"><img class="<%=animateds[number%7]%>" src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
 							 <div class="AutoSkip"><h4>${prodVO.prod_name}</h4></div>
 							 <div><h4>$${prodVO.prod_price}</h4></div>
 							 <div><h4>${prodVO.prod_sort}</h4></div>
@@ -212,7 +212,7 @@
               		<%long seconds = new java.util.Date().getTime();%>
              		 <!-- 檢舉btn,預設隱藏 -->
 	              		<button class="btn-danger btn-xs btnReport">檢舉產品</button>	
-	              		<form action="<%=request.getContextPath()%>/back-end/report/rppr.do" method="post"  class="form-horizontal rpprForm">
+	              		<form action="<%=request.getContextPath()%>/front-end/report/rppr.do" method="post"  class="form-horizontal rpprForm">
 							<div class="form-group">
 								<label class="col-sm-3 control-label" >檢舉標題</label>
 								<div class="col-sm-9">
@@ -231,7 +231,7 @@
 								<input type="hidden" name="user_id" value="${userVO.user_id}">
 								<input type="hidden" name="prod_id" value="${prodVO.prod_id}">
 								<input type="hidden" name="rppr_date" value="<%= seconds%>">
-								<input type="hidden" name="action" value="insert">
+								<input type="hidden" name="action" value="ADDTOReport">
 								<input type="submit" class="btn btn-danger btn-sm" value="送出檢舉">
 							</div>
 						</form>

@@ -33,7 +33,7 @@
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="<%=request.getContextPath() %>/front-end/css/bootstrap.css" rel="stylesheet">
-	<link rel="stylesheet" href="<%=request.getContextPath() %>/front-end/css/jquery-ui.css" />
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <!-- Custom CSS -->
     <link href="<%=request.getContextPath() %>/front-end/css/stylish-portfolio.css" rel="stylesheet">
 
@@ -206,7 +206,7 @@
 							 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/ord/ord.do">
 							   <c:if test="${ordVO.ord_sscore =='0'}">
 								    <div class="col-xs-6"><select name="ord_sscore" value="${ordVO.ord_sscore }">
-																	  <option value="1">負評</option>
+																	  <option value="1">負評。</option>
 																	  <option value="2">還行。</option>
 																	  <option value="3">沒Fu。</option>
 																	  <option value="4">不錯。</option>
