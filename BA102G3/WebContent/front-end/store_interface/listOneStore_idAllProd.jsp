@@ -96,6 +96,9 @@ td{
   white-space : nowrap;
   width : 240px;
 }
+.areaColor{
+	background-color:#E2A8B7;
+}
 </style>
 </head>
 
@@ -103,7 +106,7 @@ td{
 
 	<%@include file="/front-end/store_interface/headerBar.file"%>
 	<div class="callout"></div>
-	<div class="container headBar1" >
+	<div class="container headBar1 areaColor" >
 		<div class="row">
 			<div class="col-md-4 ">
 				<div class="row">
@@ -124,7 +127,7 @@ td{
 				<div>
 					商店營業電話:<%=storeVO.getStore_phone()%></div>
 			</div>
-			<div class="col-md-4  col-xs-6">
+			<div class="col-md-4  col-xs-6 ">
 			<div class="callout"></div>
 	                	<div class="panel panel-primary">
 	                        <div class="panel-heading">
