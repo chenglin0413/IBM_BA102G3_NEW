@@ -29,17 +29,25 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
+		<style>
+		h1{
+		 color:gray;
+		}
+		
+		
+		</style>
 	</head>
 	<body class="hero-image" >
 		
-		<br>
+		<div class="callout"></div>
+		<div class="callout"></div>
+		<div class="callout"></div>
+		<h1 class="text-center ">Anytime Grip</h1><br>
 		
-		<h1 class="text-center">Anytime Grip</h1><br>
-
         <center >
-        <h1><a href="./front-end/">前端</a></h1><br>
-        <h1><a href="./back-end/">後端</a></h1><br><br>
+         <button class="btn btn-warning"><h1><a  href="./front-end/">前端</a></h1></button><br><br>
+         <button class="btn btn-info"><h1><a  href="./back-end/">後端</a></h1></button>
 		</center>
-			
+		
 	</body>
 </html>
