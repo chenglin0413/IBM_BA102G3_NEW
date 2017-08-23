@@ -194,10 +194,8 @@ td{
 							<div class="col-md-6">
 								<button class="btn btn-default">送出</button>
 								<!-- 		        <input type="submit" value="送出"> -->
-								<input type="hidden" name="store_id"
-									value="${storeVO.store_id }">
-								<input type="hidden" name="action"
-									value="listProds_ByCompositeQuery">
+								<input type="hidden" name="store_id" value="${storeVO.store_id }">
+								<input type="hidden" name="action" value="listProds_ByCompositeQuery">
 							</div>
 						</FORM>
 				</div>
@@ -257,8 +255,8 @@ td{
 
 
 								</tr>
-							<%@include file="page1_ByCompositeQuery_Prod.file" %>	
-								<c:forEach var="prodVO" items="${listProds_ByCompositeQuery}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >
+<%-- 							<%@include file="page1_ByCompositeQuery_Prod.file" %>	 --%>
+								<c:forEach var="prodVO" items="${listProds_ByCompositeQuery}" >
 									<tr align='center' valign='middle'>
 										<div class="col-xs-12 col-md-10">
 											<div class="item">
@@ -318,7 +316,7 @@ td{
 						</table>
 							
 						<div class="col-xs-12 col-md-8 col-md-offset-4">
-						<%@include file="page2_ByCompositeQuery_Prod.file" %>	
+<%-- 						<%@include file="page2_ByCompositeQuery_Prod.file" %>	 --%>
 						</div>
 					</div>
 				</div>

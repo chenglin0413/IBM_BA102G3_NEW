@@ -82,7 +82,7 @@
 		%>
 		
 
-<div>
+<div align="center">
 
 				
 				<c:if test="${userVO.user_id != null}" var="condition2" scope="page" >
@@ -123,10 +123,35 @@
 	            </c:if>
 </div>
 
-<br><br>
+<br>
 
-<div> 
-						<label><font color="red">入境路線導引</font>:尋找航班抵達的登機門及出關,提領行李的路徑</label>
+<div align="center"> 
+						<label><font color="red">出境路線導引</font></label>
+     					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/front-end/path/createMyMapOutHTML.jsp">
+     					<div class="input-group">
+       						<label>選擇出發航班</label>
+       						<select size="1" name="flsc_id_out" class="selectpicker">
+         						<c:forEach var="flscVOout" items="${listOut}" > 
+         						
+                                	<c:if test="${flscVOout.flsc_term == '2'}" var="condition" scope="page">         						
+          								<option value="${flscVOout.flsc_id}">${flscVOout.flsc_sdate} - ${flscVOout.flsc_stime}出發 - 飛往   ${flscVOout.flsc_location_c} - ${flscVOout.flsc_airline_c} - ${flscVOout.flsc_airlinecode}${flscVOout.flsc_flno} - ${flscVOout.flsc_gate}
+          							</c:if>	
+          								
+         						</c:forEach>   
+       						</select>
+       		
+       							<input type="submit" value="查詢" class="btn btn-primary">
+       						
+       						<input type="hidden" name="action" value="getOne_For_Display_By_PK">
+       					</div>
+    					</FORM>
+    					<br>	
+</div>			
+
+<br>
+
+<div align="center"> 
+						<label><font color="red">入境路線導引</font><br><font color="blue">尋找航班抵達的登機門及出關,提領行李的路徑</font></label>
      					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/front-end/schedule/flsc.do">
      					<div class="input-group">
        						<label>選擇抵達航班</label>
@@ -147,31 +172,7 @@
     					</FORM>
     					<br>	
 </div>		
-		
-<div> 
-						<label><font color="red">出境路線導引</font></label>
-     					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/front-end/schedule/flsc.do">
-     					<div class="input-group">
-       						<label>選擇出發航班</label>
-       						<select size="1" name="flsc_id">
-         						<c:forEach var="flscVOout" items="${listOut}" > 
-         						
-                                	<c:if test="${flscVOout.flsc_term == '2'}" var="condition" scope="page">         						
-          								<option value="${flscVOout.flsc_id}">${flscVOout.flsc_sdate} - ${flscVOout.flsc_stime}出發 - 飛往   ${flscVOout.flsc_location_c} - ${flscVOout.flsc_airline_c} - ${flscVOout.flsc_airlinecode}${flscVOout.flsc_flno} - ${flscVOout.flsc_gate}
-          							</c:if>	
-          								
-         						</c:forEach>   
-       						</select>
-       		
-       							<input type="submit" value="查詢" class="btn btn-primary">
-       						
-       						<input type="hidden" name="action" value="getOne_For_Display_By_PK">
-       					</div>
-    					</FORM>
-    					<br>	
-</div>			
-		
-
+				
 
 	</div>
 	

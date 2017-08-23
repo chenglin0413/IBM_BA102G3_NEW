@@ -18,17 +18,17 @@
 	   
 	}
     //若萬用查詢沒有給東西，則帶入所有訂單。
-    if(request.getAttribute("listOrds_ByCompositeQuery")!=null){
-    	List listOrds_ByCompositeQuery=(List)request.getAttribute("listOrds_ByCompositeQuery");
-    	pageContext.setAttribute("listOrds_ByCompositeQuery",listOrds_ByCompositeQuery);
-    }else{
-    	OrdService ordSvc=new OrdService();
-    	List<OrdVO> listOrds_ByCompositeQuery=(List<OrdVO>)ordSvc.getOneStore_idAllOrd(storeVO.getStore_id());
-    	pageContext.setAttribute("listOrds_ByCompositeQuery",listOrds_ByCompositeQuery);
-    }
+    List<OrdVO> listOrds_ByCompositeQuery=null;
+	    if(request.getAttribute("listOrds_ByCompositeQuery")!=null){
+	    	listOrds_ByCompositeQuery=(List<OrdVO>)request.getAttribute("listOrds_ByCompositeQuery");
+	    	pageContext.setAttribute("listOrds_ByCompositeQuery",listOrds_ByCompositeQuery);
+	    }else{
+	    	OrdService ordSvc = new OrdService();
+	    	listOrds_ByCompositeQuery=(List<OrdVO>)ordSvc.getOneStore_idAllOrd(storeVO.getStore_id());
+	    	pageContext.setAttribute("listOrds_ByCompositeQuery",listOrds_ByCompositeQuery);
+	    }
     
 %>
-
 <jsp:useBean id="ordSvc" scope="page" class="com.ord.model.OrdService" />
 <jsp:useBean id="userSvc"  scope="page" class="com.user.model.UserService"/>
 <jsp:useBean id="storeSvcs"  scope="page" class="com.store.model.StoreService"/>

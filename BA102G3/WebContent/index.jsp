@@ -45,8 +45,8 @@
 		<h1 class="text-center ">Anytime Grip</h1><br>
 		
         <center >
-         <button class="btn btn-warning"><h1><a  href="./front-end/">前端</a></h1></button><br><br>
-         <button class="btn btn-info"><h1><a  href="./back-end/">後端</a></h1></button>
+        <h1><a  href="./front-end/">前端</a></h1><br><br>
+         <h1><a  href="./back-end/">後端</a></h1>
 		</center>
 		
 	</body>

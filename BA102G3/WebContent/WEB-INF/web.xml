@@ -366,7 +366,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>RepmServlet</servlet-name>
-		<url-pattern>/front-end/restaurant/repm.do</url-pattern>
+		<url-pattern>/front-end/rest_interface/repm.do</url-pattern>
 	</servlet-mapping>
 
 	<servlet>

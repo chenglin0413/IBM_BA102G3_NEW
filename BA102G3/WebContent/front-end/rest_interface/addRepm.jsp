@@ -14,16 +14,6 @@
 		
 		session.setAttribute("key", "val");
 	}
-
-session.setAttribute("key", "val");
-
-Integer rest_id = 3000001;
-RestService restSvc = new RestService();
-
-RestVO restVO = restSvc.getOneRest(rest_id);
-
-pageContext.setAttribute("restVO", restVO);
-
 %>
 
 
@@ -92,7 +82,7 @@ pageContext.setAttribute("restVO", restVO);
 			
 			<div class="callout"></div>
 
-			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/restaurant/repm.do" name="form1">
+			<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/rest_interface/repm.do" name="form1">
 				<table border="0">
 					<tr>
 						<td><label>商店代號:&nbsp;&nbsp;</label></td>

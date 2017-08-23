@@ -821,7 +821,7 @@ public class ProdServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-			try {
+//			try {
 				
 				/***************************1.將輸入資料轉為Map**********************************/ 
 				//採用Map<String,String[]> getParameterMap()的方法 
@@ -847,12 +847,12 @@ public class ProdServlet extends HttpServlet {
 				successView.forward(req, res);
 				System.out.println("849");
 				/***************************其他可能的錯誤處理**********************************/
-			} catch (Exception e) {
-				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/select_page.jsp");
-				failureView.forward(req, res);
-			}
+//			} catch (Exception e) {
+//				errorMsgs.add(e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/select_page.jsp");
+//				failureView.forward(req, res);
+//			}
 		}
 
 	}

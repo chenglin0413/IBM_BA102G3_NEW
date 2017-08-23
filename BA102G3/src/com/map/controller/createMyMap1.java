@@ -1,6 +1,9 @@
 package com.map.controller;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.*;
@@ -28,7 +31,7 @@ import com.path.model.PathVO;
 //import com.reta.model.RetaService;
 //import com.reta.model.RetaVO;
 
-public class createMyMap extends HttpServlet {
+public class createMyMap1 extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		doPost(req, res);
@@ -36,10 +39,13 @@ public class createMyMap extends HttpServlet {
 
 	public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-			req.setCharacterEncoding("UTF-8");		    
-			
-			Integer user_id = new Integer(req.getParameter("user_id"));
-		    		    
+		    req.setCharacterEncoding("UTF-8");
+		
+		    List<Integer> pointx=new ArrayList();
+		    List<Integer> pointy=new ArrayList();
+		    
+		    Integer user_id = new Integer(req.getParameter("user_id"));
+		    
 		    System.out.println("pass getMap.java line.37"+user_id);
 
 			List<String> errorMsgs = new LinkedList<String>();
@@ -83,7 +89,7 @@ public class createMyMap extends HttpServlet {
 								
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/path/findPath.jsp");
+					RequestDispatcher failureView = req.getRequestDispatcher("/front-end/path/indoorPathConnectionQuery.jsp");
 					failureView.forward(req, res);
 					return;// 程式中斷
 				}
@@ -145,12 +151,18 @@ public class createMyMap extends HttpServlet {
 //mark security check--------------------------------------------------				      
 				      				      
 				      g.drawImage(bi2, 1074-shiftx, 552-shifty, null);
+				      
+				      pointx.add(1074);
+				      pointy.add(552);
 
 //mark out bound flight-------------------------------------------------- 				      
 				      
 				      PathService pathSrv = new PathService();
 				      PathVO pathVO=pathSrv.getOnePathFromTo( flscQuery2.getFlsc_gate(), flscQuery2.getFlsc_gate() );
 				      g.drawImage(bi5, pathVO.getPath_fromlon().intValue()-shiftx, pathVO.getPath_fromlat().intValue()-shifty, null);
+
+				      pointx.add(pathVO.getPath_fromlon().intValue());
+				      pointy.add(pathVO.getPath_fromlat().intValue());				      
 				      
 //mark store-----------------------------------------------------test user_id: 1000003, store_id: 2000004
 				      
@@ -161,7 +173,10 @@ public class createMyMap extends HttpServlet {
 
 							StoreVO storeVO=storeSrv.getOneStore(a.getStore_id());
 							g.drawImage(bi3, storeVO.getStore_lon().intValue()-shiftx, storeVO.getStore_lat().intValue()-shifty, null);
-														
+
+						    pointx.add(storeVO.getStore_lon().intValue());
+						    pointy.add(storeVO.getStore_lat().intValue());										
+							
 						}
 					  }
 				      
@@ -186,21 +201,40 @@ public class createMyMap extends HttpServlet {
 							System.out.println("Rest lat: "+restVO.getRest_lat().intValue());
 							
 							g.drawImage(bi4, restVO.getRest_lon().intValue()-shiftx, restVO.getRest_lat().intValue()-shifty, null);
+
+						    pointx.add(restVO.getRest_lon().intValue());
+						    pointy.add(restVO.getRest_lat().intValue());								
 							
 						}
-					  }
+					  }				      
 				      
-//				      g.drawImage(bi4, 2221-shiftx, 520-shifty, null);
+//--------------------------------------------------------------
+				      int[] intPointx = new int[pointx.size()];
+
+				      int[] intPointy = new int[pointy.size()];
 				      
-//--------------------------------------------------------------				      
+				      int count=0;
+				      for (Integer ii:pointx){
+				    	  intPointx[count]= ii;
+				    	  count=count+1;
+				      }
+				      
+				      count=0;
+				      for (Integer ii:pointy){
+				    	  intPointy[count]= ii;
+				    	  count=count+1;
+				      }
+
+				      g.setColor(Color.red);
+				      
+				      int length=intPointy.length;
+				      g.drawPolyline(intPointx,intPointy,length); 
+//--------------------------------------------------------------				      				      
 				      				      
 				    }
 				    finally {
 				      g.dispose();
 				    }
-//				    final File outputFile = new File("C:/Users/mjdtsay/Dropbox/Project/Path/PNG/z_op.png");
-//				    if (!ImageIO.write(canvas, "png", outputFile))
-//				      System.out.printf("Output image to %s failed!!!%n", outputFile);
 				    	
 				    OutputStream os = res.getOutputStream();
 				    ImageOutputStream ios = ImageIO.createImageOutputStream(os);

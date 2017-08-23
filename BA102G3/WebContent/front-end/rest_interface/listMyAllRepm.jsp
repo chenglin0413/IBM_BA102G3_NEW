@@ -2,29 +2,24 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
 <%@ page
-	import="com.repm.model.*,com.user.model.*,com.store.model.*,com.prod.model.*"%>
-
+	import="com.repm.model.*,com.user.model.*,com.rest.model.*,com.prod.model.*"%>
 
 <!-- click -->
 <%
 	if (session.getAttribute("userVO") != null) {
 		UserVO userVO = (UserVO) session.getAttribute("userVO");
 		String account = (String) session.getAttribute("account");
-		StoreService storeSvc = new StoreService();
-		StoreVO storeVO = storeSvc.getOneStoreByUsed_Id(userVO.getUser_id());
-		Integer store_id = storeVO.getStore_id();
-		RepmService stpmSvc = new RepmService();
-		List<RepmVO> list = stpmSvc.findByRestID(store_id);
+		RestService restSvc = new RestService();
+		RestVO restVO = restSvc.getOneRestByUser_Id(userVO.getUser_id());
+		Integer rest_id = restVO.getRest_id();
+		RepmService repmSvc = new RepmService();
+		List<RepmVO> list = repmSvc.findByRestID(rest_id);
 		pageContext.setAttribute("list", list);
 	}
 
-	Integer rest_id = 3000001;
-	RepmService stpmSvc = new RepmService();
-	List<RepmVO> list = stpmSvc.findByRestID(rest_id);
-	pageContext.setAttribute("list", list);
-
 	String zero = "資訊關閉";
 	String one = "資訊開啟";
+	
 %>
 
 
@@ -140,7 +135,7 @@ td {
 						<td>
 
 							<FORM METHOD="post"
-								ACTION="<%=request.getContextPath()%>/front-end/restaurant/repm.do">
+								ACTION="<%=request.getContextPath()%>/front-end/rest_interface/repm.do">
 								<button type="submit" class="btn btn-default btn-sm">修改專案</button>
 								<input type="hidden" name="repm_id" value="${repmVO.repm_id}">
 								<input type="hidden" name="action" value="getOne_For_Update">

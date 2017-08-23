@@ -22,7 +22,7 @@
 <jsp:useBean id="ordSvc" scope="page" class="com.ord.model.OrdService" />
 <jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService" />
 <jsp:useBean id="restSvc" scope="page" class="com.rest.model.RestService" />
-<jsp:useBean id="repmSvcB	" scope="page" class="com.repm.model.RepmService" />
+<jsp:useBean id="repmSvcB" scope="page" class="com.repm.model.RepmService" />
 
 
 <!DOCTYPE html>
@@ -218,13 +218,13 @@
 							<div class="col-xs-12 col-sm-4">
 								<b>${repmVO.repm_startdate} ~ ${repmVO.repm_enddate}</b>
 							</div>
-
-							<div class="col-xs-12 col-sm-4">
-								<a href='#${repmVO.repm_id}' data-toggle="modal" class="btn btn-default btn-xs">顯示詳情</a>
-								<a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_id=${prpmVO.prod_id}&action=getOne_For_Display" class="btn btn-default btn-xs">餐廳詳情</a>
-							</div>
-
-
+							<c:forEach	var="restVO" items="${restSvc.all}">
+								<c:if test="${repmVO.rest_id == restVO.rest_id}">
+									<div class="col-xs-12 col-sm-4">
+										<a href="<%=request.getContextPath()%>/front-end/rest/rest.do?rest_id=${restVO.rest_id}&action=getOne_For_Display_formember" class="btn btn-default btn-xs">餐廳詳情</a>
+									</div>
+								</c:if>
+							</c:forEach>
 							<!-- modal -->
 <%-- 							<div class="modal fade" id="${repmVO.repm_id}"> --%>
 <!-- 								<div class="modal-dialog modal-lg"> -->

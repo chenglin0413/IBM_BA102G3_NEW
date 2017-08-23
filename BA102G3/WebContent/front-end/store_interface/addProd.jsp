@@ -174,8 +174,11 @@
 			</div>
 			</FORM>
 		
-				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn1();">預設1</button>
-				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn2();">預設2</button>
+				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn1();"></button>
+				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn2();"></button>
+				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn3();"></button>
+				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn4();"></button>
+				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn5();"></button>
 		</div>
 	
 	
@@ -190,8 +193,8 @@
 		<script type="text/javascript">
 
 		function magiclittlebtn1() {
-			document.getElementById('name').value = '精選鳳梨酥';
-			document.getElementById('descript').value = '台灣優質鳳梨所製，口感絕佳！';
+			document.getElementById('name').value = '原味鳳梨酥';
+			document.getElementById('descript').value = '奶蛋素。皮薄餡多、鬆香、不黏牙，夾藏著口感細緻的鳳梨美味，輕輕一口就可以感受到精緻茗點。';
 			document.getElementById('price').value = 500;
 			document.getElementById('sort').value = '伴手禮';
 			document.getElementById('format').value = '禮盒包裝*12入';
@@ -200,10 +203,37 @@
 		
 		function magiclittlebtn2() {
 			document.getElementById('name').value = '精選花生糖';
-			document.getElementById('descript').value = '綜合口味／香菜、海苔、原味、芝麻';
-			document.getElementById('price').value = 400;
+			document.getElementById('descript').value = '選用粒粒分明的花生，搭配上香濃的麥芽糖，又香又脆的好滋味，怎麼能夠錯過！簡單又樸實的古早味，一口咬下，童年的美好回憶隨著化開的花生糖，再次回憶~';
+			document.getElementById('price').value = 200;
 			document.getElementById('sort').value = '伴手禮';
 			document.getElementById('format').value = '禮盒包裝*10入';
+			document.getElementById('brand').value = '航站精品館';
+		}
+		
+		function magiclittlebtn3() {
+			document.getElementById('name').value = '楓糖太陽餅';
+			document.getElementById('descript').value = '嚴選至加拿大的楓糖、咬一口如濃烈瑪琪朵般香氣、陣陣酥軟的滋味撲鼻而來…幸福口感直撲天頂、來Espaso、Cappuccino、花茶…有如夢中奇緣的仙境，是日本、香港、新加坡、馬來西亞的貴賓們最佳必帶的神秘饗食伴手禮物。 ';
+			document.getElementById('price').value = 500;
+			document.getElementById('sort').value = '伴手禮';
+			document.getElementById('format').value = '禮盒包裝*12入';
+			document.getElementById('brand').value = '航站精品館';
+		}
+		
+		function magiclittlebtn4() {
+			document.getElementById('name').value = '冠軍麻糬';
+			document.getElementById('descript').value = '冠軍麻糬,共有四種口味,分別為:黑天使-巧克力口味,海王子-XO干貝口味,幸福紫米-花生芝麻口味,含吉薯糬-地瓜葡萄干口味。';
+			document.getElementById('price').value = 250;
+			document.getElementById('sort').value = '伴手禮';
+			document.getElementById('format').value = '禮盒包裝*6入';
+			document.getElementById('brand').value = '航站精品館';
+		}
+		
+		function magiclittlebtn5() {
+			document.getElementById('name').value = '透心涼冰心綠豆糕';
+			document.getElementById('descript').value = '咬一口微甜的綠豆糕，再喝一口熱茶，感覺整個人都飄了起來。直接吃就超讚的綠豆糕，冰過後更多了一種透心涼的舒爽，風味更佳超推薦！';
+			document.getElementById('price').value = 600;
+			document.getElementById('sort').value = '伴手禮';
+			document.getElementById('format').value = '禮盒包裝*20入';
 			document.getElementById('brand').value = '航站精品館';
 		}
 		
