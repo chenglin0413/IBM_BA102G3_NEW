@@ -5,23 +5,34 @@
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%	
+	UserVO userVO=null;
+	StoreVO storeVO=null;
+	StoreService storeSvc=null;
+	
 	if(session.getAttribute("userVO")!=null){
-		UserVO userVO = (UserVO) session.getAttribute("userVO");
+		 userVO = (UserVO) session.getAttribute("userVO");
 		String account =(String) session.getAttribute("account");
-		StoreService storeSvc= new StoreService();
-		StoreVO storeVO=storeSvc.getOneStoreByUsed_Id(userVO.getUser_id());
+		storeSvc= new StoreService();
+		storeVO=storeSvc.getOneStoreByUsed_Id(userVO.getUser_id());
 		pageContext.setAttribute("storeVO",storeVO);
 	   
 	}
-    
-    
+    //若萬用查詢沒有給東西，則帶入所有訂單。
+    if(request.getAttribute("listOrds_ByCompositeQuery")!=null){
+    	List listOrds_ByCompositeQuery=(List)request.getAttribute("listOrds_ByCompositeQuery");
+    	pageContext.setAttribute("listOrds_ByCompositeQuery",listOrds_ByCompositeQuery);
+    }else{
+    	OrdService ordSvc=new OrdService();
+    	List<OrdVO> listOrds_ByCompositeQuery=(List<OrdVO>)ordSvc.getOneStore_idAllOrd(storeVO.getStore_id());
+    	pageContext.setAttribute("listOrds_ByCompositeQuery",listOrds_ByCompositeQuery);
+    }
     
 %>
 
 <jsp:useBean id="ordSvc" scope="page" class="com.ord.model.OrdService" />
 <jsp:useBean id="userSvc"  scope="page" class="com.user.model.UserService"/>
-<jsp:useBean id="storeSvc"  scope="page" class="com.store.model.StoreService"/>
-<jsp:useBean id="listOrds_ByCompositeQuery" scope="request" type="java.util.List" />
+<jsp:useBean id="storeSvcs"  scope="page" class="com.store.model.StoreService"/>
+
 <!DOCTYPE html>
 <html lang="en" class="easy-sidebar-active">
 
@@ -202,8 +213,7 @@ li {
 	
 			
 		
-		<%@ include file="page1_ByCompositeQuery.file" %>
-	<c:forEach var="ordVO" items="${listOrds_ByCompositeQuery}"  begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+	<c:forEach var="ordVO" items="${listOrds_ByCompositeQuery}"  >
 		<tr align='center' valign='middle'>
 <!-- 			<TD> -->
 <%-- 			<FORM METHOD="POST" ACTION="<%=REQUEST.GETCONTEXTPATH()%>/FRONT-END/ITEM/ITEM.DO"> --%>
@@ -224,7 +234,7 @@ li {
                     </c:if>
                 </c:forEach>
 			</td>
-			<td><c:forEach var="storeVO" items="${storeSvc.all}">
+			<td><c:forEach var="storeVO" items="${storeSvcs.all}">
                     <c:if test="${ordVO.store_id==storeVO.store_id}">
 	                    	【${storeVO.store_name}】
                     </c:if>
@@ -300,7 +310,6 @@ li {
 		</script>
 	</c:forEach>
 </table>
-<%@ include file="page2_ByCompositeQuery.file" %>
 						</div>
 						</div>
 						</div>

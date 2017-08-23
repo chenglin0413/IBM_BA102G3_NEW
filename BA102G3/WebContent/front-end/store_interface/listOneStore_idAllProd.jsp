@@ -10,6 +10,7 @@
 		String account = (String) session.getAttribute("account");
 		StoreService storeSvc = new StoreService();
 		StoreVO storeVO = storeSvc.getOneStoreByUsed_Id(userVO.getUser_id());
+		pageContext.setAttribute("storeVO", storeVO);
 		//將store_id存在session中
 		Integer store_id=new Integer(storeVO.getStore_id());
 		session.setAttribute("store_id",store_id);
@@ -18,9 +19,19 @@
 		store_ids.add(store_id);
 		application.setAttribute("store_ids", store_ids);
 		//取得該商店會員所擁有的prod
-		ProdService prodSvc = new ProdService();
-		List<ProdVO> list = prodSvc.getOneStore_idAllProd(storeVO.getStore_id());
-		pageContext.setAttribute("list", list);
+		
+		
+		 //若萬用查詢沒有給東西，則帶入該商店所有商品。
+		 List<ProdVO> listProds_ByCompositeQuery=null;
+	    if(request.getAttribute("listProds_ByCompositeQuery")!=null){
+	    	listProds_ByCompositeQuery=(List<ProdVO>)request.getAttribute("listOrds_ByCompositeQuery");
+	    	pageContext.setAttribute("listProds_ByCompositeQuery",listProds_ByCompositeQuery);
+	    }else{
+	    	ProdService prodSvc = new ProdService();
+	    	listProds_ByCompositeQuery=(List<ProdVO>)prodSvc.getOneStore_idAllProd(storeVO.getStore_id());
+	    	pageContext.setAttribute("listProds_ByCompositeQuery",listProds_ByCompositeQuery);
+	    }
+		
 		//計算未審核訂單、未備貨_待取貨的狀態數量
 		OrdService ordSvc = new OrdService();
 		List<OrdVO> ordlist=ordSvc.getOneStore_idAllOrd(storeVO.getStore_id());
@@ -167,10 +178,34 @@ td{
 				<li class="active">查看所有商品</li>
 				
 			</ol>
-			<%@ include file="page1.file" %>
+			
 		</div>
-		<!-- 查詢訂單，待套用萬用搜尋 -->
+		<!-- 關鍵字查詢產品，待套用萬用搜尋 -->
 
+ 			<div id="page-wrapper col-md-12">
+                <div class="col-md-4">
+						<FORM METHOD="post"
+							ACTION="<%=request.getContextPath()%>/front-end/prod/prod.do"
+							name="form1">
+							<div class="col-md-6">
+			
+								產品名稱_關鍵字查詢:<input type="text" name="prod_name" value="">
+							</div>
+							<div class="col-md-6">
+								<button class="btn btn-default">送出</button>
+								<!-- 		        <input type="submit" value="送出"> -->
+								<input type="hidden" name="store_id"
+									value="${storeVO.store_id }">
+								<input type="hidden" name="action"
+									value="listProds_ByCompositeQuery">
+							</div>
+						</FORM>
+				</div>
+						<div class="col-md-4 ">
+				
+						</div>
+                
+			</div>
 	</div>
 
 
@@ -193,7 +228,7 @@ td{
 	<div class="container-fluid col-md-12">
 
 		<div class="row">
-
+	
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">
@@ -222,8 +257,8 @@ td{
 
 
 								</tr>
-								
-								<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+							<%@include file="page1_ByCompositeQuery_Prod.file" %>	
+								<c:forEach var="prodVO" items="${listProds_ByCompositeQuery}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >
 									<tr align='center' valign='middle'>
 										<div class="col-xs-12 col-md-10">
 											<div class="item">
@@ -283,7 +318,7 @@ td{
 						</table>
 							
 						<div class="col-xs-12 col-md-8 col-md-offset-4">
-						<%@ include file="page2.file" %>
+						<%@include file="page2_ByCompositeQuery_Prod.file" %>	
 						</div>
 					</div>
 				</div>

@@ -42,7 +42,7 @@
                         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                          <i class="fa fa-bar-chart-o fa-fw"></i>訂單管理<i class="fa fa-caret-down"></i></a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="<%=request.getContextPath()%>/front-end/store_interface/listOneStore_idAllOrdselect.jsp"><i class="fa fa-info fa-fw"></i>查看訂單</a>
+                        <li><a href="<%=request.getContextPath()%>/front-end/store_interface/listOneStore_idAllOrd.jsp"><i class="fa fa-info fa-fw"></i>查看訂單</a>
                         </li>
                       
                         

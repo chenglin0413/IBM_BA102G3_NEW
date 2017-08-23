@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import com.ord.model.OrdVO;
 import com.prpi.model.PrpiVO;
 
 public interface ProdDAO_interface {
@@ -24,4 +25,7 @@ public interface ProdDAO_interface {
 	
 	
 	public void insertWithPrpi(ProdVO prodVO , List<PrpiVO> list); //新增產品與圖
+	
+	//萬用複合查詢(傳入參數型態Map)(回傳 List)
+    public List<ProdVO> getAll(Map<String, String[]> map);
 }

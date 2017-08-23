@@ -15,6 +15,9 @@ import javax.sql.DataSource;
 
 import com.json.JSONException;
 import com.json.JSONObject;
+import com.ord.controller.jdbcUtil_CompositeQuery_Ord;
+import com.ord.model.OrdVO;
+import com.prod.controller.jdbcUtil_CompositeQuery_Prod;
 import com.prpi.model.PrpiJDBCDAO;
 import com.prpi.model.PrpiVO;
 
@@ -878,6 +881,74 @@ public class ProdDAO implements ProdDAO_interface {
 			}
 		}
 
+	}
+	
+	@Override
+	public List<ProdVO> getAll(Map<String, String[]> map) {
+		List<ProdVO> list = new ArrayList<ProdVO>();
+		ProdVO prodVO = null;
+	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+			
+			con = ds.getConnection();
+			String finalSQL = "select * from prod "
+		          + jdbcUtil_CompositeQuery_Prod.get_WhereCondition(map)
+		          + "order by prod_id desc";
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("●●finalSQL(by DAO) = "+finalSQL);
+			rs = pstmt.executeQuery();
+	
+			while (rs.next()) {
+				prodVO = new ProdVO();
+				prodVO.setProd_id(rs.getInt("prod_id"));
+				prodVO.setStore_id(rs.getInt("store_id"));
+				prodVO.setProd_name(rs.getString("prod_name"));
+				prodVO.setProd_descript(rs.getString("prod_descript"));
+				prodVO.setProd_price(rs.getInt("prod_price"));
+				prodVO.setProd_sort(rs.getString("prod_sort"));
+				prodVO.setProd_format(rs.getString("prod_format"));
+				prodVO.setProd_brand(rs.getString("prod_brand"));
+				prodVO.setProd_updatetime(rs.getDate("prod_updatetime"));
+				prodVO.setProd_soldcount(rs.getInt("prod_soldcount"));
+				prodVO.setProd_status(rs.getInt("prod_status"));
+				prodVO.setProd_count(rs.getInt("prod_count"));
+				prodVO.setProd_score(rs.getInt("prod_score"));
+
+				list.add(prodVO); // Store the row in the List
+			}
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
 	}
 
 }

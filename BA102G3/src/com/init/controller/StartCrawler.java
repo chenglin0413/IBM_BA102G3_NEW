@@ -91,15 +91,16 @@ public class StartCrawler extends HttpServlet {
 		};
 		timerInsert.schedule(runInsert, 1100, 300000);
 
-		// 促銷商品
+		// 促銷
 		TimerTask checkDay = new TimerTask() {
 
 			@Override
 			public void run() {
 
-				CheckDate.CheckDate();
+				CheckDate.updateSTPM();
+				CheckDate.updateREPM();
 			}
 		};
-		dateCheck.scheduleAtFixedRate(checkDay, 1000, 5000);
+		dateCheck.schedule(checkDay, 1000, 86400000);
 	}
 }
