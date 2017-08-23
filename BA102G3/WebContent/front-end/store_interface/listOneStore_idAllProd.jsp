@@ -24,7 +24,7 @@
 		 //若萬用查詢沒有給東西，則帶入該商店所有商品。
 		 List<ProdVO> listProds_ByCompositeQuery=null;
 	    if(request.getAttribute("listProds_ByCompositeQuery")!=null){
-	    	listProds_ByCompositeQuery=(List<ProdVO>)request.getAttribute("listOrds_ByCompositeQuery");
+	    	listProds_ByCompositeQuery=(List<ProdVO>)request.getAttribute("listProds_ByCompositeQuery");
 	    	pageContext.setAttribute("listProds_ByCompositeQuery",listProds_ByCompositeQuery);
 	    }else{
 	    	ProdService prodSvc = new ProdService();
@@ -255,8 +255,8 @@ td{
 
 
 								</tr>
-<%-- 							<%@include file="page1_ByCompositeQuery_Prod.file" %>	 --%>
-								<c:forEach var="prodVO" items="${listProds_ByCompositeQuery}" >
+							<%@include file="page1_ByCompositeQuery.file" %>	
+								<c:forEach var="prodVO" items="${listProds_ByCompositeQuery}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >
 									<tr align='center' valign='middle'>
 										<div class="col-xs-12 col-md-10">
 											<div class="item">
@@ -316,7 +316,7 @@ td{
 						</table>
 							
 						<div class="col-xs-12 col-md-8 col-md-offset-4">
-<%-- 						<%@include file="page2_ByCompositeQuery_Prod.file" %>	 --%>
+							<%@include file="page2_ByCompositeQuery.file" %>
 						</div>
 					</div>
 				</div>

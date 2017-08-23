@@ -29,6 +29,7 @@
 	    }
     
 %>
+
 <jsp:useBean id="ordSvc" scope="page" class="com.ord.model.OrdService" />
 <jsp:useBean id="userSvc"  scope="page" class="com.user.model.UserService"/>
 <jsp:useBean id="storeSvcs"  scope="page" class="com.store.model.StoreService"/>
@@ -211,7 +212,6 @@ li {
 		
 		
 	
-			
 		
 	<c:forEach var="ordVO" items="${listOrds_ByCompositeQuery}"  >
 		<tr align='center' valign='middle'>

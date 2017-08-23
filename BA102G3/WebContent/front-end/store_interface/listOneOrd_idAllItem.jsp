@@ -90,7 +90,7 @@ if (request.getAttribute("oneord_idAllItem") != null) {
                         <a href="<%=request.getContextPath()%>/front-end/store_interface/listOneStore_idAllProd.jsp">查看所有商品</a>
                     </li>
                     <li>
-                        <a href="<%=request.getContextPath()%>/front-end/store_interface/listOneStore_idAllOrdselect.jsp">訂單管理</a>
+                        <a href="<%=request.getContextPath()%>/front-end/store_interface/listOneStore_idAllOrd.jsp">訂單管理</a>
                     </li>
                     <li class="active">訂單明細</li>
                 </ol>

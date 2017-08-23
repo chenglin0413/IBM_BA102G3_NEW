@@ -81,7 +81,7 @@
 				<div class="col-md-6">
                 <ol class="breadcrumb">
                     <li>
-                         <a href="<%=request.getContextPath()%>/front-end/store_interface/listOneStore_idAllOrdselect.jsp">訂單管理</a>
+                         <a href="<%=request.getContextPath()%>/front-end/store_interface/listOneStore_idAllOrd.jsp">訂單管理</a>
                     </li>
                     <li class="active">修改訂單狀態</li>
                 </ol>

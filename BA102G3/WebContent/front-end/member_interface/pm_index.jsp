@@ -1,24 +1,72 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*,com.wish.model.*,com.wish.controller.*"%>
+<%@ page
+	import="com.prod.model.*,com.user.model.*,com.store.model.*,com.stpm.model.*,com.prpm.model.*,com.repm.model.*"%>
+<%-- 此頁練習採用 EL 的寫法取值 --%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<%
+	if (session.getAttribute("userVO") != null) {
+		UserVO userVO = (UserVO) session.getAttribute("userVO");
+		String account = (String) session.getAttribute("account");
+		Integer user_id = userVO.getUser_id();
+		pageContext.setAttribute("user_id", user_id);
+	}
+
+	StpmService stpmSvc = new StpmService();
+	List<StpmVO> list = stpmSvc.getAll();
+	pageContext.setAttribute("list", list);
+
+	PrpmService prpmSvc = new PrpmService();
+	List<PrpmVO> prpmList = prpmSvc.getAll();
+	pageContext.setAttribute("prpmList", prpmList);
+
+	ProdService prodSvc = new ProdService();
+	List<ProdVO> prodList = new ArrayList<ProdVO>();
+
+	for (PrpmVO p : prpmList) {
+		ProdVO prodvo = prodSvc.getOneProd(p.getProd_id());
+		prodList.add(prodvo);
+	}
+	request.setAttribute("prodList", prodList);
+
+	RepmService repmSvc = new RepmService();
+	List<RepmVO> repmlist = repmSvc.getAll();
+	pageContext.setAttribute("repmlist", repmlist);
+%>
+
+<jsp:useBean id="ordSvc" scope="page" class="com.ord.model.OrdService" />
+<jsp:useBean id="userSvc" scope="page"
+	class="com.user.model.UserService" />
+<jsp:useBean id="storeSvc" scope="page"
+	class="com.store.model.StoreService" />
+<jsp:useBean id="prodSvcB" scope="page"
+	class="com.prod.model.ProdService" />
+<jsp:useBean id="restSvc" scope="page"
+	class="com.rest.model.RestService" />
+<jsp:useBean id="repmSvcB" scope="page"
+	class="com.repm.model.RepmService" />
+
+<!DOCTYPE html>
 <html lang="en" class="easy-sidebar-active">
 
 <head>
 
-<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
 
-<title>促銷資訊</title>
+<title>listOneUser_idAllOrd</title>
 
 <!-- Bootstrap Core CSS -->
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
 <link href="<%=request.getContextPath()%>/front-end/css/bootstrap.css"
 	rel="stylesheet">
-
+<link rel="stylesheet"
+	href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
 <!-- Custom CSS -->
 <link
 	href="<%=request.getContextPath()%>/front-end/css/stylish-portfolio.css"
@@ -28,107 +76,246 @@
 <link
 	href="<%=request.getContextPath()%>/front-end/font-awesome/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css">
-<link
-	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic"
-	rel="stylesheet" type="text/css">
 
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 <style type="text/css">
-/* .item img { */
-/* 	height: 250px; */
-/* 	width: 100%; */
-/* } */
+.item img {
+	height: 250px;
+	width: 100%;
+}
+
+.panel-body {
+	font-size: 13px;
+	border: #dcdcdc 1px solid;;
+}
 
 .content: {
 	position: relative;
 }
 
-h1 {
-	text-align: center;
-	font-weight: bold;
+.box {
+	width: 110px;
+	height: 50px;
+	position: fixed;
+	top: 52px;
+	left: 5px;
+	margin: auto;
 }
 
-p {
-	text-align: center;
+#accordion {
+	font-size: 12px;
 }
 
-.item img {
-	margin-bottom: 20px;
-	height: 250px;
-	width: 100%;
+#accordions {
+	font-size: 12px;
 }
 </style>
 </head>
 
 <body>
 
+
 	<%@include file="/front-end/member_interface/headerBar.file"%>
+	<%-- 錯誤表列 --%>
+	<c:if test="${not empty errorMsgs}">
+		<font color='red'>請修正以下錯誤:
+			<ul>
+				<c:forEach var="message" items="${errorMsgs}">
+					<li>${message}</li>
+				</c:forEach>
+			</ul>
+		</font>
+	</c:if>
 
-
-
-<!-- 	<div class="container"> -->
-<!-- 		<div class="row"> -->
-<!-- 			<br> -->
-
-<!-- 			<div class="col-xs-12 col-md-6"> -->
-<!-- 				<a -->
-<%-- 					href="<%=request.getContextPath()%>/front-end/member_interface/listAllStpm.jsp"> --%>
-<!-- 					<div class="item"> -->
-<!-- 						<img -->
-<%-- 							src="<%=request.getContextPath()%>/front-end/img/shopping.jpg"> --%>
-<!-- 						<p>商品促銷</p> -->
-<!-- 					</div> -->
-<!-- 				</a> -->
-<!-- 			</div> -->
-
-
-<!-- 			<div class="col-xs-12 col-md-6"> -->
-<!-- 				<a -->
-<%-- 					href="<%=request.getContextPath()%>/front-end/member_interface/listAllRepm.jsp"> --%>
-<!-- 					<div class="item"> -->
-
-<%-- 						<img src="<%=request.getContextPath()%>/front-end/img/food.jpg"> --%>
-<!-- 						<p>餐廳促銷</p> -->
-<!-- 					</div> -->
-<!-- 				</a> -->
-<!-- 			</div> -->
-<!-- 		</div> -->
-		
-		<div class="container">
-		<br>
-		<br>
-		
-			<div class="row">
-				<div class="col-xs-12 col-sm-4">
-					<a href="<%=request.getContextPath()%>/front-end/member_interface/listAllStpm.jsp">
-					<div class="item">
-					<img src="<%=request.getContextPath()%>/front-end/img/shopping.jpg" class="img-responsive">
-					</div>
-					</a>
-				</div>
-				<div class="col-xs-12 col-sm-8">
-				<br><br><br>
-					<p>合作店家精選促銷商品！</p>
-					<p>送禮自用兩相宜，走過路過別錯過～！</p>
-					
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12 col-sm-4 col-sm-push-8">
-					<a href="<%=request.getContextPath()%>/front-end/member_interface/listAllRepm.jsp">
-					<div class="item">
-					<img src="<%=request.getContextPath()%>/front-end/img/food.jpg">
-					</div>
-					</a>
-				</div>
-				<div class="col-xs-12 col-sm-8 col-sm-pull-4">
-				<br><br><br>
-					<p>旅途累了？適時後休息一下吧！</p>
-					<p>看看合作餐廳所提供優惠吧</p>
-				</div>
+	<div class="container">
+		<div class="row">
+			<div class="callout"></div>
+			<div class="col-md-11 col-xs-12">
+				<h3>促銷資訊</h3>
 			</div>
 		</div>
+	</div>
+	</div>
+	<header id="myCarousel top" class="carousel slide"> </header>
 
-		<%@ include file="/front-end/member_interface/script.file"%>
+	<div class="container content">
+		<div class="row">
+			<header class="header">
+				<div class="text-vertical-center">
+					<h1>Anytime Grip</h1>
+					<h3>SHOP OUR COLLECTIONS &amp; SHOP WITH RUNWAY</h3>
+					<br> <a href="#about" class="btn btn-dark btn-lg">Grip
+						Now!!</a>
+				</div>
+			</header>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="<%=request.getContextPath()%>/front-end/index.jsp">首頁</a>
+				</li>
+				<li class="active"><a>促銷資訊</a></li>
+			</ol>
+			<h3>商店資訊</h3>
+			<div id="accordion">
+				<c:forEach var="stpmVO" items="${list}" varStatus="count">
+					<c:if test="${stpmVO.stpm_status == 1}">
+						<div>&nbsp;&nbsp;&nbsp;&nbsp;${stpmVO.stpm_name}</div>
+						<div class="text-center">
+							<!-- 內容 -->
+
+							<div class="col-xs-12 col-sm-4">
+								<b>${stpmVO.stpm_desc}</b>
+							</div>
+							<div class="col-xs-12 col-sm-4">
+								<b>${stpmVO.stpm_startdate} ~ ${stpmVO.stpm_enddate}</b>
+							</div>
+
+							<div class="col-xs-12 col-sm-4">
+								<a href='#${stpmVO.stpm_id}' data-toggle="modal"
+									class="btn btn-default btn-xs">顯示詳情</a>
+							</div>
+
+
+							<!-- modal -->
+							<div class="modal fade" id="${stpmVO.stpm_id}">
+								<div class="modal-dialog modal-lg">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal"
+												aria-hidden="true">&times;</button>
+											<h4 class="modal-title">${stpmVO.stpm_content}</h4>
+										</div>
+										<div class="modal-body">
+
+											<table border="0" align="center">
+												<c:forEach var="prpmVO" items="${prpmList}"
+													varStatus="count">
+													<c:if test="${stpmVO.stpm_id == prpmVO.stpm_id}">
+														<tr>
+															<td width="20%"><b>促銷商品:&nbsp;</b><a> <c:forEach
+																		var="prodVOB" items="${prodSvcB.all}"
+																		varStatus="count">
+																		<c:if test="${prodVOB.prod_id == prpmVO.prod_id}">
+																		${prodVOB.prod_name}
+																	</c:if>
+																	</c:forEach>
+															</a></td>
+
+															<td width="20%"><b>原價:&nbsp;</b><font color="blue">
+																	<c:if test="${prodList != null}">
+																		<c:forEach var="prodVO" items="${prodList}">
+																			<c:if test="${prpmVO.prod_id == prodVO.prod_id}">
+																				$${prodVO.prod_price}
+																				</c:if>
+																		</c:forEach>
+																	</c:if>
+															</font></td>
+															<td width="20%"><b>促銷特價:&nbsp;</b><font color="red">$${prpmVO.prpm_price}</font></td>
+															<td width="20%"><a
+																href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_id=${prpmVO.prod_id}&action=getOne_For_Display"
+																class="btn btn-default btn-xs">商品詳情</a></td>
+														</tr>
+													</c:if>
+												</c:forEach>
+											</table>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default"
+												data-dismiss="modal">close</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- 內容結束 -->
+					</c:if>
+				</c:forEach>
+			</div>
+		</div>
+	</div>
+
+	<div class="container content">
+		<div class="row">
+			<header class="header">
+				<div class="text-vertical-center"></div>
+			</header>
+		</div>
+	</div>
+
+	<div class="callout"></div>
+
+	<div class="container">
+		<div class="row">
+		<h3>餐廳資訊</h3>
+			<div id="accordions">
+				<c:forEach var="repmVO" items="${repmlist}" varStatus="count">
+					<c:if test="${repmVO.repm_status == 1}">
+						<div>&nbsp;&nbsp;&nbsp;&nbsp;${repmVO.repm_name}</div>
+						<div class="text-center">
+							<!-- 內容 -->
+
+							<div class="col-xs-12 col-sm-4">
+								<b>${repmVO.repm_desc}</b>
+							</div>
+							<div class="col-xs-12 col-sm-4">
+								<b>${repmVO.repm_startdate} ~ ${repmVO.repm_enddate}</b>
+							</div>
+							<c:forEach var="restVO" items="${restSvc.all}">
+								<c:if test="${repmVO.rest_id == restVO.rest_id}">
+									<div class="col-xs-12 col-sm-4">
+										<a
+											href="<%=request.getContextPath()%>/front-end/rest/rest.do?rest_id=${restVO.rest_id}&action=getOne_For_Display_formember"
+											class="btn btn-default btn-xs">餐廳詳情</a>
+									</div>
+								</c:if>
+							</c:forEach>
+						</div>
+						<!-- 內容結束 -->
+					</c:if>
+				</c:forEach>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<div class="callout"></div>
+	<a id="to-top" href="#top" class="btn btn-dark btn-lg"><i
+		class="fa fa-chevron-up fa-fw fa-1x"></i></a>
+
+
+	<!-- Custom Theme JavaScript -->
+	<%@ include file="/front-end/member_interface/script.file"%>
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		$(function() {
+			$("#accordion").accordion();
+		});
+	</script>
+
+
+	<script>
+		$(function() {
+			$("#accordions").accordion();
+		});
+	</script>
 </body>
-
 </html>

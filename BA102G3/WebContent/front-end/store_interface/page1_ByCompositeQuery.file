@@ -7,8 +7,7 @@
     int pageIndex=0; 
 %>
 
-<%  if(listProds_ByCompositeQuery!=null){
-
+<%  
     rowNumber=listProds_ByCompositeQuery.size();
     if (rowNumber%rowsPerPage !=0)
      pageNumber=rowNumber/rowsPerPage +1;
@@ -17,7 +16,6 @@
     pageIndexArray=new int[pageNumber]; 
     for (int i=1 ; i<=pageIndexArray.length ; i++)
     pageIndexArray[i-1]=i*rowsPerPage-rowsPerPage;
-    }
 %>
 
 <%  try {
