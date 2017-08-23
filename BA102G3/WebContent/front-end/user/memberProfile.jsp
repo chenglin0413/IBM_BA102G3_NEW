@@ -76,6 +76,11 @@ UserVO userVO = (UserVO) session.getAttribute("userVO");
                             </div><br>
 
                             <div class="input-group">
+                                <label class="input-group-addon">更改密碼</label>
+                                <input type="password" name="user_passwd" value="<%= (userVO==null)? "" : userVO.getUser_passwd()%>" class="form-control">
+                            </div><br>
+
+                            <div class="input-group">
                                 <label class="input-group-addon">姓</label>
                                 <input type="text" name="user_lastname" value="<%= (userVO==null)? "" : userVO.getUser_lastname()%>" class="form-control">
                             </div><br>
@@ -138,7 +143,7 @@ UserVO userVO = (UserVO) session.getAttribute("userVO");
                     <div class="col-xs-12 col-sm-1">
 						<input type="hidden" name="user_id" value="<%=userVO.getUser_id()%>">
 						<input type="hidden" name="user_account" value="<%=userVO.getUser_account()%>">
-						<input type="hidden" name="user_passwd" value="<%=userVO.getUser_passwd()%>">
+<!-- 						<input type="hidden" name="user_passwd" value="<%=userVO.getUser_passwd()%>">  -->
 						<input type="hidden" name="user_type" value="<%=userVO.getUser_type()%>">
 						<input type="hidden" name="user_joindate" value="<%=userVO.getUser_joindate()%>">
 						<input type="hidden" name="user_status" value="<%=userVO.getUser_status()%>">

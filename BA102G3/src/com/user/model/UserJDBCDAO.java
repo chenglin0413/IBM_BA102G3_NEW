@@ -8,7 +8,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import com.rest.model.RestVO;
 import com.store.model.StoreVO;
+import com.stpi.model.StpiVO;
+import com.repi.model.RepiVO;
 
 public class UserJDBCDAO implements UserDAO_Interface {
 
@@ -383,7 +386,7 @@ public class UserJDBCDAO implements UserDAO_Interface {
 
 
 	@Override
-	public void insertStore(UserVO userVO, StoreVO storeVO) {
+	public void insertStore(UserVO userVO, StoreVO storeVO, StpiVO stpiVO) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -399,5 +402,12 @@ public class UserJDBCDAO implements UserDAO_Interface {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void insertRest(UserVO userVO, RestVO restVO, RepiVO repiVO) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

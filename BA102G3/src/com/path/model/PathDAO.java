@@ -356,8 +356,8 @@ public class PathDAO implements PathDAO_Interface {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		
-		System.out.println(path_fromplace);
-		System.out.println(path_toplace);
+		System.out.println("PathDAO.java, line359, from "+path_fromplace);
+		System.out.println("PathDAO.java, line360, to "+path_toplace);
 
 		try {
 

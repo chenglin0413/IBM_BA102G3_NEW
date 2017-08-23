@@ -68,9 +68,18 @@ public class UserDBGifReader extends HttpServlet {
 			
 			rs.close();
 			pstmt.close();
+			con.close();
 			
 		} catch (Exception e) {
 			  System.out.println(e);
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 	}
 	

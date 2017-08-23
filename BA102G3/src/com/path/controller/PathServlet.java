@@ -100,6 +100,13 @@ public class PathServlet extends HttpServlet {
 				String path_fromplace = req.getParameter("path_fromplace").trim();
 				String path_toplace = req.getParameter("path_toplace").trim();
 				
+//				String path_toplace1;
+//				if (path_toplace.equals("07") || path_toplace.equals("08")){
+//					path_toplace1="06";
+//				} else {
+//					path_toplace1=path_toplace;
+//				}
+				
 				/***************************2.開始查詢資料*****************************************/
 				PathService pathSvc = new PathService();
 				PathVO pathVO = pathSvc.getOnePathFromTo(path_fromplace, path_toplace);

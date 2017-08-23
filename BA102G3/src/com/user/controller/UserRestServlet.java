@@ -9,11 +9,12 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
 import com.user.model.*;
-import com.store.model.*;
+import com.rest.model.*;
+import com.repi.model.*;
 import mail.MailService;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
-public class UserServlet extends HttpServlet {
+public class UserRestServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
@@ -98,8 +99,6 @@ public class UserServlet extends HttpServlet {
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 			
-			String requestURL = req.getParameter("requestURL"); // 送出修改的來源網頁路徑: 可能為【/emp/listAllEmp.jsp】 或  【/dept/listEmps_ByDeptno.jsp】 或 【 /dept/listAllDept.jsp】
-			
 			try {
 				/***************************1.接收請求參數****************************************/
 				Integer user_id = new Integer(req.getParameter("user_id"));
@@ -123,22 +122,20 @@ public class UserServlet extends HttpServlet {
 				failureView.forward(req, res);
 			}
 		}
-				
+		
+		
 		if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-			
-			String requestURL = req.getParameter("requestURL"); // 送出修改的來源網頁路徑: 可能為【/emp/listAllEmp.jsp】 或  【/dept/listEmps_ByDeptno.jsp】 或 【 /dept/listAllDept.jsp】 或 【 /emp/listEmps_ByCompositeQuery.jsp】
 					
-			System.out.println("UserServlet line.136: "+requestURL);
-			
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				
 				Integer user_id = new Integer(req.getParameter("user_id"));
+				
 				
 				String user_account = req.getParameter("user_account").trim();
 				if ( user_account.isEmpty()) {
@@ -171,7 +168,7 @@ public class UserServlet extends HttpServlet {
 				
 				UserService userSvc = new UserService();
 				UserVO current_userVO = userSvc.getOneUser(user_id);
-				Integer current_user_status=current_userVO.getUser_status();
+				Integer current_user_status=current_userVO.getUser_status();				
 				
 				Integer user_status = new Integer(req.getParameter("user_status"));
 								
@@ -231,7 +228,7 @@ public class UserServlet extends HttpServlet {
 				userVO = userSvc.updateUser(user_id, user_account, user_passwd, user_type, user_lastname,
 						user_firstname, user_phone, user_mobile, user_address, user_email, 
 						user_joindate, user_status, user_img, user_imgfmt, updateImg);
-
+				
 				if (current_user_status!=1 && user_status==1){
 					String[] args={user_account,user_passwd,user_lastname,user_firstname,user_email}; 
 					MailService.main(args);
@@ -239,26 +236,8 @@ public class UserServlet extends HttpServlet {
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("userVO", userVO); // 資料庫update成功後,正確的的empVO物件,存入req
-				
-				if (userVO.getUser_type()==2){
-					StoreService storeSvc = new StoreService();
-					StoreVO storeVO = new StoreVO();
-					storeVO = storeSvc.getOneStoreByUsed_Id(userVO.getUser_id());
-					req.setAttribute("storeVO", storeVO);
-				}
-				if (userVO.getUser_type()==3){
-					
-				}
-				
-				String url = requestURL;
-				if ( requestURL.equals("/back-end/user/adminUserListAll.jsp") ) {
-					url = "/back-end/user/adminUserListAll.jsp";
-				} else if (requestURL.equals("/back-end/user/adminUserListOne.jsp")) {
-					url = "/back-end/user/adminUserListOne.jsp";
-				}
-				
-				req.setAttribute("successMsgs", "successMsgs");
-				System.out.println("pass UserServlet.java line 261");
+				String url = "/back-end/user/adminUserListOne.jsp";
+//				String url = "/back-end/user/listOneUser.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -280,7 +259,6 @@ public class UserServlet extends HttpServlet {
 			req.setAttribute("errorMsgs", errorMsgs);
 			
 			String requestURL = req.getParameter("requestURL");
-			System.out.println("line 273: "+requestURL);
 
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
@@ -295,7 +273,7 @@ public class UserServlet extends HttpServlet {
 				Random rand = new Random(); 
 				int randomPasswd = rand.nextInt(max-min)+min; 
 				String user_passwd=Integer.toString(randomPasswd);
-				System.out.println("UserServlet.java line.288 New User Password: "+user_passwd);
+				System.out.println("UserRestServlet.java line.275 New User Password: "+user_passwd);
 				
 				Integer user_type = new Integer(req.getParameter("user_type"));
 				
@@ -318,13 +296,7 @@ public class UserServlet extends HttpServlet {
 					errorMsgs.add("請輸入Email");										
 				}
 				
-//				java.sql.Date user_joindate = null;
-//				try {
-//					user_joindate = java.sql.Date.valueOf(req.getParameter("user_joindate").trim());
-//				} catch (IllegalArgumentException e) {
-				java.sql.Date user_joindate=new java.sql.Date(System.currentTimeMillis());				
-//					errorMsgs.add("請輸入日期");
-//				}
+				java.sql.Date user_joindate=new java.sql.Date(System.currentTimeMillis());
 				
 				Integer user_status = new Integer(req.getParameter("user_status"));
 				
@@ -361,42 +333,156 @@ public class UserServlet extends HttpServlet {
 				userVO.setUser_joindate(user_joindate);
 				userVO.setUser_status(user_status);
 				userVO.setUser_img(user_img);
-				userVO.setUser_imgfmt(user_imgfmt);			
+				userVO.setUser_imgfmt(user_imgfmt);
 				
+				System.out.println("pass user");
+				
+//				if (!errorMsgs.isEmpty()) {
+//					req.setAttribute("userVO", userVO); // 含有輸入格式錯誤的empVO物件,也存入req
+//					RequestDispatcher failureView = req
+//							.getRequestDispatcher("/back-end/store/adminStoreAdd.jsp");
+////							.getRequestDispatcher("/back-end/user/addUser.jsp");
+//					failureView.forward(req, res);
+//					return;
+//				}
+								
+		//===========for Restaurant====================================================
+			
+				String rest_name = req.getParameter("rest_name").trim();
+				String rest_phone = req.getParameter("rest_phone").trim();
+				String rest_detail = req.getParameter("rest_detail").trim();
+				String rest_hours = req.getParameter("rest_hours").trim();
+				Integer rest_ter = new Integer(req.getParameter("rest_ter").trim());
+				Integer rest_floor = new Integer(req.getParameter("rest_floor").trim());
+				
+				String rest_address= "T"+rest_ter+"-"+rest_floor+"F";
+				String rest_trans=null;
+				
+				Double rest_lon = 0.0;
+				try {
+					rest_lon = new Double(req.getParameter("rest_lon").trim());
+				} catch (NumberFormatException e) {
+					rest_lon = 0.0;
+//					errorMsgs.add("經緯度請填數字.");
+				}
+				
+				Double rest_lat = 0.0;
+				try {
+					rest_lat = new Double(req.getParameter("rest_lat").trim());
+				} catch (NumberFormatException e) {
+					rest_lat = 0.0;
+//					errorMsgs.add("經緯度請填數字.");
+				}
+				
+				Integer rest_inout = new Integer(req.getParameter("rest_inout").trim());
+				Integer rest_type = new Integer(req.getParameter("rest_type").trim());
+								
+				Integer rest_count=0;
+				Integer rest_score=0;
+//				Integer store_count = new Integer(req.getParameter("store_count").trim());
+//				Integer store_score = new Integer(req.getParameter("store_score").trim());
+				
+				RestVO restVO = new RestVO();
+				restVO.setRest_name(rest_name);
+				restVO.setRest_address(rest_address);
+				restVO.setRest_phone(rest_phone);
+				restVO.setRest_trans(rest_trans);
+				restVO.setRest_detail(rest_detail);
+				restVO.setRest_hours(rest_hours);
+				restVO.setRest_ter(rest_ter);
+				restVO.setRest_floor(rest_floor);
+				restVO.setRest_lon(rest_lon);
+				restVO.setRest_lat(rest_lat);
+				restVO.setRest_inout(rest_inout);
+				restVO.setRest_inout(rest_type);
+				restVO.setRest_count(rest_count);
+				restVO.setRest_score(rest_score);
+				
+//----------------------------------------------
+				String repi_name = req.getParameter("repi_name").trim();
+				
+				System.out.println("pass UserRestServlet.java line.404");
+				
+				byte[] repi_img =null;
+				String repi_imgfmt=null;
+				Part part1=req.getPart("upfileRest");				
+				String filename1 = getFileNameFromPart(part1).trim();
+				
+				System.out.println("pass UserRestServlet line 409");
+								
+				if ( filename1.length() != 0 ){
+					
+					InputStream in = part1.getInputStream();
+					repi_img = new byte[in.available()];
+					in.read(repi_img);
+					in.close();
+					
+					System.out.println(filename1);
+					
+					String temp[] = filename1.split("[.]");				
+					if(temp.length>1){
+						repi_imgfmt = temp[temp.length-1];
+					} else {
+						repi_imgfmt=null; 
+						errorMsgs.add("請輸入附檔名!");
+					}					
+				}
+//----------------------------------------------								
+
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("userVO", userVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					req.setAttribute("restVO", restVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
 							.getRequestDispatcher(requestURL);
 //							.getRequestDispatcher("/back-end/user/addUser.jsp");
 					failureView.forward(req, res);
 					return;
 				}
-								
+				
 				/***************************2.開始新增資料***************************************/
+				
+				System.out.println("UserServlet line 442");
 				UserService userSvc = new UserService();
-				userVO = userSvc.addUser(user_account, user_passwd, user_type, user_lastname,
-						user_firstname, user_phone, user_mobile, user_address, user_email,
-						user_joindate, user_status, user_img, user_imgfmt);
+				userVO = userSvc.addRest(user_account, user_passwd, user_type, user_lastname,
+				user_firstname, user_phone, user_mobile, user_address, user_email,
+				user_joindate, user_status, user_img, user_imgfmt,
+				rest_name, rest_address, rest_phone, rest_trans, rest_detail, rest_hours, rest_ter,
+				rest_floor,rest_lon,rest_lat,rest_inout,rest_type,rest_count,rest_score, repi_name, repi_img, repi_imgfmt
+				);
+				System.out.println("UserRestServlet line 450");
 				
-				String[] args={user_account,user_passwd,user_lastname,user_firstname,user_email}; 
-				MailService.main(args);
-																								
-				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-
-				req.setAttribute("successMsgs", "successMsgs");
-				
-				String url=requestURL;
-			
-				System.out.println("line.372"+url);
-				
-				if (requestURL.equals("/front-end/user/newMember.jsp")){
-					url = "/front-end/user/newMember.jsp";
+				if (user_status==1){
+					String[] args={user_account,user_passwd,user_lastname,user_firstname,user_email}; 
+					MailService.main(args);
 				}
 				
-				if (requestURL.equals("/back-end/user/adminUserAdd.jsp")){
-					url = "/back-end/user/adminUserListAll.jsp";
-				} 
-			
+				req.setAttribute("successMsgs", "successMsgs");
+				
+//				userVO = userSvc.addUser(user_account, user_passwd, user_type, user_lastname,
+//						user_firstname, user_phone, user_mobile, user_address, user_email,
+//						user_joindate, user_status, user_img, user_imgfmt);
+								
+//				StoreService storeSvc = new StoreService();
+//				storeVO = storeSvc.addStore(store_name, store_time, store_phone,store_describe,
+//						store_ter,store_floor,store_lon,store_lat,store_inout,store_count,store_score);
+																								
+				/***************************3.新增完成,準備轉交(Send the Success view)***********/
+//				String url = "/back-end/user/listAllUser.jsp";
+				
+				String url=requestURL;
+				
+				if (requestURL.equals("/front-end/user/newStoreMember.jsp")){
+					url = "/front-end/user/newStoreMember.jsp";
+				}
+				
+				if (requestURL.equals("/back-end/store/adminStoreAdd.jsp")){
+					url = "/back-end/store/adminStoreListAll.jsp";
+				}
+				
+				if (requestURL.equals("/back-end/rest/adminRestAdd.jsp")){
+					url = "/back-end/rest/adminRestListAll.jsp";
+				}				
+
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
 				
@@ -404,7 +490,6 @@ public class UserServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				String url = req.getParameter("requestURL");
-				System.out.println("line.389"+url);
 				RequestDispatcher failureView = req
 						.getRequestDispatcher(url);
 //						.getRequestDispatcher("/back-end/user/addUser.jsp");
@@ -419,8 +504,6 @@ public class UserServlet extends HttpServlet {
 			// Store this set in the request scope, in case we need to
 			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
-			
-			String requestURL = req.getParameter("requestURL"); // 送出刪除的來源網頁路徑: 可能為【/emp/listAllEmp.jsp】 或  【/dept/listEmps_ByDeptno.jsp】 或 【 /dept/listAllDept.jsp】 或 【 /emp/listEmps_ByCompositeQuery.jsp】			
 	
 			try {
 				/***************************1.接收請求參數***************************************/
@@ -428,13 +511,11 @@ public class UserServlet extends HttpServlet {
 				
 				/***************************2.開始刪除資料***************************************/
 				UserService userSvc = new UserService();
-//				UserVO empVO = userSvc.getOneUser(user_id);
 				userSvc.deleteUser(user_id);
 				
 				/***************************3.刪除完成,準備轉交(Send the Success view)***********/								
-								
-//				String url = "/back-end/user/adminUserListAll.jsp";
-				String url = requestURL;
+				String url = "/back-end/rest/adminRestListAll.jsp";
+//				String url = "/back-end/user/listAllUser.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);// 刪除成功後,轉交回送出刪除的來源網頁
 				successView.forward(req, res);
 				
@@ -442,7 +523,7 @@ public class UserServlet extends HttpServlet {
 			} catch (Exception e) {
 				errorMsgs.add("刪除錯誤:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/user/adminUserListAll.jsp");
+						.getRequestDispatcher("/back-end/rest/adminRestListAll.jsp");
 //  				.getRequestDispatcher("/back-end/user/listAllUser.jsp");
 				failureView.forward(req, res);
 			}

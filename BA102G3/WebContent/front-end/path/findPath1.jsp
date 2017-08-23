@@ -2,7 +2,6 @@
 	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	<%@ page import="java.util.*"%>
 	<%@ page import="com.flsc.model.*"%>
-	<%@ page import="com.user.model.*"%>
 <!DOCTYPE html>
 <html lang="en" class="easy-sidebar-active">
 
@@ -42,9 +41,7 @@
     	pageContext.setAttribute("listArrive",listArrive);
 
     	List<FlscVO> listOut = flscSvc.getAllOut();
-    	pageContext.setAttribute("listOut",listOut);
-    	
-    	UserVO userVO = (UserVO) session.getAttribute("userVO");
+    	pageContext.setAttribute("listOut",listOut);	
     %>
 
 </head>
@@ -52,13 +49,9 @@
 
 <br>
 
-
-	<div class="container">
-	<div class="row">
-
 <div>
   <ul class="nav nav-tabs">
-    <li><a href="<%= request.getContextPath() %>/front-end/member_interface/listAllFlsc.jsp">班機查詢</a></li>
+    <li><a href="<%= request.getContextPath() %>/front-end/schedule/listAllFlsc.jsp">班機查詢</a></li>
     <li class="active"><a href="<%= request.getContextPath() %>/front-end/path/findPath.jsp"><b>室內地圖導引</b></a></li>
   </ul>
   <br>
@@ -82,19 +75,46 @@
 		%>
 		
 
+
+<div>
+						<label><font color="red">我的地圖1</font></label>
+<!--   
+     					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/front-end/map/createMyMap.do">
+-->     					
+
+     					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/front-end/path/createMyMapHTML1.jsp">
+     					<div class="input-group">
+       							
+       							會員編號<input type="text" name="user_id" value="1000091" placeshold="1000091"><br>
+       							
+       							抵達日期<input type="text" name="flsc_sdate1" value="2017-08-20"><br>
+       							航空公司<input type="text" name="flsc_airlinecode1" value="BR"><br>
+       							班機編號<input type="text" name="flsc_flno1" value="868"><br>
+       							
+       							<br><br>
+
+       							出發日期<input type="text" name="flsc_sdate2" value="2017-08-21"><br>
+       							航空公司<input type="text" name="flsc_airlinecode2" value="BR"><br>
+       							班機編號<input type="text" name="flsc_flno2" value="138"><br><br>
+       							
+       							<input type="submit" value="查詢" class="btn btn-primary">
+       						
+       					</div>
+    					</FORM>
+    					<br>	
+
+</div>
+
 <div>
 
-				
-				<c:if test="${userVO.user_id != null}" var="condition2" scope="page" >
- 
-						<label><font color="red">轉機地圖</font></label>
+						<label><font color="red">我的地圖2</font></label>
      					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/front-end/path/createMyMapHTML.jsp">
      					<div class="input-group">
        							
-       						<b>您好! ${userVO.user_lastname}${userVO.user_firstname}</b><br>
+       						會員編號<input type="text" name="user_id" value="1000091" placeshold="1000091"><br>
 
        						<label>選擇抵達航班</label>
-       						<select size="1" name="flsc_id_arrive" class="selectpicker">
+       						<select size="1" name="flsc_id_arrive">
          						<c:forEach var="flscVOarrive" items="${listArrive}" > 
          						
                                 	<c:if test="${flscVOarrive.flsc_term == '2'}" var="condition" scope="page">         						
@@ -105,7 +125,7 @@
        						</select><br>
 
        						<label>選擇轉機航班</label>
-       						<select size="1" name="flsc_id_out" class="selectpicker">
+       						<select size="1" name="flsc_id_out">
          						<c:forEach var="flscVOout" items="${listOut}" > 
          						
                                 	<c:if test="${flscVOout.flsc_term == '2'}" var="condition" scope="page">         						
@@ -115,12 +135,11 @@
          						</c:forEach>   
        						</select>
        						
-       						<input type="hidden" name="user_id" value="${userVO.user_id}">
        						<input type="submit" value="查詢" class="btn btn-primary">
 
 						</div>
     					</FORM>
-	            </c:if>
+
 </div>
 
 <br><br>
@@ -173,28 +192,37 @@
 		
 
 
+<br><br>
+
+
+		
+		<FORM METHOD="post" ACTION="flsc.do">
+
+
+
+			<b>航空代碼&班次編號:</b> <input type="text" name="flsc_airlinecode"
+				size="20"> <input type="text" name="flsc_flno" size="20">
+			<b>表定日期：</b> <input type="date" name="flsc_sdate"
+				value="<%=sdate_SQL%>"> <input type="submit" value="送出">
+			<input type="hidden" name="action"
+				value="getOne_For_Display_inlistAllFlsc">
+		</FORM>
+
 	</div>
 	
 	<br>
 
 
-    <!-- jQuery -->
- 
-<script src="<%= request.getContextPath() %>/front-end/js/jquery.js"></script>
+	<script src="https://code.jquery.com/jquery.js"></script>
+	<script
+		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<script>
+		$(document).ready(function() {
+			$("tr:even").css("background-color", "#CFE0E1");
+			$("tr:odd").css("background-color", "#ffffff");
+		});
+	</script>
 
-    <!-- Bootstrap Core JavaScript -->
-<script src="<%= request.getContextPath() %>/front-end/js/bootstrap.min.js"></script>
-  <script type='text/javascript'>
-     $(document).ready(function () {
-     if ($("[rel=tooltip]").length) {
-     $("[rel=tooltip]").tooltip();
-     }
-   });
-  </script>
-
-	</div>
-	</div>
-	
 </body>
 
 </html>

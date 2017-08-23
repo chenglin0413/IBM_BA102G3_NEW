@@ -135,6 +135,7 @@ StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
                     	    	</div>
                     	    </div><br>
 
+<!-- 
                             <div class="col-xs-12 col-sm-6">
                                 <div class="input-group">
                                     <label class="input-group-addon" >所在經度</label>
@@ -147,7 +148,7 @@ StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
                                     <input type="text" name="store_lat" value="<%= (storeVO==null)? "" : storeVO.getStore_lat()%>" class="form-control">
                                 </div><br>                                
                             </div>
-                            
+ -->                            
                             <div class="col-xs-12 col-sm-12">
 
 <!-- 							
@@ -170,6 +171,8 @@ StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
 						<input type="hidden" name="store_id" value="<%=storeVO.getStore_id()%>">
 						<input type="hidden" name="user_id" value="<%=storeVO.getUser_id()%>">
 						<input type="hidden" name="user_status" value="<%=userVO.getUser_status()%>">
+						<input type="hidden" name="store_lon" value="<%=storeVO.getStore_lon()%>">
+						<input type="hidden" name="store_lat" value="<%=storeVO.getStore_lat()%>">
 						<input type="hidden" name="store_count" value="<%=storeVO.getStore_count()%>">
 						<input type="hidden" name="store_score" value="<%=storeVO.getStore_score()%>">
 						<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->

@@ -56,6 +56,17 @@
 
 			</font>
 		</c:if>
+		
+	<div class="container">
+	<div class="row">
+		
+<div>
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="<%= request.getContextPath() %>/front-end/member_interface/listAllFlsc.jsp"><b>班機查詢</b></a></li>
+    <li><a href="<%= request.getContextPath() %>/front-end/path/findPath.jsp">室內地圖導引</a></li>
+  </ul>
+  <br>
+</div>		
 
 		<FORM METHOD="post" ACTION="flsc.do">
 
@@ -74,8 +85,8 @@
 	</div>
 	
 	<br>
-	<div class="container">
-	<div class="row">
+
+	
 	
 	<table border="0" cellpadding="0" cellspacing="0" style="width: 100%;">
 		<tr height="79" style="background-color: rgb(255, 228, 139);">
@@ -155,6 +166,14 @@
 			$("tr:odd").css("background-color", "#ffffff");
 		});
 	</script>
+	
+  <script type='text/javascript'>
+     $(document).ready(function () {
+     if ($("[rel=tooltip]").length) {
+     $("[rel=tooltip]").tooltip();
+     }
+   });
+  </script>	
 
 </body>
 

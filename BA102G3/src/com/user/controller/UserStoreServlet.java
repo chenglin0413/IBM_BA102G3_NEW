@@ -2,6 +2,7 @@ package com.user.controller;
 
 import java.io.*;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import javax.servlet.*;
@@ -10,6 +11,8 @@ import javax.servlet.http.*;
 
 import com.user.model.*;
 import com.store.model.*;
+import com.stpi.model.*;
+import mail.MailService;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class UserStoreServlet extends HttpServlet {
@@ -131,10 +134,9 @@ public class UserStoreServlet extends HttpServlet {
 					
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-				
+								
 				Integer user_id = new Integer(req.getParameter("user_id"));
-				
-				
+								
 				String user_account = req.getParameter("user_account").trim();
 				if ( user_account.isEmpty()) {
 					errorMsgs.add("請填入帳號!");					
@@ -163,6 +165,10 @@ public class UserStoreServlet extends HttpServlet {
 				}
 				
 				java.sql.Date user_joindate = java.sql.Date.valueOf(req.getParameter("user_joindate").trim());
+				
+				UserService userSvc = new UserService();
+				UserVO current_userVO = userSvc.getOneUser(user_id);
+				Integer current_user_status=current_userVO.getUser_status();
 				
 				Integer user_status = new Integer(req.getParameter("user_status"));
 								
@@ -217,12 +223,18 @@ public class UserStoreServlet extends HttpServlet {
 				}
 				
 				/***************************2.開始修改資料*****************************************/
-				UserService userSvc = new UserService();
+//				UserService userSvc = new UserService();
 				
 				userVO = userSvc.updateUser(user_id, user_account, user_passwd, user_type, user_lastname,
 						user_firstname, user_phone, user_mobile, user_address, user_email, 
 						user_joindate, user_status, user_img, user_imgfmt, updateImg);
 				
+				if (current_user_status!=1 && user_status==1){
+					System.out.println("Pass UserStoreServlet.java line.232");
+					String[] args={user_account,user_passwd,user_lastname,user_firstname,user_email}; 
+					MailService.main(args);
+				}
+								
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("userVO", userVO); // 資料庫update成功後,正確的的empVO物件,存入req
 				String url = "/back-end/user/adminUserListOne.jsp";
@@ -257,7 +269,12 @@ public class UserStoreServlet extends HttpServlet {
 					errorMsgs.add("請輸入帳號");					
 				}
 												
-				String user_passwd="ba102g3";
+				int min = 100000;
+				int max = 999999;				
+				Random rand = new Random(); 
+				int randomPasswd = rand.nextInt(max-min)+min; 
+				String user_passwd=Integer.toString(randomPasswd);
+				System.out.println("UserStoreServlet.java line.275 New User Password: "+user_passwd);
 				
 				Integer user_type = new Integer(req.getParameter("user_type"));
 				
@@ -340,20 +357,18 @@ public class UserStoreServlet extends HttpServlet {
 				Integer store_ter = new Integer(req.getParameter("store_ter").trim());
 				String store_floor = req.getParameter("store_floor").trim();
 				
-				Double store_lon = null;
+				Double store_lon = 0.0;
 				try {
 					store_lon = new Double(req.getParameter("store_lon").trim());
 				} catch (NumberFormatException e) {
 					store_lon = 0.0;
-					errorMsgs.add("經緯度請填數字.");
 				}
 				
-				Double store_lat = null;
+				Double store_lat = 0.0;
 				try {
 					store_lat = new Double(req.getParameter("store_lat").trim());
 				} catch (NumberFormatException e) {
 					store_lat = 0.0;
-					errorMsgs.add("經緯度請填數字.");
 				}
 				
 				Integer store_inout = new Integer(req.getParameter("store_inout").trim());
@@ -374,6 +389,37 @@ public class UserStoreServlet extends HttpServlet {
 				storeVO.setStore_inout(store_inout);
 				storeVO.setStore_count(store_count);
 				storeVO.setStore_score(store_score);
+				
+				System.out.println("pass store");
+
+//----------------------------------------------
+				Integer stpi_name = new Integer(req.getParameter("stpi_name").trim());
+				
+				byte[] stpi_img =null;
+				String stpi_imgfmt=null;
+				Part part1=req.getPart("upfileStore");				
+				String filename1 = getFileNameFromPart(part1).trim();
+				
+				System.out.println("pass UserStoreServlet line 393");
+								
+				if ( filename1.length() != 0 ){
+					
+					InputStream in = part1.getInputStream();
+					stpi_img = new byte[in.available()];
+					in.read(stpi_img);
+					in.close();
+					
+					System.out.println(filename1);
+					
+					String temp[] = filename1.split("[.]");				
+					if(temp.length>1){
+						stpi_imgfmt = temp[temp.length-1];
+					} else {
+						stpi_imgfmt=null; 
+						errorMsgs.add("請輸入附檔名!");
+					}					
+				}
+//----------------------------------------------				
 
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("userVO", userVO); // 含有輸入格式錯誤的empVO物件,也存入req
@@ -391,8 +437,13 @@ public class UserStoreServlet extends HttpServlet {
 				user_firstname, user_phone, user_mobile, user_address, user_email,
 				user_joindate, user_status, user_img, user_imgfmt,
 				store_name, store_time, store_phone, store_describe, store_ter,
-				store_floor,store_lon,store_lat,store_inout,store_count,store_score
+				store_floor,store_lon,store_lat,store_inout,store_count,store_score, stpi_name, stpi_img, stpi_imgfmt
 				);
+				
+				if (user_status==1){
+					String[] args={user_account,user_passwd,user_lastname,user_firstname,user_email}; 
+					MailService.main(args);
+				}
 				
 				req.setAttribute("successMsgs", "successMsgs");
 				

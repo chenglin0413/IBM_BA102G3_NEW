@@ -9,7 +9,7 @@
 
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=0.35">
 <meta name="description" content="">
 <meta name="author" content="">
 
@@ -35,17 +35,29 @@
 	 <%@include file="/front-end/member_interface/headerBar.file" %>
 
 	<%
-		
+
 	    String user_id=request.getParameter("user_id");
 	
-		Integer flsc_id_arrive=new Integer(request.getParameter("flsc_id_arrive"));
-		Integer flsc_id_out=new Integer(request.getParameter("flsc_id_out"));
+	    String flsc_sdate1=request.getParameter("flsc_sdate1");
+	    String flsc_airlinecode1=request.getParameter("flsc_airlinecode1");
+	    String flsc_flno1=request.getParameter("flsc_flno1");
 	
-	    FlscService flscSvc = new FlscService();
+	    String flsc_sdate2=request.getParameter("flsc_sdate2");
+	    String flsc_airlinecode2=request.getParameter("flsc_airlinecode2");
+	    String flsc_flno2=request.getParameter("flsc_flno2");
 	    
-	    FlscVO flscVOarrive=flscSvc.findByPK(flsc_id_arrive);
-	    FlscVO flscVOout=flscSvc.findByPK(flsc_id_out);
-
+	    System.out.println("----------------------------");
+	    System.out.println(user_id);
+	    System.out.println(flsc_sdate1);
+	    System.out.println(flsc_airlinecode1);
+	    System.out.println(flsc_flno1);
+	    
+	    System.out.println(flsc_sdate2);
+	    System.out.println(flsc_airlinecode2);
+	    System.out.println(flsc_flno2);
+	    System.out.println("----------------------------");
+	    
+		
     %>
 
 </head>
@@ -64,8 +76,10 @@
 		</c:if>
 		
 <div>
-		<%=flscVOarrive.getFlsc_sdate() %>, 抵達航班:<%=flscVOarrive.getFlsc_airlinecode() %><%=flscVOarrive.getFlsc_flno() %><br>
-		<%=flscVOout.getFlsc_sdate() %>, 出發航班:<%=flscVOout.getFlsc_airlinecode() %><%=flscVOout.getFlsc_flno() %><br>
+		
+		${param.flsc_sdate1}, 抵達航班:${param.flsc_airlinecode1}${param.flsc_flno1}<br>
+		${param.flsc_sdate2}, 出發航班:${param.flsc_airlinecode2}${param.flsc_flno2}<br>
+		
 		
 		<img src="<%= request.getContextPath() %>/front-end/image/tagYellow.png" width=40><b>:轉機安檢出口</b>
 		<img src="<%= request.getContextPath() %>/front-end/image/tagBlue.png" width=40><b>:商店取貨</b>
@@ -74,26 +88,23 @@
 		
 		<br>
 		
-		<img id="image" src="<%= request.getContextPath() %>/front-end/map/createMyMap.do?user_id=${param.user_id}&flsc_sdate1=<%=flscVOarrive.getFlsc_sdate() %>&flsc_airlinecode1=<%=flscVOarrive.getFlsc_airlinecode() %>&flsc_flno1=<%=flscVOarrive.getFlsc_flno() %>&flsc_sdate2=<%=flscVOout.getFlsc_sdate() %>&flsc_airlinecode2=<%=flscVOout.getFlsc_airlinecode() %>&flsc_flno2=<%=flscVOout.getFlsc_flno() %>" width=1000>
+		<img id="image1" src="<%= request.getContextPath() %>/front-end/map/createMyMap.do?user_id=${param.user_id}&flsc_sdate1=${param.flsc_sdate1}&flsc_airlinecode1=${param.flsc_airlinecode1}&flsc_flno1=${param.flsc_flno1}&flsc_sdate2=${param.flsc_sdate2}&flsc_airlinecode2=${param.flsc_airlinecode2}&flsc_flno2=${param.flsc_flno2}" width=1000>
 
 </div>
 
 	</div>
-	
-                    <div align="center">
-                 		<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/path/findPath.jsp">
-                            <div class="input-group">
-   								<input type="submit" value="回上頁" class="btn btn-primary">
-                            </div>
-                        </FORM>                                	
-                    </div>		
 	
 	<br>
 
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
+	<script>
+		$(document).ready(function() {
+			$("tr:even").css("background-color", "#CFE0E1");
+			$("tr:odd").css("background-color", "#ffffff");
+		});
+	</script>
 	
 	<link rel="stylesheet" href="./leaflet.css">
 	<script src="./leaflet.js"></script>

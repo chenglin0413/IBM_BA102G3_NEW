@@ -60,16 +60,26 @@ public class PathDBGifReader extends HttpServlet {
 					out.write(buf, 0, len);
 				}
 								
-			    in.close();
+				in.close();
 			} else {
 				res.sendError(HttpServletResponse.SC_NOT_FOUND);
 			}
 			
 			rs.close();
 			pstmt.close();
+			out.close();
+			con.close();
 			
 		} catch (Exception e) {
 			  System.out.println(e);
+		} finally {
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
 		}
 	}
 	
