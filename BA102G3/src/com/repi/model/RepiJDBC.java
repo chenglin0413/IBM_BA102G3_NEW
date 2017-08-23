@@ -1,9 +1,5 @@
 package com.repi.model;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -12,10 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-//import com.android.restaurant.model.RepiDAO_Interface;
-//import com.android.restaurant.model.RepiVO;
-import com.dipi.model.DipiVO;
 import com.repi.model.RepiJDBC;
+import com.repi.model.RepiVO;
 
 public class RepiJDBC implements RepiDAO_Interface {
 	String driver = "oracle.jdbc.driver.OracleDriver";
@@ -310,14 +304,14 @@ public class RepiJDBC implements RepiDAO_Interface {
 		RepiJDBC dao = new RepiJDBC();
 
 		//
-//		RepiVO repiVO1 = new RepiVO();
-//		repiVO1.setRest_id(3000002);
-//		repiVO1.setRepi_name("pi001");
-//		byte[] img = {5,5,5,5,5,5};
-//		repiVO1.setRepi_img(img);
-//		repiVO1.setRepi_imgfmt("jpg");
-//		
-//		dao.insert(repiVO1);
+		RepiVO repiVO1 = new RepiVO();
+		repiVO1.setRest_id(3000002);
+		repiVO1.setRepi_name("pi001");
+		byte[] img = {5,5,5,5,5,5};
+		repiVO1.setRepi_img(img);
+		repiVO1.setRepi_imgfmt("jpg");
+		
+		dao.insert(repiVO1);
 
 		//
 //		RepiVO repiVO2 = new RepiVO();
@@ -351,86 +345,13 @@ public class RepiJDBC implements RepiDAO_Interface {
 //			System.out.print(repi.getRepi_imgfmt());
 //			System.out.println();
 //		}
-		
-		String path = "C:\\Users\\mjdtsay\\Dropbox\\三組\\Oracle建表格指令\\repi";
-		File f = new File(path); //讀取"00這個資料夾"，要記得將此資料夾放置同個java file裡面
-        ArrayList<String> fileList = new ArrayList<String>(); //宣告一的動態陣列為String的型態，目的用來儲存檔名
-        
-        if(f.isDirectory()) //如果f讀到的是資料夾，就會執行
-        {
-            System.out.println("filename : "+f.getName()); //印出我們所讀到的資料夾
-            String []s=f.list(); //宣告一個list
-            System.out.println("size : "+s.length); //印出資料夾裡的檔案個數
-            for(int i=0;i<s.length;i++)
-            {
-                //System.out.println(s[i]);
-                fileList.add(s[i]); //將檔名一一存到fileList動態陣列裡面
-            }
-        }
-        for(int i=0;i<fileList.size();i++)
-        {
-            System.out.println(fileList.get(i)); //印出資料夾內的檔名
-            System.out.println(fileList.get(i));
-            String k = fileList.get(i);
-//            int endIndex = k.lastIndexOf(".");
-//            name= k.substring(0,(endIndex));
-//            System.out.println(name);
-        }
-        
-    
-		
-        int j = 3000001;		
-		for(int i = 0;i<fileList.size();i++){
-			try {
-				
-				RepiVO dipi = new RepiVO();
-				String k = fileList.get(i);
-	            int endIndex = k.lastIndexOf(".");
-	            String name= k.substring(0,(endIndex));
-								
-				
-					dipi.setRest_id(j);
-					dipi.setRepi_name(name);;
-					byte[] pic = getPictureByteArray(path+"\\"+fileList.get(i));
-					dipi.setRepi_imgfmt("jpg");
-					dipi.setRepi_img(pic);
-				
-				dao.insert(dipi);
-				j++;
-			} catch (IOException e) {
-				System.out.println(e);
-			}
-		}
-		
-		
 	}
 	
-	
-	public static byte[] getPictureByteArray(String path) throws IOException {
-		File file = new File(path);
-		FileInputStream fis = new FileInputStream(file);
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		byte[] buffer = new byte[8192];
-		int i;
-		while ((i = fis.read(buffer)) != -1) {
-			baos.write(buffer, 0, i);
-		}
-		baos.close();
-		fis.close();
-
-		return baos.toByteArray();
-	}
 	
 	@Override
 	public byte[] download(Integer repi_id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-//	@Override
-//	public RepiVO findByForeignKey(Integer rest_id) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 
 }

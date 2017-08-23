@@ -7,6 +7,9 @@ import java.util.*;
 import javax.servlet.*;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
+
+import com.avtb.model.AvtbService;
+import com.avtb.model.AvtbVO;
 import com.reta.model.RetaService;
 import com.reta.model.RetaVO;
 
@@ -232,13 +235,13 @@ public class RetaServlet extends HttpServlet {
 				Integer reta_number = new Integer(req.getParameter("reta_number").trim());
 				Integer reta_status = new Integer(req.getParameter("reta_status").trim());
 				Integer reta_grant = new Integer(req.getParameter("reta_grant").trim());
-				Date reta_date = null;
+				Date reta_date = java.sql.Date.valueOf(req.getParameter("reta_date").trim()) ;
 				Integer reta_rank_res = new Integer(req.getParameter("reta_rank_res").trim());
 				String reta_review = null;
 				Date reta_reviewdate = null;
 				Date rest_rpdate = null;
 				String rest_rpcomm = null;
-				Integer rest_rpstatus = new Integer(req.getParameter("reta_rpstatus").trim());
+				Integer rest_rpstatus = new Integer(req.getParameter("rest_rpstatus").trim());
 				
 				try {
 					reta_id = new Integer(req.getParameter("reta_id").trim());
@@ -253,6 +256,8 @@ public class RetaServlet extends HttpServlet {
 					user_id = new Integer(1000044);
 					errorMsgs.add("1000044格式的會員編號");
 				}
+				
+				
 
 				RetaVO retaVO = new RetaVO();
 				retaVO.setReta_id(reta_id);
@@ -285,13 +290,41 @@ public class RetaServlet extends HttpServlet {
 				/***************************2.開始新增資料***************************************/
 				
 				RetaService retaSvc = new RetaService();
+				AvtbService avtbSvc = new AvtbService();
+				AvtbVO avtbVO = new AvtbVO();
+				
+				avtbVO = avtbSvc.getOneAvtb(avtb_id);
+				
+				int freeseat = avtbVO.getAvtb_reservation();
+				System.out.println("目前訂位人數:"+freeseat);
+				System.out.println(avtbVO.getAvtb_max_reservation());
+				
+				if(avtbVO.getAvtb_max_reservation() >= freeseat+reta_number){
+					freeseat =  avtbVO.getAvtb_reservation()+reta_number;
+					avtbVO = avtbSvc.updateFreeSeat(avtb_id, freeseat);
+				}else {
+					freeseat = avtbVO.getAvtb_max_reservation()- avtbVO.getAvtb_reservation();
+					errorMsgs.add("目前剩餘"+freeseat+"位");
+			
+					if (!errorMsgs.isEmpty()) {
+						System.out.println("123");
+						req.setAttribute("retaVO", retaVO); // 含有輸入格式錯誤的retaVO物件,也存入req
+						req.setAttribute("avtbVO", avtbVO);
+						RequestDispatcher failureView = req
+								.getRequestDispatcher("/front-end/rest/addReta.jsp");
+						failureView.forward(req, res);
+						
+						return;
+					}
+				}
 				
 				retaVO = retaSvc.addReta(reta_id,avtb_id,user_id,reta_number,reta_status,reta_grant,reta_date,
 										 reta_rank_res,reta_review,reta_reviewdate,rest_rpdate,rest_rpcomm,rest_rpstatus);
 				
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/front-end/restaurant/reta/listAllReta.jsp";
+				req.setAttribute("retaVO", retaVO);
+				String url = "/front-end/member_interface_rest/rest/resultReta.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllreta.jsp
 				successView.forward(req, res);				
 				
@@ -332,6 +365,75 @@ public class RetaServlet extends HttpServlet {
 				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/front-end/restaurant/reta/listAllReta.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+		if ("listReta_By_UserId".equals(action)) { // 來自listRest_idAllRetaselect.jsp的請求
+			
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+				String str = req.getParameter("user_id");
+				if (str == null || (str.trim()).length() == 0) {
+					errorMsgs.add("請輸入會員編號");
+				}
+				System.out.println(str);
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/restaurant/reta/select_page.jsp");
+					failureView.forward(req, res);
+					
+					return;//程式中斷
+				}
+				
+				Integer user_id = null;
+				try {
+					user_id = new Integer(str);
+					
+				} catch (Exception e) {
+					errorMsgs.add("訂位編號格式不正確");
+					
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/restaurant/reta/select_page.jsp");
+					failureView.forward(req, res);
+					
+					return;//程式中斷
+				}
+				
+				/***************************2.開始查詢資料*****************************************/
+				RetaService retaSvc = new RetaService();
+				RetaVO retaVO = (RetaVO) retaSvc.findByUserId(user_id);
+				if (retaVO == null) {
+					errorMsgs.add("查無資料");
+				}
+				// Send the use back to the form, if there were errors
+				if (!errorMsgs.isEmpty()) {
+					RequestDispatcher failureView = req
+							.getRequestDispatcher("/front-end/restaurant/reta/select_page.jsp");
+					failureView.forward(req, res);
+					return;//程式中斷
+				}
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("retaVO", retaVO); // 資料庫取出的retaVO物件,存入req
+				String url = "/front-end/rest_interface/listRest_idAllRetaselect.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listRest_idAllRetaselect.jsp
+				successView.forward(req, res);
+
+				/***************************其他可能的錯誤處理*************************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/front-end/restaurant/reta/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}

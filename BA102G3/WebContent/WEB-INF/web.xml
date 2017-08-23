@@ -440,7 +440,69 @@
   </servlet-mapping>
   <!-- 韋翔結尾 -->
 
-
+<!-- 培凱開始 -->
+  <servlet>
+    <servlet-name>AvtbServlet</servlet-name>
+    <servlet-class>com.avtb.controller.AvtbServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AvtbServlet</servlet-name>
+    <url-pattern>/front-end/restaurant/avtb/avtb.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>RetaServlet</servlet-name>
+    <servlet-class>com.reta.controller.RetaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RetaServlet</servlet-name>
+    <url-pattern>/front-end/restaurant/reta/reta.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>RepiServlet</servlet-name>
+    <servlet-class>com.repi.controller.RepiServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RepiServlet</servlet-name>
+    <url-pattern>/front-end/restaurant/repi/repi.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DBGifReader_repi</servlet-name>
+    <servlet-class>com.repi.controller.DBGifReader_repi</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DBGifReader_repi</servlet-name>
+    <url-pattern>/front-end/restaurant/repi/DBGifReader_repi.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DishServlet</servlet-name>
+    <servlet-class>com.dish.controller.DishServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DishServlet</servlet-name>
+    <url-pattern>/front-end/restaurant/dish/dish.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DishServlet</servlet-name>
+    <url-pattern>/front-end/rest_interface/dish.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DipiServlet</servlet-name>
+    <servlet-class>com.dipi.controller.DipiServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DipiServlet</servlet-name>
+    <url-pattern>/front-end/restaurant/dipi/dipi.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DBGifReader_dipi</servlet-name>
+    <servlet-class>com.dipi.controller.DBGifReader_dipi</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DBGifReader_dipi</servlet-name>
+    <url-pattern>/front-end/restaurant/dipi/DBGifReader_dipi.do</url-pattern>
+  </servlet-mapping>
+<!-- 培凱結束-->
 
 
 

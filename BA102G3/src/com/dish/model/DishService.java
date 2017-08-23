@@ -8,7 +8,7 @@ public class DishService {
 		dao = new DishDAO();
 	}
 	
-	public DishVO addDish(Integer rest_id,String dish_name,Integer dish_price,
+	public String addDish(Integer rest_id,String dish_name,Integer dish_price,
 			Integer dish_status,String dish_detail,String dish_note ) {
 		DishVO dishVO = new DishVO();
 		
@@ -18,9 +18,9 @@ public class DishService {
 		dishVO.setDish_status(dish_status);
 		dishVO.setDish_detail(dish_detail);
 		dishVO.setDish_note(dish_note);
-		dao.insert(dishVO);
+		String	dish_id = dao.insert(dishVO);
 		
-		return dishVO;
+		return dish_id;
 	}
 	
 	public DishVO updateDish(Integer rest_id,String dish_name,Integer dish_price,
@@ -49,6 +49,10 @@ public class DishService {
 	
 	public List<DishVO> getAll(){
 		return dao.getAll();
+	}
+	
+	public List<DishVO> getDishsByRestId(Integer rest_id) {
+		return dao.findByFk(rest_id);
 	}
 
 }

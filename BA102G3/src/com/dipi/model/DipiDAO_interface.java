@@ -8,6 +8,8 @@ public interface DipiDAO_interface {
 	public void update(DipiVO dipiVO);
 	public void delete(Integer dipi_id);
 	public DipiVO findByPrimaryKey(Integer dipi_id);
+
 	public List<DipiVO> getAll();
 	public byte[] download(Integer dipi_id);
+	List<DipiVO> getDipisByDishId(Integer dish_id);
 }

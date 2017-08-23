@@ -22,7 +22,6 @@ public class DBGifReader_repi extends HttpServlet {
 		res.setContentType("image/gif");
 		ServletOutputStream out = res.getOutputStream();
 		Integer repi_id = new Integer(req.getParameter("repi_id"));
-
 		try {
 			
 			PreparedStatement pstmt = null;

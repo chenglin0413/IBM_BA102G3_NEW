@@ -64,5 +64,9 @@ public class RetaService {
 		
 		public List<RetaVO> findByUserId(Integer user_id) {
 			return dao.findByUserId(user_id);
-		}		
+		}	
+		
+		public List<RetaVO> getAllRetaByRestID(Integer rest_id){
+			return dao.findByUserId(rest_id);
+		}
 }

@@ -1,8 +1,6 @@
 package com.dish.model;
 
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.ArrayList;
 import java.util.List;
 import javax.naming.Context;
@@ -40,16 +38,18 @@ public class DishJNDIDAO implements DishDAO_interface{
 	private static final String GET_ONE_STMT = 
 			"select * from dish where dish_id = ?";
 	
+	private static final String GET_BY_RESTID = "select * from dish where rest_id = ? order by dish_status desc";
 	
 	@Override
-	public void insert(DishVO dishVO) {
+	public String insert(DishVO dishVO) {
 		// TODO Auto-generated method stub
 		Connection con = null;
 		PreparedStatement pstmt = null;
-		
+		String dish_id = null;
 		try {
 			con = ds.getConnection();
-			pstmt = con.prepareStatement(INSERT_STMT);
+			String cols[] = { "dish_id" };
+			pstmt = con.prepareStatement(INSERT_STMT,cols);
 			
 			pstmt.setInt(1, dishVO.getRest_id());
 			pstmt.setString(2, dishVO.getDish_name());
@@ -59,6 +59,20 @@ public class DishJNDIDAO implements DishDAO_interface{
 			pstmt.setString(6, dishVO.getDish_note());
 			
 			pstmt.executeUpdate();
+			ResultSet rs = pstmt.getGeneratedKeys();
+			ResultSetMetaData rsmd = rs.getMetaData();
+			int columnCount = rsmd.getColumnCount();
+			if (rs.next()) {
+				do {
+					for (int i = 1; i <= columnCount; i++) {
+						dish_id = rs.getString(i);
+						System.out.println("(" + i + ") = " + dish_id + "(新增的自增主鍵值號碼)");
+					}
+				} while (rs.next());
+			} else {
+				System.out.println("NO KEYS WERE GENERATED.");
+			}
+			rs.close();
 			
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. "
@@ -80,7 +94,7 @@ public class DishJNDIDAO implements DishDAO_interface{
 				}
 			}
 		}
-		
+		return dish_id;
 	}
 
 	@Override
@@ -282,6 +296,68 @@ public class DishJNDIDAO implements DishDAO_interface{
 		return list;
 	}
 	
+	
+	@Override
+	public List<DishVO> findByFk(Integer rest_id) {
+		// TODO Auto-generated method stub
+		List<DishVO> list = new ArrayList<DishVO>();
+		DishVO dishVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement( GET_BY_RESTID );
+			
+			pstmt.setInt(1, rest_id);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				// empVO 也稱為 Domain objects
+				dishVO = new DishVO();
+				dishVO.setDish_id(rs.getInt("dish_id"));
+				dishVO.setRest_id(rs.getInt("rest_id"));
+				dishVO.setDish_name(rs.getString("dish_name"));
+				dishVO.setDish_price(rs.getInt("dish_price"));
+				dishVO.setDish_status(rs.getInt("dish_status"));
+				dishVO.setDish_detail(rs.getString("dish_detail"));
+				dishVO.setDish_note(rs.getString("dish_note"));
+				list.add(dishVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
 	public static void main(String[] args) {
 
 		DishJDBCDAO dao = new DishJDBCDAO();
@@ -334,5 +410,5 @@ public class DishJNDIDAO implements DishDAO_interface{
 			System.out.println();
 		}
 	}
-	
+
 }

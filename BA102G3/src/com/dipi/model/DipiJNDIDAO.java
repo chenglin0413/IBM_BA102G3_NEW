@@ -43,7 +43,8 @@ public class DipiJNDIDAO implements DipiDAO_interface{
 	private static final String GET_ONE_STMT = 
 			"select * from dipi where dipi_id = ?";
 	
-	
+	private static final String GET_ONE_DISH_STMT = 
+			"select * from dipi where dish_id = ?";
 	
 
 	@Override
@@ -291,9 +292,68 @@ public class DipiJNDIDAO implements DipiDAO_interface{
 		return list;
 	}
 	
+	@Override
+	public List<DipiVO> getDipisByDishId(Integer dish_id) {
+		// TODO Auto-generated method stub
+		List<DipiVO> list = new ArrayList<DipiVO>();
+		DipiVO dipiVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_DISH_STMT);
+			
+			pstmt.setInt(1, dish_id);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				dipiVO = new DipiVO();
+				dipiVO.setDipi_id(rs.getInt("dipi_id"));
+				dipiVO.setDish_id(rs.getInt("Dish_id"));
+				dipiVO.setDipi_name(rs.getString("dipi_name"));
+				dipiVO.setDipi_imgfmt(rs.getString("dipi_imgfmt"));
+				dipiVO.setDipi_img(rs.getBytes("dipi_img"));
+				list.add(dipiVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		}  catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
 	public static void main(String[] args) {
 
-		DipiJDBCDAO1 dao = new DipiJDBCDAO1();
+		DipiJDBCDAO dao = new DipiJDBCDAO();
 
 		// 新增
 		DipiVO dipiVO1 = new DipiVO();

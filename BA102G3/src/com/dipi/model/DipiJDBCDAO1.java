@@ -356,5 +356,11 @@ public class DipiJDBCDAO1 implements DipiDAO_interface{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<DipiVO> getDipisByDishId(Integer dish_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

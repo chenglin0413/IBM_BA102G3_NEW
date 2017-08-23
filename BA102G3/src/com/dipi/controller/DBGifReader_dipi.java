@@ -27,16 +27,11 @@ public class DBGifReader_dipi extends HttpServlet {
 			
 			PreparedStatement pstmt = null;
 			
-			
-				
-			
 				pstmt = con.prepareStatement(GET_ONE_STMT);
 				
 				pstmt.setInt(1, dipi_id);
 				
 				ResultSet rs= pstmt.executeQuery();
-			
-			
 			
 			if(rs.next()) {
 				BufferedInputStream in = new BufferedInputStream(rs.getBinaryStream("dipi_img"));

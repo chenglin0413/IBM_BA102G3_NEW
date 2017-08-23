@@ -44,7 +44,7 @@ public class RestService {
 			Integer rest_score, Integer user_status) {
 
 		RestVO restVO = new RestVO();
-		
+
 		restVO.setRest_id(rest_id);
 		restVO.setUser_id(user_id);
 		restVO.setRest_name(rest_name);

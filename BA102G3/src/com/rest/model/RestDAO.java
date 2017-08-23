@@ -165,7 +165,7 @@ public class RestDAO implements RestDAO_Interface {
 			pstmt.setInt(12, restVO.getRest_type());
 			pstmt.setInt(13,restVO.getRest_count());
 			pstmt.setInt(14, restVO.getRest_score());
-			pstmt.setInt(15, restVO.getRest_id());
+			pstmt.setInt(15, restVO.getUser_id());
 			pstmt.executeUpdate();
 			
 			pstmt = con.prepareStatement(UPDATE_USER_STATUS_STMT);

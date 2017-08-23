@@ -58,5 +58,9 @@ public class DipiService {
 //	public byte[] download(Integer dipi_id){
 //		return dao.download(dipi_id);
 //	}
+	
+	public List<DipiVO> findDipisByDishId(Integer dish_id){
+		return dao.getDipisByDishId(dish_id);
+	}
 
 }

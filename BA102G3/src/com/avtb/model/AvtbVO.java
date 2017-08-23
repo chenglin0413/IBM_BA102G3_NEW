@@ -1,12 +1,13 @@
 package com.avtb.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class AvtbVO {
  private Integer avtb_id;
  private Integer rest_id;
- private Date avtb_date_s;
- private Date avtb_date_e;
+ private Timestamp avtb_date_s;
+ private Timestamp avtb_date_e;
  private Integer avtb_reservation;
  private Integer avtb_max_reservation;
  
@@ -14,7 +15,7 @@ public class AvtbVO {
 	 super();
  }
 
-public AvtbVO(Integer avtb_id, Integer rest_id, Date avtb_date_s, Date avtb_date_e, Integer avtb_reservation,
+public AvtbVO(Integer avtb_id, Integer rest_id, Timestamp avtb_date_s, Timestamp avtb_date_e, Integer avtb_reservation,
 		Integer avtb_max_reservation) {
 	super();
 	this.avtb_id = avtb_id;
@@ -41,19 +42,19 @@ public void setRest_id(Integer rest_id) {
 	this.rest_id = rest_id;
 }
 
-public Date getAvtb_date_s() {
+public Timestamp getAvtb_date_s() {
 	return avtb_date_s;
 }
 
-public void setAvtb_date_s(Date avtb_date_s) {
+public void setAvtb_date_s(Timestamp avtb_date_s) {
 	this.avtb_date_s = avtb_date_s;
 }
 
-public Date getAvtb_date_e() {
+public Timestamp getAvtb_date_e() {
 	return avtb_date_e;
 }
 
-public void setAvtb_date_e(Date avtb_date_e) {
+public void setAvtb_date_e(Timestamp avtb_date_e) {
 	this.avtb_date_e = avtb_date_e;
 }
 

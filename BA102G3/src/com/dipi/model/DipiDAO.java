@@ -60,7 +60,10 @@ public class DipiDAO implements DipiDAO_interface{
 		try {
 			
 			con = ds.getConnection();
+			con.setAutoCommit(false);
 			pstmt = con.prepareStatement(INSERT_STMT);
+			
+			
 			
 			pstmt.setInt(1, dipiVO.getDish_id());
 			pstmt.setString(2, dipiVO.getDipi_name());
@@ -71,6 +74,7 @@ public class DipiDAO implements DipiDAO_interface{
 			
 			pstmt.executeUpdate();
 			
+			con.commit();
 		} 
 			// Handle any SQL errors
 		 catch (SQLException se) {
@@ -197,7 +201,7 @@ public class DipiDAO implements DipiDAO_interface{
 			
 
 			while (rs.next()) {
-				// empVo ¤]ºÙ¬° Domain objects
+				// empVo ï¿½]ï¿½Ù¬ï¿½ Domain objects
 				dipiVO = new DipiVO();
 				dipiVO.setDipi_id(rs.getInt("dipi_id"));
 				dipiVO.setDish_id(rs.getInt("Dish_id"));
@@ -257,7 +261,7 @@ public class DipiDAO implements DipiDAO_interface{
 			rs = pstmt.executeQuery();
 
 			while (rs.next()) {
-				// empVO ¤]ºÙ¬° Domain objects
+				// empVO ï¿½]ï¿½Ù¬ï¿½ Domain objects
 				
 				dipiVO = new DipiVO();
 				dipiVO.setDipi_id(rs.getInt("dipi_id"));
@@ -265,6 +269,66 @@ public class DipiDAO implements DipiDAO_interface{
 				dipiVO.setDipi_name(rs.getString("dipi_name"));
 				dipiVO.setDipi_imgfmt(rs.getString("dipi_imgfmt"));
 				//dipiVO.setDipi_img(dipiVO.toObjects(rs.getBytes("dipi_img")));
+				dipiVO.setDipi_img(rs.getBytes("dipi_img"));
+				list.add(dipiVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		}  catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	
+	@Override
+	public List<DipiVO> getDipisByDishId(Integer dish_id) {
+		// TODO Auto-generated method stub
+		List<DipiVO> list = new ArrayList<DipiVO>();
+		DipiVO dipiVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ONE_DISH_STMT);
+			
+			pstmt.setInt(1, dish_id);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				dipiVO = new DipiVO();
+				dipiVO.setDipi_id(rs.getInt("dipi_id"));
+				dipiVO.setDish_id(rs.getInt("Dish_id"));
+				dipiVO.setDipi_name(rs.getString("dipi_name"));
+				dipiVO.setDipi_imgfmt(rs.getString("dipi_imgfmt"));
 				dipiVO.setDipi_img(rs.getBytes("dipi_img"));
 				list.add(dipiVO); // Store the row in the list
 			}

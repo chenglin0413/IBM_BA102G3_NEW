@@ -92,7 +92,7 @@ pageContext.setAttribute("trvllist", trvllist);
                         <a class="page-scroll" href="<%=request.getContextPath()%>/front-end/member_interface/listAllProd.jsp">商品</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="../rest/rest__2.html">餐廳</a>
+                        <a class="page-scroll" href="<%=request.getContextPath()%>/front-end/member_interface_rest/rest/listAllRest.jsp">餐廳</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="<%=request.getContextPath()%>/front-end/member_interface/pm_index.jsp">促銷</a>

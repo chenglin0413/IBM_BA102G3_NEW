@@ -21,7 +21,8 @@ public class RetaDAO implements RetaDAO_Interface {
 	private static final String GET_ONE_STMT ="SELECT * FROM RETA WHERE RETA_ID = ?";
 	private static final String GET_ALL_STMT = "SELECT * FROM RETA";
 	private static final String GET_ALL_BY_USER_ID_STMT = "SELECT * FROM RETA WHERE USER_ID=?";
-	
+	private static final String GET_ALL_BY_REST_ID_STMT = "SELECT * FROM RETA WHERE REST_ID=?";
+
 	private static DataSource ds = null;
 	static {
 		try {
@@ -48,13 +49,15 @@ public class RetaDAO implements RetaDAO_Interface {
 			pstmt.setInt(3, retaVO.getReta_number());
 			pstmt.setInt(4, retaVO.getReta_status());
 			pstmt.setInt(5, retaVO.getReta_grant());
+			System.out.println("52");
 			pstmt.setDate(6, retaVO.getReta_date());
+			System.out.println("54");
 			pstmt.setInt(7, retaVO.getReta_rank_res());
 			pstmt.setString(8, retaVO.getReta_review());
 			pstmt.setDate(9, retaVO.getReta_reviewdate());
 			pstmt.setDate(10, retaVO.getRest_rpdate());
 			pstmt.setString(11,retaVO.getRest_rpcomm());
-			pstmt.setDouble(12, retaVO.getRest_rpstatus());
+			pstmt.setInt(12, retaVO.getRest_rpstatus());
 			
 			pstmt.executeUpdate();
 
@@ -311,6 +314,74 @@ public class RetaDAO implements RetaDAO_Interface {
 			pstmt = con.prepareStatement(GET_ALL_BY_USER_ID_STMT);
 
 			pstmt.setInt(1, user_id);
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+				
+				retaVO = new RetaVO();
+				retaVO.setReta_id(rs.getInt("reta_id"));
+				retaVO.setAvtb_id(rs.getInt("avtb_id"));
+				retaVO.setUser_id(rs.getInt("user_id"));
+				retaVO.setReta_number(rs.getInt("reta_number"));
+				retaVO.setReta_status(rs.getInt("reta_status"));
+				retaVO.setReta_grant(rs.getInt("reta_grant"));
+				retaVO.setReta_date(rs.getDate("reta_date"));
+				retaVO.setReta_rank_res(rs.getInt("reta_rank_res"));
+				retaVO.setReta_review(rs.getString("reta_review"));
+				retaVO.setReta_reviewdate(rs.getDate("reta_reviewdate"));
+				retaVO.setRest_rpdate(rs.getDate("rest_rpdate"));
+				retaVO.setRest_rpcomm(rs.getString("rest_rpcomm"));
+				retaVO.setRest_rpstatus(rs.getInt("rest_rpstatus"));
+				list.add(retaVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		}catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+
+	@Override
+	public List<RetaVO> getAllRetaByRestID(Integer rest_id) {
+		List<RetaVO> list = new ArrayList<RetaVO>();
+		RetaVO retaVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_BY_USER_ID_STMT);
+
+			pstmt.setInt(1, rest_id);
 			
 			rs = pstmt.executeQuery();
 			

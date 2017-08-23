@@ -48,11 +48,7 @@ public class DipiServlet extends HttpServlet {
 		res.setContentType("text/html; charset=utf8");
 		
 		String action = req.getParameter("action");
-		
-		System.out.println(getServletContext().getServerInfo());
-		System.out.println("ContentType="+req.getContentType()); // 測試用
 
-		
 		Collection<Part> parts = req.getParts(); // Servlet3.0新增了Part介面，讓我們方便的進行檔案上傳處理
 		
 		if ("insert".equals(action)) {
