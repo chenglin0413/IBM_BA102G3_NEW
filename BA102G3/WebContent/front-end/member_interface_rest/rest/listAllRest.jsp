@@ -71,7 +71,7 @@ $( function() {
         <div class="row">
         <ol class="breadcrumb">
                <li>
-                   <a href="../index.html">首頁</a>
+                   <a href="<%=request.getContextPath() %>/front-end/index.jsp">首頁</a>
                </li>
                <li class="active">餐廳</a>
                </li>

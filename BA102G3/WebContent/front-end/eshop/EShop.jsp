@@ -13,7 +13,7 @@
 
 %>
 
-
+<jsp:useBean id="prodSvc" scope="page" class="com.prod.model.ProdService"/>
 <!DOCTYPE html>
 <html lang="en" class="easy-sidebar-active">
 
@@ -58,6 +58,9 @@
           height: 250px;  
           margin: auto;
         }
+        .areaColor{
+			background-color:blue;
+		}
     </style>
 </head>
 
@@ -112,7 +115,7 @@
               
          <div class="item">
          
-			<div class="col-md-6"><div class="item">
+			<div class="col-md-6"><div class="item" > 
 			<img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" >
 			</div></div>
 			<div class="col-md-6">
@@ -162,6 +165,48 @@
 		</div>
 		</div>
 <%-- </c:forEach> --%>
+
+
+<div class="callout"></div>
+ <!--橫幅廣告頁-->
+	<div id="myCarousel areaColor" class="carousel slide ">
+    	<div class="container">
+       		<div class="row carousel-holder">
+                <div class="col-md-12">
+                	<div class="row">
+	                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+	                        <div class="carousel-inner">
+			                         <c:forEach var="prodVO" items="${prodSvc.getOneStore_idAllProd(prodVO.store_id)}" varStatus="s" begin="1" end="${prodSvc.all.size()}" step="1">
+									<c:if test="${s.count==1}">                      
+			                            <div class="item active">
+			                            <div class="row">
+			                         </c:if>
+			                     <c:if test="${s.count!=1 && s.count%4==1}">                      
+			                          <div class="item">
+			                          <div class="row">
+			                          </c:if>      
+	                                 		<div class="col-md-3 " id="boxshadow" >
+	                                 			<div class="text-center"><h4><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_id=${prodVO.prod_id}&action=getOne_For_Display">${prodVO.prod_name }</a></h4></div>
+												<img  class="img-thumbnail" src="<%= request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}">
+	                                 		</div>
+		                                <c:if test="${s.count%4==0}"> 		
+		                                   	</div>
+		                				</div>
+                               		</c:if>   
+                        		 </c:forEach> 
+                     </div>          
+                     </div>
+                     <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                         <span class="glyphicon glyphicon-chevron-left"></span>
+                     </a>
+                     <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                         <span class="glyphicon glyphicon-chevron-right"></span>
+                     </a>
+              </div>
+          </div> 
+      </div>   
+      <!--------------- 廣告橫幅 ---------------->
+
 
 <div class="col-xs-12 col-md-8 col-md-offset-4">
 </div>
