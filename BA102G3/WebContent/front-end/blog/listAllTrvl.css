@@ -1,12 +1,12 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:400,100italic,100,300,300italic,900italic,900,700,700italic,500italic,500,400italic);
 body {
     font-family: 'Roboto', sans-serif;
+    border:1px;
 }
 .publicaciones-blog-home {
     padding-bottom: 50px;
 	background: url("") no-repeat fixed center center;
     background-size: 100% auto;
-	background-color: #f1f1f1;
 }
 .publicaciones-blog-home h2 {
 	text-align: center;
@@ -14,13 +14,15 @@ body {
     margin-bottom: 30px;
     font-size: 44px;
     margin-top: 70px;
+    background-color: #A5DEE4;
 }
 .publicaciones-blog-home h2 b {
-	color: #2BBCDE;
+	color: #376B6D;
 }
 .publicaciones-blog-home .fondo-publicacion-home {
 	background: #ffffff;
-    border-radius: 3px;
+    border-radius: 15px;
+    border-top-left-radius:1em;
     overflow: hidden;
     height: 400px;
     margin-bottom: 20px;
@@ -30,14 +32,14 @@ body {
     position: relative;
 }
 .publicaciones-blog-home .fondo-publicacion-home:hover h3 {
-	color: #2BBCDE;
-/*    box-shadow: 0px 4px 3px 3px rgba(0, 0, 0, 0.08);*/
+	color: #33A6B8;
+    box-shadow: 0px 4px 3px 3px rgba(0, 0, 0, 0.08);
 }
 .publicaciones-blog-home .fondo-publicacion-home:hover .mascara-enlace-blog-home {
     height: 400px;
     width: 100%;
     color: #aaa;
-    background-color: #2BBCDE;
+    background-color: #33A6B8;
     position: absolute;
     top: 0;
     opacity: 0.95;
@@ -68,7 +70,8 @@ body {
     font-weight: 900;
     color: #fff;
     text-transform: uppercase;
-    font-size: 30px;
+    font-size: 25px;
+    margin-left:30px;
 }
 .publicaciones-blog-home .fondo-publicacion-home .contenido-publicacion-principal-home p {
     color: #ffffff;
@@ -83,6 +86,7 @@ body {
     font-weight: 900;
     font-size: 20px;
     text-transform: uppercase;
+    margin-left:20px;
 }
 .publicaciones-blog-home .fondo-publicacion-home .img-publicacion-home  {
     overflow: hidden;
@@ -128,6 +132,7 @@ body {
     text-transform: uppercase;
     font-size: 25px;
     line-height: 26px;
+    margin-left:20px;
 }
 @media (max-width: 768px) {
     .publicaciones-blog-home h2 {

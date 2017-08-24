@@ -74,7 +74,13 @@ public class TrvlServlet extends HttpServlet {
 				trvlVO.setTrvl_date(trvl_date);
 				trvlVO.setTrvl_content(trvl_content);
 				
-
+				Collection<Part> parts = request.getParts();
+				for (Part partTest : parts) {
+					if (getFileNameFromPart(partTest) == null) {
+						errorMsgs.add("請上傳一張圖片");
+					}
+				}	
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					request.setAttribute("trvlVO", trvlVO);
@@ -86,28 +92,17 @@ public class TrvlServlet extends HttpServlet {
 				/*************************** 2.開始新增資料 ***************************************/
 				TrvlService trvlSvc = new TrvlService();
 				TrpiService trpiSvc = new TrpiService();
+				Integer trvl_id = Integer.parseInt(trvlSvc.addTrvl(userVO.getUser_id(), trvl_date, trvl_tittle, trvl_loc, trvl_content));
 				
-				Collection<Part> parts = request.getParts();
 				for (Part part : parts) {
 					if (getFileNameFromPart(part) != null && part.getContentType() != null) {
 						InputStream in = part.getInputStream();
 						String trpi_imgfmt = getFileNameFromPart(part);
 						byte[] trpi_img = new byte[in.available()];
 						in.read(trpi_img);
-						
 						//確認有圖片再新增遊記
-						Integer trvl_id = Integer.parseInt(trvlSvc.addTrvl(userVO.getUser_id(), trvl_date, trvl_tittle, trvl_loc, trvl_content));
 						trpiSvc.addTrpi(trvl_id, trpi_img, trpi_imgfmt);
 						in.close();
-					}else if (getFileNameFromPart(part) == null) {
-						errorMsgs.add("請上傳一張圖片");
-						
-						if (!errorMsgs.isEmpty()) {
-							request.setAttribute("trvlVO", trvlVO);
-							RequestDispatcher failureView = request.getRequestDispatcher("/front-end/blog/addTrvl.jsp");
-							failureView.forward(request, response);
-							return;
-						}
 					}
 				}
 				
@@ -406,6 +401,88 @@ public class TrvlServlet extends HttpServlet {
 				failureView.forward(request, response);
 			}
 		}
+		
+		
+		if ("listTrvls_ByCompositeQuery".equals(action)) { // 來自select_page.jsp的複合查詢請求
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			request.setAttribute("errorMsgs", errorMsgs);
+
+			try {
+				
+				/***************************1.將輸入資料轉為Map**********************************/ 
+				//採用Map<String,String[]> getParameterMap()的方法 
+				//注意:an immutable java.util.Map 
+				//Map<String, String[]> map = req.getParameterMap();
+				Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
+				if (request.getParameter("whichPage") == null){
+					HashMap<String, String[]> map1 = (HashMap<String, String[]>)request.getParameterMap();
+					HashMap<String, String[]> map2 = new HashMap<String, String[]>();
+					map2 = (HashMap<String, String[]>)map1.clone();
+					session.setAttribute("map",map2);
+					map = (HashMap<String, String[]>)request.getParameterMap();
+				} 
+				
+				/***************************2.開始複合查詢***************************************/
+				TrvlService trvlSvc = new TrvlService();
+				List<TrvlVO> list  = trvlSvc.getAll(map);
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				request.setAttribute("listTrvls_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
+				RequestDispatcher successView = request.getRequestDispatcher("/front-end/blog/listTrvls_ByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+				successView.forward(request, response);
+				
+				/***************************其他可能的錯誤處理**********************************/
+			} catch (Exception e) {
+				errorMsgs.add(e.getMessage());
+				RequestDispatcher failureView = request
+						.getRequestDispatcher("/front-end/blog/listAllTrvl.jsp");
+				failureView.forward(request, response);
+			}
+		}
+		
+		
+//		if ("listTrvls_ByCompositeQuery".equals(action)) { // 來自select_page.jsp的複合查詢請求
+//			List<String> errorMsgs = new LinkedList<String>();
+//			// Store this set in the request scope, in case we need to
+//			// send the ErrorPage view.
+//			req.setAttribute("errorMsgs", errorMsgs);
+//
+//			try {
+//				
+//				/***************************1.將輸入資料轉為Map**********************************/ 
+//				//採用Map<String,String[]> getParameterMap()的方法 
+//				//注意:an immutable java.util.Map 
+//				//Map<String, String[]> map = req.getParameterMap();
+//				HttpSession session = req.getSession();
+//				Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
+//				if (req.getParameter("whichPage") == null){
+//					HashMap<String, String[]> map1 = (HashMap<String, String[]>)req.getParameterMap();
+//					HashMap<String, String[]> map2 = new HashMap<String, String[]>();
+//					map2 = (HashMap<String, String[]>)map1.clone();
+//					session.setAttribute("map",map2);
+//					map = (HashMap<String, String[]>)req.getParameterMap();
+//				} 
+//				
+//				/***************************2.開始複合查詢***************************************/
+//				EmpService empSvc = new EmpService();
+//				List<EmpVO> list  = empSvc.getAll(map);
+//				
+//				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+//				req.setAttribute("listEmps_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
+//				RequestDispatcher successView = req.getRequestDispatcher("/emp/listEmps_ByCompositeQuery.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+//				successView.forward(req, res);
+//				
+//				/***************************其他可能的錯誤處理**********************************/
+//			} catch (Exception e) {
+//				errorMsgs.add(e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/select_page.jsp");
+//				failureView.forward(req, res);
+//			}
+//		}
+		
 
 	}
 	

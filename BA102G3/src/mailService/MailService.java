@@ -52,7 +52,7 @@ public class MailService {
 	//測試用的
 	 public static void main (String args[]){
 
-	      String to = "chenglin0413@gmail.com";//專題用 :"ba102g3iii@gmail.com"
+	      String to = "BA102G3iii@gmail.com";//專題用 :"ba102g3iii@gmail.com"
 	      
 	      String subject = "密碼通知";
 	      

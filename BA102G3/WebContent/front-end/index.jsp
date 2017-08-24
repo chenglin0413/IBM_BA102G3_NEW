@@ -126,7 +126,7 @@ pageContext.setAttribute("trvllist", trvllist);
                     	  <li><a href="<%= request.getContextPath() %>/front-end/user/memberProfile.html"><i class="fa fa-user-md fa-fw"></i>${userVO.user_lastname},您好</a></li>       
 				     	<li><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneUser_idAllWish.jsp"><i class="fa fa-heart-o"></i>追蹤商品</a></li>
                         <li><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneUser_idAllOrd.jsp"><i class="fa fa-bookmark-o fa-fw"></i></i>消費記錄</a></li>
-                        <li><a href="memberReserveRecord.html"><i class="fa fa-book fa-fw"></i>餐廳訂位記錄</a></li>
+                        <li><a href="<%=request.getContextPath()%>/front-end/member_interface_rest/rest/listOneUser_idAllReta.jsp"><i class="fa fa-book fa-fw"></i>餐廳訂位記錄</a></li>
                         <li><a href="<%=request.getContextPath()%>/front-end/blog/listAllByUser.jsp"><i class="fa fa-camera-retro fa-fw"></i> 個人遊記</a></li>
                         <li><a href="<%= request.getContextPath() %>/front-end/user/memberProfile.jsp"><i class="fa fa-gear fa-fw"></i> 基本資訊修改</a></li>
                         <li><a href="<%= request.getContextPath() %>/front-end/user/memberPayFee.jsp"><i class="fa fa-money fa-fw"></i> 繳費</a></li>
@@ -244,7 +244,7 @@ pageContext.setAttribute("trvllist", trvllist);
 									 <c:if test="${not empty userVO.user_account}" var="condition2" scope="session" > 
 									 	<form name="shoppingForm" action="<%=request.getContextPath()%>/front-end/eshop/ShoppingServlet" method="POST">
 										<div>數量： <input type="number" name="quantity" size="3" value=1 required></div>
-							                  <div class="btn btn-default"><input type="submit" name="Submit" value="放入購物車"></div>
+							                 <button class="btn btn-success">加入購物車</button>
 										  <input type="hidden" name="prod_id" value="${prodVO.prod_id}">
 								      	  <input type="hidden" name="store_id" value="${prodVO.store_id}">
 									      <input type="hidden" name="prod_name" value="${prodVO.prod_name}">
@@ -257,7 +257,7 @@ pageContext.setAttribute("trvllist", trvllist);
 								       <form name="wishForm" action="<%=request.getContextPath()%>/front-end/wish/wish.do" method="POST">
 								       	  <input type="hidden" name="user_id" value="${userVO.user_id}">			
 								       	  <input type="hidden" name="prod_id" value="${prodVO.prod_id}">
-									       <div class="btn btn-default"><input type="submit" name="Submit" value="加入追蹤"></div>
+									       <button class="btn btn-info">加入追蹤</button>
 									       <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑-->
 									       <input type="hidden" name="action" value="ADDTOWish">
 								       </form>

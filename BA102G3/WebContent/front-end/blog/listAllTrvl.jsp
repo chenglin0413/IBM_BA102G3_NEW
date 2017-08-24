@@ -23,7 +23,6 @@
     <title>Anytime Grip</title>
 
     <!-- Bootstrap Core CSS -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="<%= request.getContextPath() %>/front-end/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
@@ -40,7 +39,15 @@
     <title>遊記瀏覽</title>
 
 	<style type="text/css">
-       
+       body {
+			background-image: url('<%=request.getContextPath()%>/front-end/blog/img/28.jpg');
+			background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+		}
+		
+		
         .content: {
           position: relative;
         }
@@ -55,7 +62,9 @@
         }
         
         .pic {
-        	width:500px;
+        	border-top-left-radius:1em;
+        	border-top-right-radius:1em;
+        	width:550px;
         	height:auto;
         }
   		#trvl_tittle{
@@ -63,10 +72,19 @@
         }
         #user_information {
         	position: absolute;
-        	margin-left:0;
+        	margin-left:20px;
     		bottom: 0;
+    		font-size:10px;
         }
-  		
+  		#textSearch{
+			 border-radius: 999px;
+			 width:150px;
+ 			 height: 30px;
+			 box-sizing: border-box;
+			 font-family: courier;
+  		}
+  	
+	
     </style>
 </head>
 <body>
@@ -98,30 +116,49 @@
            </ol>
   	</div>
 </div>         
-           
-     
+   	<div class="container">	
+  		<div class="row">
+  			<form id="serchForm" ACTION="<%=request.getContextPath()%>/front-end/trvl/trvl.do" method="post">
+	  		     <div class="col-sm-6 col-md-2">
+	  				<input type="text" placeholder="地點蒐尋" name="trvl_loc" id="textSearch"/>
+	    		</div> 
+	    		 <div class="col-sm-6 col-md-2">
+	  				<input type="text" placeholder="遊記標題蒐尋" name="trvl_tittle" id="textSearch"/>
+	    		</div> 
+	  		     <div class="col-sm-6 col-md-1">
+	  		     	<input type="hidden" name="action" value="listTrvls_ByCompositeQuery"  />
+	  		     	<input type="submit" value="查詢" class="btn btn-primary btn-sm btnSearch" />
+	    		</div>
+	    	</form>	
+    	</div>
+	</div> 
+	
   <section class="publicaciones-blog-home">
       <div class="container">
           <h2></h2>
         <div class="row">
           <div class="row-page row">
-          <%@ include file="page1.file"%>
+          <%@ include file="page/page1.file"%>
 			<c:forEach var="trvlVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" step="1" varStatus="s">
           
-			    <div class="col-page col-sm-4 col-md-3">
+			    <div class="col-page col-sm-4 col-md-4">
               		<a href="<%=request.getContextPath()%>/front-end/trvl/trvl.do?trvl_id=${trvlVO.trvl_id}&action=getOne_For_Display"  class="fondo-publicacion-home">
                 <div class="img-publicacion-home">
                   	<c:forEach var="trpiVO" items="${trpiSvc.all}">
 						<c:if test="${trvlVO.trvl_id==trpiVO.trvl_id}">
-							<img class="img-responsive pic" src="<%= request.getContextPath()%>/front-end/trpi/DBGifReader.do?trpi_id=${trpiVO.trpi_id}">
+							<img class="img-responsive img-thumbnail pic" src="<%= request.getContextPath()%>/front-end/trpi/DBGifReader.do?trpi_id=${trpiVO.trpi_id}">
 						</c:if>
 					</c:forEach>
                 </div>
-                  	<h3>${trvlVO.trvl_tittle}</h3>
+                <h3>${trvlVO.trvl_tittle}</h3>
                 <div class="contenido-publicacion-home JQellipsis">
                  	 <p>${trvlVO.trvl_content}</p>
                 </div>
-                <p id="user_information">${userSvc.getOneUser(trvlVO.user_id).user_account}&nbsp;&nbsp;<small>(${trvlVO.trvl_date})</small></p>
+                	<p id="user_information">${userSvc.getOneUser(trvlVO.user_id).user_account}
+	               	 	<small>(${trvlVO.trvl_date})</small>
+	               	 	<img src="<%=request.getContextPath()%>/front-end/blog/img/footstep.png" width="20">
+	               	 	${trvlVO.trvl_count}
+                	</p>
                 <div class="mascara-enlace-blog-home">
                   	<span>Read More</span>
                 </div>
@@ -134,28 +171,29 @@
  </section>
 <div class="row">
 	<div class="col-sm-6 col-md-4 col-md-offset-4">
-		<p><%@include file="page2.file"%></p>
+		<p><%@include file="page/page2.file"%></p>
 	</div>
 </div>	
-  <!--   -----------------------------------------------------------------------------------------------   - -->         	
 	
 	
 
 
 <%@ include file="/front-end/member_interface/script.file" %>	
 <script type="text/javascript">
-
 	
-	$(function(){
-	    var len = 80; // 超過len個字以"..."取代
-	    $(".JQellipsis").each(function(i){
-	        if($(this).text().length>len){
-	            $(this).attr("title",$(this).text());
-	            var text=$(this).text().substring(0,len-1)+"...";
-	            $(this).text(text);
-	        }
-	    });
-	});
+	
+$(function(){
+    var len = 100; // 超過len個字以"..."取代
+    $(".JQellipsis").each(function(i){
+        if($(this).text().length>len){
+            $(this).attr("title",$(this).text());
+            var text=$(this).text().substring(0,len-1)+"...";
+            $(this).text(text);
+        }
+    });
+    
+});
+	
 	
     </script>
 </body>

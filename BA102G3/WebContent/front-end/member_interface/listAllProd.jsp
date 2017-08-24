@@ -239,7 +239,7 @@
 									  
 									 <form name="shoppingForm" action="<%=request.getContextPath()%>/front-end/eshop/ShoppingServlet" method="POST">	
 												<div>數量： <input type="number" name="quantity" min="1" max="10" value="1" size="2"></div>
-							                  <div class="btn btn-default"><input type="submit" name="Submit" value="放入購物車"></div>
+							                  <button class="btn btn-success">放入購物車</button>
 										  <input type="hidden" name="prod_id" value="${prodVO.prod_id}">
 								      	  <input type="hidden" name="store_id" value="${prodVO.store_id}">
 									      <input type="hidden" name="prod_name" value="${prodVO.prod_name}">
@@ -259,7 +259,7 @@
 								       <form name="wishForm" action="<%=request.getContextPath()%>/front-end/wish/wish.do" method="POST">
 								       	  <input type="hidden" name="user_id" value="${userVO.user_id}">			
 								       	  <input type="hidden" name="prod_id" value="${prodVO.prod_id}">
-									       <div class="btn btn-default"><input type="submit" name="Submit" value="加入追蹤"></div>
+									       <button class="btn btn-info">加入追蹤</button>
 									       <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑-->
 									       <input type="hidden" name="action" value="ADDTOWish">
 								       </form>

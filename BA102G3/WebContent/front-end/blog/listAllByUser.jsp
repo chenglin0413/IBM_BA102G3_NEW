@@ -37,6 +37,13 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 	
 	<style type="text/css">
+		body {
+			background-image: url('<%= request.getContextPath() %>/front-end/blog/img/335.jpg');
+			background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+		}
         .content: {
           position: relative;
         }
@@ -49,7 +56,6 @@
           left: 5px;
           margin: auto;
         }
- 
 			      
     </style>
 
@@ -105,48 +111,55 @@
 			</div>
 		</div>
 	</div>
-	<br>
+	
+	<br/>
+	<jsp:useBean id="trpiSvc" scope="page" class="com.trpi.model.TrpiService" />
+	
 	<div class="col-md-10 col-md-offset-1">
-		<table class="table table-striped table-hover datatable">
-			<jsp:useBean id="trpiSvc" scope="page" class="com.trpi.model.TrpiService" />
-			<tr>
-				<th>遊記編號</th>
-				<th>撰寫日期</th>
-				<th>旅遊標題</th>
-				<th>旅遊地點</th>
-				<th>點擊量</th>
-				<th>修改</th>
-				<th>刪除</th>
-			</tr>
-			<%@ include file="page1.file"%>
-			<c:forEach var="trvlVO" items="${list}" begin="<%=pageIndex%>"
-				end="<%=pageIndex+rowsPerPage-1%>">
-				<tr>
-					<td>${trvlVO.trvl_id}</td>
-					<td>${trvlVO.trvl_date}</td>
-					<td><a href="<%=request.getContextPath()%>/front-end/trvl/trvl.do?trvl_id=${trvlVO.trvl_id}&action=getOne_For_Display">${trvlVO.trvl_tittle}</a></td>
-					<td>${trvlVO.trvl_loc}</td>
-					<td>${trvlVO.trvl_count}</td>
-					<td>
-						<FORM METHOD="post"
-							ACTION="<%=request.getContextPath()%>/front-end/trvl/trvl.do">
-							<input type="submit" value="修改"> <input type="hidden"
-								name="trvl_id" value="${trvlVO.trvl_id}"> <input
-								type="hidden" name="action" value="getOne_For_Update">
-						</FORM>
-					</td>
-					<td>
-						<FORM METHOD="post"
-							ACTION="<%=request.getContextPath()%>/front-end/trvl/trvl.do">
-							<input type="submit" value="刪除"> <input type="hidden"
-								name="trvl_id" value="${trvlVO.trvl_id}"> <input
-								type="hidden" name="action" value="delete">
-						</FORM>
-					</td>
+		<table class="table table-hover">
+			<thead style="background-color:#66BAB7;">	
+				<tr style="color:white;">
+					<th>項次</th>
+					<th>遊記編號</th>
+					<th>撰寫日期</th>
+					<th>旅遊標題</th>
+					<th>旅遊地點</th>
+					<th>點擊量</th>
+					<th>修改</th>
+					<th>刪除</th>
 				</tr>
-			</c:forEach>
+			</thead>
+			<tbody style="background-color:white;">
+			<%@ include file="page/page1.file"%>
+				<c:forEach var="trvlVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" varStatus="s">
+					<tr>
+						<td>${s.count}</td>
+						<td>${trvlVO.trvl_id}</td>
+						<td>${trvlVO.trvl_date}</td>
+						<td><a href="<%=request.getContextPath()%>/front-end/trvl/trvl.do?trvl_id=${trvlVO.trvl_id}&action=getOne_For_Display">${trvlVO.trvl_tittle}</a></td>
+						<td>${trvlVO.trvl_loc}</td>
+						<td>${trvlVO.trvl_count}</td>
+						<td>
+							<FORM METHOD="post"
+								ACTION="<%=request.getContextPath()%>/front-end/trvl/trvl.do">
+								<input type="submit" value="修改"> <input type="hidden"
+									name="trvl_id" value="${trvlVO.trvl_id}"> <input
+									type="hidden" name="action" value="getOne_For_Update">
+							</FORM>
+						</td>
+						<td>
+							<FORM METHOD="post"
+								ACTION="<%=request.getContextPath()%>/front-end/trvl/trvl.do">
+								<input type="submit" value="刪除"> <input type="hidden"
+									name="trvl_id" value="${trvlVO.trvl_id}"> <input
+									type="hidden" name="action" value="delete">
+							</FORM>
+						</td>
+					</tr>
+				</c:forEach>
+			</tbody>
 		</table>
-		<%@ include file="page2.file"%>
+		<%@ include file="page/page2.file"%>
 	</div>	
 		
 

@@ -1,6 +1,7 @@
 package com.trvl.model;
 
 import java.util.List;
+import java.util.Map;
 
 import com.tlcm.model.TlcmVO;
 import com.trpi.model.TrpiVO;
@@ -76,6 +77,11 @@ public class TrvlService {
 	//找出點擊數前三的trvl
 	public List<TrvlVO> getTopTrvlCounts() {
 		 return dao.getTopOfBlogs();
+	}
+	
+	//萬用查詢
+	public List<TrvlVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
 	}
 	
 //	public void addTrvlWithTrpis (TrvlVO trvlVO , List<TrpiVO> trpiList) {

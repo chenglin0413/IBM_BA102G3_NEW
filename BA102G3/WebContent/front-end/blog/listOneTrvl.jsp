@@ -53,7 +53,6 @@
         .box{
           width: 110px;
           height: 50px;
-          
           position: fixed;
           top: 52px;
           left: 5px;
@@ -65,8 +64,17 @@
         #rptlForm {
         	display:none;
         }
-        
-       
+        .img-thumbnail{
+        	width:800px;
+        	border-radius:5px;
+        }
+       	.profilePic {
+ 			margin-left:15px;      		
+       	}
+       	.sidebar-module-inset > h4{
+       		margin-left:40px;
+       		background-color:
+       	}
     </style>
 
 </head>
@@ -125,17 +133,21 @@
 		</div><!-- /.blog-post -->
 		<br>
 		<br>
-		<br>
-		<br>
 		<%	
 			java.sql.Date date_SQL = new java.sql.Date(System.currentTimeMillis());
 		%>	
 		<c:forEach var="tlcmVO" items="${trvlSvc.getTlcmsByTrvlId(trvlVO.trvl_id)}">
 			<div class="panel panel-info">
 				<div class="panel-heading">
-				    <h3 class="panel-title">
-					    <img class="image-circle" src="<%= request.getContextPath() %>/front-end/user/userImg.do?user_id=${tlcmVO.user_id}" width="30px" height="30px">&nbsp${userSvc.getOneUser(tlcmVO.user_id).user_account}
-					    <small>於${tlcmVO.tlcm_date}留言</small> &nbsp <img src="<%=request.getContextPath()%>/front-end/blog/img/pencil.png">
+				    <h3 class="panel-title" style="margin-left:0">
+				    	<div class="row">
+						    <div class="col-md-1" style="padding-right: 0px;">
+							    <img class="img-responsive img-circle" width="50" height="50" src="<%= request.getContextPath() %>/front-end/user/userImg.do?user_id=${tlcmVO.user_id}">
+						    </div>
+						     <div class="col-md-8" style="margin:0 ,0 ,0, 0;"><strong>${userSvc.getOneUser(tlcmVO.user_id).user_account}</strong>
+						    	<small>於${tlcmVO.tlcm_date}留言</small> &nbsp <img src="<%=request.getContextPath()%>/front-end/blog/img/pencil.png">
+				   			 </div>
+				    	</div>
 				    </h3>
 				</div>
 				<div class="panel-body">
@@ -165,11 +177,11 @@
         
         <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
           <div class="sidebar-module sidebar-module-inset">
-            <h4>About Me</h4>
-            <img class="image-circle" src="<%= request.getContextPath() %>/front-end/user/userImg.do?user_id=${trvlVO.user_id}" width="150px" height="150px">
-            <p>${userSvc.getOneUser(trvlVO.user_id).user_firstname}&nbsp;${userSvc.getOneUser(trvlVO.user_id).user_lastname}</p>
-            <a href="#"><em>${userSvc.getOneUser(trvlVO.user_id).user_email}</em></a>
-            <p> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+            <h4>About me</h4>
+            <img class="img-responsive profilePic" src="<%= request.getContextPath() %>/front-end/user/userImg.do?user_id=${trvlVO.user_id}">
+            <p>${userSvc.getOneUser(trvlVO.user_id).user_firstname}  ${userSvc.getOneUser(trvlVO.user_id).user_lastname}</p>
+            <a href="#">${userSvc.getOneUser(trvlVO.user_id).user_email}</a>
+            <p> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed.</p>
           </div>
           <div class="sidebar-module">
             <h4>Archives</h4>
@@ -179,21 +191,15 @@
               <li><a href="#">January 2014</a></li>
               <li><a href="#">December 2013</a></li>
               <li><a href="#">November 2013</a></li>
-              <li><a href="#">October 2013</a></li>
-              <li><a href="#">September 2013</a></li>
-              <li><a href="#">August 2013</a></li>
-              <li><a href="#">July 2013</a></li>
-              <li><a href="#">June 2013</a></li>
-              <li><a href="#">May 2013</a></li>
-              <li><a href="#">April 2013</a></li>
             </ol>
           </div>
           <div class="sidebar-module">
-            <h4>Elsewhere</h4>
+           <h4>	<img src="<%= request.getContextPath()%>/front-end/blog/img/handdown.png" width="32">Find and Follow</h4>
             <ol class="list-unstyled">
               <li><a href="#"><img src="<%= request.getContextPath() %>/front-end/blog/img/github.png" width="32">GitHub</a></li>
               <li><a href="#"><img src="<%= request.getContextPath() %>/front-end/blog/img/twitter.png" width="32">Twitter</a></li>
               <li><a href="#"><img src="<%= request.getContextPath() %>/front-end/blog/img/facebook.png" width="32">Facebook</a></li>
+              <li><a href="#"><img src="<%= request.getContextPath() %>/front-end/blog/img/instagram.png" width="32">Instagram</a></li>
               <li>  								
               <%long seconds = new java.util.Date().getTime();%>
               
@@ -202,14 +208,14 @@
 	              		<button class="btn-danger btn-xs btnReport">檢舉遊記</button>	
 							<div class="form-horizontal" id="rptlForm">
 								<div class="form-group ">
-									<label class="col-sm-3 control-label">檢舉標題</label>
+									<label class="col-sm-6 control-label">檢舉標題</label>
 									<div class="col-sm-9">
 										<input type="text" name="rptl_tittle"  id="rptlTittle" class="form-contrl" size="15" required>
 									</div>										
 								</div>
 								
 								<div class="form-group">
-									<label class="col-sm-3 control-label">檢舉內容</label>
+									<label class="col-sm-6 control-label">檢舉內容</label>
 									<div class="col-sm-9">
 										<textarea name="rptl_content" id="rptlContent" class="form-contrl" required></textarea>
 									</div>										
@@ -222,7 +228,7 @@
 								</div>
 							</div>
 						    <div class="comment">  
-							    檢舉結果：<p id="resultJsonText"></p>  
+								<p id="resultJsonText"></p>  
 						    </div>  
 	              	</c:if>	
               	</li>

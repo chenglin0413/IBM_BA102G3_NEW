@@ -20,6 +20,7 @@ public class RetaJDBCDAO implements RetaDAO_Interface {
 	private static final String UPDATE = "UPDATE RETA SET AVTB_ID=?, USER_ID=?, RETA_NUMBER=?, RETA_STATUS=?, RETA_GRANT=?, RETA_DATE=?, RETA_RANK_RES=?, RETA_REVIEW=?, RETA_REVIEWDATE=?, REST_RPDATE=?, REST_RPCOMM=?, REST_RPSTATUS=? WHERE RETA_ID = ?";
 	private static final String DELETE = "DELETE FROM RETA WHERE RETA_ID=?";
 	private static final String GET_ONE_STMT ="SELECT RETA_ID,AVTB_ID,USER_ID FROM RETA WHERE RETA_ID = ?";
+	private static final String GET_ONE_STMT_USERID ="SELECT * FROM RETA WHERE USER_ID = ?";
 	private static final String GET_ALL_STMT = "SELECT * FROM RETA";
 	private static final String GET_ALL_BY_REST_ID_STMT = "SELECT * FROM RETA WHERE USER_ID=?";
 	@Override
@@ -312,20 +313,20 @@ public class RetaJDBCDAO implements RetaDAO_Interface {
 		RetaJDBCDAO dao = new RetaJDBCDAO();
 		
 		//新增
-		RetaVO retain = new RetaVO();
-		retain.setAvtb_id(3500006);
-		retain.setUser_id(1000044);
-		retain.setReta_number(5);
-		retain.setReta_status(0);
-		retain.setReta_grant(1);
-		retain.setReta_date(java.sql.Date.valueOf("2017-08-07"));
-		retain.setReta_rank_res(2);
-		retain.setReta_review("3213213213212");
-		retain.setReta_reviewdate(java.sql.Date.valueOf("2017-08-09"));
-		retain.setRest_rpdate(java.sql.Date.valueOf("2017-08-10"));
-		retain.setRest_rpcomm("還好");
-		retain.setRest_rpstatus(2);
-		dao.insert(retain);
+//		RetaVO retain = new RetaVO();
+//		retain.setAvtb_id(3500006);
+//		retain.setUser_id(1000044);
+//		retain.setReta_number(5);
+//		retain.setReta_status(0);
+//		retain.setReta_grant(1);
+//		retain.setReta_date(java.sql.Date.valueOf("2017-08-07"));
+//		retain.setReta_rank_res(2);
+//		retain.setReta_review("3213213213212");
+//		retain.setReta_reviewdate(java.sql.Date.valueOf("2017-08-09"));
+//		retain.setRest_rpdate(java.sql.Date.valueOf("2017-08-10"));
+//		retain.setRest_rpcomm("還好");
+//		retain.setRest_rpstatus(2);
+//		dao.insert(retain);
 		
 		//修改
 //		RetaVO retaup = new RetaVO();
@@ -348,11 +349,15 @@ public class RetaJDBCDAO implements RetaDAO_Interface {
 //		dao.delete(3400011);
 		
 		//查詢一筆
-//		RetaVO retaVOPK = dao.findByPrimaryKey(3400002);
-//		System.out.print("訂位編號:"+retaVOPK.getReta_id() + "\n");
-//		System.out.print("時段編號:"+retaVOPK.getAvtb_id() + ",");
-//		System.out.print("使用者編號:"+retaVOPK.getUser_id() + "。");
-//		System.out.println();
+		RetaVO retaVOPK = dao.findRetaByUserId(1000033);
+		System.out.print("訂位編號:"+retaVOPK.getReta_id() + "\n");
+		System.out.print("時段編號:"+retaVOPK.getAvtb_id() + ",");
+		System.out.print("使用者編號:"+retaVOPK.getUser_id() + "。");
+		System.out.print("訂位人數:"+retaVOPK.getReta_number()+ ",");
+		System.out.print("到位狀況:"+retaVOPK.getReta_status()+ ",");
+		System.out.print("餐廳審核訂位狀態:"+retaVOPK.getReta_grant()+ ",");
+		System.out.print("訂位成立日期:"+retaVOPK.getReta_date()+ ",");
+		System.out.println();
 		
 		
 		//查詢
@@ -510,6 +515,74 @@ public class RetaJDBCDAO implements RetaDAO_Interface {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public RetaVO findRetaByUserId(Integer user_id) {
+		RetaVO retaVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+
+			Class.forName(driver);
+			con = DriverManager.getConnection(url, userid, passwd);
+			pstmt = con.prepareStatement(GET_ONE_STMT_USERID);
+
+			pstmt.setInt(1, user_id);
+
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				retaVO = new RetaVO();
+				retaVO.setReta_id(rs.getInt("reta_id"));
+				retaVO.setAvtb_id(rs.getInt("avtb_id"));
+				retaVO.setUser_id(rs.getInt("user_id"));
+				retaVO.setReta_number(rs.getInt("reta_number"));
+				retaVO.setReta_status(rs.getInt("reta_status"));
+				retaVO.setReta_grant(rs.getInt("reta_grant"));
+				retaVO.setReta_date(rs.getDate("reta_date"));
+//				retaVO.setReta_rank_res(rs.getInt("reta_rank_res"));
+//				retaVO.setReta_review(rs.getString("reta_review"));
+//				retaVO.setRest_rpdate(rs.getDate("rest_rpdate"));
+//				retaVO.setRest_rpcomm(rs.getString("rest_rpcomm"));
+//				retaVO.setRest_rpstatus(rs.getInt("rest_rpstatus"));
+			}
+
+			// Handle any driver errors
+		} catch (ClassNotFoundException e) {
+			throw new RuntimeException("Couldn't load database driver. "
+					+ e.getMessage());
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return retaVO;
 	}
 
 }

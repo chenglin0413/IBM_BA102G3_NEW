@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="java.util.*"%>
-<%@ page import="com.reta.model.*,com.rest.model.*,com.user.model.*"%>
+<%@ page import="com.reta.model.*,com.rest.model.*,com.user.model.*,com.repi.model.*,com.avtb.model.*"%>
 <%-- 此頁練習採用 EL 的寫法取值 --%>
 
 <%	
@@ -12,14 +12,17 @@
 		RestVO restVO=restSvc.getOneRestByUser_Id(userVO.getUser_id());
 // 		pageContext.setAttribute("restVO",restVO);
 
-		RetaService retaSvc = new RetaService();
-		List<RetaVO> list = retaSvc.findByUserId(userVO.getUser_id());
-		pageContext.setAttribute("list",list);
-	
+		AvtbService avtbSvc = new AvtbService();
+		List<AvtbVO> list_avtb = avtbSvc.findByPrimaryKeyByRest(restVO.getRest_id());
+	    pageContext.setAttribute("list_avtb", list_avtb);
+	    
+// 	    RetaService retaSvc_userid = new RetaService();
+// 		RetaVO retaVO_userid = retaSvc_userid.getOneRetaByUserID();
 %>
 
 <jsp:useBean id="userSvc"  scope="page" class="com.user.model.UserService"/>
-<jsp:useBean id="repiSvc" scope="page" class="com.repi.model.RepiService"/>
+<%-- <jsp:useBean id="avtbSvc" scope="page" class="com.avtb.model.AvtbService"/> --%>
+<jsp:useBean id="retaSvc" scope="page" class="com.reta.model.RetaService"/>
 
 <!DOCTYPE html>
 <html lang="en" class="easy-sidebar-active">
@@ -68,7 +71,6 @@
     <!-- Header -->
     <div class="callout" ></div>
 
-   
 	
    			<div id="page-wrapper">
             <div class="row">
@@ -85,55 +87,14 @@
                 <ol class="breadcrumb">
                 	<li>
                         <a href="<%=request.getContextPath()%>/front-end/rest_interface/listOneRest_idAllDish.jsp">查看所有料理</a>
-                        
                     </li>
                     <li class="active">訂位管理</li>
                 </ol>
-                
-<%--                 <img src="<%=request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}" --%>
-<!-- 								width="300" height="200"> -->
+                <c:if test="${restVO.rest_id==repiVO.rest_id}">
+                <img src="<%=request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}"
+								width="300" height="200">
+				</c:if>
                 </div>
-                <div class="col-md-4">
-<!-- 						<FORM METHOD="post" -->
-<%-- 							ACTION="<%=request.getContextPath()%>/front-end/restaurant/reta/reta.do" --%>
-<!-- 							name="form1"> -->
-<!-- 							<div class="col-md-12"> -->
-<!-- 								選擇訂位編號: <select size="1" name="reta_id"> -->
-<!-- 									<option name="reta_id" value=""> -->
-<%-- 										<c:forEach var="retaVO" --%>
-<%--  											items="${retaSvc.findByUserId(userVO.user_id)}">  --%>
-<%-- 											<option name="reta_id" value="${retaVO.reta_id}">${retaVO.reta_id} --%>
-<%--  										</c:forEach>  --%>
-<!-- 								</select> -->
-<!-- 								<br> -->
-<!-- 								<br> -->
-<!-- 							</div> -->
-<!-- 							<div class="col-md-12"> -->
-<!-- 								商店審核訂單狀態:&nbsp;<select name="ord_grant" value="1"> -->
-<!-- 									<option name="ord_grant" value=""> -->
-<!-- 									<option value="1">未審核</option> -->
-<!-- 									<option value="2">審核</option> -->
-<!-- 								</select><br> -->
-			
-<!-- 								訂單狀態:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<select name="ord_status" -->
-<!-- 									value="1"> -->
-<!-- 									<option name="ord_status" value=""> -->
-<!-- 									<option value="1">備貨中</option> -->
-<!-- 									<option value="2">待取貨</option> -->
-<!-- 									<option value="3">已取貨</option> -->
-<!-- 								</select> -->
-<!-- 							</div> -->
-<!-- 							<div> -->
-<!-- 								<button class="btn btn-default">送出</button> -->
-<%-- 								<input type="hidden" name="user_id" value="${userVO.user_id}"> --%>
-<!-- 								<input type="hidden" name="action" -->
-<!-- 									value="listReta_By_UserId"> -->
-<!-- 							</div> -->
-						</FORM>
-				</div>
-						<div class="col-md-4 ">
-				
-						</div>
 			</div>
 								
 
@@ -149,43 +110,65 @@
 	</ul>
 	</font>
 </c:if>
-			
-            <div class="container-fluid col-md-12">
 
-                <div class="row">
+	<div class="container-fluid col-md-12">
 
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                            </div>
-                            <div class="panel-body">
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-hover table-striped">
-                                        <thead>
-                                            <tr>
-												<th>訂位編號</th>
-												<th>時段編號</th>
-												<th>會員編號</th>
-												<th>訂位人數</th>
-												<th>修改</th>
-											</tr>
-										</thead>
-										
-										<%@ include file="page1.file" %> 
-											<c:forEach var="retaVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-												<tr>
-												<td>${retaVO.reta_id}</td>
-												<td>${retaVO.avtb_id}</td>
-												<td>${retaVO.user_id}</td>
-												<td>${retaVO.reta_number}</td>
-												</tr>
-  											</c:forEach>	
-									</table>	
-						</div>
-						</div>
-						</div>
-</div>
-</div>
-<%@ include file="page2.file" %>
+		<div class="row">
+
+			<div class="panel panel-default">
+				<div class="panel-heading"></div>
+				<div class="panel-body">
+					<div class="table-responsive">
+						<table class="table table-bordered table-hover table-striped">
+							<thead>
+								<tr>
+									<th>訂位編號</th>
+									<th>時段編號</th>
+									<th>會員編號</th>
+									<th>訂位人數</th>
+									<th>已訂位會員</th>
+									<th>修改</th>
+								</tr>
+							</thead>
+
+							<%-- 							<%@ include file="page1.file"%> --%>
+
+							<c:forEach var="avtbVO" items="${list_avtb}">
+
+								<tr>
+
+									<td>${avtbVO.avtb_id}</td>
+									<td>${avtbVO.avtb_reservation}</td>
+									<td>${avtbVO.avtb_max_reservation}</td>
+									<td>${avtbVO.avtb_max_reservation-avtbVO.avtb_reservation}</td>
+
+									<td>
+									<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/front-end/restaurant/reta/reta.do">
+									<select name="user_id">
+											<option>"查看會員"</option>
+											<c:forEach var="retaVO" items="${retaSvc.all}" >
+												<c:if test="${avtbVO.avtb_id == retaVO.avtb_id}">
+													<option value="${retaVO.user_id}">${retaVO.user_id}</option>
+												</c:if>
+											</c:forEach>
+									</select>
+									<input type="submit" value="修改"> 
+									<input type="hidden" name="action" value="getOne_For_Update_By_Userid">
+									</FORM>
+								</td>
+								
+								</tr>
+
+							</c:forEach>
+							
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<%-- 	<%@ include file="page2.file" %> --%>
 
 <script src="<%= request.getContextPath() %>/front-end/js_store/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->

@@ -19,6 +19,7 @@ public class RetaDAO implements RetaDAO_Interface {
 	private static final String UPDATE = "UPDATE RETA SET AVTB_ID=?, USER_ID=?, RETA_NUMBER=?, RETA_STATUS=?, RETA_GRANT=?, RETA_DATE=?, RETA_RANK_RES=?, RETA_REVIEW=?, RETA_REVIEWDATE=?, REST_RPDATE=?, REST_RPCOMM=?, REST_RPSTATUS=? WHERE RETA_ID = ?";
 	private static final String DELETE = "DELETE FROM RETA WHERE RETA_ID=?";
 	private static final String GET_ONE_STMT ="SELECT * FROM RETA WHERE RETA_ID = ?";
+	private static final String GET_RETA_BY_REST_ID ="SELECT * FROM RETA WHERE USER_ID = ?";
 	private static final String GET_ALL_STMT = "SELECT * FROM RETA";
 	private static final String GET_ALL_BY_USER_ID_STMT = "SELECT * FROM RETA WHERE USER_ID=?";
 	private static final String GET_ALL_BY_REST_ID_STMT = "SELECT * FROM RETA WHERE REST_ID=?";
@@ -105,8 +106,8 @@ public class RetaDAO implements RetaDAO_Interface {
 			pstmt.setDate(9, retaVO.getReta_reviewdate());
 			pstmt.setDate(10, retaVO.getRest_rpdate());
 			pstmt.setString(11,retaVO.getRest_rpcomm());
-			pstmt.setDouble(12, retaVO.getRest_rpstatus());
-			pstmt.setDouble(13, retaVO.getReta_id());
+			pstmt.setInt(12, retaVO.getRest_rpstatus());
+			pstmt.setInt(13, retaVO.getReta_id());
 			pstmt.executeUpdate();
 
 			// Handle any driver errors
@@ -433,6 +434,70 @@ public class RetaDAO implements RetaDAO_Interface {
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public RetaVO findRetaByUserId(Integer user_id) {
+		RetaVO retaVO= null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_RETA_BY_REST_ID);
+
+			pstmt.setInt(1, user_id);
+			
+			rs = pstmt.executeQuery();
+			
+
+			while (rs.next()) {
+				retaVO = new RetaVO();
+				retaVO.setReta_id(rs.getInt("reta_id"));
+				retaVO.setAvtb_id(rs.getInt("avtb_id"));
+				retaVO.setUser_id(rs.getInt("user_id"));
+				retaVO.setReta_number(rs.getInt("reta_number"));
+				retaVO.setReta_status(rs.getInt("reta_status"));
+				retaVO.setReta_grant(rs.getInt("reta_grant"));
+				retaVO.setReta_date(rs.getDate("reta_date"));
+				retaVO.setReta_rank_res(rs.getInt("reta_rank_res"));
+//				retaVO.setReta_review(rs.getString("reta_review"));
+//				retaVO.setRest_rpdate(rs.getDate("rest_rpdate"));
+//				retaVO.setRest_rpcomm(rs.getString("rest_rpcomm"));
+//				retaVO.setRest_rpstatus(rs.getInt("rest_rpstatus"));
+			}
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return retaVO;
 	}
 	
 }

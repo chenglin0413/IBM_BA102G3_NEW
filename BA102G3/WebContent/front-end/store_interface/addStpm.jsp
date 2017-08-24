@@ -46,6 +46,12 @@
 	rel="stylesheet" type="text/css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/front-end/js_store/bootstrap-datepicker3.min.css" />
+<!-- timepicker -->
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.js"></script>
+<link type="text/css" href="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.css" rel="stylesheet" />
+<!-- timepicker end-->
 
 <style type="text/css">
 .content: {
@@ -111,15 +117,14 @@
 							java.sql.Date startdate_SQL = new java.sql.Date(System.currentTimeMillis());
 						%>
 						<td><label>開始日期:&nbsp;&nbsp;</label></td>
-						<td><input type="date" name="stpm_startdate" required="required" value="<%=startdate_SQL%>"></td>
+						<td><input type="text" name="stpm_startdate" required="required" value="<%=startdate_SQL%>"></td>
 					</tr>
-
 					<tr>
 						<%
 							java.sql.Date enddate_SQL = new java.sql.Date(System.currentTimeMillis());
 						%>
 						<td><label>結束日期:&nbsp;&nbsp;</label></td>
-						<td><input type="date" name="stpm_enddate"	required="required" value="<%=enddate_SQL%>"></td>
+						<td><input type="text" name="stpm_enddate"	required="required" value="<%=enddate_SQL%>"></td>
 					</tr>
 
 					<tr>
@@ -165,11 +170,23 @@
 	<!-- Bootstrap Core JavaScript -->
 	<script
 		src="<%=request.getContextPath()%>/front-end/js_store/bootstrap.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/front-end/js_store/bootstrap-datepicker.js"></script>
-
-	<script
-		src="<%=request.getContextPath()%>/front-end/js_store/bootstrap-datepicker.zh-TW.js"></script>
-
+	
+	
+	
+	<script type="text/javascript">
+			$(function(){
+				$('*[name=stpm_startdate]').appendDtpicker({
+					"inline": true,
+					"dateOnly": true,
+					"dateFormat": "DD-MM-YYYY"
+				});
+				$('*[name=stpm_enddate]').appendDtpicker({
+					"inline": true,
+					"dateOnly": true,
+					"dateFormat": "DD-MM-YYYY"
+				});
+			});
+			
+		</script>
 </body>
 </html>

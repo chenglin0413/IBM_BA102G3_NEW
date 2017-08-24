@@ -42,9 +42,19 @@ public class RetaService {
 
 			RetaVO retaVO = new RetaVO();
 
+			retaVO.setReta_id(reta_id);
+			retaVO.setAvtb_id(avtb_id);
+			retaVO.setUser_id(user_id);
 			retaVO.setReta_number(reta_number);
 			retaVO.setReta_status(reta_status);
 			retaVO.setReta_grant(reta_grant);
+			retaVO.setReta_date(reta_date);
+			retaVO.setReta_rank_res(reta_rank_res);
+			retaVO.setReta_review(reta_review);
+			retaVO.setReta_reviewdate(reta_reviewdate);
+			retaVO.setRest_rpdate(rest_rpdate); 
+			retaVO.setRest_rpcomm(rest_rpcomm);
+			retaVO.setRest_rpstatus(rest_rpstatus);
 			dao.update(retaVO);
 
 			return retaVO;
@@ -58,6 +68,11 @@ public class RetaService {
 			return dao.findByPrimaryKey(reta_id);
 		}
 
+		public RetaVO getOneRetaByUserID(Integer user_id) {
+
+			return dao.findRetaByUserId(user_id);
+		}
+		
 		public List<RetaVO> getAll() {
 			return dao.getAll();
 		}
