@@ -13,6 +13,7 @@ import com.ord.model.*;
 import com.prod.model.ProdService;
 import com.prod.model.ProdVO;
 import com.store.model.StoreService;
+import com.store.model.StoreVO;
 import com.user.model.UserService;
 import com.user.model.UserVO;
 
@@ -678,12 +679,12 @@ public class OrdServlet extends HttpServlet {
 				ord_group.insert(8,ord_id.toString()+"_|");
 			}
 			UserVO userVO=userSvc.getOneUser(user_id);
-//			String user_email=userVO.getUser_email();//訂貨會員的email
-			String user_email="chenglin0413@gmail.com";
+			String user_email=userVO.getUser_email();//訂貨會員的email
+//			String user_email="chenglin0413@gmail.com";
 			
-//			String user_mobile=userVO.getUser_mobile();//訂貨會員的行動電話
-			String x="0911-258-102";
-			String user_mobile=x.replace("-","");
+			String user_mobile=userVO.getUser_mobile();//訂貨會員的行動電話
+//			String x="0911-258-102";
+//			String user_mobile=x.replace("-","");
 			System.out.println(ord_group);//印出訂單編號組
 			for(OrdVO ordVO:addOrd){
 				store_ids.insert(8, storeSvc.getOneStore(ordVO.getStore_id()).getStore_name()+"_|");
@@ -699,6 +700,16 @@ public class OrdServlet extends HttpServlet {
 			String message="您的訂單已於"+addOrd.get(0).getOrd_date()+"成立，請記得於2~7後至指定桃機商店取貨，感謝您使用Anytime_Grip購物系統";
 			send.sendMessage(tel, message);
 			
+			
+			
+			//信用卡支付，寄信通知商家會員
+			MailService mailToStore=new MailService();
+			
+			Integer store_id =ordSvc.getOneOrd(ord_ids.get(0)).getStore_id();//商家會員編號
+			StoreVO storeVO=storeSvc.getOneStore(store_id);//商家VO
+			String store_mail=userSvc.getOneUser(storeVO.getUser_id()).getUser_email();//商家會員的信箱
+			String messageTextToStore="X旗銀行:您好，你已於剛剛收到一筆來自AnytimeGrip會員"+userVO.getUser_lastname()+userVO.getUser_lastname()+"的付款，請查收。";
+			mailToStore.sendMail(store_mail,"X旗銀行:訂單收款通知。",messageTextToStore);
 				/***************************3.更新完成,準備轉交(Send the Success view)***********/								
 				String url = "/front-end/eshop/OrdFinishDetail.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
