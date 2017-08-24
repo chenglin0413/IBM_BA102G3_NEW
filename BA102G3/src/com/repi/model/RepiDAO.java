@@ -40,6 +40,10 @@ public class RepiDAO implements RepiDAO_Interface{
 	
 	private static final String GET_ONE_STMT = 
 			"select * from repi where repi_id = ?";
+
+	private static final String GET_ONE_BY_REST_ID_STMT = 
+			"select * from repi where rest_id = ?";
+	
 	private static final String GET_ONE_REST_STMT = 
 			"select * from repi where rest_id = ?";
 	
@@ -347,5 +351,70 @@ public class RepiDAO implements RepiDAO_Interface{
 			}
 		}
 		return buf;
+	}
+
+	@Override
+	public RepiVO findByRestId(Integer rest_id) {
+		// TODO Auto-generated method stub
+		RepiVO repiVO = null;
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+
+			con = ds.getConnection();
+			
+			pstmt = con.prepareStatement(GET_ONE_BY_REST_ID_STMT);
+			
+			pstmt.setInt(1, rest_id);
+			
+
+			rs = pstmt.executeQuery();
+			
+
+			while (rs.next()) {
+			
+				repiVO = new RepiVO();
+				repiVO.setRepi_id(rs.getInt("repi_id"));
+				repiVO.setRest_id(rs.getInt("rest_id"));
+				repiVO.setRepi_name(rs.getString("repi_name"));
+				repiVO.setRepi_imgfmt(rs.getString("repi_imgfmt"));
+				//repiVO.setrepi_img(repiVO.toObjects(rs.getBytes("repi_img")));
+				repiVO.setRepi_img(rs.getBytes("repi_img"));
+				
+				
+			}
+
+			// Handle any driver errors
+		}  catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return repiVO;
+
 	}
 }

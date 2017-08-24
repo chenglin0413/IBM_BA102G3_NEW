@@ -28,13 +28,14 @@
     <title>商品詳情</title>
 
    <!-- Bootstrap Core CSS -->
+   	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%=request.getContextPath() %>/front-end/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="<%=request.getContextPath() %>/front-end/css/stylish-portfolio.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="<%=request.getContextPath() %>/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=request.getContextPath() %>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -58,9 +59,10 @@
           height: 250px;  
           margin: auto;
         }
-        .areaColor{
-			background-color:blue;
-		}
+        #boxshadow{
+			border:1px solid lightgray;  
+			border-radius: 25px;      
+        }
     </style>
 </head>
 
@@ -113,9 +115,9 @@
 		
 		<div class="col-xs-12 col-md-12">
               
-         <div class="item">
+         <div class="item" >
          
-			<div class="col-md-6"><div class="item" > 
+			<div class="col-md-6 img-rounded" ><div class="item"  > 
 			<img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" >
 			</div></div>
 			<div class="col-md-6">
@@ -169,7 +171,8 @@
 
 <div class="callout"></div>
  <!--橫幅廣告頁-->
-	<div id="myCarousel areaColor" class="carousel slide ">
+ <div class="container">
+	<div id="myCarousel " class="carousel slide ">
     	<div class="container">
        		<div class="row carousel-holder">
                 <div class="col-md-12">
@@ -178,15 +181,15 @@
 	                        <div class="carousel-inner">
 			                         <c:forEach var="prodVO" items="${prodSvc.getOneStore_idAllProd(prodVO.store_id)}" varStatus="s" begin="1" end="${prodSvc.all.size()}" step="1">
 									<c:if test="${s.count==1}">                      
-			                            <div class="item active">
+			                            <div class="item active" id="boxshadow">
 			                            <div class="row">
 			                         </c:if>
 			                     <c:if test="${s.count!=1 && s.count%4==1}">                      
-			                          <div class="item">
+			                          <div class="item" id="boxshadow" >
 			                          <div class="row">
 			                          </c:if>      
-	                                 		<div class="col-md-3 " id="boxshadow" >
-	                                 			<div class="text-center"><h4><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_id=${prodVO.prod_id}&action=getOne_For_Display">${prodVO.prod_name }</a></h4></div>
+	                                 		<div class="col-md-3 "  >
+	                                 			<div class="text-center"><h5><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_id=${prodVO.prod_id}&action=getOne_For_Display">${prodVO.prod_name }</a></h5></div>
 												<img  class="img-thumbnail" src="<%= request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}">
 	                                 		</div>
 		                                <c:if test="${s.count%4==0}"> 		
@@ -204,7 +207,8 @@
                      </a>
               </div>
           </div> 
-      </div>   
+      </div>  
+ </div>      
       <!--------------- 廣告橫幅 ---------------->
 
 

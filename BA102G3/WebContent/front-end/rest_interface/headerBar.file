@@ -58,13 +58,13 @@
                         
                         <i class="fa fa-user fa-fw"></i>餐廳資訊管理<i class="fa fa-caret-down"></i></a>
                     <ul class="dropdown-menu dropdown-user">
-                    	<li><a href="<%= request.getContextPath() %>/front-end/user/storeMemberProfile.jsp"><i class="fa fa-user-md fa-fw"></i>${userVO.user_lastname},您好</a></li>
-                       <!-- <li>
-                        	<a href="<%= request.getContextPath() %>/front-end/user/storeMemberProfile.jsp"><i class="fa fa-info fa-fw"></i>會員資訊修改</a>
-                        </li>-->
-                       <!-- <li>
-                        	<a href="<%= request.getContextPath() %>/front-end/user/storeProfile.jsp"><i class="fa fa-info fa-fw"></i>餐廳資訊修改</a>
-                        </li>-->
+                    	<li><a href="<%= request.getContextPath() %>/front-end/user/restMemberProfile.jsp"><i class="fa fa-user-md fa-fw"></i>${userVO.user_lastname},您好</a></li>
+                        <li>
+                        	<a href="<%= request.getContextPath() %>/front-end/user/restMemberProfile.jsp"><i class="fa fa-info fa-fw"></i>會員資訊修改</a>
+                        </li>
+                        <li>
+                        	<a href="<%= request.getContextPath() %>/front-end/user/restProfile.jsp"><i class="fa fa-info fa-fw"></i>餐廳資訊修改</a>
+                        </li>
                         
                         <li class="divider"></li>
                         <li>

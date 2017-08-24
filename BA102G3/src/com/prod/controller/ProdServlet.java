@@ -838,8 +838,8 @@ public class ProdServlet extends HttpServlet {
 				} 
 				
 				/***************************2.開始複合查詢***************************************/
-				ProdService ProdSvc = new ProdService();
-				List<ProdVO> list  = ProdSvc.getAll(map);
+				ProdService prodSvc = new ProdService();
+				List<ProdVO> list  = prodSvc.getAll(map);
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("listProds_ByCompositeQuery", list); // 資料庫取出的list物件,存入request

@@ -7,5 +7,6 @@ public interface StpiDAO_interface {
 	public void update(StpiVO stpiVO);
 	public void delete(Integer stpi_id);
 	public StpiVO findByPrimaryKey(Integer stpi_id);
+	public StpiVO findByStoreId(Integer store_id);
 	public List<StpiVO> getAll();
 }

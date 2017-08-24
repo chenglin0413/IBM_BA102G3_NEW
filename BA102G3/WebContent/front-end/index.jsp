@@ -46,7 +46,7 @@ pageContext.setAttribute("trvllist", trvllist);
 
 <style type="text/css">
         .item img{
-            height: 100%;
+            height: 270px;
             margin-bottom:1px;
         }
        

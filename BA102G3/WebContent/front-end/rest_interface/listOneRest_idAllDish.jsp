@@ -88,7 +88,7 @@ td{
 </style>
 </head>
 
-<body onload="connect(),showTime();" onunload="disconnect();">
+<body >
 
 	<%@include file="/front-end/rest_interface/headerBar.file"%>
 	<div class="callout"></div>

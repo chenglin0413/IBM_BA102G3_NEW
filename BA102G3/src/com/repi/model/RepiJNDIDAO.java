@@ -348,5 +348,11 @@ public class RepiJNDIDAO implements RepiDAO_Interface{
 		}
 		return buf;
 	}
+
+	@Override
+	public RepiVO findByRestId(Integer rest_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
 

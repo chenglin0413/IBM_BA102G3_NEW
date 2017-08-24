@@ -44,6 +44,10 @@ public class StpiService {
 	public StpiVO getOneStpi(Integer stpi_id) {
 		return dao.findByPrimaryKey(stpi_id);
 	}
+	
+	public StpiVO getOneStpiByStoreId(Integer store_id) {
+		return dao.findByStoreId(store_id);
+	}
 
 	public List<StpiVO> getAll() {
 		return dao.getAll();

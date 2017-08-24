@@ -59,7 +59,7 @@
 </head>
 
 <body>
-
+	
                            
     
  <%@include file="headerBar.file" %>
@@ -337,14 +337,17 @@
 </div>
 
 
+
+	
+
+
+
 <script src="<%= request.getContextPath() %>/front-end/js_store/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="<%= request.getContextPath() %>/front-end/js_store/bootstrap.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
-
-
 
 
 

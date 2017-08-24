@@ -205,6 +205,24 @@
 		<servlet-name>FuncServlet</servlet-name>
 		<url-pattern>/back-end/func/func.do</url-pattern>
 	</servlet-mapping>
+	<!-- 8/24新增 -->
+	<servlet>
+	    <servlet-name>RepiDBGifReader</servlet-name>
+	    <servlet-class>com.repi.controller.RepiDBGifReader</servlet-class>
+    </servlet>
+   <servlet-mapping>
+	    <servlet-name>RepiDBGifReader</servlet-name>
+	    <url-pattern>/back-end/repi/RepiDBGifReader.do</url-pattern>
+   </servlet-mapping>
+   <servlet-mapping>
+	    <servlet-name>RepiDBGifReader</servlet-name>
+	    <url-pattern>/front-end/repi/RepiDBGifReader.do</url-pattern>
+   </servlet-mapping>  
+	
+	
+	
+	
+	
   <!-- 政達結尾 -->
   
   

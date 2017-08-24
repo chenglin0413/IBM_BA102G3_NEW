@@ -88,7 +88,7 @@
 <div class="callout"></div>
 	<div class="container">
 		<div class="row">
-		<h4>::::頭上的storeid${storeVO.store_id}</h4><!-- 測試商店上線狀態 -->
+<%-- 		<h4>::::頭上的storeid${storeVO.store_id}</h4><!-- 測試商店上線狀態 --> --%>
 			<div class="col-md-12 ">
 				<c:if test="${store_ids.contains(storeVO.store_id)==true}" var="condition">  
 							           <td>此商店上線狀態:&nbsp;<img id="online" src="<%=request.getContextPath() %>/front-end/image/circleGreen2.png"></td>

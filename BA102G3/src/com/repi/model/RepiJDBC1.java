@@ -354,4 +354,10 @@ public class RepiJDBC1 implements RepiDAO_Interface {
 		return null;
 	}
 
+	@Override
+	public RepiVO findByRestId(Integer rest_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

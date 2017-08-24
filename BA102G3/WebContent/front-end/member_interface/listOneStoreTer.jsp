@@ -6,7 +6,7 @@
 
 <%	
 	//產品動畫
-	String [] animateds= {"animated slideInDown","animated  fadeInUp","animated  fadeIn","animated  shake","animated  swing","animated rotateIn","animated slideInRight"};
+	String [] animateds= {"animated zoomIn","animated  flip","animated  swing","animated  zoomInDown","animated  zoomInUp","animated zoomInRight","animated zoomInLeft"};
 	int number=0;
 	
 	List<ProdVO> list = (List<ProdVO>)session.getAttribute("onestoreterlist");

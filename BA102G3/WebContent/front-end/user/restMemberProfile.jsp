@@ -1,10 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.user.model.*"%>
-<%@ page import="com.store.model.*"%>
 <%
 UserVO userVO = (UserVO) session.getAttribute("userVO");
-StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
 %>
 
 <!DOCTYPE html>
@@ -46,20 +44,18 @@ StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
 
 <body>
 
-    <%@include file="/front-end/store_interface/headerBar.file" %>
-    
-    <br><br><br>
+   <%@include file="/front-end/rest_interface/headerBar.file" %>
+    <div class="callout"></div>
 
 <div class="container">
 	<div class="row">
 	
-            <FORM class="uploadImage" METHOD="post" ACTION="<%= request.getContextPath() %>/front-end/store/store.do" name="form1" enctype="multipart/form-data">
+
+            <FORM class="uploadImage" METHOD="post" ACTION="<%= request.getContextPath() %>/front-end/user/user.do" name="form1" enctype="multipart/form-data">
 
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-6">
-
-					商店基本資料<br><br>
 
 <%-- 錯誤表列 --%>
 <c:if test="${not empty errorMsgs}">
@@ -70,127 +66,110 @@ StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
 		</c:forEach>
 	</ul>
 	</font>
-</c:if>  
+</c:if>
+
 <%-- 更新完成 --%>
 <c:if test="${not empty successMsgs}">
 	<font color='red'>更新完成	</font><br><br>
 </c:if>
-							
+                        
                             <div class="input-group">
-                                <label class="input-group-addon">商店名稱</label>
-                                <input type="text" name="store_name" value="<%= (storeVO==null)? "" : storeVO.getStore_name()%>" class="form-control">
-                            </div><br>
-                            <div class="input-group">
-                                <label class="input-group-addon">商店營業時間</label>
-                                <input type="text" name="store_time" value="<%= (storeVO==null)? "" : storeVO.getStore_time()%>" class="form-control">
-                            </div><br>
-                            <div class="input-group">
-                                <label class="input-group-addon">商店電話</label>
-                                <input type="text" name="store_phone" value="<%= (storeVO==null)? "" : storeVO.getStore_phone()%>" class="form-control">
-                            </div><br>                                                        
-                            <div >
-                                <label class="input-group-addon">店家簡介</label>
-                                <textarea name="store_describe" class="form-control" rows="6" cols="70"> <%= (storeVO==null)? "" : storeVO.getStore_describe()%> </textarea>
+                                                                                    帳號: <%=userVO.getUser_account()%>
                             </div><br>
                             
-		                    <div class="col-lg-6">
-                         		<c:if test="${userVO.user_status == '0'}" var="condition" scope="page">目前狀態: 停權</c:if>
-                         		<c:if test="${userVO.user_status == '2'}" var="condition" scope="page">目前狀態: 未確認</c:if> 		                    	
-                    		</div>
-                    
+                            <div class="input-group">
+                                <label class="input-group-addon">更改密碼</label>
+                                <input type="password" name="user_passwd" value="<%= (userVO==null)? "" : userVO.getUser_passwd()%>" class="form-control">
+                            </div><br>                            
+
+                            <div class="input-group">
+                                <label class="input-group-addon">姓</label>
+                                <input type="text" name="user_lastname" value="<%= (userVO==null)? "" : userVO.getUser_lastname()%>" class="form-control">
+                            </div><br>
+
+                            <div class="input-group">
+                                <label class="input-group-addon">名</label>
+                                <input type="text" name="user_firstname" value="<%= (userVO==null)? "" : userVO.getUser_firstname()%>" class="form-control">
+                            </div><br>                                
+
+                            <div class="input-group">
+                                <label class="input-group-addon">電話</label>
+                                <input type="text" name="user_phone" value="<%= (userVO==null)? "" : userVO.getUser_phone()%>" class="form-control">
+                            </div><br>
+
+                            <div class="input-group">
+                                <label class="input-group-addon">手機</label>
+                                <input type="text" name="user_mobile" value="<%= (userVO==null)? "" : userVO.getUser_mobile()%>" class="form-control">
+                            </div><br>
+
+                            <div class="input-group">
+                                <label class="input-group-addon">住址</label>
+                                <input type="text" name="user_address" value="<%= (userVO==null)? "" : userVO.getUser_address()%>" class="form-control">
+                            </div><br>
+
+                            <div class="input-group">
+                                <label class="input-group-addon">Email</label>
+                                <input type="text" name="user_email" value="<%= (userVO==null)? "" : userVO.getUser_email()%>" class="form-control">
+                            </div><br>
+
                     </div>
-                    
                     <div class="col-lg-6">
-                            <div class="col-xs-12 col-sm-4">
-                                <div class="form-group">
-                                    <label for="name">所在航廈</label>
-                                    <select class="form-control" name="store_ter">
-                                    <option <c:if test="${storeVO.store_ter == '1'}" var="condition" scope="page">selected</c:if> value="1">T1</option>
-                                    <option <c:if test="${storeVO.store_ter == '2'}" var="condition" scope="page">selected</c:if> value="2">T2</option>
-                                    </select>
-                                </div>                                
-                            </div>
-                    
-                            <div class="col-xs-12 col-sm-4">
-                                <div class="form-group">
-                                    <label for="name">所在樓層</label>
-                                    <select class="form-control" name="store_floor">
-                                    <option <c:if test="${storeVO.store_floor == 'B2'}" var="condition" scope="page">selected</c:if> >B2</option>
-                                    <option <c:if test="${storeVO.store_floor == 'B1'}" var="condition" scope="page">selected</c:if> >B1</option>
-                                    <option <c:if test="${storeVO.store_floor == '1'}" var="condition" scope="page">selected</c:if> >1</option>
-                                    <option <c:if test="${storeVO.store_floor == '2'}" var="condition" scope="page">selected</c:if> >2</option>
-                                    <option <c:if test="${storeVO.store_floor == '3'}" var="condition" scope="page">selected</c:if> >3</option>
-                                    <option <c:if test="${storeVO.store_floor == '4'}" var="condition" scope="page">selected</c:if> >4</option>
-                                    </select>
-                                </div>                               
-                            </div>
-
-                            <div class="col-xs-12 col-sm-4">
-                                <div class="form-group">
-	                            	<label for="name">出入境位置</label>
-    	                        	<select class="form-control" name="store_inout">
-  									<option value="1" <c:if test="${storeVO.store_inout == '1'}" var="condition" scope="page">selected</c:if> >出境區</option>
-  									<option value="2" <c:if test="${storeVO.store_inout == '2'}" var="condition" scope="page">selected</c:if> >入境區</option>
-									</select>                            
-                    	    	</div>
-                    	    </div><br>
-
-                    <div class="col-xs-12">
-                                                               更新圖片<br>
+                         <c:if test="${userVO.user_status == '0'}" var="condition" scope="page">目前狀態: 停權</c:if>
+                         <c:if test="${userVO.user_status == '2'}" var="condition" scope="page">目前狀態: 未確認</c:if> 
+                    </div>
+                    <div class="col-lg-6">
+                    	會員加入時間: <%=userVO.getUser_joindate()%>
+                    </div>
+                    <div class="col-lg-6">
+						會員圖片<br>
+						<img src="<%= request.getContextPath() %>/front-end/user/userImg.do?user_id=<%=userVO.getUser_id()%>" height="200">
+                    </div>
+                                    
+                    <div class="col-lg-6">
+                                                               更新圖片
                         <input type="file" name="upfile1" id="file-input1" class="file" onchange="previewImages()">
                         </label>
-                        <div id="preview"></div>                        
+                        <div id="preview"></div>
+                        
                     </div>
                     
-                    <div class="col-xs-12">
-						<img src="<%= request.getContextPath() %>/front-end/stpi/DBGifReader?store_id=<%=storeVO.getStore_id()%>" height="300">
-                    </div>
-
-                            <div class="col-xs-12 col-sm-12">
-
-<!-- 							
-							<img src="https://maps.googleapis.com/maps/api/staticmap?center=${storeVO.store_lat},${storeVO.store_lon}&zoom=14&size=400x400&key=AIzaSyBT6zUMx6Q_XFzfy_1JbwmpT6F9Mi2ATOs" width="640" height="400" alt="Google Map">
- -->
-                            </div>
-                    
-                    </div>
-                      
                 </div>
                 <!-- /.row -->
 
             </div>
             <!-- /.container-fluid -->
-                        
+            
             <br>
             <div class="container">
                 <div class="row">
                     <div class="col-xs-12 col-sm-1">
-						<input type="hidden" name="store_id" value="<%=storeVO.getStore_id()%>">
-						<input type="hidden" name="user_id" value="<%=storeVO.getUser_id()%>">
+						<input type="hidden" name="user_id" value="<%=userVO.getUser_id()%>">
+						<input type="hidden" name="user_account" value="<%=userVO.getUser_account()%>">
+<!-- 						<input type="hidden" name="user_passwd" value="<%=userVO.getUser_passwd()%>">  -->
+						<input type="hidden" name="user_type" value="<%=userVO.getUser_type()%>">
+						<input type="hidden" name="user_joindate" value="<%=userVO.getUser_joindate()%>">
 						<input type="hidden" name="user_status" value="<%=userVO.getUser_status()%>">
-						<input type="hidden" name="store_lon" value="<%=storeVO.getStore_lon()%>">
-						<input type="hidden" name="store_lat" value="<%=storeVO.getStore_lat()%>">
-						<input type="hidden" name="store_count" value="<%=storeVO.getStore_count()%>">
-						<input type="hidden" name="store_score" value="<%=storeVO.getStore_score()%>">
 						<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
+                        <input type="hidden" name="whichPage" value="<%=request.getParameter("whichPage")%>">  <!--用於:istAllEmp.jsp 與 複合查詢 listEmps_ByCompositeQuery.jsp-->
                         <button class="btn btn-primary" name="action" value="update">送出修改</button>
                     </div>
                 </div>
             </div>
 
             </form>
-                        
+            
             <c:if test="${userVO.user_status == '2'}" var="condition" scope="page">
             	<form METHOD="post" ACTION="<%= request.getContextPath() %>/front-end/user/user.do" name="form1">
                		<button class="btn btn-info" name="action" value="resendMail">重發確認信</button>
             		<input type="hidden" name="user_id" value="<%=userVO.getUser_id()%>">
             	</form>
             </c:if>
-            
+	
 	</div>
 </div>
 
     <!-- Footer -->
+
     
 <!-- 登入模組 開始-->
 	<div class="modal fade" id="modal-login">
@@ -250,6 +229,7 @@ StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
 		</div>
 	</div>
 <!-- 登入模組 結束-->
+
 
     <!-- jQuery -->
     <script src="<%= request.getContextPath() %>/front-end/js/jquery.js"></script>

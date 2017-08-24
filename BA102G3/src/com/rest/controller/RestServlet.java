@@ -4,11 +4,17 @@ import java.io.*;
 import java.util.*;
 
 import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
 import com.rest.model.*;
+import com.repi.model.RepiService;
+import com.repi.model.RepiVO;
 import com.user.model.*;
 
+import mail.MailService;
+
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class RestServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -150,10 +156,15 @@ public class RestServlet extends HttpServlet {
 				Integer rest_type = new Integer(req.getParameter("rest_type").trim());
 				Integer rest_count = new Integer(req.getParameter("rest_count").trim());
 				Integer rest_score = new Integer(req.getParameter("rest_score").trim());
+				
+				UserService userSvc=new UserService();
+				UserVO current_userVO = userSvc.getOneUser(user_id);
+				String user_passwd=current_userVO.getUser_passwd();
 
 				Double rest_lon = null;
 				try {
 					rest_lon = new Double(req.getParameter("rest_lon").trim());
+					System.out.println("RestServlet.java line 161 "+rest_lon);
 				} catch (NumberFormatException e) {
 					rest_lon = 0.0;
 					errorMsgs.add("經緯度請填數字.");
@@ -161,10 +172,13 @@ public class RestServlet extends HttpServlet {
 				Double rest_lat = null;
 				try {
 					rest_lat = new Double(req.getParameter("rest_lat").trim());
+					System.out.println("RestServlet.java line 169 "+rest_lat);
 				} catch (NumberFormatException e) {
 					rest_lat = 0.0;
 					errorMsgs.add("經緯度請填數字.");
 				}
+				
+				Integer current_user_status=current_userVO.getUser_status();
 				
 				Integer user_status = new Integer(req.getParameter("user_status").trim());
 				
@@ -185,7 +199,48 @@ public class RestServlet extends HttpServlet {
 				restVO.setRest_type(rest_type);
 				restVO.setRest_count(rest_count);
 				restVO.setRest_score(rest_score);
-								
+
+				byte[] repi_img=null;
+				String repi_imgfmt=null;
+				
+				int updateImg=0;
+				
+				Part part=req.getPart("upfile1");
+				
+				String filename = getFileNameFromPart(part).trim();
+				
+				if ( filename.length() != 0 ){
+					
+					updateImg=1;
+					
+					InputStream in = part.getInputStream();
+					repi_img = new byte[in.available()];
+					in.read(repi_img);
+					in.close();
+					
+					String temp[] = filename.split("[.]");				
+					if(temp.length>1){
+						repi_imgfmt = temp[temp.length-1];
+					} else {
+						repi_imgfmt=null; 
+						errorMsgs.add("請輸入附檔名!");
+					}
+					
+					System.out.println(repi_imgfmt);
+					
+					RepiService repiSvc=new RepiService();
+					RepiVO repiVO=repiSvc.getOneRepiByRestId(rest_id);
+					
+					repiVO.setRepi_img(repi_img);
+					repiVO.setRepi_imgfmt(repi_imgfmt);
+					
+					System.out.println(repiVO.getRepi_id());
+					System.out.println(repiVO.getRepi_name());
+					
+					repiSvc.updaterepi(rest_id, repiVO.getRepi_name(), repi_img, repi_imgfmt, repiVO.getRepi_id());
+				}								
+				
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("restVO", restVO); // 含有輸入格式錯誤的empVO物件,也存入req
@@ -199,12 +254,24 @@ public class RestServlet extends HttpServlet {
 				/***************************2.開始修改資料*****************************************/
 				RestService restSvc = new RestService();
 //				restVO = restSvc.updateRest(rest_id, user_id, rest_name, store_time, store_phone,store_describe,store_ter,store_floor,store_lon,store_lat,store_inout,store_count,store_score, user_status);
-
+								
 				restVO = restSvc.updateRest(rest_id, user_id, rest_name, rest_address, rest_phone, rest_trans,
 						rest_detail, rest_hours, rest_ter, rest_floor, rest_lon, rest_lat, rest_inout, rest_type,
 						rest_count, rest_score, user_status);
 				
 				req.setAttribute("successMsgs","successMsgs");
+
+				String user_account=current_userVO.getUser_account();
+				String user_lastname=current_userVO.getUser_lastname();
+				String user_firstname=current_userVO.getUser_firstname();
+				String user_email=current_userVO.getUser_email();				
+				
+				System.out.println("RestServlet.java line.220 Rest Member Password: "+user_passwd);				
+								
+				if (current_user_status!=1 && user_status==1){
+					String[] args={user_account,user_passwd,user_lastname,user_firstname,user_email}; 
+					MailService.main(args);
+				}					
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("restVO", restVO); // 資料庫update成功後,正確的的empVO物件,存入req
@@ -494,4 +561,16 @@ System.out.println("412");
 		
 		
 	}
+	
+	// 讀出檔名
+	public String getFileNameFromPart(Part part) {
+		String header = part.getHeader("content-disposition");
+//		System.out.println("header=" + header); // 輸出測試
+		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
+//		System.out.println("filename=" + filename); // 輸出測試
+		if (filename.length() == 0) {
+//			return null;
+		}
+		return filename;
+	}		
 }

@@ -32,6 +32,7 @@ public class StpiDAO implements StpiDAO_interface {
 		private static final String UPDATE_STMT = "UPDATE STPI SET STORE_ID=?,STPI_NAME=?, STPI_IMG=?,STPI_IMGFMT=? where STPI_ID = ? " ;
 		private static final String DELETE_STMT = "DELETE FROM STPI WHERE STPI_ID= ? ";
 		private static final String GET_ONE_STMT = "SELECT * FROM  STPI WHERE STPI_ID = ?";
+		private static final String GET_ONE_BY_STORE_ID_STMT = "SELECT * FROM  STPI WHERE STORE_ID = ?";
 		private static final String GET_ALL = "SELECT * FROM STPI";
 
 		@Override
@@ -327,5 +328,60 @@ public class StpiDAO implements StpiDAO_interface {
 //				System.out.print(aWish.getWish_date() + ",\n");
 //			}
 //			System.out.println("\n----------------查詢總表-------------");
+		}
+
+		@Override
+		public StpiVO findByStoreId(Integer store_id) {
+			// TODO Auto-generated method stub
+			StpiVO stpiVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GET_ONE_BY_STORE_ID_STMT);
+				pstmt.setInt(1, store_id);
+				rs = pstmt.executeQuery();
+
+				while (rs.next()) {
+					stpiVO = new StpiVO();
+					stpiVO.setStpi_id(rs.getInt("stpi_id"));
+					stpiVO.setStore_id(rs.getInt("store_id"));
+					stpiVO.setStpi_name(rs.getInt("stpi_name"));
+					stpiVO.setStpi_img(rs.getBytes("stpi_img"));
+					stpiVO.setStpi_imgfmt(rs.getString("stpi_imgfmt"));
+					
+					
+				}
+
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. " + se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+
+			return stpiVO;
 		}
 }

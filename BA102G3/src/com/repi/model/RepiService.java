@@ -48,7 +48,11 @@ public class RepiService {
 	public RepiVO getOnerepi(Integer repi_id) {
 		return dao.findByPrimaryKey(repi_id);
 	}
-	
+
+	public RepiVO getOneRepiByRestId(Integer rest_id) {
+		return dao.findByRestId(rest_id);
+	}
+
 	public List<RepiVO> getAll(){
 		return dao.getAll();
 	}

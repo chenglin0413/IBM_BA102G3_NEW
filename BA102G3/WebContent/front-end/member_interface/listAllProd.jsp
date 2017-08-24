@@ -12,7 +12,7 @@
     pageContext.setAttribute("list",list);
     pageContext.setAttribute("prodtwelvelist",prodtwelvelist);
    	//產品圖片動畫
-    String [] animateds= {"animated slideInDown","animated  fadeInUp","animated  fadeIn","animated  shake","animated  swing","animated rotateIn","animated slideInRight"};
+    String [] animateds= {"animated zoomIn","animated  flip","animated  swing","animated  zoomInDown","animated  zoomInUp","animated zoomInRight","animated zoomInLeft"};
 	int number=0;
     //檢舉產品使用
     RpprVO rpprVO=(RpprVO)request.getAttribute("rpprVO");
@@ -133,26 +133,17 @@
            </ol>
         
         <ul class="nav nav-tabs">
-<!--                             <div class="dropdown"> -->
-<!--                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">商品種類 <b class="caret"></b></a> -->
-<!--                               <ul class="dropdown-menu"> -->
-<!--                                 <li><a href="#">零食、點心</a></li> -->
-<!--                                 <li><a href="#">免稅菸酒</a></li> -->
-<!--                                 <li><a href="#">國際精品</a></li> -->
-<!--                               </ul> -->
-<!--                             </div> -->
                              <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?store_ter=1&action=getOneStoreTer_For_Display"><i class="fa fa-arrow-circle-o-up"></i>第一航廈</a></li>
                              <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?store_ter=2&action=getOneStoreTer_For_Display"><i class="fa fa-arrow-circle-o-up"></i>第二航廈</a></li>
-                            <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=3&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>伴手禮</a></li>
+                            <li ><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=3&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>伴手禮</a></li>
                             <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=4&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>酒類</a></li>
 							<li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=5&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>文具用品</a></li>   
                             <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=6&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>生活用品</a></li>
                              <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=7&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>化妝品</a></li>
                               <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=8&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>精品</a></li>
-                            
+         </ul>
 
                            
-         </ul>
 
 
 	<%-- 錯誤表列 --%>
@@ -187,7 +178,7 @@
 </ul>
 	</div>
 	</div>
-	<div class="col-md-10">
+	<div class="col-md-10" id="mainpage">
 	<div class="row">
 	<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 			<div class="col-xs-12 col-md-4">
@@ -361,7 +352,6 @@
     		  
     		});
     </script>
-
 
 
   

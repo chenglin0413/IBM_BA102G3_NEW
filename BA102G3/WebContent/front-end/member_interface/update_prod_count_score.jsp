@@ -186,6 +186,7 @@ $(function(){
 		    					success : function(jsonStr) {
 		    						console.log(jsonStr);
 		    							  $('.starRating').append('評價完成');
+		    							  $('.click-callback').remove();
 		    							  
 		    						},
 		    					error : function(xhr) {
