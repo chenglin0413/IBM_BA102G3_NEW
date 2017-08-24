@@ -46,12 +46,6 @@
 	rel="stylesheet" type="text/css">
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/front-end/js_store/bootstrap-datepicker3.min.css" />
-<!-- timepicker -->
-
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script type="text/javascript" src="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.js"></script>
-<link type="text/css" href="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.css" rel="stylesheet" />
-<!-- timepicker end-->
 
 <style type="text/css">
 .content: {
@@ -117,14 +111,17 @@
 							java.sql.Date startdate_SQL = new java.sql.Date(System.currentTimeMillis());
 						%>
 						<td><label>開始日期:&nbsp;&nbsp;</label></td>
-						<td><input type="text" name="stpm_startdate" required="required" value="<%=startdate_SQL%>"></td>
+<%-- 				<td><input type="date" name="stpm_startdate" required="required" value="<%=startdate_SQL%>"></td> --%>
+						<td><input type="text" name="stpm_startdate" value="<%=startdate_SQL%>" required="required"></td>
 					</tr>
+
 					<tr>
 						<%
 							java.sql.Date enddate_SQL = new java.sql.Date(System.currentTimeMillis());
 						%>
 						<td><label>結束日期:&nbsp;&nbsp;</label></td>
-						<td><input type="text" name="stpm_enddate"	required="required" value="<%=enddate_SQL%>"></td>
+				<%-- <td><input type="date" name="stpm_enddate"	required="required" value="<%=enddate_SQL%>"></td> --%>
+						<td><input type="text" name="stpm_enddate" value="<%=enddate_SQL%>" required="required"></td>
 					</tr>
 
 					<tr>
@@ -139,8 +136,8 @@
 
 			</FORM>
 			
-				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn1();">預設1</button>
-				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn2();">預設2</button>
+				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn1();"></button>
+				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn2();"></button>
 
 			<br> <br>
 		</div>
@@ -152,7 +149,7 @@
 
 		function magiclittlebtn1() {
 			document.getElementById('name').value = '航站最便宜';
-			document.getElementById('desc').value = '期間限定折扣滿滿';
+			document.getElementById('desc').value = '期間限定折扣滿滿滿';
 			document.getElementById('content').value = '期間折扣專案';
 		}
 		
@@ -164,29 +161,40 @@
 		
 	</script>
 
+
+
 	<script
 		src="<%=request.getContextPath()%>/front-end/js_store/jquery.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->
 	<script
 		src="<%=request.getContextPath()%>/front-end/js_store/bootstrap.min.js"></script>
-	
-	
-	
+	<script
+		src="<%=request.getContextPath()%>/front-end/js_store/bootstrap-datepicker.js"></script>
+
+	<script
+		src="<%=request.getContextPath()%>/front-end/js_store/bootstrap-datepicker.zh-TW.js"></script>
+		
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.js"></script>
+<link type="text/css" href="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.css" rel="stylesheet" />
+
 	<script type="text/javascript">
-			$(function(){
-				$('*[name=stpm_startdate]').appendDtpicker({
-					"inline": true,
-					"dateOnly": true,
-					"dateFormat": "DD-MM-YYYY"
-				});
-				$('*[name=stpm_enddate]').appendDtpicker({
-					"inline": true,
-					"dateOnly": true,
-					"dateFormat": "DD-MM-YYYY"
-				});
+		$(function() {
+			$('*[name=stpm_startdate]').appendDtpicker({
+				"inline" : true,
+				"dateOnly" : true,
+				"futureOnly": true,
+				"dateFormat" : "YYYY-MM-DD"
 			});
-			
-		</script>
+			$('*[name=stpm_enddate]').appendDtpicker({
+				"inline" : true,
+				"dateOnly" : true,
+				"futureOnly": true,
+				"dateFormat" : "YYYY-MM-DD"
+			});
+		});
+	</script>
+
 </body>
 </html>

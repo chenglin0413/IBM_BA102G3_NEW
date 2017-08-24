@@ -734,9 +734,9 @@ function previewFileRest() {
                 if(results == 'SUCCESS'){
                     window.location='<%= request.getContextPath() %><%=request.getServletPath()%>'
                 }else if(results == 'SUCCESS_STORE'){
-                	window.location='<%= request.getContextPath() %>/front-end/store/'
+                	window.location='<%= request.getContextPath() %>/front-end/store_interface/listOneStore_idAllProd.jsp'
                 }else if(results == 'SUCCESS_REST'){
-                	window.location='<%= request.getContextPath() %>/front-end/rest/'
+                	window.location='<%= request.getContextPath() %>/front-end/rest_interface/listOneRest_idAllDish.jsp'
                 }else if(results == 'FAILURE'){
                     $('#messageDiv').html("<font color='red'>帳號或密碼不正確 </font>")
                 }else if(results == 'ACCOUNT SUSPENDED'){

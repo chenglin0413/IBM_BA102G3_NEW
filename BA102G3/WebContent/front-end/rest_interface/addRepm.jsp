@@ -111,7 +111,8 @@
 							java.sql.Date startdate_SQL = new java.sql.Date(System.currentTimeMillis());
 						%>
 						<td><label>開始日期:&nbsp;&nbsp;</label></td>
-						<td><input type="date" name="repm_startdate" required="required" value="<%=startdate_SQL%>"></td>
+<%-- 						<td><input type="date" name="repm_startdate" required="required" value="<%=startdate_SQL%>"></td> --%>
+						<td><input type="text" name="repm_startdate" value="<%=startdate_SQL%>" required="required"></td>
 					</tr>
 
 					<tr>
@@ -119,7 +120,8 @@
 							java.sql.Date enddate_SQL = new java.sql.Date(System.currentTimeMillis());
 						%>
 						<td><label>結束日期:&nbsp;&nbsp;</label></td>
-						<td><input type="date" name="repm_enddate"	required="required" value="<%=enddate_SQL%>"></td>
+<%-- 						<td><input type="date" name="repm_enddate"	required="required" value="<%=enddate_SQL%>"></td> --%>
+						<td><input type="text" name="repm_enddate" value="<%=enddate_SQL%>" required="required"></td>
 					</tr>
 
 					<tr>
@@ -133,8 +135,8 @@
 				 <br><br>
 			</FORM>
 			
-				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn1();">預設1</button>
-				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn2();">預設2</button>
+				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn1();"></button>
+				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn2();"></button>
 
 			<br> <br>
 		</div>
@@ -169,6 +171,27 @@
 
 	<script
 		src="<%=request.getContextPath()%>/front-end/js_store/bootstrap-datepicker.zh-TW.js"></script>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.js"></script>
+<link type="text/css" href="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.css" rel="stylesheet" />
+
+	<script type="text/javascript">
+		$(function() {
+			$('*[name=repm_startdate]').appendDtpicker({
+				"inline" : true,
+				"dateOnly" : true,
+				"futureOnly": true,
+				"dateFormat" : "YYYY-MM-DD"
+			});
+			$('*[name=repm_enddate]').appendDtpicker({
+				"inline" : true,
+				"dateOnly" : true,
+				"futureOnly": true,
+				"dateFormat" : "YYYY-MM-DD"
+			});
+		});
+	</script>
 
 </body>
 </html>

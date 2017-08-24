@@ -682,7 +682,8 @@ public class OrdServlet extends HttpServlet {
 			String user_email="chenglin0413@gmail.com";
 			
 //			String user_mobile=userVO.getUser_mobile();//訂貨會員的行動電話
-			String user_mobile="0911-258-102";
+			String x="0911-258-102";
+			String user_mobile=x.replace("-","");
 			System.out.println(ord_group);//印出訂單編號組
 			for(OrdVO ordVO:addOrd){
 				store_ids.insert(8, storeSvc.getOneStore(ordVO.getStore_id()).getStore_name()+"_|");

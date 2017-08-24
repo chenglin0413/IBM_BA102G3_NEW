@@ -112,13 +112,13 @@
 					</tr>
 					<tr>
 						<td><label>開始日期:&nbsp;&nbsp;</label></td>
-						<td><input type="date" name="stpm_startdate" size="15"
-							value="<%=stpmVO.getStpm_startdate()%>" /></td>
+<%-- 						<td><input type="date" name="stpm_startdate" size="15"	value="<%=stpmVO.getStpm_startdate()%>" /></td> --%>
+						<td><input type="text" name="stpm_startdate" value="<%=stpmVO.getStpm_startdate()%>" required="required"></td>
 					</tr>
 					<tr>
 						<td><label>結束日期:&nbsp;&nbsp;</label></td>
-						<td><input type="date" name="stpm_enddate" size="15"
-							value="<%=stpmVO.getStpm_enddate()%>" /></td>
+<%-- 						<td><input type="date" name="stpm_enddate" size="15" value="<%=stpmVO.getStpm_enddate()%>" /></td> --%>
+						<td><input type="text" name="stpm_enddate" value="<%=stpmVO.getStpm_enddate()%>" required="required"></td>
 					</tr>
 
 					<tr>
@@ -193,6 +193,28 @@
 
 	<script
 		src="<%=request.getContextPath()%>/front-end/js_store/bootstrap-datepicker.zh-TW.js"></script>
+		
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.js"></script>
+<link type="text/css" href="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.css" rel="stylesheet" />
+
+	<script type="text/javascript">
+		$(function() {
+			$('*[name=stpm_startdate]').appendDtpicker({
+				"inline" : true,
+				"dateOnly" : true,
+				"futureOnly": true,
+				"dateFormat" : "YYYY-MM-DD"
+			});
+			$('*[name=stpm_enddate]').appendDtpicker({
+				"inline" : true,
+				"dateOnly" : true,
+				"futureOnly": true,
+				"dateFormat" : "YYYY-MM-DD"
+			});
+		});
+	</script>
+		
 
 </body>
 </html>

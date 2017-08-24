@@ -114,10 +114,13 @@
 #accordions {
 	font-size: 12px;
 }
+body{
+background: url(../img/slidebg15.jpg) no-repeat center center scroll;
+}
 </style>
 </head>
 
-<body>
+<body >
 
 
 	<%@include file="/front-end/member_interface/headerBar.file"%>
@@ -155,7 +158,7 @@
 			</header>
 		</div>
 	</div>
-	<div class="container">
+	<div class="container"  >
 		<div class="row">
 			<ol class="breadcrumb">
 				<li><a href="<%=request.getContextPath()%>/front-end/index.jsp">首頁</a>
