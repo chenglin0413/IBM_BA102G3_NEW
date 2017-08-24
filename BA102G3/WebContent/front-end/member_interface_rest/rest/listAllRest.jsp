@@ -8,7 +8,6 @@
     List<RestVO> list = restSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
-      <br/>
 <jsp:useBean id="repiSvc" scope="page" class="com.repi.model.RepiService"/>
 <!DOCTYPE html>
 <head>
@@ -88,8 +87,8 @@
 			                         </c:if>
 			                     <c:if test="${s.count!=1 && s.count%4==1}">                      
 			                          <div class="item">
-			                          <div class="row">
-			                      </c:if>      
+			                          		<div class="row">
+			                     </c:if>      
                                 		<div class="col-md-3">
 											<img class="img-thumbnail" src="<%= request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}">
                                 		</div>
@@ -129,7 +128,7 @@
 										<a href="<%=request.getContextPath()%>/front-end/rest/rest.do?rest_id=${RestVO.rest_id}&action=getOne_For_Display_formember">
 											<img class="img-thumbnail restPic" src="<%= request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}">
 										</a>
-								   			<h4><label class=" bg-priamry">${RestVO.rest_name}</h4><p class="star"></p></label>
+								   			<h4><label class=" bg-priamry">${RestVO.rest_name}</h4></label>
 								   		</a>
 								    </c:if>
 								</c:forEach>

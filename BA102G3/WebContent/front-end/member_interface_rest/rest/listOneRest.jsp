@@ -89,9 +89,7 @@ java.util.Date sql = new Date(System.currentTimeMillis());
 						<p><small>位址:</small><%=restVO.getRest_address()%></p>
 					</li>
 					<li>
-						<p><small>餐廳被評分次數:</small><%=restVO.getRest_count()%>&nbsp;&nbsp;&nbsp;
-						
-						
+						 <p class="click-callback"><small>評等:</small></p>
 						
 						<div class="col-md-6">
 									<c:if test="${empty userVO.user_account}" var="condition1" scope="session" > 
@@ -186,7 +184,19 @@ java.util.Date sql = new Date(System.currentTimeMillis());
 		</div>
 	</div>
 <%@ include file="/front-end/member_interface/script.file" %>	
+<script src="<%= request.getContextPath() %>/front-end/js/stars.min.js"></script>
 
 
+<script>
+
+$(".click-callback").stars({ 
+	value:${restVO.getRest_score()/restVO.getRest_count()},
+
+	click: function(i) {
+        i 
+    }
+});
+
+</script>
 </body>
 </html>

@@ -34,6 +34,13 @@
     <title>遊記瀏覽</title>
 
 	<style type="text/css">
+       	body {
+			background-image: url('<%=request.getContextPath()%>/front-end/blog/img/28.jpg');
+			background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+		}
        
         .content: {
           position: relative;

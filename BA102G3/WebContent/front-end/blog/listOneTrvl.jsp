@@ -46,6 +46,13 @@
     <title>瀏覽單篇</title>
 
 	<style type="text/css">
+		 body {
+			background-image: url('<%=request.getContextPath()%>/front-end/blog/img/photo.jpeg');
+			background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+		}
 		
 		.content: {
           position: relative;
@@ -128,6 +135,7 @@
 				<img class="img-thumbnail" src="<%= request.getContextPath()%>/front-end/trpi/DBGifReader.do?trpi_id=${trpiVO.trpi_id}">
 			</c:forEach>
 		</div>
+		<br/>
 		<div>
 			<p>${trvlVO.getTrvl_content()}</p>
 		</div><!-- /.blog-post -->
