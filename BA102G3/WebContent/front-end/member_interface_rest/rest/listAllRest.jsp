@@ -31,15 +31,6 @@
 <link href="<%=request.getContextPath()%>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
-<script>
-$( function() {
-    $( "#accordion" ).accordion({
-      collapsible: true,
-      heightStyle: "content",
-    });
-  });
-
-</script>
 
 <style type="text/css">
        
@@ -58,7 +49,7 @@ $( function() {
         
         .restPic {
             height: auto;
-            width: 300px;
+            width: 400px;
         }
     </style>
 
@@ -98,17 +89,17 @@ $( function() {
 			                     <c:if test="${s.count!=1 && s.count%4==1}">                      
 			                          <div class="item">
 			                          <div class="row">
-			                          </c:if>      
-	                                 		<div class="col-md-3">
-												<img class="img-thumbnail" src="<%= request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}">
-	                                 		</div>
-		                                <c:if test="${s.count%4==0}"> 		
+			                      </c:if>      
+                                		<div class="col-md-3">
+											<img class="img-thumbnail" src="<%= request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}">
+                                		</div>
+		                          <c:if test="${s.count%4==0}"> 		
 		                                   	</div>
 		                				</div>
                                		</c:if>   
                         		 </c:forEach>       
-                     </div>          
-                     </div>
+                     		</div>          
+               			</div>
                      <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
                          <span class="glyphicon glyphicon-chevron-left"></span>
                      </a>
@@ -138,7 +129,7 @@ $( function() {
 										<a href="<%=request.getContextPath()%>/front-end/rest/rest.do?rest_id=${RestVO.rest_id}&action=getOne_For_Display_formember">
 											<img class="img-thumbnail restPic" src="<%= request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}">
 										</a>
-								   		<h4><a href="#" class=" bg-warning">${RestVO.rest_name}</a></h4>
+								   			<h4><label class=" bg-priamry">${RestVO.rest_name}</h4><p class="star"></p></label>
 								   		</a>
 								    </c:if>
 								</c:forEach>
@@ -159,6 +150,9 @@ $( function() {
 <%@ include file="page2.file" %>
 	
 <%@ include file="/front-end/member_interface/script.file" %>	
+<script src="<%= request.getContextPath() %>/front-end/js/stars.min.js"></script>
+
+
 
 
 </body>

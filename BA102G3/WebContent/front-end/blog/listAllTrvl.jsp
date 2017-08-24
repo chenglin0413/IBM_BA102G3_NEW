@@ -64,7 +64,7 @@
         .pic {
         	border-top-left-radius:1em;
         	border-top-right-radius:1em;
-        	width:550px;
+        	width:600px;
         	height:auto;
         }
   		#trvl_tittle{
@@ -74,7 +74,7 @@
         	position: absolute;
         	margin-left:20px;
     		bottom: 0;
-    		font-size:10px;
+    		font-size:15px;
         }
   		#textSearch{
 			 border-radius: 999px;
@@ -156,7 +156,7 @@
                 </div>
                 	<p id="user_information">${userSvc.getOneUser(trvlVO.user_id).user_account}
 	               	 	<small>(${trvlVO.trvl_date})</small>
-	               	 	<img src="<%=request.getContextPath()%>/front-end/blog/img/footstep.png" width="20">
+	               	 	<img src="<%=request.getContextPath()%>/front-end/blog/img/footstep.png" width="40">
 	               	 	${trvlVO.trvl_count}
                 	</p>
                 <div class="mascara-enlace-blog-home">

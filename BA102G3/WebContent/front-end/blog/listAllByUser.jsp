@@ -38,7 +38,7 @@
 	
 	<style type="text/css">
 		body {
-			background-image: url('<%= request.getContextPath() %>/front-end/blog/img/335.jpg');
+			background-image: url('<%= request.getContextPath()%>/front-end/blog/img/typewriter.jpg');
 			background-repeat: no-repeat;
             background-attachment: fixed;
             background-position: center;

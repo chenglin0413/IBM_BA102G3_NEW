@@ -37,7 +37,7 @@
 
 	<style type="text/css">
 		body {
-			background-image: url('<%= request.getContextPath() %>/front-end/blog/img/335.jpg');
+			background-image: url('<%= request.getContextPath()%>/front-end/blog/img/typewriter.jpg');
 			background-repeat: no-repeat;
             background-attachment: fixed;
             background-position: center;
@@ -115,7 +115,7 @@
 		<div class="row">
 			<form class="form-horizontal" enctype="multipart/form-data" method="POST"  action="<%=request.getContextPath()%>/front-end/trvl/trvl.do" name="form1" onsubmit="return validateForm()">
 			 	<div class="col-xs-12 col-md-3 col-md-offset-1">
-					<div class="panel panel-primary">
+					<div class="panel panel-warning">
 						<div class="panel-heading">
 							<h3 class="panel-title"><strong>遊記標題</strong></h3>
 						</div>
@@ -125,7 +125,7 @@
 					</div>
 				</div>
 				<div class="col-xs-12 col-md-3">
-					<div class="panel panel-primary">
+					<div class="panel panel-warning">
 						<div class="panel-heading">
 						<h3 class="panel-title"><strong>遊記地點</strong></h3>
 					</div>
@@ -135,7 +135,7 @@
 					</div>
 				</div>
 				<div class="col-xs-12 col-md-3">
-						<div class="panel panel-primary">
+						<div class="panel panel-warning">
 						<div class="panel-heading">
 							<h3 class="panel-title"><strong>遊記日期</strong></h3>
 						</div>
@@ -167,7 +167,7 @@
 
 <script>
  CKEDITOR.replace('trvl_content', { //轉換編輯器文末Tag
-     uiColor: '#0066FF',
+     uiColor: '#F6C555',
      enterMode:CKEDITOR.ENTER_BR,
      shiftEnterMode: CKEDITOR.ENTER_BR, 
  }); 
