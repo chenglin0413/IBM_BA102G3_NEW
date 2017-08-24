@@ -8,7 +8,7 @@
     List<RestVO> list = restSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
-
+      <br/>
 <jsp:useBean id="repiSvc" scope="page" class="com.repi.model.RepiService"/>
 <!DOCTYPE html>
 <head>
