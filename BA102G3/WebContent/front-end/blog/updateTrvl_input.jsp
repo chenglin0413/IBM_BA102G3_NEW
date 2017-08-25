@@ -1,36 +1,52 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.trvl.model.*"%>
-<%@ page import="com.trpi.model.*"%>
-<%@ page import="java.util.*"%>
-<%
-	TrvlVO trvlVO = (TrvlVO) request.getAttribute("trvlVO");
-	List<TrpiVO> listTrpis = (List<TrpiVO>) request.getAttribute("listTrpis");
+<%@ page import="com.trvl.model.*,com.user.model.*"%>
+<%	
+	UserVO userVO = (UserVO)session.getAttribute("userVO");
+	String account =(String) session.getAttribute("account");
+	Integer user_id =userVO.getUser_id();//取得會員ID
+	pageContext.setAttribute("user_id", user_id);
+	TrvlVO trvlVO = (TrvlVO)request.getAttribute("addTrvl");
 %>
+
 <!DOCTYPE html>
 <head>
-
-	<title>遊記修改 - updateTrvl_input.jsp</title>
-
-  	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>修改遊記</title>
-	<!--  ckeditor JS -->
+    <title>Anytime Grip</title>
+	 <!-- ckeditor JS -->
 	<script src="https://cdn.ckeditor.com/4.7.1/standard/ckeditor.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-    <link href="<%=request.getContextPath()%>/front-end/css/bootstrap.css" rel="stylesheet">
-	
-    <!-- Custom CSS -->
-    <link href="<%=request.getContextPath()%>/front-end/blog/css/stylish-portfolio.css" rel="stylesheet">
-	
-    <!-- Custom Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-	<style type="text/css">
+    <!-- Bootstrap Core CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="<%= request.getContextPath() %>/front-end/css/bootstrap.css" rel="stylesheet">
 
+    <!-- Custom CSS -->
+    <link href="<%= request.getContextPath() %>/front-end/css/stylish-portfolio.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    
+    <link href="<%= request.getContextPath() %>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+    
+    <link href="<%= request.getContextPath() %>/front-end/css/fileinput.min.css" rel="stylesheet">
+
+    <link href="<%= request.getContextPath() %>/front-end/image/loading-sm.gif" rel="stylesheet">
+    
+    <title>個人遊記</title>
+
+	<style type="text/css">
+		body {
+			background-image: url('<%= request.getContextPath()%>/front-end/blog/img/typewriter.jpg');
+			background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+		}
+		
         .content: {
           position: relative;
         }
@@ -45,29 +61,24 @@
         }
         
         .imgPreview {
-        	width:600px;
+        	width:400px;
         	height:auto;
         }
-			      
     </style>
 
 </head>
 
 <body>
-
 <%@include file="/front-end/member_interface/headerBar.file" %>
-
 
 <div class="container">
     <div class="row">
         <div class="col-md-11 col-xs-12" >
-            <h3>_</h3>
+            <h3></h3>
         </div>         
     </div>
 </div>
 
-
-<div class="callout"></div>
 
  <div class="container">	
 	<div class="row ">         
@@ -108,7 +119,7 @@
 	<div class="row">
 		<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="<%=request.getContextPath()%>/front-end/trvl/trvl.do" name="form1" onsubmit="return validateForm()">
 		 	<div class="col-xs-12 col-md-4">
-				<div class="panel panel-primary">
+				<div class="panel panel-warning">
 					<div class="panel-heading">
 						<h3 class="panel-title"><strong>遊記標題</strong></h3>
 					</div>
@@ -118,7 +129,7 @@
 				</div>
 			</div>
 			<div class="col-xs-12 col-md-4">
-				<div class="panel panel-primary">
+				<div class="panel panel-warning">
 					<div class="panel-heading">
 					<h3 class="panel-title"><strong>遊記地點</strong></h3>
 				</div>
@@ -128,7 +139,7 @@
 				</div>
 			</div>
 			<div class="col-xs-12 col-md-4">
-				<div class="panel panel-primary">
+				<div class="panel panel-warning">
 					<div class="panel-heading">
 						<h3 class="panel-title"><strong>遊記日期</strong></h3>
 					</div>
@@ -137,7 +148,11 @@
 					</div>
 				</div>
 			</div>
-		<input type="file" name="upfile" accept="image/*" onchange="loadFile(event)">	
+		
+		
+<!-- 		<input type="file" name="upfile" accept="image/*" onchange="loadFile(event)">	 -->
+		<input id="input-24" name="input24[]" type="file" multiple class="file-loading">	
+			
 			<div class="col xs-12 col-md-8 col-md-offset-2">
 				<c:forEach var="trpiVO" items="${listTrpis}">
 					<c:if test="${trvlVO.trvl_id==trpiVO.trvl_id}">
@@ -146,6 +161,8 @@
 					</c:if>
 				</c:forEach>			
 			</div>
+			
+			
 		<br>
 			<div class="col-xs-12 col-md-12">	
 				<textarea name="trvl_content">${trvlVO.getTrvl_content()}</textarea>
@@ -154,142 +171,62 @@
 			<div class="col-xs-12 col-md-1 col-md-push-11">	
 				<input type="hidden" name="trvl_date" value="${date_SQL}">
 				<input type="hidden" name="trvl_id" value="${trvlVO.trvl_id}">
-				<input type="hidden" name="requestURL" value="<%=request.getAttribute("requestURL")%>">
-				<input type="hidden" name="whichPage" value="<%=request.getAttribute("whichPage")%>">
 				<input type="hidden" name="action" value="update">
-				<input type="submit" class="btn btn-primary btn-sm btn" value="確認修改上傳遊記">
 			</div>	
 		</form>
 	</div>		<!-- row -->	
 </div>	<!-- container -->	
 
-<!-- 登入模組 開始-->
-	<div class="modal fade" id="modal-login">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
-					<h4 class="modal-title">會員登入</h4>
-				</div>
-				<div class="modal-body">
-					<div class="container">
-						<div class="row">
-							<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
-							
-								<form action="<%= request.getContextPath() %>/front-end/UserLoginHandler" method="POST" id="loginForm">
-									<div class="form-group">
-										<label for="name">帳號</label> <input type="text"
-											class="form-control" name="account" id="name"
-											placeholder="請輸入您的帳號">
-									</div>
-									<div class="form-group">
-										<label for="pw">密碼</label> <input type="password"
-											class="form-control" name="password" id="pw" placeholder="請輸入您的密碼">
-									</div>
-									
-									<div>
-										<a href="#">忘記密碼</a>&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/front-end/user/newMember.jsp">加入會員</a>
-									</div>
-									
-									<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑-->
+<%@ include file="/front-end/member_interface/script.file" %>
+<script src="<%= request.getContextPath() %>/front-end/js/fileinput.min.js"></script>
 
-								</form>
-								
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<button id="login" type="button" class="btn btn-primary">登入</button>
-				</div>
-			</div>
-		</div>
-	</div>
 
-	<div class="modal fade" id="modal-sign-in">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-hidden="true">&times;</button>
-					<h4 class="modal-title">新生註冊</h4>
-				</div>
-				<div class="modal-body">註冊表單</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-					<button type="button" class="btn btn-primary">註冊</button>
-				</div>
-			</div>
-		</div>
-	</div>
-<!-- 登入模組 結束-->	
- 
 <script>
-   	CKEDITOR.replace('trvl_content', { //關閉編輯器文末<p>
-        uiColor: '#9AB8F3',
-        enterMode:CKEDITOR.ENTER_BR,
-        shiftEnterMode: CKEDITOR.ENTER_BR, 
-    }); 
+$(document).on('ready', function() {
+    $("#input-24").fileinput({
+        initialPreviewAsData: true,
+        browseOnZoneClick: true,
+        deleteUrl: "/site/file-delete",
+        overwriteInitial: false,
+        maxFileSize: 1024,
+    });
+});
 </script>
-<!-- jQuery -->
-    <script src="<%= request.getContextPath() %>/front-end/js/jquery.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="<%= request.getContextPath() %>/front-end/js/bootstrap.min.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-<script type="text/javascript">
-//登入模組        
-	var $userName = $("#account");
-	var $password = $("#password");
-	$("#login").click(function() {
-		$.ajax({
-			url : '<%= request.getContextPath() %>/front-end/UserLoginHandler',
-			data : {
-				name : $userName.val(),
-				password : $password.val()
-			},
-			type : 'POST',
-			error : function(xhr) {
-				alert('Ajax request 發生錯誤');
-			},
-			success : function(result) {
-				if (result == '帳號不存在') {
-					console.log("帳號或密碼有錯");
-				} else {
-					console.log("123456");
-					$("#loginForm").submit();
-				}
-			}
-		});
-	});
-
-    </script>
-    
     	
-	<script>
-	  var loadFile = function(event) {
-	    var reader = new FileReader();
-	    reader.onload = function(){
-	      var output = document.getElementById('imgPreview');
-	      output.src = reader.result;
-	    };
-	    reader.readAsDataURL(event.target.files[0]);
-	  };
-	  
-	  function validateForm(){
-		  if(CKEDITOR.instances.trvl_content.getData()==""){
-			  alert("留言請勿空白！");
-			  return false;
-		}else {
-			
-			return true;
-		}
+<script>
+
+CKEDITOR.replace('trvl_content', { //轉換編輯器文末Tag
+     uiColor: '#F6C555',
+     enterMode:CKEDITOR.ENTER_BR,
+     shiftEnterMode: CKEDITOR.ENTER_BR, 
+ }); 
+ 
+</script>
+<script>
+ var loadFile = function(event) {
+    var reader = new FileReader();
+    reader.onload = function(){
+      var output = document.getElementById('imgPreview');
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  };
+  
+  function validateForm(){
+	  if(CKEDITOR.instances.trvl_content.getData()==""){
+		  alert("留言請勿空白！");
+		  return false;
+	}else {
+		return true;
 	}
-	</script>
-    
+}
+  
+  $('#input-24').change(function(){
+	  	$('#imgPreview').hide();
+	});
+</script>
+   
     
     			
 </body>

@@ -20,7 +20,7 @@
     <meta name="author" content="">
 
 <title>所有餐廳資料 - listAllRest.jsp</title>
-
+<link href="<%=request.getContextPath()%>/front-end/css/jquery-ui.css" rel="stylesheet">
 <!-- Bootstrap Core CSS -->
 <link href="<%=request.getContextPath()%>/front-end/css/bootstrap.css" rel="stylesheet">
 
@@ -30,7 +30,6 @@
 <!-- Custom Fonts -->
 <link href="<%=request.getContextPath()%>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-
 
 <style type="text/css">
        
@@ -47,18 +46,23 @@
           margin: auto;
         }
         
-        .restPic {
-            width: 600px;
-        }         
-        .panel-default .panel-heading {
-		    background-color: #00ab90;
-		    color: #f2f2f2;
+        .restBox{
+			width: 240px;
+			position: relative;
+			float: left;
+			margin: 10px;
 		}
-
-		.panel-default .panel-footer {
-		    background-color: #00ab90;
-		    color: #f2f2f2;
+		.restName{
+		    background-color: #fcf8e3;
+		    width: 280px;
+		    padding: 6px;
+		    text-align: center;
+		    color: #26234f;
+		    position: absolute;
+		    left: -20px;
+		    top: -14px;
 		}
+        
     </style>
 
 
@@ -122,44 +126,41 @@
 	  <div class="col-md-12 col-xs-12">
          <h2 class="text-center bg-info">Dining & Menu</h2>
       </div>
-       
  	<!--------------- 餐廳 ---------------------->	
 	<div class="container-fluid container">
 		<div class="row">
 			<%@ include file="page1.file" %> 
 			<c:forEach var="RestVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+			<fmt:formatNumber type="number" value="${(RestVO.rest_score)/(RestVO.rest_count)}" maxFractionDigits="0" var="num"/>
+				
 				<div class="col-xs-12 col-md-4">
-							<div>
-								<c:forEach var="repiVO" items="${repiSvc.all}">
-									<c:if test="${RestVO.rest_id==repiVO.rest_id}">
-										<a href="<%=request.getContextPath()%>/front-end/rest/rest.do?rest_id=${RestVO.rest_id}&action=getOne_For_Display_formember">
-<%-- 											<label class="label label-default"> ${RestVO.rest_name}</label> --%>
-<%-- 						               		<fmt:formatNumber type="number" value="${(RestVO.rest_score)/(RestVO.rest_count)}" maxFractionDigits="0" var="num"/> --%>
-<%-- 						             		${num}<span style="font-size:14px;">.0</span> <img src="<%=request.getContextPath()%>/front-end/member_interface_rest/rest/images/star.png"> --%>
-											<img id="show-option" class="img-thumbnail restPic" src="<%= request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}">
-										</a>
-								    </c:if>
-								</c:forEach>
-							</div>	
+					<div>
+						<c:forEach var="repiVO" items="${repiSvc.all}">
+							<c:if test="${RestVO.rest_id==repiVO.rest_id}">
+				           		<div class="restBox">  	
+				             		<p class="restName">
+				 					${RestVO.rest_name}
+									 ${num}<span style="font-size:14px;">.0</span><img src="<%=request.getContextPath()%>/front-end/member_interface_rest/rest/images/star.png">
+				             		</p>
+									<a  href="<%=request.getContextPath()%>/front-end/rest/rest.do?rest_id=${RestVO.rest_id}&action=getOne_For_Display_formember">
+										<img id="pix" class="img-thumbnail" src="<%= request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}" width="400px">
+									</a>
+								</div>	
+						    </c:if>
+						</c:forEach>
+					</div>	
+							
            		</div>
 			</c:forEach>
 		</div><!-- row-->
 	</div><!-- 餐廳 -->
 	
 <%@ include file="page2.file" %>
+<script src="<%= request.getContextPath() %>/front-end/js/jquery-1.9.1.js"></script>
 	
 <%@ include file="/front-end/member_interface/script.file" %>	
-<script src="<%= request.getContextPath() %>/front-end/js/stars.min.js"></script>
+<script src="<%= request.getContextPath() %>/front-end/js/jquery-ui.js"></script>
 
- <script>
-  $( function() {
-    $( "#show-option" ).tooltip({
-      show: {
-        effect: "slideDown",
-        delay: 250
-      }
-    });
-  </script>
 
 
 </body>
