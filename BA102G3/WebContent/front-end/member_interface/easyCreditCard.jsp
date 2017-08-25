@@ -56,7 +56,6 @@
 <body>
 
 <%@include file="/front-end/member_interface/headerBar.file" %>
-
 	<div class="container-fluid">
         <div class="creditCardForm">
             <div class="heading">
@@ -66,18 +65,19 @@
 				信用卡<input type="radio" id="credit" name="ord_bill" value="2">                
             </div>
             <div id="a" style="display:none;">
-               
+               		
+                  <form>
                     <div class="form-group owner">
                         <label for="owner">Owner</label>
-                        <input type="text" class="form-control" id="owner" required="required">
+                        <input type="text" class="form-control" id="owner">
                     </div>
                     <div class="form-group CVV">
                         <label for="cvv">CVV</label>
-                        <input type="text" class="form-control" id="cvv" required="required">
+                        <input type="text" class="form-control" id="cvv">
                     </div>
                     <div class="form-group" id="card-number-field">
                         <label for="cardNumber">Card Number</label>
-                        <input type="text" class="form-control" id="cardNumber" required="required">
+                        <input type="text" class="form-control" id="cardNumber">
                     </div>
                     <div class="form-group" id="expiration-date">
                         <label>Expiration Date</label>
@@ -104,11 +104,15 @@
                             <option value="21"> 2021</option>
                         </select>
                     </div>
-                    <div class="form-group" id="credit_cards">
+                   	<div class="form-group" id="credit_cards">
                         <img src="<%=request.getContextPath() %>/front-end/member_interface/assets/images/visa.jpg" id="visa">
                         <img src="<%=request.getContextPath() %>/front-end/member_interface/assets/images/mastercard.jpg" id="mastercard">
                         <img src="<%=request.getContextPath() %>/front-end/member_interface/assets/images/amex.jpg" id="amex">
                     </div>
+                    <div class="form-group" id="pay-now">
+                        <button type="submit" class="btn btn-default" id="confirm-purchase">Confirm</button>
+                    </div>
+                     </form> 
             </div>
 
 
@@ -151,9 +155,15 @@
 		              </div>
 		              </div>
     
-    
-<%@ include file="/front-end/member_interface/script.file" %>
+  
+
 <!--  displayCreditCard -->
+
+<%@ include file="/front-end/member_interface/script.file" %>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="<%=request.getContextPath() %>/front-end/member_interface/assets/js/jquery.payform.min.js" charset="utf-8"></script>
+    <script src="<%=request.getContextPath() %>/front-end/member_interface/assets/js/script.js"></script>
 
 <script type="text/javascript">
 	
@@ -188,9 +198,6 @@
 	}
 	 window.onload = init;
 </script>
-    
-    
-    
 
 </body>
 </html>
