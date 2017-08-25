@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*"%>
 <%@ page import="com.rest.model.*,com.repi.model.*"%>
 
@@ -47,9 +48,17 @@
         }
         
         .restPic {
-            height: auto;
-            width: 400px;
-        }
+            width: 600px;
+        }         
+        .panel-default .panel-heading {
+		    background-color: #00ab90;
+		    color: #f2f2f2;
+		}
+
+		.panel-default .panel-footer {
+		    background-color: #00ab90;
+		    color: #f2f2f2;
+		}
     </style>
 
 
@@ -120,27 +129,18 @@
 			<%@ include file="page1.file" %> 
 			<c:forEach var="RestVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
 				<div class="col-xs-12 col-md-4">
-	              	<div class="item">
-	              		<div class="row">
-							<div class="col-xs-12 col-md-6">
+							<div>
 								<c:forEach var="repiVO" items="${repiSvc.all}">
 									<c:if test="${RestVO.rest_id==repiVO.rest_id}">
 										<a href="<%=request.getContextPath()%>/front-end/rest/rest.do?rest_id=${RestVO.rest_id}&action=getOne_For_Display_formember">
-											<img class="img-thumbnail restPic" src="<%= request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}">
+<%-- 											<label class="label label-default"> ${RestVO.rest_name}</label> --%>
+<%-- 						               		<fmt:formatNumber type="number" value="${(RestVO.rest_score)/(RestVO.rest_count)}" maxFractionDigits="0" var="num"/> --%>
+<%-- 						             		${num}<span style="font-size:14px;">.0</span> <img src="<%=request.getContextPath()%>/front-end/member_interface_rest/rest/images/star.png"> --%>
+											<img id="show-option" class="img-thumbnail restPic" src="<%= request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}">
 										</a>
-								   			<h4><label class=" bg-priamry">${RestVO.rest_name}</h4></label>
-								   		</a>
 								    </c:if>
 								</c:forEach>
-							</div>
-							<div class="col-xs-12 col-md-6">
-			                <P><img src="<%=request.getContextPath()%>/front-end/restaurant/rest/images/old-handphone.png"><strong class="text-left">電話 :</strong></P>
-			                <P>${RestVO.rest_phone}</P>
-			               	<P><img src="<%=request.getContextPath()%>/front-end/restaurant/rest/images/clock.png"><strong class="text-left">營業時間 :</strong></P>
-			               	<P>${RestVO.rest_hours}</P>
-		          		</div>
-		          	</div>
-	             </div>
+							</div>	
            		</div>
 			</c:forEach>
 		</div><!-- row-->
@@ -151,7 +151,15 @@
 <%@ include file="/front-end/member_interface/script.file" %>	
 <script src="<%= request.getContextPath() %>/front-end/js/stars.min.js"></script>
 
-
+ <script>
+  $( function() {
+    $( "#show-option" ).tooltip({
+      show: {
+        effect: "slideDown",
+        delay: 250
+      }
+    });
+  </script>
 
 
 </body>

@@ -47,7 +47,7 @@
 
 	<style type="text/css">
 		 body {
-			background-image: url('<%=request.getContextPath()%>/front-end/blog/img/photo.jpeg');
+<%-- 			background-image: url('<%=request.getContextPath()%>/front-end/blog/img/photo.jpeg'); --%>
 			background-repeat: no-repeat;
             background-attachment: fixed;
             background-position: center;

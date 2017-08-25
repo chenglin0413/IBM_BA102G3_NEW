@@ -50,7 +50,8 @@
 	height: 180px;
 }
 .dishPic {
-	width: 500px;
+	width: 400px;
+	height:300px;
 	margin-top:0;
 }
 
@@ -89,7 +90,6 @@ java.util.Date sql = new Date(System.currentTimeMillis());
 						<p><small>位址:</small><%=restVO.getRest_address()%></p>
 					</li>
 					<li>
-						 <p class="click-callback"><small>評等:</small></p>
 						
 						<div class="col-md-6">
 									<c:if test="${empty userVO.user_account}" var="condition1" scope="session" > 
@@ -134,12 +134,12 @@ java.util.Date sql = new Date(System.currentTimeMillis());
 								        </div>
 								        <div class="modal-body">
 									        <div class="row">
-												<div class="col-md-6">
+												<div class="col-md-6 ">
 										        	<c:forEach var="dipiVO" items="${dipiSvc.findDipisByDishId(dishVO.dish_id)}" >
 														<c:if test="${dishVO.dish_id==dipiVO.dish_id}">
 										        			<img class="img-thumbnail dishPic"src="<%= request.getContextPath()%>/front-end/restaurant/dipi/DBGifReader_dipi.do?dipi_id=${dipiVO.dipi_id}">
-										        			<h3 ><small>料理名稱 :</small>&nbsp;${dishVO.dish_name}</h3>
-										        			<h3>
+										        			<h3 class="titleSize"><small>料理名稱 :</small>&nbsp;${dishVO.dish_name}</h3>
+										        			<h3 class="titleSize">
 										        				<small>供應時段 :</small>
 									        					<span>${(dishVO.dish_status==1)? '目前提供中':'目前不提供此餐點 '}</span>&nbsp; | &nbsp;
 									        					<c:if test="${dishVO.dish_note== 1}">
@@ -162,10 +162,10 @@ java.util.Date sql = new Date(System.currentTimeMillis());
 										        	</c:forEach>
 									        	</div>
 									        	<div class="col-md-6">
-									        		<h3 class="modal-title">料理簡介:</h3>
+									        		<h3 class="modal-title titleSize">料理簡介:</h3>
 								        			${dishVO.dish_detail}
 								        			
-								        			<h3><small>料理價格 :</small>&nbsp; NT$. &nbsp;${dishVO.dish_price} &nbsp;</h3>
+								        			<h3 class="titleSize"><small>料理價格 :</small>&nbsp; NT$. &nbsp;${dishVO.dish_price} &nbsp;</h3>
 								        		</div>
 								        	</div>
 								        </div>
@@ -187,16 +187,6 @@ java.util.Date sql = new Date(System.currentTimeMillis());
 <script src="<%= request.getContextPath() %>/front-end/js/stars.min.js"></script>
 
 
-<script>
 
-$(".click-callback").stars({ 
-	value:${restVO.getRest_score()/restVO.getRest_count()},
-
-	click: function(i) {
-        i 
-    }
-});
-
-</script>
 </body>
 </html>
