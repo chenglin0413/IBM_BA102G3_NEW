@@ -117,99 +117,106 @@
 </div>
 </div>
 <div class="container">
-<div class="row">        
-          <ol class="breadcrumb">
-               <li>
-                   <a href="<%=request.getContextPath()%>/front-end/index.jsp">首頁</a>
-               </li>
-               <li class="active">餐廳訂位記錄
-               </li>
-               
-           </ol>
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="<%=request.getContextPath()%>/front-end/index.jsp">首頁</a>
+				</li>
+				<li class="active">餐廳訂位記錄</li>
+
+			</ol>
 
 
-<!-- paneltitle -->
-<div class="pop">
-						<div class="col-xs-12 col-sm-3">訂位編號</div>
-						<div class="col-xs-12 col-sm-3">商家名稱</div>
-						<div class="col-xs-12 col-sm-3">訂位日期</div>
-						<div class="col-xs-12 col-sm-3">訂位人數</div>
+			<!-- paneltitle -->
+			<div class="pop">
+				<div class="col-xs-12 col-sm-3">訂位編號</div>
+				<div class="col-xs-12 col-sm-3">商家名稱</div>
+				<div class="col-xs-12 col-sm-3">訂位日期</div>
+				<div class="col-xs-12 col-sm-3">訂位人數</div>
 
-</div>
-<br>		  
-<!-- paneltitleEND -->
-<!-- panelbodyStart -->
-<div class="container">
-<div class="row">
 
-<div id="accordion">
-<c:forEach var="retaVO" items="${retaSvc.findByUserId(userVO.getUser_id())}" varStatus="s">
- 
- <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;訂位編號#${retaVO.reta_id}</div>
- <div class="text-center">
-			       		<!-- 內容 -->
-			       		
-<!-- 			       		<div class="col-xs-12 col-sm-2"> -->
-<%--   						【<A HREF="javascript:presses${s.index}()">${retaVO.reta_id}</a>】 --%>
-<!--   						</div> -->
-  						
-							<div class="col-xs-12 col-sm-3">【${retaVO.reta_id}】</div>
-							<div class="col-xs-12 col-sm-3">${retaVO.avtb_id}</div>
-							<div class="col-xs-12 col-sm-3">${avtbSvc.getOneAvtb(retaVO.avtb_id).avtb_date_s}<br>${avtbSvc.getOneAvtb(retaVO.avtb_id).avtb_date_e}</div>
-							<div class="col-xs-12 col-sm-3">${retaVO.reta_number}</div>
-<%-- 						<div class="col-xs-12 col-sm-2">${ordVO.ord_date}</div> --%>
-<!-- 						<div class="col-xs-12 col-sm-1">$${ordVO.ord_total}</div> -->
-<!-- 						<div class="col-xs-12 col-sm-1"> -->
-<%-- 								 <c:if test="${ordVO.ord_bill == '1'}" var="condition" scope="page" >  --%>
-<!-- 					            <span class="label label-danger">未付款</span> -->
-<%-- 					            </c:if> --%>
-<%-- 					            <c:if test="${ordVO.ord_bill  == '2'}" var="condition" scope="page" >  --%>
-<!-- 					           <span class="label label-warning">已付款</span> -->
-<%-- 					           </c:if> --%>
-<%-- 					            <c:if test="${ordVO.ord_bill  == '3'}" var="condition" scope="page" >  --%>
-<!-- 					           	<span class="label label-success">已結案</span> -->
-<%-- 					           </c:if> --%>
-<!-- 						</div> -->
-<!-- 						<div class="col-xs-12 col-sm-2"> -->
-<%-- 							 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/ord/ord.do"> --%>
-<%-- 							   <c:if test="${ordVO.ord_sscore =='0'}"> --%>
-<%-- 								    <div class="col-xs-6"><select name="ord_sscore" value="${ordVO.ord_sscore }"> --%>
-<!-- 																	  <option value="1">負評。</option> -->
-<!-- 																	  <option value="2">還行。</option> -->
-<!-- 																	  <option value="3">沒Fu。</option> -->
-<!-- 																	  <option value="4">不錯。</option> -->
-<!-- 																	  <option value="5">優質。</option> -->
-<!-- 									</select></div> -->
-<!-- 									 <div class="col-xs-6"><input type="submit" value="給予評價:"></div> -->
-<%-- 									 <input type="hidden" name="ord_id" value="${ordVO.ord_id }"> --%>
-<!-- 									<input type="hidden" name="action"	value="update_ord_sscore"> -->
-<%-- 								</c:if></FORM> --%>
-<%-- 								<c:if test="${ordVO.ord_sscore !='0'}">  --%>
-<!-- 								<b>已給過評價。</b> -->
+			</div>
+			<br>
+			<!-- paneltitleEND -->
+			<!-- panelbodyStart -->
+			<div class="container">
+				<div class="row">
 
-<%-- 								</c:if>		 --%>
-						<script>
-						 	//跳窗
-						          function presses${s.index}(){
-						         	 document.open("<%=request.getContextPath()%>/front-end/item/item.do?ord_id=${ordVO.ord_id}&action=getOne_Ord_id_AllItem_formember", "" ,"height=550,width=1270,left=50,top=107,resizable=yes,scrollbars=yes"); 
+					<div id="accordion">
+						<c:forEach var="retaVO" items="${retaSvc.findByUserId(userVO.getUser_id())}" varStatus="s">
+							<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;訂位編號#${retaVO.reta_id}</div>
+							<div class="text-center">
+								<!-- 內容 -->
+								<div class="col-xs-12 col-sm-2"><a href="<%=request.getContextPath()%>/front-end/restaurant/reta/reta.do?reta_id=${retaVO.reta_id}&action=">【${retaVO.reta_id}】</a></div>
+								<div class="col-xs-12 col-sm-2">${restSvc.getOneRest(avtbSvc.getOneAvtb(retaVO.avtb_id).rest_id).rest_name}</div>
+								<div class="col-xs-12 col-sm-3">${avtbSvc.getOneAvtb(retaVO.avtb_id).avtb_date_s}<br>${avtbSvc.getOneAvtb(retaVO.avtb_id).avtb_date_e}</div>
+								<div class="col-xs-12 col-sm-2">${retaVO.reta_number}</div>
+								<div class="col-xs-12 col-sm-3"><button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Open Modal</button></div>
+								
+								
+								<script> 
+						 		//跳窗
+ 						          function presses${s.index}(){
+ 						         	 document.open("<%=request.getContextPath()%>/front-end/item/item.do?ord_id=${ordVO.ord_id}&action=getOne_Ord_id_AllItem_formember", "" ,"height=550,width=1270,left=50,top=107,resizable=yes,scrollbars=yes"); 
 						          }
-						 </script> 
-						</div>
-			       		<!-- 內容結束 -->
-			      </div>
-			      
-			      </c:forEach>
-			    </div>
-			  </div>
- 
- 
- 
+						 		</script> 
+							</div>
+							<!-- 內容結束 -->
+						</c:forEach>
+					</div>
+					
+				</div>
+			</div>
+			<%-- 		<a href="<%=request.getContextPath()%>/front-end/item/item.do?ord_id=${ordVO.ord_id}&action=getOne_Ord_id_AllItem_formember">${ordVO.ord_id}</a></td> --%>
 
-<%-- 		<a href="<%=request.getContextPath()%>/front-end/item/item.do?ord_id=${ordVO.ord_id}&action=getOne_Ord_id_AllItem_formember">${ordVO.ord_id}</a></td> --%>
-                   
-</div>
-</div>
-</div>
+		</div>
+	</div>
+	
+	
+<!-- Modal -->
+	<div class="container">
+		
+
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">修改評分&感想</h4>
+					</div>
+					<form METHOD="post"	ACTION="<%=request.getContextPath()%>/front-end/restaurant/reta/reta.do">
+					<div class="modal-body">
+						<td>
+							評分:
+							<select name="reta_rank_res" id="reta_rank_res" value="${retaVO.reta_rank_res}">
+								<option value="1" selected>1分</option>
+								<option value="2" >2分</option>
+								<option value="3" >3分</option>
+								<option value="4" >4分</option>
+								<option value="5" >5分</option>
+							</select>
+						</td>
+						<td>
+						  <textarea class="form-control" name="reta_review" id="reta_review" cols="40" rows="8" >${retaVO.reta_review}</textarea>
+						</td> 
+						
+					</div>
+					<div class="modal-footer">
+						<button type="submit" class="btn btn-default" data-dismiss="modal">送出</button>
+					</div>
+					<input type="hidden" name="user_id" value="${userVO.user_id}">
+					<input type="hidden" name="action" value="getOne_For_Update_By_Userid">
+					</form>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+<!-- Modal End -->
+			
 			
 
 <div class="callout"></div>

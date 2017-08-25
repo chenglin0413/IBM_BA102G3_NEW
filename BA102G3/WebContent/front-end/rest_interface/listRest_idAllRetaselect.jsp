@@ -122,11 +122,10 @@
 						<table class="table table-bordered table-hover table-striped">
 							<thead>
 								<tr>
-									<th>訂位編號</th>
 									<th>時段編號</th>
-									<th>會員編號</th>
-									<th>訂位人數</th>
-									<th>已訂位會員</th>
+									<th>目前訂位人數</th>
+									<th>最大可訂位人數</th>
+									<th>剩餘可訂位數</th>
 									<th>修改</th>
 								</tr>
 							</thead>
@@ -137,7 +136,7 @@
 
 								<tr>
 
-									<td>${avtbVO.avtb_id}</td>
+									<td>${avtbVO.avtb_date_s}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;│<br>${avtbVO.avtb_date_s}</td>
 									<td>${avtbVO.avtb_reservation}</td>
 									<td>${avtbVO.avtb_max_reservation}</td>
 									<td>${avtbVO.avtb_max_reservation-avtbVO.avtb_reservation}</td>
@@ -145,15 +144,15 @@
 									<td>
 									<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/front-end/restaurant/reta/reta.do">
 									<select name="user_id">
-											<option>"查看會員"</option>
+											<option value="0">"選擇會員"</option>
 											<c:forEach var="retaVO" items="${retaSvc.all}" >
 												<c:if test="${avtbVO.avtb_id == retaVO.avtb_id}">
 													<option value="${retaVO.user_id}">${retaVO.user_id}</option>
 												</c:if>
 											</c:forEach>
 									</select>
-									<input type="submit" value="修改"> 
-									<input type="hidden" name="action" value="getOne_For_Update_By_Userid">
+									<input type="submit" value="修改">
+								    <input type="hidden" name="action" value="getOne_For_Update_By_Userid">
 									</FORM>
 								</td>
 								
@@ -168,6 +167,7 @@
 		</div>
 	</div>
 
+	
 	<%-- 	<%@ include file="page2.file" %> --%>
 
 <script src="<%= request.getContextPath() %>/front-end/js_store/jquery.js"></script>

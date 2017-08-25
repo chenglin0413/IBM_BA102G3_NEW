@@ -609,11 +609,11 @@ function init(){
 
 function InputText(){
     document.getElementById("user_account").value="keroro";
-    document.getElementById("user_email").value="mjdtsaygmail.com";
+    document.getElementById("user_email").value="ba102g3iii@gmail.com";
     document.getElementById("user_lastname").value="菜";
     document.getElementById("user_firstname").value="軍曹";
-    document.getElementById("user_mobile").value="090579969";
-    document.getElementById("user_phone").value ="5711438";
+    document.getElementById("user_mobile").value="0911258102";
+    document.getElementById("user_phone").value ="0911258102";
     document.getElementById("user_address").value = "K隆星";
 }
 

@@ -37,13 +37,13 @@ RestVO restVO = (RestVO) session.getAttribute("restVO");
 <link
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic"
 	rel="stylesheet" type="text/css">
-<link type="text/css" href="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.css" rel="stylesheet" />
+
 </head>
 
 <div id="popupcalendar" class="text"></div>
 
 <body bgcolor='white'>
-<%@include file="headerBar.file"%>
+<%@include file="headerBar.file" %>
 <div class="callout"></div>
 
 <h3>新增可訂位人數&時段</h3>
@@ -68,20 +68,24 @@ java.sql.Timestamp sql = new Timestamp(System.currentTimeMillis());
 	
 	<tr>
 		<td>餐廳編號:</td>
-		<td>${restVO.rest_id}</td>
+		<td>${restVO.rest_name}</td>
 	</tr>
-	<tr>
-		<td>可預約時段 - 起始:</td>
-		<td>
-		<input type="text" name="avtb_date_s" value="<%=(avtbVO==null)? sql : avtbVO.getAvtb_date_s()%>">
-		</td>
-	</tr>
-	<tr>
-		<td>可預約時段 - 結束:</td>
-		<td>
-		<input type="text" name="avtb_date_e" value="<%=(avtbVO==null)? sql : avtbVO.getAvtb_date_e()%>">
-		</td>
-	</tr>
+	
+
+	  <div class="col-xs-12 col-sm-6">
+			<td>可預約時段 - 起始:</td>
+			<td>
+			<input type="text" name="avtb_date_s" value="<%=(avtbVO==null)? sql : avtbVO.getAvtb_date_s()%>">
+			</td>
+	  </div>
+	  
+	  <div class="col-xs-12 col-sm-6">
+			<td>可預約時段 - 結束:</td>
+			<td>
+			<input type="text" name="avtb_date_e" value="<%=(avtbVO==null)? sql : avtbVO.getAvtb_date_e()%>">
+			</td>
+	  </div>
+	  
 	<tr>
 		<td>目前訂位人數:</td>
 		<td><input type="TEXT" name="avtb_reservation" size="45"
@@ -92,6 +96,7 @@ java.sql.Timestamp sql = new Timestamp(System.currentTimeMillis());
 		<td><input type="TEXT" name="avtb_max_reservation" size="45"
 			value="<%= (avtbVO==null)? "20" : avtbVO.getAvtb_max_reservation()%>" required/></td>
 	</tr>
+	
 </table>
 
 
@@ -100,12 +105,18 @@ java.sql.Timestamp sql = new Timestamp(System.currentTimeMillis());
 <input type="hidden" name="avtb_id" value="3500001">
 <input type="hidden" name="rest_id" value="${restVO.rest_id}">
 <input type="submit" value="送出新增"></FORM>
+
+</body>
+
 <script src="<%= request.getContextPath() %>/front-end/js_store/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->
 <script src="<%= request.getContextPath() %>/front-end/js_store/bootstrap.min.js"></script>
     <!-- Custom Theme JavaScript -->
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.js"></script>
+<link type="text/css" href="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.css" rel="stylesheet" />
+
 
 <script type="text/javascript">
 		$(function(){
@@ -123,6 +134,6 @@ java.sql.Timestamp sql = new Timestamp(System.currentTimeMillis());
 			});
 		});
 </script>
-</body>
+
 
 </html>

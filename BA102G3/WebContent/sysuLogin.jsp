@@ -80,7 +80,6 @@
 			</div>
 		</div>
 		
-				<h4 class="text-center">測試用 account: admin &nbsp;&nbsp; passwd: ba102g3</h4>	
 
 	</body>
 </html>

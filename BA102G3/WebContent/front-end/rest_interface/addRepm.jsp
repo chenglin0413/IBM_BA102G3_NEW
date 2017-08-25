@@ -160,17 +160,12 @@
 		
 	</script>
 
-	<script
-		src="<%=request.getContextPath()%>/front-end/js_store/jquery.js"></script>
+	<script	src="<%=request.getContextPath()%>/front-end/js_store/jquery.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->
-	<script
-		src="<%=request.getContextPath()%>/front-end/js_store/bootstrap.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/front-end/js_store/bootstrap-datepicker.js"></script>
-
-	<script
-		src="<%=request.getContextPath()%>/front-end/js_store/bootstrap-datepicker.zh-TW.js"></script>
+	<script	src="<%=request.getContextPath()%>/front-end/js_store/bootstrap.min.js"></script>
+	<script	src="<%=request.getContextPath()%>/front-end/js_store/bootstrap-datepicker.js"></script>
+	<script	src="<%=request.getContextPath()%>/front-end/js_store/bootstrap-datepicker.zh-TW.js"></script>
 
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.js"></script>
@@ -179,13 +174,11 @@
 	<script type="text/javascript">
 		$(function() {
 			$('*[name=repm_startdate]').appendDtpicker({
-				"inline" : true,
 				"dateOnly" : true,
 				"futureOnly": true,
 				"dateFormat" : "YYYY-MM-DD"
 			});
 			$('*[name=repm_enddate]').appendDtpicker({
-				"inline" : true,
 				"dateOnly" : true,
 				"futureOnly": true,
 				"dateFormat" : "YYYY-MM-DD"

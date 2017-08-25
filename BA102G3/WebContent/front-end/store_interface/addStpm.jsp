@@ -182,13 +182,11 @@
 	<script type="text/javascript">
 		$(function() {
 			$('*[name=stpm_startdate]').appendDtpicker({
-				"inline" : true,
 				"dateOnly" : true,
 				"futureOnly": true,
 				"dateFormat" : "YYYY-MM-DD"
 			});
 			$('*[name=stpm_enddate]').appendDtpicker({
-				"inline" : true,
 				"dateOnly" : true,
 				"futureOnly": true,
 				"dateFormat" : "YYYY-MM-DD"

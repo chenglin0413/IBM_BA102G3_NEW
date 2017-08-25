@@ -152,7 +152,7 @@
 
 <div align="center"> 
 						<label><font color="red">入境路線導引</font><br><font color="blue">尋找航班抵達的登機門及出關,提領行李的路徑</font></label>
-     					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/front-end/schedule/flsc.do">
+     					<FORM METHOD="get" ACTION="<%=request.getContextPath()%>/front-end/member_interface/flsc.do">
      					<div class="input-group">
        						<label>選擇抵達航班</label>
        						<select size="1" name="flsc_id">
@@ -172,7 +172,9 @@
     					</FORM>
     					<br>	
 </div>		
-				
+			<div>
+				<img src="<%= request.getContextPath() %>/front-end/image/wordcloud.svg">
+			</div>	
 
 	</div>
 	

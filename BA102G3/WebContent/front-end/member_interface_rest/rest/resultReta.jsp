@@ -13,14 +13,31 @@ AvtbVO avtbVO = (AvtbVO) request.getAttribute("avtbVO");
 <head>
 <title>確認訂位資訊 - resultReta.jsp</title>
 <meta charset="UTF-8">	
+
+	<!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link href="<%= request.getContextPath() %>/front-end/css/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="<%= request.getContextPath() %>/front-end/css/stylish-portfolio.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    
+    <link href="<%= request.getContextPath() %>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+
+
 </head>
 
 
 <body bgcolor='white'>
+<%@include file="headerBar.file" %>
 
 <jsp:useBean id="avtbSvc" scope="page" class="com.avtb.model.AvtbService"></jsp:useBean>
 
-<h3>確認訂位資料 - resultReta.jsp</h3>
+<div class="callout"></div>
+<div class="callout"></div>
+<h3>確認訂位資料</h3>
 
 <h3>訂位資料:</h3>
 <%-- 錯誤表列 --%>

@@ -747,11 +747,11 @@ function init(){
 
 function InputText(){
     document.getElementById("user_account").value="plankton";
-    document.getElementById("user_email").value="mjdtsay@gmail.com";
+    document.getElementById("user_email").value="ba102g3iii@gmail.com";
     document.getElementById("user_lastname").value="皮";
     document.getElementById("user_firstname").value="老闆";
-    document.getElementById("user_mobile").value="0905456123";
-    document.getElementById("user_phone").value ="086543120";
+    document.getElementById("user_mobile").value="0911258102";
+    document.getElementById("user_phone").value ="0911258102";
     document.getElementById("user_address").value = "雲林麥寮";
     
     document.getElementById("store_name").value="皮老闆的尚好禮";

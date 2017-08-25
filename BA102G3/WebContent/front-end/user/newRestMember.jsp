@@ -765,11 +765,11 @@ function init(){
 
 function InputText(){
     document.getElementById("user_account").value="crab";
-    document.getElementById("user_email").value="mjdtsay@gmail.com";
+    document.getElementById("user_email").value="ba102g3iii@gmail.com";
     document.getElementById("user_lastname").value="蟹";
     document.getElementById("user_firstname").value="老闆";
-    document.getElementById("user_mobile").value="0905123456";
-    document.getElementById("user_phone").value ="086543120";
+    document.getElementById("user_mobile").value="0911258102";
+    document.getElementById("user_phone").value ="0911258102";
     document.getElementById("user_address").value = "屏東東港";
     
     document.getElementById("rest_name").value="蟹老闆的小南門";
