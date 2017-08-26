@@ -127,6 +127,9 @@
          <h2 class="text-center bg-info">Dining & Menu</h2>
       </div>
  	<!--------------- 餐廳 ---------------------->	
+	
+	
+	
 	<div class="container-fluid container">
 		<div class="row">
 			<%@ include file="page1.file" %> 
@@ -143,7 +146,7 @@
 									 ${num}<span style="font-size:14px;">.0</span><img src="<%=request.getContextPath()%>/front-end/member_interface_rest/rest/images/star.png">
 				             		</p>
 									<a  href="<%=request.getContextPath()%>/front-end/rest/rest.do?rest_id=${RestVO.rest_id}&action=getOne_For_Display_formember">
-										<img id="pix" class="img-thumbnail" src="<%= request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}" width="400px">
+										<img  class="img-thumbnail" src="<%= request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}" width="400px">
 									</a>
 								</div>	
 						    </c:if>
@@ -154,6 +157,10 @@
 			</c:forEach>
 		</div><!-- row-->
 	</div><!-- 餐廳 -->
+	
+	
+	
+	
 	
 <%@ include file="page2.file" %>
 <script src="<%= request.getContextPath() %>/front-end/js/jquery-1.9.1.js"></script>

@@ -1,103 +1,99 @@
-$blue: #47b8e0
-$red: #E71D36
-$green: #2EC4B6
-$purple: #A593E0
 
-*
-	box-sizing: border-box
 
-body
-	min-height: 100vh
-	display: flex
-	justify-content: center
-	align-items: center
+body { padding-top: 70px; }
+.logo {color:red;}
+.navbar-inner{
+    /*height: 90px*/
+    min-height: 60px
+}
+.nav {
+    background-color: white;
+}
+.navbar{
 
-body, button, input, textarea, select
-	font-family: 'Raleway', sans-serif
+    padding: 0 10px;
+}
+.navbar .nav > li > a {
+    padding: 20px 15px;
+    font-size: 150%;
+}
+.navbar .btn-navbar {
+    /*margin-right: 0px;*/
+    margin-top:15px;
+}
+.navbar-brand {
+    padding: 20px 15px;
+    font-size: 190%;
+}
+@media (max-width:768px) {
+    .brand img{
+        margin-bottom: 5px
+    }
+    .navbar .btn-navbar{
+        /*margin-right: -15px;*/
+    }
+    .navbar .nav > li > a {
+        padding: 10px 15px;
+    }
+}
 
-.center
-	width: 100%
-	max-width: 1200px
-	text-align: center
-	margin: auto
-	display: flex
-	justify-content: center
-	flex-wrap: wrap
-	padding: 20px
+.jumbotron{background-color: transparent;}
 
-button, .btn, input[type='submit']
-	padding: 20px 60px
-	border: none
-	outline: none
-	background: $blue
-	transition: 0.15s ease-in-out
-	color: white
-	text-decoration: none
-	border-radius: 5px
-	display: inline-block
-	&:hover, &:focus
-		background: darken($blue, 10%)
+#div-pagination{clear: both;}
 
-.has-tooltip:hover + .tooltip,
-.has-tooltip:focus + .tooltip,
-.has-tooltip.hover + .tooltip	
-	opacity: 1
-	transform: translate(-50%, -100%) scale(1) rotate(0deg)
-	pointer-events: inherit
+.carousel {padding-bottom: 25px}
+.carousel img{padding-top: 20px;}
+.carousel h2 {color: #0072b5;}
+.carousel h2 small{color: #289bde}
+.carousel col-lg-4 p {text-align: center;}
 
-.tooltip
-	display: block
-	position: absolute
-	top: 0px
-	left: 50%
-	transform: translate(-50%, -50%) scale(0.75) rotate(5deg)
-	transform-origin: bottom center
-	padding: 10px 30px
-	border-radius: 5px
-	background: rgba(0,0,0,0.75)
-	text-align: center
-	color: white
-	transition: 0.15s ease-in-out
-	opacity: 0
-	width: 100%
-	max-width: 100vw
-	pointer-events: none
-	z-index: 5
-	&.blue
-		background: rgba($blue, 0.75)
-		&:after
-			border-top: 5px solid rgba($blue,0.75)
-	&.red
-		background: rgba($red, 0.75)
-		&:after
-			border-top: 5px solid rgba($red,0.75)
-	&.green
-		background: rgba($green, 0.75)
-		&:after
-			border-top: 5px solid rgba($green,0.75)
-	&.purple
-		background: rgba($purple, 0.75)
-		&:after
-			border-top: 5px solid rgba($purple,0.75)
-	&:hover
-		opacity: 1
-		transform: translate(-50%, -100%) scale(1) rotate(0deg)
-		pointer-events: inherit
-	img
-		max-width: 100%
-	&:after
-		content: ''
-		display: block
-		margin: 0 auto
-		widtH: 0
-		height: 0
-		border: 5px solid transparent
-		border-top: 5px solid rgba(0,0,0,0.75)
-		position: absolute
-		bottom: 0
-		left: 50%
-		transform: translate(-50%, 100%)
+/*footer*/
+.footer {
+    background: #EDEFF1;
+    height: auto;
+    padding-bottom: 30px;
+    position: relative;
+    width: 100%;
+    border-bottom: 1px solid #CCCCCC;
+    border-top: 1px solid #DDDDDD;
+}
+.footer p {
+    margin: 0;
+}
+.footer h3 {
+    border-bottom: 1px solid #BAC1C8;
+    color: #54697E;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 27px;
+    padding: 40px 0 10px;
+    text-transform: uppercase;
+}
+.footer ul {
+    font-size: 13px;
+    list-style-type: none;
+    margin-left: 0;
+    padding-left: 0;
+    margin-top: 15px;
+    color: #7F8C8D;
+}
+.footer ul li a {
+    padding: 0 0 5px 0;
+    display: block;
+}
+.footer a {
+    color: #78828D
+}
 
-.field
-	position: relative
-	padding: 20px
+.footer-bottom {
+    background: #E3E3E3;
+    border-top: 1px solid #DDDDDD;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.footer-bottom p.pull-left {
+    padding-top: 6px;
+}
+#menu-social-menu li{display: inline-table}
+
+/*footer*/
