@@ -59,7 +59,7 @@ $( function() {
 
  .pic{
  	width:350px;
-	height:200px;
+	height:auto;
  }
 
 #accordion {
@@ -119,7 +119,7 @@ $( function() {
 								<c:if test="${dishVO.dish_note == 5}">全天供應</c:if>
 							</span>&nbsp;|&nbsp;
 							<c:if test="${(dishVO.dish_status==1)}">
-								<span style="color:#E1E100;" >供應中</span>
+								<span style="color:#FBE251;" >供應中</span>
 							</c:if>
 							<c:if test="${(dishVO.dish_status==0)}">
 								<span style="color:	red;" >暫不提供</span>

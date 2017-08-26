@@ -70,6 +70,14 @@
 <body>
 <%@include file="headerBar.file" %>
 	   
+<div class="container">
+    <div class="row">
+        <div class="col-md-11 col-xs-12" >
+            <h3></h3>
+        </div>         
+    </div>
+</div>	   
+	   
 <div class="container content">
         <div class="row">
         <ol class="breadcrumb">
@@ -159,13 +167,10 @@
 	</div><!-- 餐廳 -->
 	
 	
-	
-	
-	
 <%@ include file="page2.file" %>
-<script src="<%= request.getContextPath() %>/front-end/js/jquery-1.9.1.js"></script>
 	
 <%@ include file="/front-end/member_interface/script.file" %>	
+<script src="<%= request.getContextPath() %>/front-end/js/jquery-1.9.1.js"></script>
 <script src="<%= request.getContextPath() %>/front-end/js/jquery-ui.js"></script>
 
 

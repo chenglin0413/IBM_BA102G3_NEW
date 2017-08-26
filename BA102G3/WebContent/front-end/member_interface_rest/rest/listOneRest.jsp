@@ -74,17 +74,16 @@
                </li>
                <li ><a href="<%=request.getContextPath()%>/front-end/member_interface_rest/rest/listAllRest.jsp">餐廳</a>
                </li>
-               <li class="active">餐廳詳情</a>
+               <li class="active"><strong><%=restVO.getRest_name()%></strong></a>
                </li>
                
            </ol>
-     
      </div>       <!-- Pagination -->
  </div> 
 
+<!-------------    餐廳介紹          ------------>
 	<div class="container">
 		<div class="row">
-		<!-------------    餐廳介紹          ------------>
 			<div class="col-sm-6 col-md-4">
 				<c:forEach var="repiVO" items="${repiSvc.all}">
 					<c:if test="${restVO.rest_id==repiVO.rest_id}">
@@ -94,16 +93,13 @@
 				</c:forEach>
 				<ul>
 					<li>
-						<p><small>餐廳名稱:</small><%=restVO.getRest_name()%></p>
+						<small>位址:</small><%=restVO.getRest_address()%></p>
 					</li>
 					<li>
 						<p><small>電話:</small><%=restVO.getRest_phone()%></p>
 					</li>
 					<li>
 						<p><small>營業時間:</small><%=restVO.getRest_hours()%></p>
-					</li>
-					<li>
-						<p><small>位址:</small><%=restVO.getRest_address()%></p>
 					</li>
 					<li>
 						<h2>餐廳介紹:</h2>
@@ -126,14 +122,15 @@
 							</c:if>
 						</div>
 					</li>
-					
 				</ul>
-				
 				
 			</div>
 		<!-------------    餐廳介紹         ------------>	
-			<div class="col-sm-6 col-md-8">
+		
+		
+		
 		<!-------------    菜餚             ------------->			
+			<div class="col-sm-6 col-md-8">
 					<div class="row">
 					
 							<c:forEach var="dishVO" items="${dishSvc.getDishsByRestId(restVO.rest_id)}" varStatus="s">
@@ -217,6 +214,9 @@
 	<!-------------    菜餚  end        ------------>		
 		</div>
 	</div>
+	
+	
+	
 <%@ include file="/front-end/member_interface/script.file" %>	
 <script src="<%= request.getContextPath() %>/front-end/js/stars.min.js"></script>
 

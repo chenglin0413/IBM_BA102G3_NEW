@@ -29,6 +29,7 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 	
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,100italic,100,300,300italic,900italic,900,700,700italic,500italic,500,400italic" rel="stylesheet" type="text/css">
+	
 	<link href="<%= request.getContextPath() %>/front-end/blog/listAllTrvl.css" rel="stylesheet">
 	
     <title>遊記瀏覽</title>
@@ -76,7 +77,6 @@
 			 font-family: courier;
   		}
   	
-	
     </style>
 </head>
 <body>
@@ -92,7 +92,6 @@
 </div>
 
 
-
  <div class="container">	
 	<div class="row ">         
             
@@ -105,32 +104,33 @@
                <li>
                		<a href="<%=request.getContextPath() %>/front-end/blog/listAllTrvl.jsp">遊記瀏覽</a>
                </li>
-               <li class="active">收尋結果
+               <li class="active">
+               		收尋結果
                </li>
                
            </ol>
   	</div>
 </div>         
- <div class="container">	
-  		<div class="row">
-  			<form id="serchForm" ACTION="<%=request.getContextPath()%>/front-end/trvl/trvl.do" method="post">
-	  		     <div class="col-sm-6 col-md-2">
-	  				<input type="text" placeholder="地點蒐尋" name="trvl_loc" id="textSearch"/>
-	    		</div> 
-	    		 <div class="col-sm-6 col-md-2">
-	  				<input type="text" placeholder="遊記標題蒐尋" name="trvl_tittle" id="textSearch"/>
-	    		</div> 
-	  		     <div class="col-sm-6 col-md-1">
-	  		     	<input type="hidden" name="action" value="listTrvls_ByCompositeQuery"  />
-	  		     	<input type="submit" value="查詢" class="btn btn-primary btn-sm btnSearch" />
-	    		</div>
-	    	</form>	
-    	</div>
-	</div>  
+ 
 <%@ include file="page/page1_ByCompositeQuery.file"%>
   <section class="publicaciones-blog-home">
       <div class="container">
-          <h2></h2>
+          <h2>
+			    <div class="row">
+			        <div class="col-md-12 col-md-offset-3">
+			            <form ACTION="<%=request.getContextPath()%>/front-end/trvl/trvl.do" method="post" class="search-form">
+			                <div class="col-md-6">
+				                <div class="form-group has-feedback">
+				            		<label for="search" class="sr-only">Search</label>
+				            		<input type="text" class="form-control" name="trvl_loc" id="search" placeholder="地點收尋">
+				              		<input type="hidden" name="action" value="listTrvls_ByCompositeQuery" />
+				              		<span class="glyphicon glyphicon-search form-control-feedback"></span>
+				            	</div>
+				            </div>
+			            </form>
+			        </div>
+			    </div>
+          </h2>
         <div class="row">
           <div class="row-page row">
 			<c:forEach var="trvlVO" items="${listTrvls_ByCompositeQuery}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" step="1" varStatus="s">
@@ -167,8 +167,8 @@
 	
 	
 
-
-<%@ include file="/front-end/member_interface/script.file" %>	
+<%@ include file="/front-end/member_interface/script.file" %>
+<script src="<%= request.getContextPath() %>/front-end/js/jquery-1.9.1.js"></script>	
 <script type="text/javascript">
 	
 	
