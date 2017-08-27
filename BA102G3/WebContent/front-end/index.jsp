@@ -1,6 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.user.model.*,java.util.*,com.prod.model.*,com.trvl.model.*"%>
+<%@ page import="com.user.model.*,java.util.*,com.prod.model.*,com.trvl.model.*,com.rest.model.*"%>
 <%
 UserVO userVO = (UserVO) session.getAttribute("userVO");
 String account =(String) session.getAttribute("account");
@@ -9,6 +9,7 @@ List<TrvlVO> trvllist = trvlSvc.getTopTrvlCounts();
 pageContext.setAttribute("trvllist", trvllist);
 %>
 <jsp:useBean id="trpiSvc" scope="page" class="com.trpi.model.TrpiService" />
+<jsp:useBean id="repiSvc" scope="page" class="com.repi.model.RepiService" />
 <!DOCTYPE html>
 <html lang="en">
 
@@ -216,7 +217,7 @@ pageContext.setAttribute("trvllist", trvllist);
                 <div class="col-md-4 col-sm-12 item text-center">
                      <div class="img-rounded" id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
 					<div><h2>${prodVO.prod_name}</h2></div>
-					<div><h4>商品描述:${prodVO.prod_descript}</h4></div>
+					<div class="AutoSkip"><h4>商品描述:${prodVO.prod_descript}</h4></div>
 					<div><h4>商品種類:${prodVO.prod_sort}</h4></div>
                     <div>
                     
@@ -279,46 +280,23 @@ pageContext.setAttribute("trvllist", trvllist);
            </c:forEach>
          <!-- 商品前三結尾 -->  
            
-           
-                 <section class="row">
+           <jsp:useBean id="restSvc" class="com.rest.model.RestService"/>
+                  <section id="portfolio" class="bg-light-gray"> <!-- 商品 /餐廳Section -->
                 <div class="col-md-12 text-center">
                     <h2 class="section-heading">熱門餐廳</h2>
-                    <h3 class="section-subheading text-muted">Restaurant area.</h3>
+                    <h3 class="section-subheading text-muted">Shopping area.</h3>
                 </div>
-                </section>
-                <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
-                        
-                        <img src="img/portfolio/golden.png" class="img-responsive" alt="">
-                    </a>
-                    <div class="portfolio-caption">
-                        <h4>Golden</h4>
-                        <p class="text-muted">Website Design</p>
-                    </div>
+                </section>	
+               <c:forEach var="restVO" items="${restSvc.getTopThree()}" >
+                <div class="col-md-4 col-sm-12 item text-center">
+                     <div class="img-rounded" id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/repi/RepiDBGifReader.do?rest_id=${restVO.rest_id}" width="300" height="250"></div>
+					<div><h2>${restVO.rest_name}</h2></div>
+					<div class="AutoSkip"><h4>餐廳描述:${restVO.rest_detail}</h4></div>
+					<div><h4>餐廳種類:${restVO.rest_type}</h4></div>
                 </div>
-                <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="#portfolioModal5" class="portfolio-link" data-toggle="modal">
-                       
-                        <img src="img/portfolio/escape.png" class="img-responsive" alt="">
-                    </a>
-                    <div class="portfolio-caption">
-                        <h4>Escape</h4>
-                        <p class="text-muted">Website Design</p>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
-                       
-                        <img src="img/portfolio/dreams.png" class="img-responsive" alt="">
-                    </a>
-                    <div class="portfolio-caption">
-                        <h4>Dreams</h4>
-                        <p class="text-muted">Website Design</p>
-                    </div>
-                </div>
-            </div>
-     
-     
+                <!-- 餐廳前三結尾 -->
+           </c:forEach>
+     </div>
      			
      <div class="col-md-4">
      			  <!-- 遊記前四 -->
