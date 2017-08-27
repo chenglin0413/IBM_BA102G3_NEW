@@ -64,7 +64,7 @@
         .pic {
         	border-top-left-radius:1em;
         	border-top-right-radius:1em;
-        	width:550px;
+        	width:600px;
         	height:auto;
         }
   		#trvl_tittle{
@@ -74,16 +74,81 @@
         	position: absolute;
         	margin-left:20px;
     		bottom: 0;
-    		font-size:10px;
+    		font-size:15px;
         }
-  		#textSearch{
-			 border-radius: 999px;
-			 width:150px;
- 			 height: 30px;
-			 box-sizing: border-box;
-			 font-family: courier;
-  		}
   	
+  		    #custom-search-form {
+        margin:0;
+        margin-top: 5px;
+        padding: 0;
+    }
+ 
+    #custom-search-form .search-query {
+        padding-right: 3px;
+        padding-right: 4px \9;
+        padding-left: 3px;
+        padding-left: 4px \9;
+        /* IE7-8 doesn't have border-radius, so don't indent the padding */
+ 
+        margin-bottom: 0;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        border-radius: 3px;
+    }
+	
+	
+	
+	.search-form .form-group {
+  float: right !important;
+  transition: all 0.35s, border-radius 0s;
+  width: 32px;
+  height: 32px;
+  background-color: #fff;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
+  border-radius: 25px;
+  border: 1px solid #ccc;
+}
+.search-form .form-group input.form-control {
+  padding-right: 20px;
+  border: 0 none;
+  background: transparent;
+  box-shadow: none;
+  display:block;
+}
+.search-form .form-group input.form-control::-webkit-input-placeholder {
+  display: none;
+}
+.search-form .form-group input.form-control:-moz-placeholder {
+  /* Firefox 18- */
+  display: none;
+}
+.search-form .form-group input.form-control::-moz-placeholder {
+  /* Firefox 19+ */
+  display: none;
+}
+.search-form .form-group input.form-control:-ms-input-placeholder {
+  display: none;
+}
+.search-form .form-group:hover,
+.search-form .form-group.hover {
+  width: 100%;
+  border-radius: 4px 25px 25px 4px;
+}
+.search-form .form-group span.form-control-feedback {
+  position: absolute;
+  top: -1px;
+  right: -2px;
+  z-index: 2;
+  display: block;
+  width: 34px;
+  height: 34px;
+  line-height: 34px;
+  text-align: center;
+  color: #3596e0;
+  left: initial;
+  font-size: 14px;
+  margin:0;
+}
 	
     </style>
 </head>
@@ -115,27 +180,27 @@
                
            </ol>
   	</div>
-</div>         
-   	<div class="container">	
-  		<div class="row">
-  			<form id="serchForm" ACTION="<%=request.getContextPath()%>/front-end/trvl/trvl.do" method="post">
-	  		     <div class="col-sm-6 col-md-2">
-	  				<input type="text" placeholder="地點蒐尋" name="trvl_loc" id="textSearch"/>
-	    		</div> 
-	    		 <div class="col-sm-6 col-md-2">
-	  				<input type="text" placeholder="遊記標題蒐尋" name="trvl_tittle" id="textSearch"/>
-	    		</div> 
-	  		     <div class="col-sm-6 col-md-1">
-	  		     	<input type="hidden" name="action" value="listTrvls_ByCompositeQuery"  />
-	  		     	<input type="submit" value="查詢" class="btn btn-primary btn-sm btnSearch" />
-	    		</div>
-	    	</form>	
-    	</div>
-	</div> 
-	
+</div>      
+
+
   <section class="publicaciones-blog-home">
       <div class="container">
-          <h2></h2>
+          <h2>
+			    <div class="row">
+			        <div class="col-md-12 col-md-offset-3">
+			            <form ACTION="<%=request.getContextPath()%>/front-end/trvl/trvl.do" method="post" class="search-form">
+			                <div class="col-md-6">
+				                <div class="form-group has-feedback">
+				            		<label for="search" class="sr-only">Search</label>
+				            		<input type="text" class="form-control" name="trvl_loc" id="search" placeholder="地點收尋">
+				              		<input type="hidden" name="action" value="listTrvls_ByCompositeQuery" />
+				              		<span class="glyphicon glyphicon-search form-control-feedback"></span>
+				            	</div>
+				            </div>
+			            </form>
+			        </div>
+			    </div>
+          </h2>
         <div class="row">
           <div class="row-page row">
           <%@ include file="page/page1.file"%>
@@ -156,7 +221,7 @@
                 </div>
                 	<p id="user_information">${userSvc.getOneUser(trvlVO.user_id).user_account}
 	               	 	<small>(${trvlVO.trvl_date})</small>
-	               	 	<img src="<%=request.getContextPath()%>/front-end/blog/img/footstep.png" width="20">
+	               	 	<img src="<%=request.getContextPath()%>/front-end/blog/img/footstep.png" width="40">
 	               	 	${trvlVO.trvl_count}
                 	</p>
                 <div class="mascara-enlace-blog-home">
@@ -177,8 +242,10 @@
 	
 	
 
-
+	
 <%@ include file="/front-end/member_interface/script.file" %>	
+<script src="<%= request.getContextPath() %>/front-end/js/jquery-1.9.1.js"></script>
+
 <script type="text/javascript">
 	
 	

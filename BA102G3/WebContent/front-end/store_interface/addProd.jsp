@@ -49,6 +49,24 @@
 .content: {
 	position: relative;
 }
+
+
+#filePhoto{
+    position:absolute;
+    height:300px;
+    top:1px;
+    left:18px;
+    z-index:2;
+    opacity:0;
+    cursor:pointer;
+    border: 2px solid gray;
+}
+
+input[type="file"]{
+ color: transparent;
+
+
+}
 </style>
 </head>
 
@@ -94,11 +112,13 @@
 		<FORM ACTION="<%=request.getContextPath()%>/front-end/store_interface/prod.do" method=post name="form1"	enctype="multipart/form-data">
 			<div class="row">
 				<div class="col-md-6 col-xs-12">
-					<div>
-						<label>圖片名稱:&nbsp;&nbsp;</label><input type="TEXT"
-							name="prpi_name" required="required" size="15" /> <img
-							id="output" height="300" width="350" /> <input type="file" name="prpi_img" multiple accept="image/*" required="required" onchange="loadFile(event)" />
-
+				<div class="col-md-12">請將圖片拖曳至此</div>
+					<div class="uploader">
+					
+						 <img
+							id="output" height="300" width="350" /> <input id="filePhoto" type="file" name="prpi_img" multiple accept="image/*" required="required" onchange="loadFile(event)" />
+					     <div class="col-md-12"><label>圖片名稱:&nbsp;&nbsp;</label><input type="TEXT" 
+							name="prpi_name" required="required" size="15" /></div>		
 					</div>
 				</div>
 				<div class="col-md-6 col-xs-12">

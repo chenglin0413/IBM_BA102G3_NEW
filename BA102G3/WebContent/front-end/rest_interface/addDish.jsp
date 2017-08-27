@@ -19,10 +19,6 @@
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
     <style type="text/css">
-        .item img{
-            height: 300px;
-            width: 100%;
-        }
         th{
        text-align:center;
        font-size:14px;
@@ -31,6 +27,29 @@
         li {
 			list-style-type:none;
 			}
+				
+		.uploader {position:relative; overflow:hidden;  height:350px; background:#f3f3f3; border:2px dashed #e8e8e8;}
+
+#filePhoto{
+    position:absolute;
+    height:350px;
+    top:-50px;
+    left:0;
+    z-index:2;
+    opacity:0;
+    cursor:pointer;
+}
+
+.uploader img{
+    position:absolute;
+    width:400px;
+    height:350px;
+    top:-1px;
+    left:-1px;
+    z-index:1;
+    border:none;
+}	
+			
     </style>
 </head>
 
@@ -51,21 +70,30 @@
 <div class="callout"></div>
 <div class="container">
 	<div class="row">
-		<FORM  METHOD="POST" ACTION="<%= request.getContextPath()%>/front-end/restaurant/dish/dish.do" name="form1" enctype="multipart/form-data" role="form">
+		<FORM  METHOD="POST" ACTION="<%= request.getContextPath()%>/front-end/restaurant/dish/dish.do" name="form1" enctype="multipart/form-data" role="form"  class="form-horizontal">
 			<div class="col-md-5 col-md-offset-1">
-				<input type="file" name="dish_img" accept="image/*" onchange="loadFile(event)">
-				<img class="img-thumbnail" id="imgPreview">
+				<div class="callout"></div>
+				<div class="uploader" onclick="$('#filePhoto').click()">
+					 <div class="callout"></div>
+					 <div class="callout"></div>
+					 drag here your images for preview
+					<input type="file" name="userprofile_picture" id="filePhoto" accept="image/*" onchange="loadFile(event)">
+					<img id="imgPreview">
+				</div>
 			</div>	
 			<div class="col-md-5">	
 					<div class="form-group">
    						<label for="dish_name">*料理名稱 :</label>
-    					<input type="TEXT"  class="form-control" name="dish_name" id="dish_name" value="${dishVO.dish_name}" required/>
+   						 <div class="input-group">
+     						 <div class="input-group-addon"><span class="glyphicon glyphicon-cutlery"></span></div>
+    							<input type="TEXT"  class="form-control" name="dish_name" id="dish_name" value="${dishVO.dish_name}" required/>
+  							</div>
   					</div>
 					<div class="form-group">
 						
    						<label for="dish_price col-xs-8">*料理價格 :</label>
    						 <div class="input-group">
-     						 <div class="input-group-addon">$</div>
+     						 <div class="input-group-addon"> <span class="glyphicon glyphicon-usd"></span></div>
     							<input type="TEXT"  class="form-control" name="dish_price" id="dish_price" value="${dishVO.dish_price}" required/>
   							</div>
   						</div>
@@ -102,15 +130,20 @@
 </div>	<!-- container -->
 
 <script>
-var loadFile = function(event) {
-  var reader = new FileReader();
-  reader.onload = function(){
-    var output = document.getElementById('imgPreview');
-    output.src = reader.result;
-  };
-  reader.readAsDataURL(event.target.files[0]);
-};
+var imageLoader = document.getElementById('filePhoto');
+imageLoader.addEventListener('change', handleImage, false);
+
+function handleImage(e) {
+var reader = new FileReader();
+reader.onload = function (event) {
+    
+    $('.uploader img').attr('src',event.target.result);
+}
+reader.readAsDataURL(e.target.files[0]);
+}
 </script>
+
+
 
 <script src="<%= request.getContextPath() %>/front-end/js_store/jquery.js"></script>
     <!-- Bootstrap Core JavaScript -->

@@ -59,7 +59,7 @@ $( function() {
 
  .pic{
  	width:350px;
-	height:200px;
+	height:auto;
  }
 
 #accordion {
@@ -74,7 +74,7 @@ $( function() {
 
 #accordion h3{ 
   background:none;
-  background-color:#4F9D9D;         
+  background-color:#66b2b2;         
 }
 
 .item {
@@ -117,10 +117,16 @@ $( function() {
 								<c:if test="${dishVO.dish_note== 3}">晚餐</c:if>
 								<c:if test="${dishVO.dish_note== 4}">下午茶</c:if>
 								<c:if test="${dishVO.dish_note == 5}">全天供應</c:if>
-							</span>&nbsp;|&nbsp; 
-							<span style="color:	#E1E100;" >${(dishVO.dish_status==1)? '供應中':'目前不提供此餐點'}</span>
+							</span>&nbsp;|&nbsp;
+							<c:if test="${(dishVO.dish_status==1)}">
+								<span style="color:#FBE251;" >供應中</span>
+							</c:if>
+							<c:if test="${(dishVO.dish_status==0)}">
+								<span style="color:	red;" >暫不提供</span>
+							</c:if>
+							
 						</h3>
-					<div>					
+					<div>			
 						<c:forEach var="dipiVO" items="${dipiSvc.findDipisByDishId(dishVO.dish_id)}" >
 							<c:if test="${dishVO.dish_id==dipiVO.dish_id}">
 								<div class="row item">

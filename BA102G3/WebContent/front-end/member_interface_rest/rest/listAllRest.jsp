@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page import="java.util.*"%>
 <%@ page import="com.rest.model.*,com.repi.model.*"%>
 
@@ -8,7 +9,6 @@
     List<RestVO> list = restSvc.getAll();
     pageContext.setAttribute("list",list);
 %>
-
 <jsp:useBean id="repiSvc" scope="page" class="com.repi.model.RepiService"/>
 <!DOCTYPE html>
 <head>
@@ -20,7 +20,7 @@
     <meta name="author" content="">
 
 <title>所有餐廳資料 - listAllRest.jsp</title>
-
+<link href="<%=request.getContextPath()%>/front-end/css/jquery-ui.css" rel="stylesheet">
 <!-- Bootstrap Core CSS -->
 <link href="<%=request.getContextPath()%>/front-end/css/bootstrap.css" rel="stylesheet">
 
@@ -30,16 +30,6 @@
 <!-- Custom Fonts -->
 <link href="<%=request.getContextPath()%>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-
-<script>
-$( function() {
-    $( "#accordion" ).accordion({
-      collapsible: true,
-      heightStyle: "content",
-    });
-  });
-
-</script>
 
 <style type="text/css">
        
@@ -56,16 +46,37 @@ $( function() {
           margin: auto;
         }
         
-        .restPic {
-            height: auto;
-            width: 300px;
-        }
+        .restBox{
+			width: 240px;
+			position: relative;
+			float: left;
+			margin: 10px;
+		}
+		.restName{
+		    background-color: #fcf8e3;
+		    width: 280px;
+		    padding: 6px;
+		    text-align: center;
+		    color: #26234f;
+		    position: absolute;
+		    left: -20px;
+		    top: -14px;
+		}
+        
     </style>
 
 
 </head>
 <body>
 <%@include file="headerBar.file" %>
+	   
+<div class="container">
+    <div class="row">
+        <div class="col-md-11 col-xs-12" >
+            <h3></h3>
+        </div>         
+    </div>
+</div>	   
 	   
 <div class="container content">
         <div class="row">
@@ -97,18 +108,18 @@ $( function() {
 			                         </c:if>
 			                     <c:if test="${s.count!=1 && s.count%4==1}">                      
 			                          <div class="item">
-			                          <div class="row">
-			                          </c:if>      
-	                                 		<div class="col-md-3">
-												<img class="img-thumbnail" src="<%= request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}">
-	                                 		</div>
-		                                <c:if test="${s.count%4==0}"> 		
+			                          		<div class="row">
+			                     </c:if>      
+                                		<div class="col-md-3">
+											<img class="img-thumbnail" src="<%= request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}">
+                                		</div>
+		                          <c:if test="${s.count%4==0}"> 		
 		                                   	</div>
 		                				</div>
                                		</c:if>   
                         		 </c:forEach>       
-                     </div>          
-                     </div>
+                     		</div>          
+               			</div>
                      <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
                          <span class="glyphicon glyphicon-chevron-left"></span>
                      </a>
@@ -123,42 +134,45 @@ $( function() {
 	  <div class="col-md-12 col-xs-12">
          <h2 class="text-center bg-info">Dining & Menu</h2>
       </div>
-       
  	<!--------------- 餐廳 ---------------------->	
+	
+	
+	
 	<div class="container-fluid container">
 		<div class="row">
 			<%@ include file="page1.file" %> 
 			<c:forEach var="RestVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+			<fmt:formatNumber type="number" value="${(RestVO.rest_score)/(RestVO.rest_count)}" maxFractionDigits="0" var="num"/>
+				
 				<div class="col-xs-12 col-md-4">
-	              	<div class="item">
-	              		<div class="row">
-							<div class="col-xs-12 col-md-6">
-								<c:forEach var="repiVO" items="${repiSvc.all}">
-									<c:if test="${RestVO.rest_id==repiVO.rest_id}">
-										<a href="<%=request.getContextPath()%>/front-end/rest/rest.do?rest_id=${RestVO.rest_id}&action=getOne_For_Display_formember">
-											<img class="img-thumbnail restPic" src="<%= request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}">
-										</a>
-								   		<h4><a href="#" class=" bg-warning">${RestVO.rest_name}</a></h4>
-								   		</a>
-								    </c:if>
-								</c:forEach>
-							</div>
-							<div class="col-xs-12 col-md-6">
-			                <P><img src="<%=request.getContextPath()%>/front-end/restaurant/rest/images/old-handphone.png"><strong class="text-left">電話 :</strong></P>
-			                <P>${RestVO.rest_phone}</P>
-			               	<P><img src="<%=request.getContextPath()%>/front-end/restaurant/rest/images/clock.png"><strong class="text-left">營業時間 :</strong></P>
-			               	<P>${RestVO.rest_hours}</P>
-		          		</div>
-		          	</div>
-	             </div>
+					<div>
+						<c:forEach var="repiVO" items="${repiSvc.all}">
+							<c:if test="${RestVO.rest_id==repiVO.rest_id}">
+				           		<div class="restBox">  	
+				             		<p class="restName">
+				 					${RestVO.rest_name}
+									 ${num}<span style="font-size:14px;">.0</span><img src="<%=request.getContextPath()%>/front-end/member_interface_rest/rest/images/star.png">
+				             		</p>
+									<a  href="<%=request.getContextPath()%>/front-end/rest/rest.do?rest_id=${RestVO.rest_id}&action=getOne_For_Display_formember">
+										<img  class="img-thumbnail" src="<%= request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}" width="400px">
+									</a>
+								</div>	
+						    </c:if>
+						</c:forEach>
+					</div>	
+							
            		</div>
 			</c:forEach>
 		</div><!-- row-->
 	</div><!-- 餐廳 -->
 	
+	
 <%@ include file="page2.file" %>
 	
 <%@ include file="/front-end/member_interface/script.file" %>	
+<script src="<%= request.getContextPath() %>/front-end/js/jquery-1.9.1.js"></script>
+<script src="<%= request.getContextPath() %>/front-end/js/jquery-ui.js"></script>
+
 
 
 </body>

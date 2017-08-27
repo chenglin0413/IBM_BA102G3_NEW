@@ -40,34 +40,50 @@
 	text-align: center;
 }
 
-.bannerPic{
-	text-align:center;
-	margin-top:0;
-}
-
 .red {
 	width: 1100px;
 	height: 180px;
 }
 .dishPic {
-	width: 500px;
+	width: 300px;
+	height:200px;
 	margin-top:0;
 }
 
 </style>
 
 </head>
-<%
-java.util.Date sql = new Date(System.currentTimeMillis()); 
-%>
+
+
 <body>
 <%@include file="headerBar.file" %>
-	<div class="bannerPic">
-		<img class="red" src="<%=request.getContextPath()%>/front-end/member_interface_rest/rest/images/red.png">
-	</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-11 col-xs-12" >
+            <h3></h3>
+        </div>         
+    </div>
+</div>
+
+<div class="container content">
+        <div class="row">
+        <ol class="breadcrumb">
+               <li>
+                   <a href="<%=request.getContextPath() %>/front-end/index.jsp">首頁</a>
+               </li>
+               <li ><a href="<%=request.getContextPath()%>/front-end/member_interface_rest/rest/listAllRest.jsp">餐廳</a>
+               </li>
+               <li class="active"><strong><%=restVO.getRest_name()%></strong></a>
+               </li>
+               
+           </ol>
+     </div>       <!-- Pagination -->
+ </div> 
+
+<!-------------    餐廳介紹          ------------>
 	<div class="container">
 		<div class="row">
-		<!-------------    餐廳介紹          ------------>
 			<div class="col-sm-6 col-md-4">
 				<c:forEach var="repiVO" items="${repiSvc.all}">
 					<c:if test="${restVO.rest_id==repiVO.rest_id}">
@@ -77,7 +93,7 @@ java.util.Date sql = new Date(System.currentTimeMillis());
 				</c:forEach>
 				<ul>
 					<li>
-						<p><small>餐廳名稱:</small><%=restVO.getRest_name()%></p>
+						<small>位址:</small><%=restVO.getRest_address()%></p>
 					</li>
 					<li>
 						<p><small>電話:</small><%=restVO.getRest_phone()%></p>
@@ -86,44 +102,57 @@ java.util.Date sql = new Date(System.currentTimeMillis());
 						<p><small>營業時間:</small><%=restVO.getRest_hours()%></p>
 					</li>
 					<li>
-						<p><small>位址:</small><%=restVO.getRest_address()%></p>
+						<h2>餐廳介紹:</h2>
+						<p>&nbsp;&nbsp;<%=restVO.getRest_detail()%></p>
 					</li>
+					
 					<li>
-						<p><small>餐廳被評分次數:</small><%=restVO.getRest_count()%>&nbsp;&nbsp;&nbsp;
-						
-						
 						
 						<div class="col-md-6">
-									<c:if test="${empty userVO.user_account}" var="condition1" scope="session" > 
-											<div class="btn btn-info"><a href='#modal-login' data-toggle="modal">請先登入</a></div>
-									</c:if>		
-						 <c:if test="${not empty userVO.user_account}" var="condition2" scope="session" >
-							<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/front-end/rest/rest.do"
-								name="form2" id="form2"> 
-								<input type="submit" value="訂位">
-								<input type="hidden" name="rest_id" value="${restVO.rest_id}">
-								<input type="hidden" name="action" value="getOne_For_Reta_formember">
-							</FORM>
+							<c:if test="${empty userVO.user_account}" var="condition1" scope="session" > 
+									<div class="btn btn-lg btn-info"><a href='#modal-login' data-toggle="modal">訂位,請先登入</a></div>
+							</c:if>		
+							 <c:if test="${not empty userVO.user_account}" var="condition2" scope="session" >
+								<FORM METHOD="post"	ACTION="<%=request.getContextPath()%>/front-end/rest/rest.do"
+									name="form2" id="form2"> 
+									<input type="submit" value="訂位">
+									<input type="hidden" name="rest_id" value="${restVO.rest_id}">
+									<input type="hidden" name="action" value="getOne_For_Reta_formember">
+								</FORM>
 							</c:if>
-							</div>
-						</li>
-					</ul>
-				
+						</div>
+					</li>
+				</ul>
 				
 			</div>
 		<!-------------    餐廳介紹         ------------>	
-			<div class="col-sm-6 col-md-8">
-				<h2>餐廳介紹:</h2>
-				<p>&nbsp;&nbsp;<%=restVO.getRest_detail()%></p>
+		
+		
+		
 		<!-------------    菜餚             ------------->			
+			<div class="col-sm-6 col-md-8">
 					<div class="row">
+					
 							<c:forEach var="dishVO" items="${dishSvc.getDishsByRestId(restVO.rest_id)}" varStatus="s">
 								
-								<div class="col-sm-2 col-md-3">	
+								<div class="col-sm-2 col-md-4">	
 									<!-- Trigger the modal with a button -->
-									<button type="button" class="btn btn-info btn-basic" data-toggle="modal" data-target="#myModal${s.count}" >${dishVO.dish_name}</button>
-									<br>
-									<br>
+									
+									<div class="panel panel-danger panel-pricing">
+				                        <ul class="list-group text-center">
+				                            <li class="list-group-item"> 
+					                            <c:forEach var="dipiVO" items="${dipiSvc.findDipisByDishId(dishVO.dish_id)}" >
+													<c:if test="${dishVO.dish_id==dipiVO.dish_id}">
+									        			<img class="img-thumbnail dishPic"src="<%= request.getContextPath()%>/front-end/restaurant/dipi/DBGifReader_dipi.do?dipi_id=${dipiVO.dipi_id}">
+				                            		</c:if>
+										        </c:forEach>
+				                            </li>
+				                        </ul>
+				                        <div class="panel-footer">
+				                            <button type="button" class="btn btn-danger btn-block" data-toggle="modal" data-target="#myModal${s.count}" >${dishVO.dish_name}</button>
+				                        </div>
+				                    </div>
+									
 								
 									<!-- Modal -->
 								  	<div class="modal fade" id="myModal${s.count}" role="dialog">
@@ -136,11 +165,11 @@ java.util.Date sql = new Date(System.currentTimeMillis());
 								        </div>
 								        <div class="modal-body">
 									        <div class="row">
-												<div class="col-md-6">
+												<div class="col-md-6 ">
 										        	<c:forEach var="dipiVO" items="${dipiSvc.findDipisByDishId(dishVO.dish_id)}" >
 														<c:if test="${dishVO.dish_id==dipiVO.dish_id}">
 										        			<img class="img-thumbnail dishPic"src="<%= request.getContextPath()%>/front-end/restaurant/dipi/DBGifReader_dipi.do?dipi_id=${dipiVO.dipi_id}">
-										        			<h3 ><small>料理名稱 :</small>&nbsp;${dishVO.dish_name}</h3>
+										        			<h3><small>料理名稱 :</small>&nbsp;${dishVO.dish_name}</h3>
 										        			<h3>
 										        				<small>供應時段 :</small>
 									        					<span>${(dishVO.dish_status==1)? '目前提供中':'目前不提供此餐點 '}</span>&nbsp; | &nbsp;
@@ -164,7 +193,7 @@ java.util.Date sql = new Date(System.currentTimeMillis());
 										        	</c:forEach>
 									        	</div>
 									        	<div class="col-md-6">
-									        		<h3 class="modal-title">料理簡介:</h3>
+									        		<h3 class="modal-title titleSize">料理簡介:</h3>
 								        			${dishVO.dish_detail}
 								        			
 								        			<h3><small>料理價格 :</small>&nbsp; NT$. &nbsp;${dishVO.dish_price} &nbsp;</h3>
@@ -185,7 +214,12 @@ java.util.Date sql = new Date(System.currentTimeMillis());
 	<!-------------    菜餚  end        ------------>		
 		</div>
 	</div>
+	
+	
+	
 <%@ include file="/front-end/member_interface/script.file" %>	
+<script src="<%= request.getContextPath() %>/front-end/js/stars.min.js"></script>
+
 
 
 </body>
