@@ -118,7 +118,7 @@ input[type="file"]{
 						 <img
 							id="output" height="300" width="350" /> <input id="filePhoto" type="file" name="prpi_img" multiple accept="image/*" required="required" onchange="loadFile(event)" />
 					     <div class="col-md-12"><label>圖片名稱:&nbsp;&nbsp;</label><input type="TEXT" 
-							name="prpi_name" required="required" size="15" /></div>		
+							id="prpi_name" name="prpi_name" required="required" size="20" /></div>		
 					</div>
 				</div>
 				<div class="col-md-6 col-xs-12">
@@ -133,7 +133,7 @@ input[type="file"]{
 									</tr>
 									<tr>
 										<td><label>產品名稱:&nbsp;&nbsp;</label></td>
-										<td><input type="TEXT" id="name" name="prod_name"	required="required" size="15" /></td>
+										<td><input type="TEXT" id="name" name="prod_name"	required="required" size="20" /></td>
 									</tr>
 									<tr>
 										<td><label>產稱描述:&nbsp;&nbsp;</label></td>
@@ -210,51 +210,57 @@ input[type="file"]{
 
 	<div class="callout"></div>
 	
+		
 		<script type="text/javascript">
 
 		function magiclittlebtn1() {
-			document.getElementById('name').value = '原味鳳梨酥';
-			document.getElementById('descript').value = '奶蛋素。皮薄餡多、鬆香、不黏牙，夾藏著口感細緻的鳳梨美味，輕輕一口就可以感受到精緻茗點。';
-			document.getElementById('price').value = 500;
+			document.getElementById('prpi_name').value = '海之霸餐廳招牌_海霸棒';
+			document.getElementById('name').value = '海之霸餐廳招牌_海霸棒';
+			document.getElementById('descript').value = '皮老闆做過的一個食品，曾讓蟹老闆想得到海霸棒秘方，曾讓納德去洗胃好幾次，曾在蟹蟹水果報裡說過「海霸棒讓你拉到爆」。';
+			document.getElementById('price').value = 350;
 			document.getElementById('sort').value = '伴手禮';
-			document.getElementById('format').value = '禮盒包裝*12入';
-			document.getElementById('brand').value = '航站精品館';
+			document.getElementById('format').value = '1入，個人享用。';
+			document.getElementById('brand').value = '海之霸餐廳獨賣。';
 		}
 		
 		function magiclittlebtn2() {
-			document.getElementById('name').value = '精選花生糖';
-			document.getElementById('descript').value = '選用粒粒分明的花生，搭配上香濃的麥芽糖，又香又脆的好滋味，怎麼能夠錯過！簡單又樸實的古早味，一口咬下，童年的美好回憶隨著化開的花生糖，再次回憶~';
-			document.getElementById('price').value = 200;
+			document.getElementById('prpi_name').value = '海之霸餐廳_肉醬堡';
+			document.getElementById('name').value = '海之霸餐廳_肉醬堡';
+			document.getElementById('descript').value = '皮老闆做過的一個食品，因為實在是太難吃了，已至於讓皮老闆積極的想方設法偷取蟹老闆的美味蟹堡秘方。';
+			document.getElementById('price').value = 450;
 			document.getElementById('sort').value = '伴手禮';
-			document.getElementById('format').value = '禮盒包裝*10入';
-			document.getElementById('brand').value = '航站精品館';
+			document.getElementById('format').value = '1入，個人享用';
+			document.getElementById('brand').value = '海之霸餐廳獨賣。';
 		}
 		
 		function magiclittlebtn3() {
-			document.getElementById('name').value = '楓糖太陽餅';
-			document.getElementById('descript').value = '嚴選至加拿大的楓糖、咬一口如濃烈瑪琪朵般香氣、陣陣酥軟的滋味撲鼻而來…幸福口感直撲天頂、來Espaso、Cappuccino、花茶…有如夢中奇緣的仙境，是日本、香港、新加坡、馬來西亞的貴賓們最佳必帶的神秘饗食伴手禮物。 ';
-			document.getElementById('price').value = 500;
+			document.getElementById('prpi_name').value = '海之霸餐廳_梅子蛋糕';
+			document.getElementById('name').value = '海之霸餐廳_梅子蛋糕';
+			document.getElementById('descript').value = '皮老闆做過的一個食品，發臭的梅子代替麵包發酵用的酵母菌，使麵包內部蓬鬆，外部軟爛，是海之霸餐廳的客人必點的點心。';
+			document.getElementById('price').value = 150;
 			document.getElementById('sort').value = '伴手禮';
-			document.getElementById('format').value = '禮盒包裝*12入';
-			document.getElementById('brand').value = '航站精品館';
+			document.getElementById('format').value = '1入，個人享用。';
+			document.getElementById('brand').value = '海之霸餐廳獨賣。';
 		}
 		
 		function magiclittlebtn4() {
-			document.getElementById('name').value = '冠軍麻糬';
-			document.getElementById('descript').value = '冠軍麻糬,共有四種口味,分別為:黑天使-巧克力口味,海王子-XO干貝口味,幸福紫米-花生芝麻口味,含吉薯糬-地瓜葡萄干口味。';
-			document.getElementById('price').value = 250;
+			document.getElementById('prpi_name').value = '海之霸餐廳_藍莓冰茶';
+			document.getElementById('name').value = '海之霸餐廳_藍莓冰茶';
+			document.getElementById('descript').value = '皮老闆發明的特調，藍莓冰茶，嗯，沒甚麼好說的，就是一個飲料(濃縮果汁依獨家比例調配)。';
+			document.getElementById('price').value = 200;
 			document.getElementById('sort').value = '伴手禮';
-			document.getElementById('format').value = '禮盒包裝*6入';
-			document.getElementById('brand').value = '航站精品館';
+			document.getElementById('format').value = '1入，個人享用。';
+			document.getElementById('brand').value = '海之霸餐廳獨賣。';
 		}
 		
 		function magiclittlebtn5() {
-			document.getElementById('name').value = '透心涼冰心綠豆糕';
-			document.getElementById('descript').value = '咬一口微甜的綠豆糕，再喝一口熱茶，感覺整個人都飄了起來。直接吃就超讚的綠豆糕，冰過後更多了一種透心涼的舒爽，風味更佳超推薦！';
-			document.getElementById('price').value = 600;
+			document.getElementById('prpi_name').value = '海之霸餐廳_驚奇辣海霸醬';
+			document.getElementById('name').value = '海之霸餐廳_驚奇辣海霸醬';
+			document.getElementById('descript').value = '皮老闆發明的獨特醬料，辣度堪比朝天椒；喜歡吃辣的人非常推薦帶一打回家享用。';
+			document.getElementById('price').value = 450;
 			document.getElementById('sort').value = '伴手禮';
-			document.getElementById('format').value = '禮盒包裝*20入';
-			document.getElementById('brand').value = '航站精品館';
+			document.getElementById('format').value = '12入。';
+			document.getElementById('brand').value = '海之霸餐廳獨賣。';
 		}
 		
 	</script>

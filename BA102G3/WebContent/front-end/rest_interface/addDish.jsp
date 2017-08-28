@@ -94,7 +94,7 @@
    						<label for="dish_price col-xs-8">*料理價格 :</label>
    						 <div class="input-group">
      						 <div class="input-group-addon"> <span class="glyphicon glyphicon-usd"></span></div>
-    							<input type="TEXT"  class="form-control" name="dish_price" id="dish_price" value="${dishVO.dish_price}" required/>
+    							<input type="number"  class="form-control" name="dish_price" id="dish_price" value="${dishVO.dish_price}" min="1" max="99999" required/>
   							</div>
   						</div>
   					<div class="form-group">

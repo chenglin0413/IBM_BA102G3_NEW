@@ -155,36 +155,37 @@
 	<div class="callout"></div>
 
 
-	<script
-		src="<%=request.getContextPath()%>/front-end/js_store/jquery.js"></script>
 
-	<!-- Bootstrap Core JavaScript -->
+	<!-- 月曆 -->
 	<script
-		src="<%=request.getContextPath()%>/front-end/js_store/bootstrap.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/front-end/js_store/bootstrap-datepicker.js"></script>
-
-	<script
-		src="<%=request.getContextPath()%>/front-end/js_store/bootstrap-datepicker.zh-TW.js"></script>
-
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script type="text/javascript" src="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.js"></script>
-<link type="text/css" href="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.css" rel="stylesheet" />
+		type="<%=request.getContextPath()%>/front-end/css/dk/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="<%=request.getContextPath()%>/front-end/css/dk/jquery.simple-dtpicker.js"></script>
+	<!-- css非原廠修改過版型 -->
+	<link type="text/css"
+		href="<%=request.getContextPath()%>/front-end/css/dk/jquery.simple-dtpicker.css"
+		rel="stylesheet" />
 
 	<script type="text/javascript">
 		$(function() {
 			$('*[name=repm_startdate]').appendDtpicker({
+				"closeOnSelected" : true,
 				"dateOnly" : true,
-				"futureOnly": true,
+				"futureOnly" : true,
 				"dateFormat" : "YYYY-MM-DD"
 			});
 			$('*[name=repm_enddate]').appendDtpicker({
+				"closeOnSelected" : true,
 				"dateOnly" : true,
-				"futureOnly": true,
+				"futureOnly" : true,
 				"dateFormat" : "YYYY-MM-DD"
 			});
 		});
 	</script>
-
+	<!-- 月曆end -->
+	<script src="<%= request.getContextPath() %>/front-end/js_store/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+<script src="<%= request.getContextPath() %>/front-end/js_store/bootstrap.min.js"></script>
+    <!-- Custom Theme JavaScript -->
 </body>
 </html>

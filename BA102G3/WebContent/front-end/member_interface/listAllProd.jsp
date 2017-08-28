@@ -244,7 +244,7 @@ body {
 									 
 									  
 									 <form name="shoppingForm" action="<%=request.getContextPath()%>/front-end/eshop/ShoppingServlet" method="POST">	
-												<div>數量： <input type="number" name="quantity" min="1" max="10" value="1" size="2"></div>
+												<div>數量： <input type="number" name="quantity" min="1" max="100" value="1" size="2"></div>
 							                  <button class="btn btn-success">放入購物車</button>
 										  <input type="hidden" name="prod_id" value="${prodVO.prod_id}">
 								      	  <input type="hidden" name="store_id" value="${prodVO.store_id}">

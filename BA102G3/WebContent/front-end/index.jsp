@@ -18,7 +18,7 @@ pageContext.setAttribute("rest_types",rest_types);
 <html lang="en">
 
 <head>
-
+	<link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico" >
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -291,13 +291,17 @@ pageContext.setAttribute("rest_types",rest_types);
                     <h3 class="section-subheading text-muted">Shopping area.</h3>
                 </div>
                 </section>	
-               <c:forEach var="restVO" items="${restSvc.getTopThree()}" >
-                <div class="col-md-4 col-sm-12 item text-center">
-                     <div class="img-rounded" id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/repi/RepiDBGifReader.do?rest_id=${restVO.rest_id}" width="300" height="250"></div>
-					<div><h2>${restVO.rest_name}</h2></div>
-					<div class="AutoSkip"><h4>餐廳描述:${restVO.rest_detail}</h4></div>
-					
-					<div><h4>餐廳種類:${rest_types[restVO.rest_type]}</h4></div>
+               <c:forEach var="restVO" items="${restSvc.getTopThree()}" > 
+					<div class="col-md-4 col-sm-12 item text-center"> 
+					<div class="img-rounded" id="boxshadow"> 
+					<a href="<%=request.getContextPath()%>/front-end/rest/rest.do?rest_id=${restVO.rest_id}&action=getOne_For_Display_formember"> 
+					<img src="<%=request.getContextPath()%>/front-end/repi/RepiDBGifReader.do?rest_id=${restVO.rest_id}" width="300" height="250"> 
+					</a> 
+					</div> 
+					<div><h2>${restVO.rest_name}</h2></div> 
+					<div> 
+					<h4> 
+					餐廳種類: ${rest_types[restVO.rest_type]}</h4></div>
                 </div>
                 <!-- 餐廳前三結尾 -->
            </c:forEach>

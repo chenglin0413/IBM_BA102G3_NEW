@@ -46,6 +46,8 @@
 	class="com.rest.model.RestService" />
 <jsp:useBean id="repmSvcB" scope="page"
 	class="com.repm.model.RepmService" />
+<jsp:useBean id="repiSvc" scope="page"
+	class="com.repi.model.RepiService" />
 
 <!DOCTYPE html>
 <html lang="en" class="easy-sidebar-active">
@@ -107,20 +109,30 @@
 	margin: auto;
 }
 
-#accordion {
-	font-size: 12px;
-}
 
-#accordions {
-	font-size: 12px;
-}
-body{
-background: url(../img/slidebg15.jpg) no-repeat center center scroll;
+
+/* #accordion { */
+/* 	font-size: 12px; */
+/* } */
+
+/* #accordions { */
+/* 	font-size: 12px; */
+/* } */
+
+/* body { */
+/* 	background: url(../img/slidebg15.jpg) no-repeat center center scroll; */
+/* } */
+body {
+	background-image: url(<%=request.getContextPath()%>/front-end/img/bg004.jpg);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
 }
 </style>
 </head>
 
-<body >
+<body>
 
 
 	<%@include file="/front-end/member_interface/headerBar.file"%>
@@ -137,158 +149,150 @@ background: url(../img/slidebg15.jpg) no-repeat center center scroll;
 
 	<div class="container">
 		<div class="row">
-			<div class="callout"></div>
-			<div class="col-md-11 col-xs-12">
-				<h3>促銷資訊</h3>
-			</div>
-		</div>
-	</div>
-	</div>
-	<header id="myCarousel top" class="carousel slide"> </header>
-
-	<div class="container content">
-		<div class="row">
-			<header class="header">
-				<div class="text-vertical-center">
-					<h1>Anytime Grip</h1>
-					<h3>SHOP OUR COLLECTIONS &amp; SHOP WITH RUNWAY</h3>
-					<br> <a href="#about" class="btn btn-dark btn-lg">Grip
-						Now!!</a>
-				</div>
-			</header>
-		</div>
-	</div>
-	<div class="container"  >
-		<div class="row">
 			<ol class="breadcrumb">
 				<li><a href="<%=request.getContextPath()%>/front-end/index.jsp">首頁</a>
 				</li>
-				<li class="active"><a>促銷資訊</a></li>
+				<li class="active">促銷資訊</li>
 			</ol>
+
 			<h3>商店資訊</h3>
-			<div id="accordion">
-				<c:forEach var="stpmVO" items="${list}" varStatus="count">
-					<c:if test="${stpmVO.stpm_status == 1}">
-						<div>&nbsp;&nbsp;&nbsp;&nbsp;${stpmVO.stpm_name}</div>
-						<div class="text-center">
+
+			<c:forEach var="stpmVO" items="${list}" varStatus="count">
+
+				<c:if test="${stpmVO.stpm_status == 1}">
+
+					<div class="panel panel-default">
+
+						<div align="center">
+							<h4>${stpmVO.stpm_name}</h4>
+						</div>
+
+						<div class="panel-body">
+
 							<!-- 內容 -->
-
 							<div class="col-xs-12 col-sm-4">
-								<b>${stpmVO.stpm_desc}</b>
-							</div>
-							<div class="col-xs-12 col-sm-4">
-								<b>${stpmVO.stpm_startdate} ~ ${stpmVO.stpm_enddate}</b>
+								<img
+									src="<%=request.getContextPath()%>/front-end/stpi/DBGifReader?store_id=${stpmVO.store_id}"
+									class="img-thumbnail" style="height: 200px;" />
 							</div>
 
-							<div class="col-xs-12 col-sm-4">
-								<a href='#${stpmVO.stpm_id}' data-toggle="modal"
-									class="btn btn-default btn-xs">顯示詳情</a>
+							<div class="col-xs-12 col-sm-8 ">
+								<textarea class="overflow form-control" rows="6" cols="40"
+									style="resize: none; border: 0px; background-color: white; font-size: 20px; font-weight: bold;"
+									readonly>${stpmVO.stpm_startdate} - ${stpmVO.stpm_enddate} ~ ${stpmVO.stpm_desc}</textarea>
 							</div>
+						</div>
 
+						<div class="panel-body text-right">
+							<a href='#${stpmVO.stpm_id}' data-toggle="modal"
+								class="btn btn-default btn-lg">顯示詳情&nbsp;</a>
+						</div>
+						<!-- 內容結束 -->
 
-							<!-- modal -->
-							<div class="modal fade" id="${stpmVO.stpm_id}">
-								<div class="modal-dialog modal-lg">
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal"
-												aria-hidden="true">&times;</button>
-											<h4 class="modal-title">${stpmVO.stpm_content}</h4>
-										</div>
-										<div class="modal-body">
-
-											<table border="0" align="center">
-												<c:forEach var="prpmVO" items="${prpmList}"
+						<!-- stpm_modal -->
+						<div class="modal fade" id="${stpmVO.stpm_id}">
+							<div class="modal-dialog modal-md">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-hidden="true">&times;</button>
+									</div>
+									<div class="modal-body">
+										<c:forEach var="prpmVO" items="${prpmList}" varStatus="count">
+											<c:if test="${stpmVO.stpm_id == prpmVO.stpm_id}">
+												<c:forEach var="prodVOB" items="${prodSvcB.all}"
 													varStatus="count">
-													<c:if test="${stpmVO.stpm_id == prpmVO.stpm_id}">
-														<tr>
-															<td width="20%"><b>促銷商品:&nbsp;</b><a> <c:forEach
-																		var="prodVOB" items="${prodSvcB.all}"
-																		varStatus="count">
-																		<c:if test="${prodVOB.prod_id == prpmVO.prod_id}">
-																		${prodVOB.prod_name}
-																	</c:if>
-																	</c:forEach>
-															</a></td>
+													<c:if test="${prodVOB.prod_id == prpmVO.prod_id}">
+														<div align="center">
+															<b>促銷商品: ${prodVOB.prod_name}</b>
+														</div>
+														<div class="callout"></div>
 
-															<td width="20%"><b>原價:&nbsp;</b><font color="blue">
-																	<c:if test="${prodList != null}">
-																		<c:forEach var="prodVO" items="${prodList}">
-																			<c:if test="${prpmVO.prod_id == prodVO.prod_id}">
-																				$${prodVO.prod_price}
-																				</c:if>
-																		</c:forEach>
-																	</c:if>
-															</font></td>
-															<td width="20%"><b>促銷特價:&nbsp;</b><font color="red">$${prpmVO.prpm_price}</font></td>
-															<td width="20%"><a
-																href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_id=${prpmVO.prod_id}&action=getOne_For_Display"
-																class="btn btn-default btn-xs">商品詳情</a></td>
-														</tr>
+														<div align="center">
+															<img
+																src="<%=request.getContextPath()%>/front-end/store_interface/DBGifReader?prod_id=${prodVOB.prod_id}"
+																height="200" />
+														</div>
 													</c:if>
 												</c:forEach>
-											</table>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default"
-												data-dismiss="modal">close</button>
-										</div>
+												<div class="callout"></div>
+												<div class="callout"></div>
+												<c:if test="${prodList != null}">
+													<c:forEach var="prodVO" items="${prodList}">
+														<c:if test="${prpmVO.prod_id == prodVO.prod_id}">
+															<div align="center">
+																<b>原價: </b> <font color="blue"><s>$${prodVO.prod_price}</s></font>
+																<br> <b>特價: </b> <font color="red">$<font
+																	size="18">${prpmVO.prpm_price}</font></font>
+															</div>
+														</c:if>
+													</c:forEach>
+												</c:if>
+
+												<div align="right">
+													<a
+														href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_id=${prpmVO.prod_id}&action=getOne_For_Display"
+														class="btn btn-default btn-md">商品詳情</a>
+												</div>
+											</c:if>
+										</c:forEach>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">close</button>
 									</div>
 								</div>
 							</div>
 						</div>
-						<!-- 內容結束 -->
-					</c:if>
-				</c:forEach>
-			</div>
+						<!-- modal -->
+					</div>
+				</c:if>
+			</c:forEach>
 		</div>
 	</div>
-
-	<div class="container content">
-		<div class="row">
-			<header class="header">
-				<div class="text-vertical-center"></div>
-			</header>
-		</div>
-	</div>
-
-	<div class="callout"></div>
 
 	<div class="container">
 		<div class="row">
-		<h3>餐廳資訊</h3>
-			<div id="accordions">
-				<c:forEach var="repmVO" items="${repmlist}" varStatus="count">
+			<h3>餐廳資訊</h3>
+			<c:forEach var="repmVO" items="${repmlist}" varStatus="count">
+				<div class="panel panel-default">
+					<div align="center">
+						<h4>${repmVO.repm_name}</h4>
+					</div>
 					<c:if test="${repmVO.repm_status == 1}">
-						<div>&nbsp;&nbsp;&nbsp;&nbsp;${repmVO.repm_name}</div>
-						<div class="text-center">
-							<!-- 內容 -->
+						<div class="panel-body">
 
+							<!-- 內容 -->
 							<div class="col-xs-12 col-sm-4">
-								<b>${repmVO.repm_desc}</b>
+								<c:forEach var="repiVO" items="${repiSvc.all}">
+									<c:if test="${repmVO.rest_id==repiVO.rest_id}">
+										<img
+											src="<%= request.getContextPath()%>/front-end/restaurant/repi/DBGifReader_repi.do?repi_id=${repiVO.repi_id}"
+											class="img-thumbnail" style="height: 200px;" />
+									</c:if>
+								</c:forEach>
 							</div>
-							<div class="col-xs-12 col-sm-4">
-								<b>${repmVO.repm_startdate} ~ ${repmVO.repm_enddate}</b>
+							<div class="col-xs-12 col-sm-8 ">
+								<textarea class="overflow form-control" rows="6" cols="40"
+									style="resize: none; border: 0px; background-color: white; font-size: 20px; font-weight: bold;"
+									readonly>${repmVO.repm_startdate} - ${repmVO.repm_enddate} ~ ${repmVO.repm_desc}</textarea>
 							</div>
+						</div>
+						<div class="panel-body text-right">
 							<c:forEach var="restVO" items="${restSvc.all}">
 								<c:if test="${repmVO.rest_id == restVO.rest_id}">
-									<div class="col-xs-12 col-sm-4">
-										<a
-											href="<%=request.getContextPath()%>/front-end/rest/rest.do?rest_id=${restVO.rest_id}&action=getOne_For_Display_formember"
-											class="btn btn-default btn-xs">餐廳詳情</a>
-									</div>
+									<a
+										href="<%=request.getContextPath()%>/front-end/rest/rest.do?rest_id=${restVO.rest_id}&action=getOne_For_Display_formember"
+										class="btn btn-default btn-lg">前往餐廳頁面&nbsp;</a>
 								</c:if>
 							</c:forEach>
 						</div>
 						<!-- 內容結束 -->
 					</c:if>
-				</c:forEach>
-			</div>
+				</div>
+			</c:forEach>
 		</div>
 	</div>
-
-
-
 
 
 

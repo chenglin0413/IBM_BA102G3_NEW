@@ -29,9 +29,9 @@
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic"
 	rel="stylesheet" type="text/css">
 
-</head>
 
-<body>
+
+
 
 	 <%@include file="/front-end/member_interface/headerBar.file" %>
 
@@ -42,7 +42,15 @@
 		List<BuscVO> list = buscSvc.getAll();
 		pageContext.setAttribute("list", list);
 	%>
-
+<style type="text/css">
+body {
+	background-image: url(<%=request.getContextPath()%>/front-end/img/bg004.jpg);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
+}
+</style>
 </head>
 <body bgcolor='white'>
 
@@ -90,16 +98,19 @@
 	<%@ include file="schedule2.file"%>
 	</div>
 	</div>
+	
+	<%@ include file="/front-end/member_interface/script.file"%>
 	<script src="https://code.jquery.com/jquery.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 	<script>
 		$(document).ready(function() {
 			$("tr:even").css("background-color", "#CFE0E1");
 			$("tr:odd").css("background-color", "#ffffff");
 		});
 	</script>
-
+	
+	
+	
 </body>
 
 </html>

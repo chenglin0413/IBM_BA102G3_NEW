@@ -140,6 +140,7 @@ public class FlscServlet extends HttpServlet {
 				 * 1.接收請求參數 - 輸入格式的錯誤處理
 				 **********************/
 				String flsc_airlinecode = req.getParameter("flsc_airlinecode");
+				String flsc_airlinecode_toUpperCase = flsc_airlinecode.toUpperCase();
 				if (flsc_airlinecode == null || (flsc_airlinecode.trim().length() == 0)) {
 					errorMsgs.add("請輸入航空代碼");
 				}
@@ -168,7 +169,7 @@ public class FlscServlet extends HttpServlet {
 				System.out.println(flsc_sdate1);
 
 				FlscService flscScv = new FlscService();
-				FlscVO flscQuery = flscScv.flscSubQuery(flsc_airlinecode, flsc_flno, flsc_sdate1);
+				FlscVO flscQuery = flscScv.flscSubQuery(flsc_airlinecode_toUpperCase, flsc_flno, flsc_sdate1);
 
 				// System.out.println(flscQuery.getFlsc_airlinecode());
 				// System.out.println(flscQuery.getFlsc_flno());

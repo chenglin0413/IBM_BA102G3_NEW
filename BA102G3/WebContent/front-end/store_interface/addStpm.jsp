@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="java.util.*,com.store.model.*,com.user.model.*,com.stpm.model.*"%>
+<%@ page
+	import="java.util.*,com.store.model.*,com.user.model.*,com.stpm.model.*"%>
 
 
 <%
@@ -11,7 +12,7 @@
 		StoreVO storeVO = storeSvc.getOneStoreByUsed_Id(userVO.getUser_id());
 		Integer store_id = storeVO.getStore_id();
 		pageContext.setAttribute("store_id", store_id);
-		
+
 		session.setAttribute("key", "val");
 	}
 %>
@@ -59,12 +60,12 @@
 	<%@ include file="headerBar.file"%>
 
 	<div class="callout"></div>
-    
-            <div class="row">
-                <div class="col-md-10 col-md-offset-1">
-                    <h3 class="page-header">建立促銷專案</h3>
-                </div>
-            </div>
+
+	<div class="row">
+		<div class="col-md-10 col-md-offset-1">
+			<h3 class="page-header">建立促銷專案</h3>
+		</div>
+	</div>
 
 	<div class="container">
 		<div class="row"></div>
@@ -73,37 +74,43 @@
 			<div align="center">
 				<%-- 錯誤表列 --%>
 				<c:if test="${not empty errorMsgs}">
-					<font color='red'>錯誤: <c:forEach var="message"	items="${errorMsgs}">
+					<font color='red'>錯誤: <c:forEach var="message"
+							items="${errorMsgs}">
 							<b>${message}</b>
 						</c:forEach>
 					</font>
 				</c:if>
 			</div>
-			
+
 			<div class="callout"></div>
 
 			<FORM METHOD="post" ACTION="stpm.do" name="form1">
 				<table border="0">
 					<tr>
 						<td><label>商店代號:&nbsp;&nbsp;</label></td>
-						<td><font color=red><b>＊</b></font>${storeVO.store_id}<input type="hidden" name="store_id" required="required"　size="15" value="${storeVO.store_id}" /></td>
+						<td><font color=red><b>＊</b></font>${storeVO.store_id}<input
+							type="hidden" name="store_id" required="required" 　size="15"
+							value="${storeVO.store_id}" /></td>
 					</tr>
 					<tr>
 
 						<td><label>促銷名稱:&nbsp;&nbsp;</label></td>
-						<td><input type="TEXT" id="name" name="stpm_name" required="required" size="15" /></td>
+						<td><input type="TEXT" id="name" name="stpm_name"
+							required="required" size="15" /></td>
 
 					</tr>
 
 					<tr>
 						<td><label>促銷說明:&nbsp;&nbsp;</label></td>
-						<td><textarea rows="4" cols="40" id="desc" name="stpm_desc"	required="required"></textarea></td>
+						<td><textarea rows="4" cols="40" id="desc" name="stpm_desc"
+								required="required"></textarea></td>
 
 					</tr>
 
 					<tr>
 						<td><label>促銷文案:&nbsp;&nbsp;</label></td>
-						<td><textarea rows="4" cols="40" id="content" name="stpm_content"></textarea></td>
+						<td><textarea rows="4" cols="40" id="content"
+								name="stpm_content"></textarea></td>
 					</tr>
 
 					<tr>
@@ -111,8 +118,9 @@
 							java.sql.Date startdate_SQL = new java.sql.Date(System.currentTimeMillis());
 						%>
 						<td><label>開始日期:&nbsp;&nbsp;</label></td>
-<%-- 				<td><input type="date" name="stpm_startdate" required="required" value="<%=startdate_SQL%>"></td> --%>
-						<td><input type="text" name="stpm_startdate" value="<%=startdate_SQL%>" required="required"></td>
+						<%-- 				<td><input type="date" name="stpm_startdate" required="required" value="<%=startdate_SQL%>"></td> --%>
+						<td><input type="text" name="stpm_startdate"
+							value="<%=startdate_SQL%>" required="required"></td>
 					</tr>
 
 					<tr>
@@ -120,79 +128,80 @@
 							java.sql.Date enddate_SQL = new java.sql.Date(System.currentTimeMillis());
 						%>
 						<td><label>結束日期:&nbsp;&nbsp;</label></td>
-				<%-- <td><input type="date" name="stpm_enddate"	required="required" value="<%=enddate_SQL%>"></td> --%>
-						<td><input type="text" name="stpm_enddate" value="<%=enddate_SQL%>" required="required"></td>
+						<%-- <td><input type="date" name="stpm_enddate"	required="required" value="<%=enddate_SQL%>"></td> --%>
+						<td><input type="text" name="stpm_enddate"
+							value="<%=enddate_SQL%>" required="required"></td>
 					</tr>
 
 					<tr>
-<!-- <td><label>促銷狀態:&nbsp;&nbsp;</label></td> -->
-						<td><input type="hidden" name="stpm_status"	required="required" value="0"></td>
+						<!-- <td><label>促銷狀態:&nbsp;&nbsp;</label></td> -->
+						<td><input type="hidden" name="stpm_status"
+							required="required" value="0"></td>
 						<td>
 					</tr>
 				</table>
 				<br> <input type="hidden" name="action" value="insert">
-				 <button type="submit" class="btn btn-default btn-sm">建立專案</button>
-				 <br><br>
+				<button type="submit" class="btn btn-default btn-sm">建立專案</button>
+				<br> <br>
 
 			</FORM>
-			
-				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn1();"></button>
-				 <button class="btn btn-danger btn-sm"  onclick="magiclittlebtn2();"></button>
+
+			<button class="btn btn-danger btn-sm" onclick="magiclittlebtn1();"></button>
+			<button class="btn btn-danger btn-sm" onclick="magiclittlebtn2();"></button>
 
 			<br> <br>
 		</div>
 	</div>
 
 	<div class="callout"></div>
-	
-	<script type="text/javascript">
 
+	<script type="text/javascript">
 		function magiclittlebtn1() {
 			document.getElementById('name').value = '航站最便宜';
 			document.getElementById('desc').value = '期間限定折扣滿滿滿';
 			document.getElementById('content').value = '期間折扣專案';
 		}
-		
+
 		function magiclittlebtn2() {
 			document.getElementById('name').value = '熱門伴手禮';
 			document.getElementById('desc').value = '最優質人氣伴手禮';
 			document.getElementById('content').value = '期間折扣專案';
 		}
-		
 	</script>
 
 
 
-	<script
-		src="<%=request.getContextPath()%>/front-end/js_store/jquery.js"></script>
 
-	<!-- Bootstrap Core JavaScript -->
+	<!-- 月曆 -->
 	<script
-		src="<%=request.getContextPath()%>/front-end/js_store/bootstrap.min.js"></script>
-	<script
-		src="<%=request.getContextPath()%>/front-end/js_store/bootstrap-datepicker.js"></script>
-
-	<script
-		src="<%=request.getContextPath()%>/front-end/js_store/bootstrap-datepicker.zh-TW.js"></script>
-		
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script type="text/javascript" src="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.js"></script>
-<link type="text/css" href="http://jq-simple-dtpicker-gh-master.herokuapp.com/jquery.simple-dtpicker.css" rel="stylesheet" />
+		type="<%=request.getContextPath()%>/front-end/css/dk/jquery.min.js"></script>
+	<script type="text/javascript"
+		src="<%=request.getContextPath()%>/front-end/css/dk/jquery.simple-dtpicker.js"></script>
+	<!-- css非原廠修改過版型 -->
+	<link type="text/css"
+		href="<%=request.getContextPath()%>/front-end/css/dk/jquery.simple-dtpicker.css"
+		rel="stylesheet" />
 
 	<script type="text/javascript">
 		$(function() {
 			$('*[name=stpm_startdate]').appendDtpicker({
+				"closeOnSelected" : true,
 				"dateOnly" : true,
-				"futureOnly": true,
+				"futureOnly" : true,
 				"dateFormat" : "YYYY-MM-DD"
 			});
 			$('*[name=stpm_enddate]').appendDtpicker({
+				"closeOnSelected" : true,
 				"dateOnly" : true,
-				"futureOnly": true,
+				"futureOnly" : true,
 				"dateFormat" : "YYYY-MM-DD"
 			});
 		});
 	</script>
-
+	<!-- 月曆end -->
+	<script src="<%= request.getContextPath() %>/front-end/js_store/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+<script src="<%= request.getContextPath() %>/front-end/js_store/bootstrap.min.js"></script>
+    <!-- Custom Theme JavaScript -->
 </body>
 </html>
