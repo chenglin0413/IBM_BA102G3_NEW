@@ -32,7 +32,7 @@
     } 
 %>
 <%if (pageNumber>0){%>
-<b><font color= #CBAD0D>第<%=whichPage%>/<%=pageNumber%>頁&nbsp&nbsp</font></b>
+<b><font color= gray>第<%=whichPage%>/<%=pageNumber%>頁&nbsp&nbsp</font></b>
 <%}%>
-<font color=#CBAD0D><%=rowNumber%>個項目</font></b>
+<font color=gray><%=rowNumber%>個項目</font></b>
 

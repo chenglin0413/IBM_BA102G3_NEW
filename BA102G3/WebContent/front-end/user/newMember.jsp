@@ -68,7 +68,6 @@ UserVO userVO = (UserVO) session.getAttribute("userVO");
    
   <%@include file="/front-end/member_interface/headerBar.file"%>
 	
-	<br><br><br>
 
 <div class="container">
 		

@@ -47,36 +47,42 @@
     <link href="<%=request.getContextPath()%>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
-    <style type="text/css">
-    	<style> 
+<style type="text/css">
+.item img {
+	height: 300px;
+	width: 100%;
+}
 
-        .item img{
-            height: 300px;
-            width:100%;
-            
-        }
-       
-        .content: {
-          position: relative;
-        }
-        .box{
-          width: 110px;
-          height: 50px;
-          
-          position: fixed;
-          top: 52px;
-          left: 5px;
-          margin: auto;
-        }
-         .rpprForm {
-        	display:none;
-        }
-        li {
-			list-style-type:none;
-			}
-   
-    </style>
-    
+.content: {
+	position: relative;
+}
+
+.box {
+	width: 110px;
+	height: 50px;
+	position: fixed;
+	top: 52px;
+	left: 5px;
+	margin: auto;
+}
+
+.rpprForm {
+	display: none;
+}
+
+li {
+	list-style-type: none;
+}
+
+body {
+	background-image: url(<%=request.getContextPath()%>/front-end/img/bg004.jpg);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
+}
+</style>
+
 </head>
 
 <body>
@@ -181,7 +187,7 @@
 	<div class="col-md-10" id="mainpage">
 	<div class="row">
 	<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-			<div class="col-xs-12 col-md-4">
+			<div class="col-xs-12 col-md-4" >
               
                 <div class="item " >
                 <c:forEach var="storeVO" items="${StoreSvc.all}">

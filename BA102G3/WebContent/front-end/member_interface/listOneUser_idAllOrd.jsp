@@ -68,10 +68,18 @@
         
         }
         .pop{
+        color:gray;
         font-size:14px;
+        font-weight:bold;
         text-align:center;
         }
-        
+        body{
+			background-image: url(<%=request.getContextPath()%>/front-end/img/bg004.jpg);
+			background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+		}
     </style>
 </head>
 
@@ -128,9 +136,8 @@
 
 
 <!-- paneltitle -->
-<div class="pop">
+<div class="pop" >
 						<div class="col-xs-12 col-sm-2">訂單編號</div>
-<!-- 						<div class="col-xs-12 col-sm-2">會員姓名</div> -->
 						<div class="col-xs-12 col-sm-2">商家名稱</div>
 						<div class="col-xs-12 col-sm-2">訂單日期</div>
 						<div class="col-xs-12 col-sm-1">訂單金額</div>

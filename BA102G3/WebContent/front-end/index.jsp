@@ -7,6 +7,10 @@ String account =(String) session.getAttribute("account");
 TrvlService trvlSvc = new TrvlService();
 List<TrvlVO> trvllist = trvlSvc.getTopTrvlCounts();
 pageContext.setAttribute("trvllist", trvllist);
+
+String []rest_types={"","中式","西式","日式","穆斯林","印度","泰國","越南"};
+pageContext.setAttribute("rest_types",rest_types);
+
 %>
 <jsp:useBean id="trpiSvc" scope="page" class="com.trpi.model.TrpiService" />
 <jsp:useBean id="repiSvc" scope="page" class="com.repi.model.RepiService" />
@@ -292,7 +296,8 @@ pageContext.setAttribute("trvllist", trvllist);
                      <div class="img-rounded" id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/repi/RepiDBGifReader.do?rest_id=${restVO.rest_id}" width="300" height="250"></div>
 					<div><h2>${restVO.rest_name}</h2></div>
 					<div class="AutoSkip"><h4>餐廳描述:${restVO.rest_detail}</h4></div>
-					<div><h4>餐廳種類:${restVO.rest_type}</h4></div>
+					
+					<div><h4>餐廳種類:${rest_types[restVO.rest_type]}</h4></div>
                 </div>
                 <!-- 餐廳前三結尾 -->
            </c:forEach>

@@ -69,8 +69,6 @@ RestVO restVO = (RestVO) request.getAttribute("restVO");
    
    <%@include file="/front-end/member_interface/headerBar.file"%>
 	
-	<br><br><br>
-
 
 
 <!--成為餐廳會員開始-->
@@ -225,7 +223,7 @@ RestVO restVO = (RestVO) request.getAttribute("restVO");
         <label class="col-md-4 control-label">餐廳簡介 <span class="asteriskField">*</span> </label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-cutlery"></i></span>
-            <textarea name="rest_detail" id="rest_detail" class="form-control" rows="3"  class="form-control"  type="text"> <%= (restVO==null)? "" : restVO.getRest_detail()%> </textarea>
+            <textarea name="rest_detail" id="rest_detail" class="form-control" rows="2"  class="form-control"  type="text"> <%= (restVO==null)? "" : restVO.getRest_detail()%> </textarea>
           </div>
         </div>
       </div>
@@ -248,7 +246,7 @@ RestVO restVO = (RestVO) request.getAttribute("restVO");
                                 </div>                               
                             </div>
       
-                            <div class="col-xs-12 col-sm-4">
+                            <div class="col-xs-12 col-sm-3">
                                 <div class="form-group">
                                     <label for="name">所在航廈*</label>
                                     <select class="form-control" name="rest_ter">
@@ -257,7 +255,7 @@ RestVO restVO = (RestVO) request.getAttribute("restVO");
                                     </select>
                                 </div>                                
                             </div>
-                            <div class="col-xs-12 col-sm-4">
+                            <div class="col-xs-12 col-sm-3">
                                 <div class="form-group">
                                     <label for="name">所在樓層*</label>
                                     <select class="form-control" name="rest_floor">
@@ -271,7 +269,7 @@ RestVO restVO = (RestVO) request.getAttribute("restVO");
                                 </div>                               
                             </div>
 
-                            <div class="col-xs-12 col-sm-4">
+                            <div class="col-xs-12 col-sm-3">
                                 <div class="form-group">
 	                            	<label for="name">出入境位置*</label>
     	                        	<select class="form-control" name="rest_inout">
@@ -280,6 +278,118 @@ RestVO restVO = (RestVO) request.getAttribute("restVO");
 									</select>                            
                     	    	</div>
                     	    </div><br>
+                    	    
+                            <div class="col-xs-12 col-sm-3">
+                            	<div class="form-group">
+                            	<!-- Trigger the modal with a button -->
+								<button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal">圖上標示餐廳位置</button>
+                            	</div>
+                            </div><br>
+                            
+                            
+<!-- Pick up location on Map -->
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">商店位置</h4>
+      </div>
+      <div class="modal-body">
+
+  <p align="center">
+      x=<input type="text" name="rest_lon" id="rest_lon" size="20" value="">
+      y=<input type="text" name="rest_lat" id="rest_lat" size="20" value="">
+      <button type="button" class="btn btn-primary" data-dismiss="modal">確定</button>
+      <button type="reset" value="reset" id="clear" class="btn btn-primary">重設</button><br>
+
+  </p>
+  <p align="center">
+      <canvas id="myCanvas" width="853" height="911"></canvas>
+      <div style="display:none;">
+         <img id="source" src="<%= request.getContextPath() %>/front-end/image/T2_3F_template_25per.png">
+      </div>
+  </p>
+
+<script>
+
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+      
+      var image = new Image();
+      image.src = "<%= request.getContextPath() %>/front-end/image/T2_3F_template_25per.png";
+      image.onload = function() {
+          context.drawImage(image, 0, 0, 853, 911, 0, 0, 853, 911);
+      };
+
+      function getMousePos(canvas, evt) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+          x: evt.clientX - rect.left,
+          y: evt.clientY - rect.top
+        };
+      }
+
+//       canvas.addEventListener('mousemove', function(evt) {
+//           var mousePos = getMousePos(canvas, evt);
+//           var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+//       });          
+
+      canvas.addEventListener('click', function(evt) {
+
+          var mousePos = getMousePos(canvas, evt);
+          var context = canvas.getContext('2d');
+
+          document.getElementById("rest_lon").value=9+4*mousePos.x;
+          document.getElementById("rest_lat").value=3+4*mousePos.y;
+
+          x=mousePos.x;
+          y=mousePos.y;
+
+          context.beginPath();
+          context.arc(x, y, 20, 0, 2 * Math.PI, false);
+          context.lineWidth = 2;
+          context.strokeStyle = '#FF0000';
+          context.stroke();
+
+          context.beginPath();
+          context.moveTo(x,y-30);
+          context.lineTo(x,y+30);
+          context.lineWidth = 2;
+          context.strokeStyle = '#FF0000';
+          context.stroke();
+
+          context.moveTo(x-30,y);
+          context.lineTo(x+30,y);
+          context.stroke();
+      });
+      
+      document.getElementById('clear').addEventListener('click', function() {
+
+          context.drawImage(document.getElementById('source'),
+                        0, 0, 853, 911, 0, 0, 853, 911);
+          document.getElementById("rest_lon").value=0;
+          document.getElementById("rest_lat").value=0;
+      }, false);  
+
+</script>
+
+
+
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">關閉</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- End Pick up location on Map -->                                                	    
                     	    
 
       <div class="form-group">
@@ -620,7 +730,6 @@ function previewFileRest() {
 
     <!-- Bootstrap Core JavaScript -->
 <!--    <script src="<%= request.getContextPath() %>/front-end/js/bootstrap.min.js"></script>  -->
-
  
     <!-- Custom Theme JavaScript -->
     <script>

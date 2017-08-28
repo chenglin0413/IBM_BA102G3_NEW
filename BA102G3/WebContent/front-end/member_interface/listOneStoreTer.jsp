@@ -43,14 +43,23 @@
     <link href="<%=request.getContextPath()%>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
-   <style type="text/css">
-        .rpprForm {
-        	display:none;
-        }
-        li {
-			list-style-type:none;
-			}
-    </style>
+<style type="text/css">
+.rpprForm {
+	display: none;
+}
+
+li {
+	list-style-type: none;
+}
+
+body {
+	background-image: url(<%=request.getContextPath()%>/front-end/img/bg004.jpg);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
+}
+</style>
 </head>
 
 <body>
