@@ -190,7 +190,7 @@
 	
 
 
-
+<script src="<%= request.getContextPath() %>/front-end/js_store/jquery.js"></script>
 	<!-- 月曆 -->
 	<script
 		type="<%=request.getContextPath()%>/front-end/css/dk/jquery.min.js"></script>
@@ -218,9 +218,8 @@
 		});
 	</script>
 	<!-- 月曆end -->
-<script src="<%= request.getContextPath() %>/front-end/js_store/jquery.js"></script>
+
     <!-- Bootstrap Core JavaScript -->
-<script src="<%= request.getContextPath() %>/front-end/js_store/bootstrap.min.js"></script>
     <!-- Custom Theme JavaScript -->
 </body>
 </html>
