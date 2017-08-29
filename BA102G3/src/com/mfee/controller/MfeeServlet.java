@@ -2,8 +2,11 @@ package com.mfee.controller;
 
 import java.io.*;
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.Format;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
-
 import javax.servlet.*;
 import javax.servlet.http.*;
 
@@ -316,6 +319,20 @@ public class MfeeServlet extends HttpServlet {
 
 		
 		if ("Find_Unpay".equals(action)) {
+					      
+		    System.out.println("------------------------------------");
+		    
+		    DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US);
+		    
+		    Format formatterYear = new SimpleDateFormat("YYYY"); 
+		    String currentYear = formatterYear.format(new java.util.Date());
+		    System.out.println("Current year: "+currentYear);
+		      
+		    Format formatterMonth = new SimpleDateFormat("MM"); 
+		    String currentMonth = formatterMonth.format(new java.util.Date());
+		    System.out.println("Current month: "+currentMonth);
+		    
+		    System.out.println("------------------------------------");
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -327,6 +344,11 @@ public class MfeeServlet extends HttpServlet {
 				/***************************1.接收請求參數***************************************/
 				String year = req.getParameter("mfee_year");
 				String month = req.getParameter("mfee_month");
+				
+				if (year==null && month==null){
+					year=currentYear;
+					month=currentMonth;
+				}
 				
 				System.out.println("MfeeServlet line 341: "+year);
 				System.out.println("MfeeServlet line 342: "+month);

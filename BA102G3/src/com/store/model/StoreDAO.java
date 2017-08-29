@@ -33,7 +33,7 @@ public class StoreDAO implements StoreDAO_interface {
 	private static final String GET_ALL_BY_STATUS_STMT = "SELECT s.STORE_ID,s.USER_ID,s.STORE_NAME,s.STORE_TIME,s.STORE_PHONE,s.STORE_DESCRIBE,s.STORE_TER,s.STORE_FLOOR,s.STORE_LON,s.STORE_LAT,s.STORE_INOUT,s.STORE_COUNT,s.STORE_SCORE from STORE s join USER_TABLE u on (s.user_id=u.user_id) where u.user_status=? order by s.STORE_ID desc";
 	private static final String GET_ALL = "SELECT * FROM STORE order by STORE_ID desc";
 	
-	
+	private static final String UPDATE_COUNT_SCORE = "UPDATE STORE SET STORE_COUNT=?,STORE_SCORE=? WHERE STORE_ID = ?";
 	
 	private static final String STORE_GET_ALLPORD = "SELECT * FROM PROD WHERE STORE_ID = ?";//李浩，促銷商品
 	@Override
@@ -504,5 +504,42 @@ public class StoreDAO implements StoreDAO_interface {
 		}
 		return list;
 	}
+	
+	public void update_count_score(Integer store_count, Integer store_score, Integer store_id) {
+		// TODO Auto-generated method stub
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(UPDATE_COUNT_SCORE);
+
+			pstmt.setInt(1, store_count);
+			pstmt.setInt(2, store_score);
+			pstmt.setInt(3, store_id);
+			pstmt.executeUpdate();
+
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+
+	}
+
 	
 }

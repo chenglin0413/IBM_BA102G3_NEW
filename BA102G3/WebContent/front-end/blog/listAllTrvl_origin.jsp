@@ -106,7 +106,7 @@
 		<div class="row">
 			<div class="col-md-10 col-md-push-1">
 				<ul>   			
-					<%@ include file="page1.file"%>
+					<%@ include file="page/page1.file"%>
 						<c:forEach var="trvlVO" items="${list}" begin="<%=pageIndex%>"
 									end="<%=pageIndex+rowsPerPage-1%>">
 							<li>
@@ -142,7 +142,7 @@
 					</ul>
 					<div class="row">
 						<div class="col-sm-6 col-md-8 col-md-offset-4">
-							<p><%@include file="page2.file"%></p>
+							<p><%@include file="page/page2.file"%></p>
 						</div>
 					</div>	
 				</div>

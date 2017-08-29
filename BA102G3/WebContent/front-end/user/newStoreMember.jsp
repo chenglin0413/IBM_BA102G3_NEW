@@ -2,9 +2,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.user.model.*"%>
 <%@ page import="com.store.model.*"%>
+<%@ page import="com.stpi.model.*"%>
 <%
 UserVO userVO = (UserVO) request.getAttribute("userVO");
 StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
+StpiVO stpiVO = (StpiVO) request.getAttribute("stpiVO");
 %>
 
 <!DOCTYPE html>
@@ -12,7 +14,7 @@ StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
 
 <head>
 
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -21,14 +23,17 @@ StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
     <title>Anytime Grip</title>
 
     <!-- Bootstrap Core CSS -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="<%= request.getContextPath() %>/front-end/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="<%= request.getContextPath() %>/front-end/css/stylish-portfolio.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
+    
     <link href="<%= request.getContextPath() %>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+   
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -37,95 +42,35 @@ StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+
+
+<style type="text/css">
+        .item img{
+            height: auto;
+            width:100%;
+        }
+       
+       
+        .content: {
+          position: relative;
+        }
+        .box{
+          width: 110px;
+          height: 50px;
+          
+          position: fixed;
+          top: 52px;
+          left: 5px;
+          margin: auto;
+        }
+			      
+    </style>
 </head>
 
-<body >
-    
-    <!-- Navigation -->
-    <!-- <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a> -->
-    
-    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
-        <div class="container">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header page-scroll">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
-                </button>
-                <a href="<%= request.getContextPath() %>/front-end/index.jsp"><img src="<%= request.getContextPath() %>/front-end/img/logo3.png"></a>
-                <a class="navbar-brand page-scroll" href="<%= request.getContextPath() %>/front-end/index.jsp">Anytime Grip</a>
-            </div>
-                
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            
-                <ul class="nav navbar-nav navbar-right">
-                    
-
-                    <li>
-                        <a class="page-scroll" href="store/store.html">商品</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="rest/rest__2.html">餐廳</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="rest/rest.html">促銷</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="blog/blog2.html">旅遊日記<span class="badge">10</span></a>
-                    </li>
-                    
-                    <li>
-                        <a class="page-scroll" href="#contact">交通運輸資訊</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="#contact"><i class="fa fa-question fa-fw"></i>檢舉管理</a>
-                    </li>
-                    <li>
-                        <a class="page-scroll" href="about.html"><i class="fa fa-tasks fa-fw"></i>關於我們</a>
-                    </li>
-			 
-			<c:if test="${empty userVO.user_account}" var="condition1" scope="session" > 
-
-						<li><a href='#modal-login' data-toggle="modal">
-						    <i class="glyphicon glyphicon-user"></i> 登入</a></li>
-
-			</c:if>				
-
-			<c:if test="${not empty userVO.user_account}" var="condition2" scope="session" > 
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i></a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="memberProfile.html"><i class="fa fa-info fa-fw"></i>${userVO.user_lastname}${userVO.user_firstname},您好</a>
-                        </li>
-                        <li><a href="memberOrderRecord.html"><i class="fa fa-info fa-fw"></i>消費記錄</a>
-                        </li>
-                        <li><a href="memberReserveRecord.html"><i class="fa fa-book fa-fw"></i>餐廳訂位記錄</a>
-                        </li>
-                        <li><a href="<%= request.getContextPath() %>/front-end/user/memberProfile.jsp"><i class="fa fa-gear fa-fw"></i> 基本資訊修改</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="<%= request.getContextPath() %>/front-end/UserLogoutHandler"><i class="fa fa-sign-out fa-fw"></i> 登出</a>
-                        </li>
-                    </ul>
-                    </li>
-                    
-			</c:if>			                             
-                                        
-                    <li>
-                        <a class="page-scroll" href="shopcar/shopcar.html">
-                        <i class="fa fa-shopping-cart"></i></a>
-                    </li>
-                    
-                </ul>
-            </div>
-            <!-- /.navbar-collapse -->
-        </div>
-        <!-- /.container-fluid -->
-    </nav>
-    <!-- nav end -->
+<body>
+   
+  <%@include file="/front-end/member_interface/headerBar.file"%>
 	
-	<br><br><br>
 
 
 
@@ -168,7 +113,7 @@ StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
         <label class="col-md-4 control-label">帳號 <span class="asteriskField">*</span> </label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input  name="user_account" placeholder="輸入想用的登入帳號" class="form-control"  type="text" value="<%= (userVO==null)? "" : userVO.getUser_account()%>">
+            <input  name="user_account" id="user_account" placeholder="輸入想用的登入帳號" class="form-control"  type="text" value="<%= (userVO==null)? "" : userVO.getUser_account()%>">
           </div>
         </div>
       </div>
@@ -177,7 +122,7 @@ StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
         <label class="col-md-4 control-label">負責人E-Mail <span class="asteriskField">*</span> </label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-            <input name="user_email" placeholder="輸入負責人E-mail" class="form-control"  type="email" type="email" value="<%= (userVO==null)? "" : userVO.getUser_email()%>">
+            <input name="user_email" id="user_email" placeholder="輸入負責人E-mail" class="form-control"  type="email" type="email" value="<%= (userVO==null)? "" : userVO.getUser_email()%>">
           </div>
         </div>
       </div>
@@ -186,7 +131,7 @@ StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
         <label class="col-md-4 control-label">負責人姓 <span class="asteriskField">*</span> </label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input  name="user_lastname" placeholder="輸入負責人姓" class="form-control"  type="text" type="text" value="<%= (userVO==null)? "" : userVO.getUser_lastname()%>">
+            <input  name="user_lastname" id="user_lastname" placeholder="輸入負責人姓" class="form-control"  type="text" type="text" value="<%= (userVO==null)? "" : userVO.getUser_lastname()%>">
           </div>
         </div>
       </div>
@@ -195,7 +140,7 @@ StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
         <label class="col-md-4 control-label" >負責人名 <span class="asteriskField">*</span> </label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-            <input name="user_firstname" placeholder="輸入負責人名" class="form-control"  type="text" value="<%= (userVO==null)? "" : userVO.getUser_firstname()%>">
+            <input name="user_firstname" id="user_firstname" placeholder="輸入負責人名" class="form-control"  type="text" value="<%= (userVO==null)? "" : userVO.getUser_firstname()%>">
           </div>
         </div>
       </div>
@@ -204,7 +149,7 @@ StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
         <label class="col-md-4 control-label" >負責人手機</label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
-            <input name="user_mobile" placeholder="輸入負責人手機" class="form-control" type="text" value="<%= (userVO==null)? "" : userVO.getUser_mobile()%>">
+            <input name="user_mobile" id="user_mobile" placeholder="輸入負責人手機" class="form-control" type="text" value="<%= (userVO==null)? "" : userVO.getUser_mobile()%>">
           </div>
         </div>
       </div>      
@@ -213,7 +158,7 @@ StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
         <label class="col-md-4 control-label" >負責人電話</label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
-            <input name="user_phone" placeholder="輸入負責人電話" class="form-control" type="text" value="<%= (userVO==null)? "" : userVO.getUser_phone()%>">
+            <input name="user_phone" id="user_phone" placeholder="輸入負責人電話" class="form-control" type="text" value="<%= (userVO==null)? "" : userVO.getUser_phone()%>">
           </div>
         </div>
       </div>      
@@ -222,7 +167,7 @@ StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
         <label class="col-md-4 control-label">負責人聯絡地址</label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-home"></i></span>
-            <input name="user_address" placeholder="輸入負責人聯絡地址" class="form-control" type="text" value="<%= (userVO==null)? "" : userVO.getUser_address()%>">
+            <input name="user_address" id="user_address" placeholder="輸入負責人聯絡地址" class="form-control" type="text" value="<%= (userVO==null)? "" : userVO.getUser_address()%>">
           </div>
         </div>
       </div>
@@ -254,7 +199,7 @@ StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
         <label class="col-md-4 control-label">商店名稱 <span class="asteriskField">*</span> </label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-shopping-cart"></i></span>
-            <input  name="store_name" placeholder="輸入商店名稱" class="form-control"  type="text" value="<%= (storeVO==null)? "" : storeVO.getStore_name()%>">
+            <input  name="store_name" id="store_name" placeholder="輸入商店名稱" class="form-control"  type="text" value="<%= (storeVO==null)? "" : storeVO.getStore_name()%>">
           </div>
         </div>
       </div>
@@ -263,7 +208,7 @@ StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
         <label class="col-md-4 control-label">商店營業時間 <span class="asteriskField"> </span> </label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-            <input  name="store_time" placeholder="輸入商店營業時間" class="form-control"  type="text" value="<%= (storeVO==null)? "" : storeVO.getStore_time()%>" >
+            <input  name="store_time" id="store_time" placeholder="輸入商店營業時間" class="form-control"  type="text" value="<%= (storeVO==null)? "" : storeVO.getStore_time()%>" >
           </div>
         </div>
       </div>      
@@ -272,7 +217,7 @@ StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
         <label class="col-md-4 control-label" >商店電話</label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-phone-alt"></i></span>
-            <input name="store_phone" placeholder="輸入商店電話" class="form-control" type="text" value="<%= (storeVO==null)? "" : storeVO.getStore_phone()%>">
+            <input name="store_phone" id="store_phone" placeholder="輸入商店電話" class="form-control" type="text" value="<%= (storeVO==null)? "" : storeVO.getStore_phone()%>">
           </div>
         </div>
       </div>  
@@ -281,12 +226,12 @@ StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
         <label class="col-md-4 control-label">商店簡介 <span class="asteriskField">*</span> </label>
         <div class="col-md-8  inputGroupContainer">
           <div class="input-group"> <span class="input-group-addon"><i class="glyphicon glyphicon-shopping-cart"></i></span>
-            <textarea name="store_describe" class="form-control" rows="3"  class="form-control"  type="text"> <%= (storeVO==null)? "" : storeVO.getStore_describe()%> </textarea>
+            <textarea name="store_describe" id="store_describe" class="form-control" rows="3"  class="form-control"  type="text"> <%= (storeVO==null)? "" : storeVO.getStore_describe()%> </textarea>
           </div>
         </div>
       </div>
       
-                            <div class="col-xs-12 col-sm-4">
+                            <div class="col-xs-12 col-sm-3">
                                 <div class="form-group">
                                     <label for="name">所在航廈*</label>
                                     <select class="form-control" name="store_ter">
@@ -295,7 +240,7 @@ StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
                                     </select>
                                 </div>                                
                             </div>
-                            <div class="col-xs-12 col-sm-4">
+                            <div class="col-xs-12 col-sm-3">
                                 <div class="form-group">
                                     <label for="name">所在樓層*</label>
                                     <select class="form-control" name="store_floor">
@@ -309,7 +254,7 @@ StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
                                 </div>                               
                             </div>
 
-                            <div class="col-xs-12 col-sm-4">
+                            <div class="col-xs-12 col-sm-3">
                                 <div class="form-group">
 	                            	<label for="name">出入境位置*</label>
     	                        	<select class="form-control" name="store_inout">
@@ -317,36 +262,164 @@ StoreVO storeVO = (StoreVO) request.getAttribute("storeVO");
   									<option value="2" <c:if test="${storeVO.store_inout == '2'}" var="condition" scope="page">selected</c:if> >入境區</option>
 									</select>                            
                     	    	</div>
-                    	    </div><br>
+                    	    </div>
+                    	                        	                        	    
+                            <div class="col-xs-12 col-sm-3">
+                            	<div class="form-group">
+                            	<label></label>
+                            	<!-- Trigger the modal with a button -->
+								<button type="button" class="btn btn-success btn-md" data-toggle="modal" data-target="#myModal">圖上標示商店位置</button>
+                            	</div>
+                            </div><br>
+                            
+<!-- Pick up location on Map -->
+<!-- Modal -->
+<div id="myModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
 
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="input-group">
-                                    <label class="input-group-addon" >所在經度</label>
-                                    <input type="text" name="store_lon" value="<%= (storeVO==null)? "" : storeVO.getStore_lon()%>" class="form-control">
-                                </div>                                
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="input-group">
-                                    <label class="input-group-addon" >所在緯度</label>
-                                    <input type="text" name="store_lat" value="<%= (storeVO==null)? "" : storeVO.getStore_lat()%>" class="form-control">
-                                </div><br>                                
-                            </div>
-  
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">商店位置</h4>
+      </div>
+      <div class="modal-body">
+
+  <p align="center">
+      x=<input type="text" name="store_lon" id="store_lon" size="20" value="">
+      y=<input type="text" name="store_lat" id="store_lat" size="20" value="">
+      <button type="button" class="btn btn-primary" data-dismiss="modal">確定</button>
+      <button type="reset" value="reset" id="clear" class="btn btn-primary">重設</button><br>
+
+  </p>
+  <p align="center">
+      <canvas id="myCanvas" width="853" height="911"></canvas>
+      <div style="display:none;">
+         <img id="source" src="<%= request.getContextPath() %>/front-end/image/T2_3F_template_25per.png">
+      </div>
+  </p>
+
+<script>
+
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+      
+      var image = new Image();
+      image.src = "<%= request.getContextPath() %>/front-end/image/T2_3F_template_25per.png";
+      image.onload = function() {
+          context.drawImage(image, 0, 0, 853, 911, 0, 0, 853, 911);
+      };
+
+      function getMousePos(canvas, evt) {
+        var rect = canvas.getBoundingClientRect();
+        return {
+          x: evt.clientX - rect.left,
+          y: evt.clientY - rect.top
+        };
+      }
+
+//       canvas.addEventListener('mousemove', function(evt) {
+//           var mousePos = getMousePos(canvas, evt);
+//           var message = 'Mouse position: ' + mousePos.x + ',' + mousePos.y;
+//       });          
+
+      canvas.addEventListener('click', function(evt) {
+
+          var mousePos = getMousePos(canvas, evt);
+          var context = canvas.getContext('2d');
+
+          document.getElementById("store_lon").value=9+4*mousePos.x;
+          document.getElementById("store_lat").value=3+4*mousePos.y;
+
+          x=mousePos.x;
+          y=mousePos.y;
+
+          context.beginPath();
+          context.arc(x, y, 20, 0, 2 * Math.PI, false);
+          context.lineWidth = 2;
+          context.strokeStyle = '#FF0000';
+          context.stroke();
+
+          context.beginPath();
+          context.moveTo(x,y-30);
+          context.lineTo(x,y+30);
+          context.lineWidth = 2;
+          context.strokeStyle = '#FF0000';
+          context.stroke();
+
+          context.moveTo(x-30,y);
+          context.lineTo(x+30,y);
+          context.stroke();
+      });
+      
+      document.getElementById('clear').addEventListener('click', function() {
+
+          context.drawImage(document.getElementById('source'),
+                        0, 0, 853, 911, 0, 0, 853, 911);
+          document.getElementById("store_lon").value=0;
+          document.getElementById("store_lat").value=0;
+      }, false);  
+
+</script>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">關閉</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- End Pick up location on Map -->
+
+
+
+
+
+                                               	    
+
+      <br><br><br>
+                            
+      <div class="form-group">
+        <label class="col-md-4 control-label">商店圖片上傳</label>
+        <div class="col-md-8  inputGroupContainer">
+		  <div class="fileUpload btn btn-info">
+		      <span>請拖拉商店圖片到這裡</span>
+          	  <input type="file" name="upfileStore" id="upfileStore" onchange="previewFileStore()" style="height: 60px;" class="upload" >
+          </div>
+        </div>
+      </div>
+
+      
+      <div class="form-group">
+        <label class="col-md-4 control-label">預覽商店圖片</label>
+        <div class="col-md-8  inputGroupContainer">
+          <div class="input-group"> 
+          		<img src="" height="200" id="ImagePreviewStore" alt="*\(^_^)/*">
+          </div>
+        </div>
+      </div>   
+                            
 		  	<div class="form-group">
 		  		<label class="col-md-4 control-label"></label> 
      			<div class="col-md-8  inputGroupContainer">
         			<input class="btn btn-primary btn-lg" type="submit" value="我要加入">
         			&nbsp;&nbsp; <input class="btn btn-primary btn-lg" type="reset" value="重設">
+        			
+        			<button type="button" id="speedInput"></button>
+        			
      			</div>                      
   			</div>
 
   </div>
- 
-                      
 
   <input type="hidden" name="action" value="insert">
   <input type="hidden" name="user_type" value="2">
   <input type="hidden" name="user_status" value="2">
+<!--   <input type="hidden" name="store_lat" value="0"> -->
+<!--   <input type="hidden" name="store_lon" value="0"> -->
+  <input type="hidden" name="stpi_name" value="1">
   <input type="hidden" name="requestURL" value="<%=request.getServletPath()%>"><!--送出本網頁的路徑-->
 
   </div>	<!-- row -->
@@ -376,6 +449,21 @@ function previewFile() {
 	    reader.readAsDataURL(file);
 	  }
 	}
+	
+function previewFileStore() {
+	  var preview = document.getElementById('ImagePreviewStore'); 
+	  var file    = document.getElementById('upfileStore').files[0];
+	  var reader  = new FileReader();
+
+	  reader.addEventListener("load", function () {
+	    preview.src = reader.result;
+	  }, false);
+
+	  if (file) {
+	    reader.readAsDataURL(file);
+	  }
+	}
+	
 
 </script>
 
@@ -585,7 +673,7 @@ function previewFile() {
 									</div>
 									 <div id="messageDiv" style="display:none;"></div>
 									<div>
-										<a href="#">忘記密碼</a>&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/front-end/user/newMember.jsp">加入會員</a>
+										<a href="#" onclick="alert('請打0800-995-5487跟本公司客服聯絡');">忘記密碼</a>&nbsp;&nbsp;&nbsp;<a href="<%=request.getContextPath()%>/front-end/user/newMember.jsp">加入會員</a>
 									</div>
 									
 									<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑-->
@@ -742,9 +830,9 @@ function previewFile() {
                 if(results == 'SUCCESS'){
                     window.location='<%= request.getContextPath() %><%=request.getServletPath()%>'
                 }else if(results == 'SUCCESS_STORE'){
-                	window.location='<%= request.getContextPath() %>/front-end/store/'
+                	window.location='<%= request.getContextPath() %>/front-end/store_interface/listOneStore_idAllProd.jsp'
                 }else if(results == 'SUCCESS_REST'){
-                	window.location='<%= request.getContextPath() %>/front-end/rest/'
+                	window.location='<%= request.getContextPath() %>/front-end/rest_interface/listOneRest_idAllDish.jsp'
                 }else if(results == 'FAILURE'){
                     $('#messageDiv').html("<font color='red'>帳號或密碼不正確 </font>")
                 }else if(results == 'ACCOUNT SUSPENDED'){
@@ -763,3 +851,32 @@ function previewFile() {
 </body>
 
 </html>
+
+<script>
+
+function init(){    
+	var speedInput=document.getElementById("speedInput");
+    speedInput.onclick=InputText;
+}
+
+function InputText(){
+    document.getElementById("user_account").value="plankton";
+    document.getElementById("user_email").value="ba102g3iii@gmail.com";
+    document.getElementById("user_lastname").value="皮";
+    document.getElementById("user_firstname").value="老闆";
+    document.getElementById("user_mobile").value="0911258102";
+    document.getElementById("user_phone").value ="0911258102";
+    document.getElementById("user_address").value = "雲林麥寮";
+    
+    document.getElementById("store_name").value="皮老闆的尚好禮";
+    document.getElementById("store_time").value="05:00am~11:00pm";
+    document.getElementById("store_phone").value="034227151";
+    document.getElementById("store_describe").value="皮老闆不腹黑, 專門販售國內特產及各國進口免稅商品及菸酒、工藝品、香水、化妝品";
+        
+}
+
+window.onload = init;
+
+</script>
+
+

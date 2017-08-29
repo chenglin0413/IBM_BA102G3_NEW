@@ -16,7 +16,7 @@
     <res-auth>Container</res-auth>
   </resource-ref>
   
-  <!--  
+  
   <filter>
     <filter-name>SysuLoginFilter</filter-name>
     <filter-class>filters.SysuLoginFilter</filter-class>
@@ -30,7 +30,7 @@
     <dispatcher>ERROR</dispatcher>
     <dispatcher>ASYNC</dispatcher>
   </filter-mapping>
--->  
+
   <!-- 政達 -->
   <servlet>
 		<servlet-name>UserServlet</servlet-name>
@@ -72,6 +72,20 @@
 	</servlet-mapping>
 
 	<servlet>
+		<servlet-name>PathServlet</servlet-name>
+		<servlet-class>com.path.controller.PathServlet</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PathServlet</servlet-name>
+		<url-pattern>/back-end/path/path.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>PathServlet</servlet-name>
+		<url-pattern>/front-end/path/path.do</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
 		<servlet-name>StoreServlet1</servlet-name>
 		<servlet-class>com.store.controller.StoreServlet1</servlet-class>
 	</servlet>
@@ -79,10 +93,6 @@
 		<servlet-name>StoreServlet1</servlet-name>
 		<url-pattern>/back-end/store/store1.do</url-pattern>
 	</servlet-mapping>
-
-
-
-
 
 	
 	<servlet>
@@ -139,8 +149,35 @@
 		<url-pattern>/front-end/user/userImg.do</url-pattern>
 	</servlet-mapping>
 	
-		
-
+	<servlet>
+		<servlet-name>PathDBGifReader</servlet-name>
+		<servlet-class>com.path.controller.PathDBGifReader</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>PathDBGifReader</servlet-name>
+		<url-pattern>/back-end/path/pathImg.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>PathDBGifReader</servlet-name>
+		<url-pattern>/front-end/path/pathImg.do</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>CreateMyMapServlet</servlet-name>
+		<servlet-class>com.map.controller.createMyMap</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateMyMapServlet</servlet-name>
+		<url-pattern>/front-end/map/createMyMap.do</url-pattern>
+	</servlet-mapping>	
+	<servlet>
+		<servlet-name>CreateRoute</servlet-name>
+		<servlet-class>com.map.controller.createRoute</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>CreateRoute</servlet-name>
+		<url-pattern>/front-end/map/createRoute.do</url-pattern>
+	</servlet-mapping>
 
 	<servlet>
 		<servlet-name>SysuServlet</servlet-name>
@@ -168,6 +205,24 @@
 		<servlet-name>FuncServlet</servlet-name>
 		<url-pattern>/back-end/func/func.do</url-pattern>
 	</servlet-mapping>
+	<!-- 8/24新增 -->
+	<servlet>
+	    <servlet-name>RepiDBGifReader</servlet-name>
+	    <servlet-class>com.repi.controller.RepiDBGifReader</servlet-class>
+    </servlet>
+   <servlet-mapping>
+	    <servlet-name>RepiDBGifReader</servlet-name>
+	    <url-pattern>/back-end/repi/RepiDBGifReader.do</url-pattern>
+   </servlet-mapping>
+   <servlet-mapping>
+	    <servlet-name>RepiDBGifReader</servlet-name>
+	    <url-pattern>/front-end/repi/RepiDBGifReader.do</url-pattern>
+   </servlet-mapping>  
+	
+	
+	
+	
+	
   <!-- 政達結尾 -->
   
   
@@ -334,7 +389,7 @@
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>RepmServlet</servlet-name>
-		<url-pattern>/front-end/restaurant/repm.do</url-pattern>
+		<url-pattern>/front-end/rest_interface/repm.do</url-pattern>
 	</servlet-mapping>
 
 	<servlet>
@@ -402,8 +457,75 @@
     <servlet-name>RptlServlet</servlet-name>
     <url-pattern>/back-end/report/rptl.do</url-pattern>
   </servlet-mapping>
+   <servlet-mapping>
+    <servlet-name>RptlServlet</servlet-name>
+    <url-pattern>/front-end/report/rptl.do</url-pattern>
+  </servlet-mapping>
   <!-- 韋翔結尾 -->
 
+<!-- 培凱開始 -->
+  <servlet>
+    <servlet-name>AvtbServlet</servlet-name>
+    <servlet-class>com.avtb.controller.AvtbServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>AvtbServlet</servlet-name>
+    <url-pattern>/front-end/restaurant/avtb/avtb.do</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+    <servlet-name>RetaServlet</servlet-name>
+    <servlet-class>com.reta.controller.RetaServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RetaServlet</servlet-name>
+    <url-pattern>/front-end/restaurant/reta/reta.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>RepiServlet</servlet-name>
+    <servlet-class>com.repi.controller.RepiServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RepiServlet</servlet-name>
+    <url-pattern>/front-end/restaurant/repi/repi.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DBGifReader_repi</servlet-name>
+    <servlet-class>com.repi.controller.DBGifReader_repi</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DBGifReader_repi</servlet-name>
+    <url-pattern>/front-end/restaurant/repi/DBGifReader_repi.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DishServlet</servlet-name>
+    <servlet-class>com.dish.controller.DishServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DishServlet</servlet-name>
+    <url-pattern>/front-end/restaurant/dish/dish.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>DishServlet</servlet-name>
+    <url-pattern>/front-end/rest_interface/dish.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DipiServlet</servlet-name>
+    <servlet-class>com.dipi.controller.DipiServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DipiServlet</servlet-name>
+    <url-pattern>/front-end/restaurant/dipi/dipi.do</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>DBGifReader_dipi</servlet-name>
+    <servlet-class>com.dipi.controller.DBGifReader_dipi</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DBGifReader_dipi</servlet-name>
+    <url-pattern>/front-end/restaurant/dipi/DBGifReader_dipi.do</url-pattern>
+  </servlet-mapping>
+<!-- 培凱結束-->
 
 
 
@@ -415,25 +537,7 @@
 
 
 
-
-	<servlet>
-		<servlet-name>HelloExcel</servlet-name>
-		<servlet-class>servlet_excel.HelloExcel</servlet-class>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>HelloExcel</servlet-name>
-		<url-pattern>/back-end/excel.do</url-pattern>
-	</servlet-mapping>
 	
-	<context-param>
-		<param-name>excel-file</param-name>
-		<param-value>/WEB-INF/data/emp2.xls</param-value>
-	</context-param>
-	
-	<context-param>
-		<param-name>excel-user</param-name>
-		<param-value>/WEB-INF/data/user.xls</param-value>
-	</context-param>
 	<!-- WebSocket -->
 	<context-param>
 	    <param-name>org.apache.tomcat.websocket.textBufferSize</param-name>

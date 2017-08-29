@@ -13,7 +13,7 @@
 
 %>
 
-
+<jsp:useBean id="prodSvc" scope="page" class="com.prod.model.ProdService"/>
 <!DOCTYPE html>
 <html lang="en" class="easy-sidebar-active">
 
@@ -28,13 +28,14 @@
     <title>商品詳情</title>
 
    <!-- Bootstrap Core CSS -->
+   	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%=request.getContextPath() %>/front-end/css/bootstrap.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="<%=request.getContextPath() %>/front-end/css/stylish-portfolio.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
-    <link href="<%=request.getContextPath() %>/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="<%=request.getContextPath() %>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -58,13 +59,24 @@
           height: 250px;  
           margin: auto;
         }
+        #boxshadow{
+			border:1px solid lightgray;  
+			border-radius: 25px;      
+        }
+        body{
+			background-image: url(<%=request.getContextPath()%>/front-end/img/bg004.jpg);
+			background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+		}
     </style>
 </head>
 
 <body>
  
 <%--     <%@include file="/front-end/member_interface/headerBar.file" %> --%>
-
+<jsp:useBean id="PrpmSvc" class="com.prpm.model.PrpmService"/>
 <div class="container">
     <div class="row">
         <div class="callout"></div>
@@ -110,9 +122,9 @@
 		
 		<div class="col-xs-12 col-md-12">
               
-         <div class="item">
+         <div class="item" >
          
-			<div class="col-md-6"><div class="item">
+			<div class="col-md-6 img-rounded" ><div class="item"  > 
 			<img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" >
 			</div></div>
 			<div class="col-md-6">
@@ -121,7 +133,15 @@
 			<div>產品描述: ${prodVO.prod_descript}</div>
 			<div>評分次數: ${prodVO.prod_count}</div>
 			<div>評分總分: ${prodVO.prod_score}</div>
-			<div><p>$<font color="red">${prodVO.prod_price}</font></p></div>
+			<c:if test="${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status=='1'}" >
+			<div><del><p>價格:$<font color="red">${prodVO.prod_price}</font></p></del></div> 
+				<div><p>促銷價格:$<font color="red">${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_price}</font></p></div>
+			</c:if>
+			<c:if test="${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status=='0'||PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status==null}" >
+				<div><p>價格:$<font color="red">${prodVO.prod_price}</font></p></div> 
+			</c:if>
+			
+<%-- 			<div><p>$<font color="red">${prodVO.prod_price}</font></p></div> --%>
 			<c:if test="${empty userVO.user_account}" var="condition1" scope="session" > 
 					<div class="btn btn-info"><a href='#modal-login' data-toggle="modal">請先登入</a></div>
 				
@@ -154,6 +174,50 @@
 		</div>
 		</div>
 <%-- </c:forEach> --%>
+
+
+<div class="callout"></div>
+ <!--橫幅廣告頁-->
+ <div class="container">
+	<div id="myCarousel " class="carousel slide ">
+    	<div class="container">
+       		<div class="row carousel-holder">
+                <div class="col-md-12">
+                	<div class="row">
+	                    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+	                        <div class="carousel-inner">
+			                         <c:forEach var="prodVO" items="${prodSvc.getOneStore_idAllProd(prodVO.store_id)}" varStatus="s" begin="1" end="${prodSvc.all.size()}" step="1">
+									<c:if test="${s.count==1}">                      
+			                            <div class="item active" id="boxshadow">
+			                            <div class="row">
+			                         </c:if>
+			                     <c:if test="${s.count!=1 && s.count%4==1}">                      
+			                          <div class="item" id="boxshadow" >
+			                          <div class="row">
+			                          </c:if>      
+	                                 		<div class="col-md-3 "  >
+	                                 			<div class="text-center"><h5><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_id=${prodVO.prod_id}&action=getOne_For_Display">${prodVO.prod_name }</a></h5></div>
+												<img  class="img-thumbnail" src="<%= request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}">
+	                                 		</div>
+		                                <c:if test="${s.count%4==0}"> 		
+		                                   	</div>
+		                				</div>
+                               		</c:if>   
+                        		 </c:forEach> 
+                     </div>          
+                     </div>
+                     <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                         <span class="glyphicon glyphicon-chevron-left"></span>
+                     </a>
+                     <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                         <span class="glyphicon glyphicon-chevron-right"></span>
+                     </a>
+              </div>
+          </div> 
+      </div>  
+ </div>      
+      <!--------------- 廣告橫幅 ---------------->
+
 
 <div class="col-xs-12 col-md-8 col-md-offset-4">
 </div>

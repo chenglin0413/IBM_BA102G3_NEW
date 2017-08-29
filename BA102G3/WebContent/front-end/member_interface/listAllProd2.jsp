@@ -293,24 +293,24 @@
 							<div class="form-group">
 								<label class="col-sm-3 control-label" >檢舉標題</label>
 								<div class="col-sm-9">
-									<input type="text" id="rppr_tittle" name="rppr_tittle" class="form-contrl" size="15" required>
+									<input type="text" class="rppr_tittle" name="rppr_tittle" class="form-contrl" size="15" required>
 								</div>										
 							</div>
 							
 							<div class="form-group">
 								<label class="col-sm-3 control-label">檢舉內容</label>
 								<div class="col-sm-9">
-									<textarea  id="rppr_content" name="rppr_content" class="form-contrl" required></textarea>
+									<textarea  class="rppr_content" name="rppr_content" class="form-contrl" required></textarea>
 								</div>										
 							</div>
 							<div class="text-center">
 								<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"> 
-								<input type="hidden" id="user_id" name="user_id" value="${userVO.user_id}">
-								<input type="hidden" id="prod_id" name="prod_id" value="${prodVO.prod_id}">
-								<input type="hidden" id="rppr_date" name="rppr_date" value="<%= seconds%>">
+								<input type="hidden" class="user_id" name="user_id" value="${userVO.user_id}">
+								<input type="hidden" class="prod_id" name="prod_id" value="${prodVO.prod_id}">
+								<input type="hidden" class="rppr_date" name="rppr_date" value="<%= seconds%>">
 <!-- 								<button type="button" id="rpprbtn">檢舉</button> -->
 								  
-								<button type="button" id="rpprbtn"  onClick="messageGo();">送出檢舉</button>
+								<button type="button" class="rpprbtn"  onClick="messageGo();">送出檢舉</button>
 							</div>
 						</form>
               			</li>
@@ -375,11 +375,11 @@
 				data : {
 					
 					
-					prod_id :  $('#prod_id').val(),
-					user_id : $('#user_id').val(),
-					rppr_date : $('#rppr_date').val(),
-					rppr_tittle : $('#rppr_tittle').val(),
-					rppr_content : $('#rppr_content').val(),
+					prod_id :  $('.prod_id').val(),
+					user_id : $('.user_id').val(),
+					rppr_date : $('.rppr_date').val(),
+					rppr_tittle : $('.rppr_tittle').val(),
+					rppr_content : $('.rppr_content').val(),
 					action:'insert'
 				},
 				type : 'POST',
@@ -389,8 +389,14 @@
 // 							alert('date saved:'+rpprVO);
 							console.log(jsonStr);
 // 							$.each(prodVO,function( key, value ) {
-								  $('.showRppr1').append(rpprVO.rppr_content);
-								  $('.showRppr2').append(rpprVO.rppr_tittle);
+
+
+								  $('.showRppr1').append('檢舉內容'+rpprVO.rppr_content);
+								  $('.showRppr2').append('檢舉標題'+rpprVO.rppr_tittle);
+								  $('.rppr_content').remove();
+								  $('.rppr_tittle').remove();
+								  
+>>>>>>> branch 'master' of https://github.com/chenglin0413/IBM_BA102G3_NEW.git
 							},
 						error : function(xhr) {
 							alert("error");

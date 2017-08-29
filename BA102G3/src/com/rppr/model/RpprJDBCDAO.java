@@ -417,4 +417,10 @@ public class RpprJDBCDAO implements RpprDAO_interface{
 			System.out.println("...............................");
 		}
 	}
+
+	@Override
+	public List<RpprVO> getAllByStatus(Integer rppr_status) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

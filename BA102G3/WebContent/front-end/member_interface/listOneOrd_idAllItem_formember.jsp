@@ -9,7 +9,9 @@
 
 if (session.getAttribute("oneord_idAllItem") != null) {
 	List<ItemVO> list = (List<ItemVO>) session.getAttribute("oneord_idAllItem");
-    pageContext.setAttribute("list",list);
+	Integer ord_id=list.get(0).getOrd_id();
+	pageContext.setAttribute("ord_id",ord_id);
+	pageContext.setAttribute("list",list);
     
 }
 %>
@@ -57,6 +59,13 @@ if (session.getAttribute("oneord_idAllItem") != null) {
        font-size:14px;
        
         }
+        body{
+			background-image: url(<%=request.getContextPath()%>/front-end/img/bg004.jpg);
+			background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+		}
     </style>
 </head>
 
@@ -130,7 +139,7 @@ if (session.getAttribute("oneord_idAllItem") != null) {
 						<div class="col-xs-12 col-md-2">
 							<c:forEach var="prodVO" items="${prodSvc.all}">
 							<c:if test="${itemVO.prod_id==prodVO.prod_id}">
-							<a href="<%=request.getContextPath() %>/front-end/item/item.do?prod_id=${itemVO.prod_id}&ord_id=${itemVO.ord_id}&action=getOne_prod_id_upate_count_score">${prodVO.prod_name}</a>
+							<a href="<%=request.getContextPath() %>/front-end/item/item.do?prod_id=${itemVO.prod_id}&ord_id=${itemVO.ord_id}&action=getOne_prod_id_upate_count_score"><h6>${prodVO.prod_name}</h6></a>
 							 </c:if>
 							 </c:forEach>
 						</div>
@@ -153,7 +162,7 @@ if (session.getAttribute("oneord_idAllItem") != null) {
 		<input onclick="window.close();" value="關閉視窗" type="button">	
 		
 	</div>
-	
+	</div>
 	            
 <%-- 	            <c:if test="${empty itemVO.item_review}" var="condition1" scope="page" >  --%>
 <!-- 	            <p>暫無評論</p> -->

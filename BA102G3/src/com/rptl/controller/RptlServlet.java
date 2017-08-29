@@ -1,6 +1,7 @@
 package com.rptl.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
@@ -13,9 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.rptl.model.*;
-import com.tlcm.model.*;
-import com.trpi.model.*;
-import com.trvl.model.*;
 import com.user.model.UserVO;
 
 public class RptlServlet extends HttpServlet {
@@ -27,18 +25,18 @@ public class RptlServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.setCharacterEncoding("UTF8"); // 處理中文檔名
-		response.setContentType("text/html; charset=UTF8");
+		request.setCharacterEncoding("UTF-8"); // 處理中文檔名
+		response.setContentType("text/html; charset=UTF-8");
 		
 		String action = request.getParameter("action");
 		HttpSession session = request.getSession();
-		
+
 		if ("insert".equals(action)) { // 來自addRppr.jsp的請求  
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			request.setAttribute("errorMsgs", errorMsgs);
+			PrintWriter out = response.getWriter();  
 			
-			String requestURL = request.getParameter("requestURL"); 
 			try {
 				/*********************** 1.接收請求參數 - 輸入格式的錯誤處理*************************/
 				UserVO userVO = (UserVO)session.getAttribute("userVO");
@@ -68,44 +66,24 @@ public class RptlServlet extends HttpServlet {
 					errorMsgs.add("請輸入檢舉內容");
 				}
 
-				RptlVO rptlVO = new RptlVO();
-				rptlVO.setTrvl_id(trvl_id);
-				rptlVO.setUser_id(userVO.getUser_id());
-				rptlVO.setRptl_tittle(rptl_tittle);
-				rptlVO.setRptl_content(rptl_content);
-
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					request.setAttribute("rptlVO", rptlVO);
-					RequestDispatcher failureView = request.getRequestDispatcher("/back-end/report/addRppr.jsp");
+					RequestDispatcher failureView = request.getRequestDispatcher("/front-end/blog/listAllTrvl.jsp");
 					failureView.forward(request, response);
 					return;
 				}
 
-				/*************************** 2.開始新增資料 ***************************************/
+				/*************************** 2.AJAX轉送資料 ***************************************/
 				RptlService rptlSvc = new RptlService();
-				rptlVO=rptlSvc.addRptl(trvl_id, userVO.getUser_id(), rptl_date, rptl_tittle, rptl_content);
-				
-				TrvlService trvlSvc = new TrvlService();
-				TlcmService tlcmSvc = new TlcmService();
-				TrpiService trpiSvc = new TrpiService();
-				TrvlVO trvlVO = trvlSvc.getOneTrvl(trvl_id);				
-				List<TlcmVO> listTlcms= tlcmSvc.getAllTlcm_For_OneTrvl(trvl_id);
-				List<TrpiVO> listTrpis = trpiSvc.getTrpiForOneTrvl(trvl_id);
-				
-				
-				/*************************** 3.新增完成,準備轉交(Send the Success view) ***********/
-				request.setAttribute("trvlVO", trvlVO); // 取出的物件,存入req
-				request.setAttribute("listTrpis", listTrpis);
-				request.setAttribute("listTlcms", listTlcms);
-				String url = requestURL;
-				RequestDispatcher successView = request.getRequestDispatcher(url); // 新增成功後轉交來源網頁
-				successView.forward(request, response);
+				rptlSvc.addRptl(trvl_id, userVO.getUser_id(), rptl_date, rptl_tittle, rptl_content);
+				String msg="已成功檢舉,感謝您的協助";
+				out.print(msg);
+				out.close();  
 
 				/*************************** 其他可能的錯誤處理 **********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
-				RequestDispatcher failureView = request.getRequestDispatcher(requestURL);
+				RequestDispatcher failureView = request.getRequestDispatcher("/front-end/blog/listAllTrvl.jsp");
 				failureView.forward(request, response);
 			}
 		}

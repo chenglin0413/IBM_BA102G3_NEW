@@ -55,7 +55,11 @@ public class RptlService {
 		return dao.getAll();
 	}
 	
-public void updateRpprStatus(Integer rptl_id,Integer rptl_status) {
+	public List<RptlVO> getAllByStatus(Integer rptl_status) {
+		return dao.getAllByStatus(rptl_status);
+	}
+	
+	public void updateRpprStatus(Integer rptl_id,Integer rptl_status) {
 		
 		RptlVO rptlVO = new RptlVO();
 		rptlVO.setRptl_id(rptl_id);

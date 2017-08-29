@@ -1,0 +1,1503 @@
+set termout off
+ALTER SESSION SET NLS_LANGUAGE = AMERICAN;
+ALTER SESSION SET NLS_TERRITORY = AMERICA;
+
+drop sequence PATH_ID_SEQ;
+drop sequence RPPR_ID_SEQ;
+drop sequence RPTL_ID_SEQ;
+DROP SEQUENCE REPM_ID_SEQ;
+DROP SEQUENCE STPM_ID_SEQ;
+DROP SEQUENCE FLSC_ID_SEQ;
+DROP SEQUENCE BUSC_ID_SEQ;
+drop sequence TRVL_ID_SEQ;
+drop sequence TLCM_ID_SEQ;
+drop sequence TRPI_ID_SEQ;
+drop sequence MFEE_ID_SEQ;
+drop sequence repi_sq;
+drop sequence dipi_sq;
+drop sequence reta_sq;
+drop sequence avtb_sq;
+drop sequence dish_sq;
+drop sequence rest_seq;
+DROP SEQUENCE PRPI_SEQ;
+DROP SEQUENCE STPI_SEQ;
+DROP SEQUENCE ORD_SEQ;
+DROP SEQUENCE PROD_SEQ;
+DROP SEQUENCE STORE_SEQ;
+DROP SEQUENCE USER_ID_SEQ;
+DROP SEQUENCE SYSU_ID_SEQ;
+DROP SEQUENCE FUNC_ID_SEQ;
+
+drop TABLE PATH;
+drop TABLE RPPR;
+drop TABLE RPTL;
+DROP TABLE FLSC;
+DROP TABLE BUSC;
+drop table TRVLRANK;
+drop table TRPI;
+drop table TLCM;
+drop table TRVL;
+DROP TABLE PRPM;
+DROP TABLE REPM;
+DROP TABLE STPM;
+drop table repi;
+drop table dipi;
+drop table reta;
+drop table avtb;
+drop table dish;
+drop table rest;
+DROP TABLE PRPI;
+DROP TABLE STPI;
+DROP TABLE WISH;
+DROP TABLE ITEM;
+DROP TABLE ORD;
+DROP TABLE PROD;
+DROP TABLE STORE;
+drop table mfee;
+DROP TABLE AUTH;
+DROP TABLE FUNC;
+DROP TABLE USER_TABLE;
+DROP TABLE SYSU;
+
+
+
+CREATE TABLE USER_TABLE (
+ USER_ID              NUMBER(7) NOT NULL,
+ USER_ACCOUNT         VARCHAR2(20) NOT NULL,
+ USER_PASSWD          VARCHAR2(20) NOT NULL,
+ USER_TYPE            NUMBER(1) NOT NULL,
+ USER_LASTNAME        VARCHAR2(20) NOT NULL,
+ USER_FIRSTNAME       VARCHAR2(20) NOT NULL,
+ USER_PHONE           VARCHAR2(20),
+ USER_MOBILE          VARCHAR2(20),
+ USER_ADDRESS         VARCHAR2(100),
+ USER_EMAIL           VARCHAR2(50) NOT NULL,
+ USER_JOINDATE        DATE NOT NULL,
+ USER_STATUS          NUMBER(1) NOT NULL,
+ USER_IMG             BLOB,
+ USER_IMGFMT          VARCHAR2(4),
+ CONSTRAINT USER_TABLE_USER_ID_PK PRIMARY KEY (USER_ID),
+ CONSTRAINT USER_TABLE_USER_ACCOUNT_UK UNIQUE (USER_ACCOUNT)
+ );
+ 
+create sequence USER_ID_SEQ
+start with 1000001
+maxvalue 1099999
+increment by 1;
+
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store1','ba102g3',2,'空','給站','+886-800-001-699','0800-001-699','新北市蘆洲區永安南路二段104之2號','member1@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,NULL,NULL);  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store2','ba102g3',2,'金','品集','+886-1-1234-5678','0920-123456','台北縣蘆洲市長榮路500號5樓','member2@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),2,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store3','ba102g3',2,'微','山丘','+886-1-1234-5679','0920-123456','新北市三重區中正北路399號','member3@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store4','ba102g3',2,'尚','好禮','+886-1-1234-5680','0920-123456','新北市蘆洲區民族路12號','member4@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store5','ba102g3',2,'寶','泉','+886-1-1234-5681','0920-123456','新北市三重區溪尾街242巷24號2樓','member5@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store6','ba102g3',2,'義','品館','+886-1-1234-5682','0920-123456','新北市三重區重新路4段184巷25弄5號5樓','member6@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store7','ba102g3',2,'好','滋味','+886-1-1234-5683','0920-123456','新北市新莊區中原路122號','member7@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),0,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store8','ba102g3',2,'原','創意','+886-1-1234-5684','0920-123456','新北市三重區五華街195號2F','member8@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store9','ba102g3',2,'翹','創商','+886-1-1234-5685','0920-123456','新北市蘆洲區三民路591-1號15樓','member1@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store10','ba102g3',2,'維','格家','+886-1-1234-5686','0920-123456','新北市蘆洲區永安南路二段110-2號3樓','member10@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store11','ba102g3',2,'手','信坊','+886-1-1234-5678','0920-123456','蘆洲市中正路453-1號','member11@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store12','ba102g3',2,'哈','客館','+886-1-1234-5677','0920-123456','新北市三重區中正北路18號5樓之1','member12@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store13','ba102g3',2,'精','名店','+886-1-1234-5676','0920-123456','新北市蘆洲區信義路222巷42弄2號1樓','member13@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store14','ba102g3',2,'采','免店','+886-1-1234-5675','0920-123456','桃園市龜山區復興南路81號','member14@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store15','ba102g3',2,'妝','香氛','+886-1-1234-5674','0920-123456','新北市三重區和平街23號','member15@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store16','ba102g3',2,'昇','恆昌','+886-1-1234-5673','0920-123456','新北市三重區信義街64號2樓','member16@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store17','ba102g3',2,'菸','酒坊','+886-1-1234-5672','0920-123456','新北市新莊區中正路659號7樓','member17@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store18','ba102g3',2,'Liquor','Tobacco','+886-1-1234-5671','0920-123456','台北縣五股鄉中興路4段48巷6號','member18@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store19','ba102g3',2,'書','店','+886-1-1234-5670','0920-123456','新北市板橋區中山路2段60巷39弄18號','member19@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store20','ba102g3',2,'adidas','adidas','+886-1-1234-5659','0920-123456','新北市五股區孝義路9~1號','member20@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store21','ba102g3',2,'遊','藥妝','+886-1-1234-5658','0920-123456','台北縣泰山鄉中山路一段502-1號','member21@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store22','ba102g3',2,'BVLGARI','BVLGARI','+886-1-1234-5657','0920-123456','新北市八里區中華路二段298號3樓','member22@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store23','ba102g3',2,'PUMA','PUMA','+886-1-1234-5656','0920-123456','臺北縣泰山鄉明志路二段323號3樓','member23@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store24','ba102g3',2,'I','Travel','+886-1-1234-5655','0920-123456','新北市新莊區建興街5號','member24@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store25','ba102g3',2,'按','生館','+886-1-1234-5654','0920-123456','新莊市富國路124號6樓','member25@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest1','ba102g3',3,'雲','象泰','+886-800-001-699','0800-001-699','新北市林口區文化三路1段439號2樓','member26@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest2','ba102g3',3,'池','記','+886-1-1234-5653','0920-123456','新北市新莊區中正路251巷18號2樓','member27@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest3','ba102g3',3,'鴻','屋木','+886-1-1234-5652','0920-123456','新北市新莊區中正路510號','member28@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest4','ba102g3',3,'美','點心','+886-1-1234-5650','0920-123456','新北市 三芝區長安街113號5樓','member30@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest5','ba102g3',3,'勝','博殿','+886-1-1234-5648','0920-123456','新北市新莊區新樹路599之1號2樓','member32@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest6','ba102g3',3,'京','東咖','+886-1-1234-5647','0920-123456','新北市蘆洲市民族路367號2樓','member33@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest7','ba102g3',3,'中','一食','+886-1-1234-5646','0920-123456','新北市泰山區明志路二段214巷18弄3號','member34@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest8','ba102g3',3,'亭','悅香','+886-1-1234-5645','0920-123456','新北市三重區頂崁街145號','member35@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest9','ba102g3',3,'凱','鐵林','+886-1-1234-5644','0920-123456','台北市中山區林森北路413號5樓之25','member36@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest10','ba102g3',3,'皇','家傳','+886-1-1234-5643','0920-123456','新北市蘆洲區永安南路2段72-1號2樓','member37@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest11','ba102g3',3,'林','茶棧','+886-1-1234-5642','0920-123456','三重區重陽路一段89號3樓之4','member38@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest12','ba102g3',3,'雲','遊子','+886-1-1234-5641','0920-123456','新莊區雙鳳路102號2樓','member39@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest13','ba102g3',3,'南','小門','+886-1-1234-5640','0920-123456','新北市蘆洲區永安南路2段154號3樓','member40@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest14','ba102g3',3,'小','度月','+886-1-1234-5639','0920-123456','新北市五股區五權路61號','member41@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest15','ba102g3',3,'師','祖洪','+886-1-1234-5638','0920-123456','新北市林口區忠孝路506號B1','member42@qq.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest16','ba102g3',3,'堂','葉青','+886-1-1234-5637','0920-123456','新北市林口區中山路532號3樓之15','member43@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest17','ba102g3',3,'張','鬍鬚','+886-1-1234-5636','0920-123456','新北市新莊區新泰路 267號3樓之1','member44@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest18','ba102g3',3,'螺','情','+886-1-1234-5635','0920-123456','新北市三重區重新路4段184巷25弄五號五樓','member45@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest19','ba102g3',3,'來','式義','+886-3-383-3133#259','0920-123456','新北市三重區自強路2段67巷16號','member46@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest20','ba102g3',3,'D3','BAR','+886-3-383-3132#258','0920-123456','三重區興華街87號','member47@yy.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rest21','ba102g3',3,'麗','思坊','+886-3-393-2427','0920-123456','新北市三重區福隆路18號11樓','member48@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'member11','ba102g3',1,'GGYY','GY','+886-1-1234-7865','0920-923456','台北市中正區林森南路2號3樓','member86@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'member12','ba102g3',1,'ZZXX','ZX','+886-1-1234-7865','0920-193456','台北市中正區林森南路3號3樓','member87@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store26','ba102g3',2,'采','盟免','+886-1-1234-9432','0920-123456','竹北市華興一街20號','member49@pc.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store27','ba102g3',2,'哈','客館','+886-1-1234-4431','0920-123456','新竹市中山路139號','member50@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store28','ba102g3',2,'BVLGARI','pe','+886-1-1234-4467','0920-123456','新竹市東大路二段76號4樓','member51@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store29','ba102g3',2,'尚','禮','+886-1-1234-3467','0920-123456','台北市東大路二段76號4樓','member86@pp.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store30','ba102g3',2,'按','生館','+886-1-1234-2467','0920-123456','台中市東大路二段76號4樓','member87@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store31','ba102g3',2,'adidas','ya','+886-1-1234-1467','0920-123456','高雄市東大路二段76號4樓','member88@yy.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store32','ba102g3',2,'好','滋味','+886-1-1234-0467','0920-123456','台南市東大路二段76號4樓','member89@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),0,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store33','ba102g3',2,'灣','文創','+886-1-1234-9467','0920-123456','嘉義市東大路二段76號4樓','member90@zz.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),2,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'store34','ba102g3',2,'美','銘品','+886-1-1234-8467','0920-123456','桃園市東大路二段76號4樓','member91@gg.com',TO_DATE('15-JUN-2017','DD-MON-YYYY'),1,'','');  
+
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'MengPeiXuan','ba102g3',1,'孟','珮瑄','+886-1-1234-0987','0920-123456','新竹市東大路一段230號','member52@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'HouXuanZhi','ba102g3',1,'侯','瓊之','+1-646-249-3557','646-249-3557','新竹縣芎林鄉文華街297號','member53@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'BoYiJun','ba102g3',1,'白','怡君','+1-732-903-9370','732-903-9370','新竹市延平路一段250號','member54@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'ShiYiJun','ba102g3',1,'史','怡君','+886-1-1234-7254','0920-123456','新竹市經國路二段62號5樓B','member55@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'MaoYiHua','ba102g3',1,'毛','逸華','+886-1-1234-0715','0920-123456','新竹市中華路三段９號８樓之４','member56@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'Exciaming','ba102g3',1,'古井','慶子','+886-1-9817-5678','0920-123456','新竹市明湖路7號','member57@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'AmyLMiramontes','ba102g3',1,'Miramontes','Amy','+886-1-1234-5678','0920-123456','新竹市中正路158號5樓','member58@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'AdamRMason','ba102g3',1,'Mason','Adam','+886-1-3549-5678','0920-123456','彰化縣員林鎮溝皂里9號','member59@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'JoshuaPJenkins','ba102g3',1,'Jenkins','Joshua','+886-1-1234-5566','0920-123456','台中市神岡區民生路95號','member60@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'KatieBellew','ba102g3',1,'Bellew','Katie','+886-1-1234-2244','0920-123456','台中市大雅區上楓里楓林街410巷1-3號','member61@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'DSean','ba102g3',1,'Danks','Sean','+886-1-1234-3322','0920-123456','台中市西屯區逢甲路225巷12號二樓','member62@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'TaylaKauper','ba102g3',1,'Kauper','Tayla','+886-1-5454-5678','0920-123456','桃園市八德區介壽路二段474號','member63@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'SeyedVerheijden','ba102g3',1,'Verheijden','Seyed','+886-1-7789-4561','0920-123456','宜蘭縣五結鄉中正路三段138號','member64@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'AsyaElderhorst','ba102g3',1,'Elderhorst','Asya','+886-1-0956-8245','0920-123456','台北市文山區羅斯福路六段92巷2號','member65@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'DelalAlferink','ba102g3',1,'Alferink','Delal','+886-1-7425-0985','0920-123456','台中市東山路1段299之1號','member66@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'MatthewKelly','ba102g3',1,'Kelly','Matthew','+886-1-9845-1204','0920-123456','花蓮縣吉安鄉勝安村','member67@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'rella','ba102g3',1,'Russell','Ella','+886-1-6332-9851','0920-123456','台北市中山區濱江街213號','member68@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'jjude','ba102g3',1,'Joyce','Jude','+886-1-5612-0918','0920-123456','台中市潭子區中山路三段438號','member69@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'MeganWalters','ba102g3',1,'Walters','Megan','+886-1-9454-1258','0920-123456','雲林縣斗南鎮小東里大業路212號','member70@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'KeiraAshton','ba102g3',1,'Ashton','Keira','+886-3-489-1789','0920-123456','桃園市龍潭區中豐路中山段206號','member71@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'PandoraPuddifoot','ba102g3',1,'Puddifoot','Pandora','+886-1-0745-4587','0920-123456','桃園縣中壢市環中東路865號','member72@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'TimbaBrandybuck','ba102g3',1,'Brandybuck','Timba','+886-1-1259-4865','0920-123456','高雄市三民區陽明路259號','member73@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'RoseClayhanger','ba102g3',1,'Clayhanger','Rose','+886-1-0958-4566','0920-123456','台中市南屯區南二段252號','member74@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'PandoraTunnelly','ba102g3',1,'Tunnelly','Pandora','+886-1-9785-8455','0920-123456','台南市東區崇德路634號','member75@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'member1','ba102g3',1,'Hogpen','Faramir','+886-1-9845-7693','0920-123456','台南市北區成功路380號','member76@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'member2','ba102g3',1,'Bunce','Tanta','+886-1-9861-4531','0920-123456','高雄市左營區文慈路192-1號','member77@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'member3','ba102g3',1,'Gardner','Mantissa','+886-1-9367-9351','0920-123456','高雄市鼓山區臨海二路24號','member78@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'member4','ba102g3',1,'Twofoot','Hildigard','+886-1-6452-6897','0920-123456','台南市永康區中正路228號','member79@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'member5','ba102g3',1,'Smallburrow','Rollo','+886-1-9126-1343','0920-123456','台北市承德路五段55號','member80@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'member6','ba102g3',1,'Hornblower','Gerda','+886-1-0161-9454','0920-123456','基隆市仁愛區港西街6-2號','member81@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'member7','ba102g3',1,'Greenhand','Ferumbras','+886-1-4612-6135','0920-123456','新北市三重區疏洪十六路','member82@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'member8','ba102g3',1,'Galbassi','Menegilda','+886-1-1234-1346','0920-123456','台北市松山區八德路四段760號10樓之3','member83@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),1,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'member9','ba102g3',1,'Headstrong','Jolly','+886-1-1234-6134','0920-123456','台北市大安區金山南路二段179號','member84@gg.com',TO_DATE('1-JAN-2017','DD-MON-YYYY'),0,'','');  
+INSERT INTO USER_TABLE VALUES (USER_ID_SEQ.NEXTVAL,'member10','ba102g3',1,'Hogpen','Amethyst','+886-1-1234-7865','0920-123456','台北市中正區林森南路1號3樓','member85@gg.com',TO_DATE('2017-09-01 18:30','YYYY-MM-DD HH24:MI'),1,'','');
+
+
+
+
+CREATE TABLE SYSU (
+ SYSU_ID              NUMBER(7) NOT NULL,
+ SYSU_ACCOUNT         VARCHAR2(15) NOT NULL,
+ SYSU_PASSWD          VARCHAR2(15) NOT NULL,
+ SYSU_type            NUMBER(1) NOT NULL,
+ SYSU_LASTNAME        VARCHAR2(20) NOT NULL,
+ SYSU_FIRSTNAME       VARCHAR2(20) NOT NULL,
+ SYSU_EMAIL           VARCHAR2(50) NOT NULL,
+ SYSU_JOINDATE        DATE NOT NULL,
+ SYSU_STATUS          NUMBER(1) NOT NULL,
+ CONSTRAINT SYSU_SYSU_ID_PK PRIMARY KEY (SYSU_ID));
+ 
+create sequence SYSU_ID_SEQ
+start with 1100001
+maxvalue 1199999
+increment by 1;
+ 
+INSERT INTO SYSU VALUES (SYSU_ID_SEQ.NEXTVAL,'admin','ba102g3',1,'System','Administrator','root@platform.com',TO_DATE('1-JAN-2015','DD-MON-YYYY'),1);  
+INSERT INTO SYSU VALUES (SYSU_ID_SEQ.NEXTVAL,'god','ba102g3',1,'god','Admini','god@platform.com',TO_DATE('2-JAN-2015','DD-MON-YYYY'),1);  
+INSERT INTO SYSU VALUES (SYSU_ID_SEQ.NEXTVAL,'peter','ba102g3',2,'Tsai','Tou','peter@yy.com',TO_DATE('1-FEB-2015','DD-MON-YYYY'),1);
+INSERT INTO SYSU VALUES (SYSU_ID_SEQ.NEXTVAL,'nancy','ba102g3',2,'Wu','Nancy','nacy@yy.com',TO_DATE('1-MAR-2015','DD-MON-YYYY'),1);
+INSERT INTO SYSU VALUES (SYSU_ID_SEQ.NEXTVAL,'pao','ba102g3',2,'Pao','Coach','pao@yy.com',TO_DATE('1-Apr-2015','DD-MON-YYYY'),1);
+INSERT INTO SYSU VALUES (SYSU_ID_SEQ.NEXTVAL,'paula','ba102g3',2,'Li','pauls','pauls@yy.com',TO_DATE('1-May-2015','DD-MON-YYYY'),1);
+INSERT INTO SYSU VALUES (SYSU_ID_SEQ.NEXTVAL,'kid','ba102g3',3,'Pei','Coach','kidPei@yy.com',TO_DATE('1-Jun-2015','DD-MON-YYYY'),1);
+INSERT INTO SYSU VALUES (SYSU_ID_SEQ.NEXTVAL,'bob','ba102g3',3,'Tan','pauls','bobt@yy.com',TO_DATE('1-Jul-2015','DD-MON-YYYY'),1);
+INSERT INTO SYSU VALUES (SYSU_ID_SEQ.NEXTVAL,'tiger','ba102g3',3,'Wang','Tiger','wangtiger@yy.com',TO_DATE('1-Aug-2015','DD-MON-YYYY'),1);
+INSERT INTO SYSU VALUES (SYSU_ID_SEQ.NEXTVAL,'scott','ba102g3',3,'Sue','Scott','scottsue@yy.com',TO_DATE('1-Sep-2015','DD-MON-YYYY'),1);
+
+
+
+CREATE TABLE FUNC (
+ FUNC_ID              NUMBER(7) NOT NULL,
+ FUNC_NAME            VARCHAR2(50) NOT NULL,
+ FUNC_PATH            VARCHAR2(50), 
+ FUNC_STATUS          NUMBER(1) NOT NULL,
+CONSTRAINT FUNC_FUNC_ID_PK PRIMARY KEY (FUNC_ID));
+ 
+create sequence FUNC_ID_SEQ
+start with 4100001
+maxvalue 4199999
+increment by 1;
+
+INSERT INTO FUNC VALUES (FUNC_ID_SEQ.NEXTVAL,'管理平台員工','/sysu',1);
+INSERT INTO FUNC VALUES (FUNC_ID_SEQ.NEXTVAL,'管理商店及餐廳會員','/store',1);
+INSERT INTO FUNC VALUES (FUNC_ID_SEQ.NEXTVAL,'管理一般會員','/user',1);
+INSERT INTO FUNC VALUES (FUNC_ID_SEQ.NEXTVAL,'處理檢舉','/report',1);
+INSERT INTO FUNC VALUES (FUNC_ID_SEQ.NEXTVAL,'管理月費','/mfee',1);
+INSERT INTO FUNC VALUES (FUNC_ID_SEQ.NEXTVAL,'導引圖資管理','/route',1);
+
+
+
+
+
+
+CREATE TABLE AUTH (
+ SYSU_ID              NUMBER(7) NOT NULL,
+ FUNC_ID              NUMBER(7) NOT NULL,
+CONSTRAINT AUTH_SYSU_ID_FK FOREIGN KEY (SYSU_ID) REFERENCES SYSU (SYSU_ID),
+CONSTRAINT AUTH_FUNC_ID_FK FOREIGN KEY (FUNC_ID) REFERENCES FUNC (FUNC_ID));
+
+INSERT INTO AUTH VALUES (1100001,4100001);
+INSERT INTO AUTH VALUES (1100001,4100002);
+INSERT INTO AUTH VALUES (1100001,4100003);
+INSERT INTO AUTH VALUES (1100001,4100004);
+INSERT INTO AUTH VALUES (1100001,4100005);
+INSERT INTO AUTH VALUES (1100001,4100006);
+INSERT INTO AUTH VALUES (1100002,4100001);
+INSERT INTO AUTH VALUES (1100002,4100002);
+INSERT INTO AUTH VALUES (1100002,4100003);
+INSERT INTO AUTH VALUES (1100002,4100004);
+INSERT INTO AUTH VALUES (1100002,4100005);
+INSERT INTO AUTH VALUES (1100002,4100006);
+INSERT INTO AUTH VALUES (1100003,4100004);
+INSERT INTO AUTH VALUES (1100003,4100005);
+INSERT INTO AUTH VALUES (1100004,4100004);
+INSERT INTO AUTH VALUES (1100004,4100005);
+INSERT INTO AUTH VALUES (1100005,4100004);
+INSERT INTO AUTH VALUES (1100005,4100005);
+INSERT INTO AUTH VALUES (1100006,4100004);
+INSERT INTO AUTH VALUES (1100006,4100005);
+INSERT INTO AUTH VALUES (1100007,4100002);
+INSERT INTO AUTH VALUES (1100007,4100003);
+INSERT INTO AUTH VALUES (1100008,4100002);
+INSERT INTO AUTH VALUES (1100008,4100003);
+INSERT INTO AUTH VALUES (1100009,4100002);
+INSERT INTO AUTH VALUES (1100009,4100003);
+INSERT INTO AUTH VALUES (1100010,4100002);
+INSERT INTO AUTH VALUES (1100010,4100003);
+
+
+CREATE TABLE STORE (
+STORE_ID                           NUMBER(7) NOT NULL,
+USER_ID                            NUMBER(7) NOT NULL,
+STORE_NAME                         VARCHAR2(200) NOT NULL,
+STORE_TIME                         VARCHAR2(100) NOT NULL,
+STORE_PHONE                        VARCHAR2(20) NOT NULL,
+STORE_DESCRIBE                     VARCHAR2(2000) NOT NULL,
+STORE_TER  	                       NUMBER(1) NOT NULL,
+STORE_FLOOR	                       VARCHAR2(4) NOT NULL,
+STORE_LON                          NUMBER(18,13) NOT NULL,
+STORE_LAT                          NUMBER(18,13) NOT NULL,
+STORE_INOUT                        NUMBER(1) NOT NULL,
+STORE_COUNT                        NUMBER(7),
+STORE_SCORE                        NUMBER(7),
+
+CONSTRAINT STORE_FK FOREIGN KEY (USER_ID) REFERENCES USER_TABLE (USER_ID),
+CONSTRAINT STORE_PK PRIMARY KEY (STORE_ID));
+
+
+
+CREATE SEQUENCE STORE_SEQ
+INCREMENT BY 1
+START WITH 2000001
+MAXVALUE   2099999
+NOCACHE
+NOCYCLE;
+
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000001','台灣名品集','06:00~23:00','03-393-2798','針對旅客對於伴手禮的需求，提供多種人氣伴手禮如：鳳梨酥、新東陽肉鬆蛋捲、台灣各地名產糕餅等，滿足旅客需求的同時，也提供臺灣品牌老店在國際展售的平台
+','1','B1','121.238204567204','25.0814706791455','3','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000002','旅遊藥妝店','06:00~23:00','0800-055-556','旅遊應急的藥妝小物與保養小品，貝德瑪、歐蕾、Dr. Wu等豐富且多樣化的國內外藥妝品牌，讓您針對自己的膚質和需求做選擇，給您全方位的美妝保養體驗
+','1','3','121.237620552764','25.079451177188','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000003','童心世界 Disney','06:00~23:00','0800-055-556','想擁有米奇、米尼、史迪奇、小熊維尼與hollow Kitty的機場限定商品嗎？童心世界給您繽紛夢幻的幸福旅程！','1','3','121.237686668435','25.079503656125','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000004','昇恆昌免稅店','06:00~23:00','0800-055-556','提供各類的報章雜誌及刊物，中外文圖書4000冊及200餘種雜誌 加設座位區，滿足各國旅客的需求，讓旅客有舒適的閱讀環境 。俗話說「讀萬卷書 行萬里路」在這裡，您不但可找到各地的時尚或旅遊刊物、也能掌握全球的最新訊息
+','1','3','121.238260492888','25.081115342562','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000005','博物館商店','06:00~23:00','0800-055-556','販售及展示博物館商品','1','3','121.238120197589','25.079848265821','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000006','昇恒昌珠寶','06:00~23:00','0800-055-556','嚴選鑽石、黃金與台灣特有的珊瑚、碧玉、碧玉貓眼等玉石，融入寶島的風土民情與台灣在地特色的設計師款珠寶，希望帶給旅客前所未有的奢華享受','1','3','121.238084445088','25.079823142492','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000007','PUMA','06:00~23:00','0800-001-699','德國一家以生?鞋與運動服?主的大型跨國公司','2','3','121.233017252875','25.0802796704385','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000008','國際精品名店','06:00~23:00','0800-055-556','國際時尚精品品牌專門店，一次購足的奢華享受，讓您感受全球同步零時差的購物禮遇。','1','3','121.238285961565','25.080019083873','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000009','時計腕錶','06:00~23:00','0800-055-556','精細時計，時尚腕錶，讓您體驗工匠對腕錶的極度專注和設計作工的精準掌控，獨一無二的品味設計，邀您一同珍藏。','1','3','121.238928422036','25.080490735613','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000010','台灣丰采館','06:00~23:00','0800-055-556','匯集台灣原住民與客家文化，提供豐富的文物、藝品與美食特產，現豐富多元的民族情懷；嚴選台灣各地特色產品、美食、茶葉與工藝逸品，提供您與友人分享旅遊的最佳伴手禮','1','3','121.239640556445','25.080986471461','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000011','行旅文創生活館','06:00~22:00','03-393-2432','台灣文化創意商品。','1','3','121.237563182633','25.080766406112','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000012','原住民精藝品展售館','06:00~22:00','03-393-2475','原住民生活為靈感創作的商品。','1','3','121.237563182633','25.080766406112','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000013','維格餅家','07:00~21:30','03-398-3899','維格餅家自成立以來始終堅持竭力傳承中國細緻的糕餅文化，為顧客帶來最上等美味的品質享受！經過多年認真踏實的經營，維格精緻的糕餅在顧客心中，成功建立起台灣最高品質糕餅品牌之意象。不僅獲得台灣食品業各大獎項的榮耀，廣受各大媒體爭相報導，同時在全球各地華人社會深獲好評，成為台灣第一指名的糕餅伴手禮名店。','1','3','121.237604830287','25.080901360402','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000014','台灣特色商品館','05:00~23:00','03-383-3440','蒐集全台灣各鄉鎮市最知名且具代表性的土特產及手工藝品，並販售OTOP，MIT微笑標章商品，農情好禮等台灣特色商品，滿足國內外旅客購物及送禮需求。','1','3','121.237282710481','25.081361001800','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000015','乾唐軒','07:30~22:00','03-398-2799','乾唐軒以漢唐藝術為題材，將現代設計理念和手法融合其中，以專利的日用陶瓷技術，創立活瓷品牌之系列商品。另有乾唐彩等，融合獨特彩釉和西方噴繪技法，經高溫多次燒成之陶瓷產品。店內主要販售各式活瓷茶杯、茶具等','1','3','121.237160253605','25.081488842732','3','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000016','亞熱帶書店','06:30~22:00','03-398-3296','販售書報雜誌，文創商品，DVD，精美藝品等','1','3','121.236976099097','25.081724258367','3','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000017','豪品服飾','07:30~22:00','03-393-2798','HAO PING目前所經銷的品牌有:美國職棒大聯盟(英文縮寫:MLB)，美國籃球職業聯盟(英文縮寫:NBA)，日本職業野球聯盟，是最頂尖的運動時尚服飾品牌。店內販售有各式男女運動服飾，帽子等','1','3','121.236976099097','25.081724258367','3','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000018','寶島美饌名店街','06:00~23:00','03-383-4885','伴手禮、精藝品。','1','3','121.236864877497','25.081771229842','3','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000019','航空補給站','06:00~23:00','0800-001-699','提供優質的影音電子產品、配件、遊戲及新奇的小玩意','2','3','121.2299453','25.0778186','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000020','金品茶集','06:00~23:00','03-2754599','金品茶集是金品茗茶在西元2000年所創立的精緻茶葉品牌。希望透過金品茶集重新詮釋茶與人之間密切關係，引領現代人接近茶，開闊對茶的認知與視野，改變人們對茶的刻板印象，推展自在喝茶。結合在地情感將台灣文化元素注入品牌之中，讓茶文化更具生命力，在品茗之間體驗全新人文印象及生活的感動。','2','2','121.231273879504','25.076607036459','3','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000021','微熱山丘','07:00-20:00','03-2754591','微熱山丘用最天然的素材，細心烘焙成樸素的美味，真實如陽光下熟成的果實。以台灣鳳梨做的樸實美點，沒有任何人工合成添加，是一個做了將近五十年糕餅的老師傅反璞歸真之作','2','2','121.231704062981','25.076969405050','3','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000022','手信坊','07:00-21:00','03-275-4593','手信，也是伴手之意，更是饋贈的禮數。在手信坊品牌創始人陳世洋與勝田安一精心研發之下，和果子融入風物、節慶、文學、詩情，將情境融入和果子製作中，忠實傳遞送禮者的隆情厚意。手信坊在傳承與創新之間不斷蛻變、成長，現在已成為創意和果子的知名品牌。','2','2','121.231598463603','25.076880114672','3','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000023','美妝香氛','06:00~23:30','0800-055-556','網羅眾多國際化妝名品，專業服務人員提供親切諮詢服務，明亮時尚的購物空間，滿足您寵愛自己的完美需求。','2','3','121.233890873495','25.076511549200','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000024','台灣菸酒坊','06:00~23:00','0800-055-556','以舊時臺灣文化元素打造令人懷念的酒窖，搭配濃濃古早味的甘仔店招牌、早期菸品和懷舊風的酒瓶包裝，引領您進入臺灣「酒鄉文化」的歷史與傳承，感受在地風味的酒鄉氣息。','2','3','121.234805267000','25.077234812696','3','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000025','Liquor Tobacco','06:00~23:00','0800-055-556','提供煙酒的免稅店。','2','3','121.233209631013','25.0759802332366','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000049','采盟免稅商店','06:00~23:30','03-383-3133?','販售各國進口免稅商品及菸酒、工藝品、香水、化妝品、國內特產等','2','3','121.231597876617','25.079144709933','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000050','哈客館','06:00~23:00','0800-055-556','藉由豐富的客家文物、藝品、美食特產等，推廣臺灣客家精神與生活文化，並結合客家油桐花、花布、藍衫等元素，展現兼具復古與摩登設計風。','2','3','121.235392015443','25.077689936912','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000051','BVLGARI','06:00~23:00','0800-055-556','創始於 1884 年，BVLGARI便以義大利風格的珠寶、腕錶、配件、香水、保養品與皮件，引領潮流','2','3','121.232712111510','25.077579218559','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000052','台灣尚好禮','06:00~23:00','03--2754584','由誠盟公司自營之伴手禮商店，開放式的購物空間，精選國內知名品牌最受歡迎的伴手禮，讓您利用在機場短短的時間購得多樣化的台灣特色名產，並有貼心的專屬打包機讓您採購上更為便利。','2','4','121.231591176912','25.0772441318733','3','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000053','按摩養生館','10:00~18:00','03-393-1057','局部按摩（頭、手、頸、肩、腰、背。','2','3','121.231189621968','25.0786880561136','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000054','adidas','06:00~23:30','0800-001-699','提供運動鞋、運動服裝、體育用品','2','3','121.233910597306','25.0808631585965','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000055','台灣好滋味','06:00~23:30','0800-055-556','館內除陳列臺灣各地名產與工藝技術，更有昇恒昌獨家監製的鳳梨酥及三太子系列商品，現場更設置了現烤肉乾專賣區讓旅客免費品嚐，滿足旅客的視覺、嗅覺及味覺，精艷臺灣伴手禮所帶來的驚喜。','2','3','121.235910354816','25.0780916714232','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000056','翹台灣文創商店','06:00~23:30','0800-055-556','集結臺灣優秀設計商品與特色品牌，從辦公室小物、居家小品、創意生活用品到臺灣一鄉一特色(OTOP)等多元化的創意精緻伴手禮。','2','3','121.233209631013','25.0759802332366','1','0','0');
+INSERT INTO STORE  VALUES(STORE_SEQ.nextval,'1000057','義美臺灣銘品館','07:00-22:00','03-275-4581','台灣知名老品牌「義美食品」，自創立以來，以實實在在的態度，真材實料把食品做好，得到顧客的迴響。義美致力於台灣本土文化之傳承，並進駐桃園國際機場第二航廈，設立「台灣銘品館」，推廣多樣化之台灣銘品，以及網羅各式台灣傳統伴手禮，提供機場旅客更優質的服務及更友善的購物氛圍。','2','1','121.231598463603','25.0768801146723','3','0','0');
+
+
+
+
+CREATE TABLE PROD(
+PROD_ID                           NUMBER(7) NOT NULL,
+STORE_ID                          NUMBER(7) NOT NULL, 
+PROD_NAME                         VARCHAR2(200) NOT NULL,
+PROD_DESCRIPT                     VARCHAR2(2000) NOT NULL,
+PROD_PRICE                        NUMBER(7) NOT NULL,
+PROD_SORT	                      VARCHAR2(40) NOT NULL,
+PROD_FORMAT                       VARCHAR2(40),
+PROD_BRAND                        VARCHAR2(40),
+PROD_UPDATETIME                   DATE NOT NULL,
+PROD_SOLDCOUNT	                  NUMBER(7),
+PROD_STATUS                       NUMBER(1),
+PROD_COUNT	                      NUMBER(7),
+PROD_SCORE	                      NUMBER(7),
+
+
+
+ CONSTRAINT PROD_FK FOREIGN KEY (STORE_ID) REFERENCES STORE (STORE_ID),
+ CONSTRAINT PROD__PK PRIMARY KEY (PROD_ID) );
+
+CREATE SEQUENCE PROD_SEQ
+INCREMENT BY 1
+START WITH 2200001
+MAXVALUE   2299999
+NOCACHE
+NOCYCLE;
+
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000001','牛軋糖綜合盒','好吃不黏牙','250','伴手禮','無','台灣名品集',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000001','白蘭氏傳統雞精盒','零脂肪、零膽固醇、低鈉，且不添加防腐劑及人工色素 。','450','伴手禮','無','白蘭氏',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000001','肉鬆起司捲禮盒杏仁','配飯好幫手','180','伴手禮','無','台灣名品集',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000001','肉鬆綜合海苔燒禮盒','零脂肪、低鈉適合全家大小','230','伴手禮','無','台灣名品集',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000001','典雅尊貴禮盒2號','零脂肪、零膽固醇、低鈉，且不添加防腐劑及人工色素 。','330','伴手禮','無','台灣名品集',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000001','海苔肉鬆蛋捲禮盒','配飯好幫手','450','伴手禮','無','台灣名品集',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000001','黑豬肉鬆禮盒50週年限量款','零脂肪、低鈉適合全家大小','300','伴手禮','無','台灣名品集',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000001','新東陽杉林茶','幫助提神，出自高山，冷泡好茶','250','伴手禮','無','台灣名品集',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000014','牛軋糖蘇打餅-蔓越莓','健康新概念，牛軋糖蘇打餅～蔓越莓口味～好評發?','350','伴手禮','20片入','手信坊',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000014','御方燒雪的戀人','原自於法國的“Langue De Chat”貓舌餅意即這種薄餅有如貓的舌頭般薄表面帶些毛細孔吃起來口感香脆搭配滑順香濃的白巧克力夾心是歐洲、日本餽贈禮品的最佳選擇','260','伴手禮','無','手信坊',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000014','大福-草莓風味','"傳承歐吉醬的百年手藝糯香飄逸，果漿香甜忘不了的手信之禮！','240','伴手禮','14入','手信坊',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000014','黃金酥','精緻迷你小顆裝，一次一口，照樣果香四溢、奶味濃郁，隨時都可品嚐的好滋味。','299','伴手禮','每盒500克','手信坊',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000014','手提鮮蛋捲','"用心烘焙製作，一滴水都不加，濃郁的奶香及蛋香再搭配蛋捲達人的手工現作','300','伴手禮','無','手信坊',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000014','隅田川禮盒 - 黑糖','細柔似絲的外皮，包裹香濃可口的黑糖內餡，雙重風味～誠心推薦!','240','伴手禮','15入','手信坊',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','60');
+
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000033','A5花卉三層文件夾','實用的文具用品','250','文具用品','無','亞熱帶書店',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000033','Subtropics花系列香膏','中性香膏','450','保養品','無','亞熱帶書店',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000033','士林官邸花園明信片','實用的文具用品','180','文具用品','無','亞熱帶書店',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000033','中正紀念堂窗花品茗杯','紀念杯子','230','文具用品','無','亞熱帶書店',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000033','可愛三軍立體留言貼','實用的文具用品','330','文具用品','無','亞熱帶書店',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000033','阿兵哥金門一條根','跌倒拐到內傷很好用','450','藥品','無','亞熱帶書店',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000033','學1舍保溫杯(250ml)','好用的保溫杯','300','文具用品','無','亞熱帶書店',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','60');
+
+
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000022','鳳梨汁','削皮的鳳梨熬出的原汁，經沉澱、殺菌、過濾，完全沒有添加任何不屬於鳳梨的東西','300','伴手禮','6瓶','微熱山丘',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000022','鳳梨酥 - 16個裝','樸實美點是一個做了將近五十年糕餅的老師傅反璞歸真之作','670','伴手禮','16個','微熱山丘',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000022','蜜豐糖蛋糕','一如微熱山丘對美味的堅持，蛋糕由未經精鍊過程的甘蔗原萃、純真蜂蜜、健康飼養的雞蛋及日本麵粉揉和而成，沒有任何複雜的人工添加，傳遞記憶中最純粹的味道','300','伴手禮','無','微熱山丘',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000022','蜜豐糖蛋糕_老梅口味','一如微熱山丘對美味的堅持，蛋糕由未經精鍊過程的甘蔗原萃、純真蜂蜜、健康飼養的雞蛋及日本麵粉揉和而成，沒有任何複雜的人工添加，傳遞記憶中最純粹的味道','350','伴手禮','無','微熱山丘',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+
+
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','玉泉窖藏16年精釀陳紹女兒紅3入','埔里酒廠特製的『女兒紅』係以精選糯米及愛蘭泉水釀製而成，調入黑棗、異麥芽寡糖等健康食材入酒，香氣濃郁、酒質甘醇。','1500','酒類','3瓶','台灣菸酒公司',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','中山先生紀念酒禮盒','風味濃冽甘醇，並在餘味中帶有阿里山麓特有青梅醞味。','1400','酒類','單瓶','台灣菸酒公司',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','玉山陳年台灣高粱客家花布','鮮紅客家花布映襯在白瓷瓶上，內盛優質台灣高粱酒 ，裡外泛香，更顯優雅珍貴。','1250','酒類','單瓶','台灣菸酒公司',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','玉山3年38度+58度高粱禮盒','本產品係以精選高粱為發酵基質原料，小麥為大麴原料，採傳統高粱酒固態法釀製，擷取香氣最精純酒液，精心勾兌調和而成。','640','酒類','禮盒','台灣菸酒公司',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','玉山金雙倍奈米金8年陳高-龍吟','玉山金雙倍奈米金八年陳高-龍吟是以儲存八年以上陳年高粱酒精心調和而成，香氣濃郁，口感純淨，結合「奈米科技」將黃金解離成十億分之一的奈米粒子，並磊晶成片狀結構，依最佳比例調和入酒。','1800','酒類','單瓶','台灣菸酒公司',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','玉泉窖藏20年精釀陳紹女兒紅','埔里酒廠特製的『女兒紅』係以精選糯米及愛蘭泉水釀製而成，調入黑棗、異麥芽寡糖等健康食材入酒，香氣濃郁、酒質甘醇。','1500','酒類','禮盒','台灣菸酒公司',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','玉山頂級陳年高粱酒','「玉山頂級陳高」乃特選優良高粱、天然小麥、大曲為原料，採傳統工法並結合現代科技所精心釀製。','820','酒類','禮盒','台灣菸酒公司',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+
+
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000013','太極鳳梨酥','VIP首選','300','伴手禮','無','微格餅家',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000013','蛋黃酥','蛋黃特濃','200','伴手禮','無','微格餅家',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000013','香蕉酥','香蕉香氣','250','伴手禮','無','微格餅家',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000013','鳳梨酥15入','台灣首選手禮','350','伴手禮','15入','微格餅家',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000013','鴛鴦綠豆糕5入','台灣首選伴手禮','400','伴手禮','無','微格餅家',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000013','總統就職紀念版鳳梨酥','台灣首選伴手禮。','600','伴手禮','無','微格餅家',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000011','ONEOONE隨身杯_飛向雲端','科學時代創造了許多點石成金的奇蹟，譜出時代英雄的輝煌篇章，論豪傑，喝好水！點石成金隨身杯與你一路隨行。','150','生活用品','無','乾唐軒',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000011','月圓春滿高杯','堅持品質，始終如一','120','生活用品','無','乾唐軒',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000011','永浴愛河高杯','守護傳統不斷創新','130','生活用品','無','乾唐軒',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000011','吉星乾坤隨身杯','科學時代創造了許多點石成金的奇蹟，譜出時代英雄的輝煌篇章，論豪傑，喝好水！點石成金隨身杯與你一路隨行。','220','生活用品','無','乾唐軒',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000011','吉星華風一手瓶','陶瓷內膽可以裝牛奶、茶葉、中藥、果醋飲品','200','生活用品','無','乾唐軒',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000011','幸福馬克杯','?具負離子及遠紅外線功能的隨身杯','100','生活用品','無','乾唐軒',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000011','時光古韻咖啡杯','科學時代創造了許多點石成金的奇蹟，譜出時代英雄的輝煌篇章，論豪傑，喝好水！點石成金隨身杯與你一路隨行。','99','生活用品','無','乾唐軒',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000011','盛世牡丹高杯','堅持品質，始終如一','70','生活用品','無','乾唐軒',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000011','點石成金隨身杯_橫紋','台灣首選伴手禮。','88','生活用品','無','乾唐軒',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','百加得蘭姆酒','獨創用木炭過濾可使蘭姆變的更加純淨，以及使其具有獨特的醇順口味。','500','酒類','單瓶','BACARDI 百加得',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','約翰走路金牌珍藏','使用Clynelish單一麥芽威士忌為調和基酒之一。','1220','酒類','單瓶','JOHNNIE WALKER 約翰走路',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','龐貝藍鑽特級琴酒','英國龐貝藍鑽特級琴酒，Bombay Sapphire四角冰藍瓶，維多利亞女王肖像的主題，融入悠久的傳統及藍鑽的歷史，脫俗的外表散發出摩登、時尚既古典亦現代的設計風格。','630','酒類','無','BOMBAY SAPPHIRE 龐貝藍鑽',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','約翰走路喬治五世紀念版','"為紀念1934年英皇喬治五世頒授皇家認證的極致榮耀。首
+席調酒師Jim Berveridge調和精選1934年即存至今甚至絕跡的釀酒廠所生產的極珍貴原酒。完美重現1930年代威士忌黃金時期的絕世風味。口感強烈、複雜、豐厚且順口，在口中留下獨特泥煤口感。','9400','酒類','單瓶','JOHNNIE WALKER 約翰走路',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','馬爹利藍帶','馬爹利藍帶干邑是馬爹利品牌風格的完美象微，盡顯優雅與複雜的香氣。乾邑一般可以歸類為各個不同的種類，但大部份鑑賞家均認為馬爹利藍帶乾邑應自成一類。','3510','酒類','單瓶','MARTELL 馬爹利',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','皇家禮炮傳承禮讚','?"亙常珍釀，風味雋永。皇家禮炮傳承禮讚陳釀至少21年，風格沈著雋永，以皇家禮炮獨有的環型調合工序(Circular Blending)調配，工序靈感源自大自然，完美保留88桶精選威士忌的精華。','5400','酒類','單瓶','ROYAL SALUTE 皇家禮炮',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','皇家禮炮21年','極致呈獻頂級佳釀，乃是最上等珍稀的蘇格蘭威士忌的原酒，經橡木桶醇化至少21年後，由首席調酒師調配出的藝術傑作，尊貴奢華，成就至高敬意。全新酒瓶採用的流線型設計完美詮釋不朽時尚，並蘊含著尊貴、力量及優雅之意。
+瓶身顏色不一，分別有寶石紅、寶石藍或翡翠綠。','3450','酒類','單瓶','ROYAL SALUTE 皇家禮炮',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000006','巴黎之花玫瑰香檳','巴黎之花玫瑰香檳是巴黎之花品牌的首款玫瑰香檳，其名字Blason Rose源自該品牌於1956年推出的「Blason de France」系列。'
+,'2610','酒類','單瓶','PERRIER-JOUET 巴黎之花',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+
+
+
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000023','DoubleWear粉持久氣墊','時下最受歡迎彩妝系列','399','化妝品','無','昇恆昌免稅店',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000023','水漾晶凍濃郁翹唇筆','修容專用','399','化妝品','無','昇恆昌免稅店',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000023','果漾特調氣墊唇萃','人氣唇膏','599','化妝品','無','昇恆昌免稅店',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000023','玫瑰保濕噴霧雙瓶裝','保濕噴霧','699','化妝品','無','昇恆昌免稅店',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000023','超放電絲絨雙色唇膏','流行化妝品','899','化妝品','無','昇恆昌免稅店',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000023','超持妝防水兩用眼線膠筆','?"防水、防曬兩用','999','化妝品','無','昇恆昌免稅店',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000023','酷愛聖羅蘭-巴黎淑女彩妝盤','來自法國彩妝盤','1299','化妝品','無','昇恆昌免稅店',TO_DATE('2017-07-17','YYYY-MM-DD'),'20','1','5','70');
+
+
+
+
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','johnnie-walker-red-label','貴族名媛派對用酒','1499','酒類','無','昇恆昌免稅店',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','jws-xr-21','貴族名媛派對用酒','899','酒類','無','昇恆昌免稅店',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','johnnie-walker-black-label','貴族名媛派對用酒','1199','酒類','無','昇恆昌免稅店',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','jws-king-george-v','貴族名媛派對用酒','699','酒類','無','昇恆昌免稅店',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','johnnie-walker-double_black','貴族名媛派對用酒','1699','酒類','無','昇恆昌免稅店',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','jws-private-collection-2014','貴族名媛派對用酒','1099','酒類','無','昇恆昌免稅店',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','johnnie-walker-gold-label-reserve','貴族名媛派對用酒','1299','酒類','無','昇恆昌免稅店',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','jws-private-collection-2015','貴族名媛派對用酒','1399','酒類','單瓶','BACARDI 百加得',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','jws-private-collection-2016','使用Clynelish單一麥芽威士忌為調和基酒之一。','1220','酒類','單瓶','JOHNNIE WALKER 約翰走路',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','jws-odyssey','英國龐貝藍鑽特級琴酒，Bombay Sapphire四角冰藍瓶，維多利亞女王肖像的主題，融入悠久的傳統及藍鑽的歷史，脫俗的外表散發出摩登、時尚既古典亦現代的設計風格。','630','酒類','無','BOMBAY SAPPHIRE 龐貝藍鑽',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','johnnie-walker-blue-label','貴族名媛派對用酒','3510','酒類','單瓶','MARTELL 馬爹利',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','jws-the-john-walker','貴族名媛派對用酒，風格沈著雋永','5400','酒類','單瓶','ROYAL SALUTE 皇家禮炮',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','yo_small_pic','極致呈獻頂級佳釀，乃是最上等珍稀的蘇格蘭威士忌的原酒，經橡木桶醇化至少21年後，由首席調酒師調配出的藝術傑作，尊貴奢華，成就至高敬意。全新酒瓶採用的流線型設計完美詮釋不朽時尚，並蘊含著尊貴、力量及優雅之意。
+瓶身顏色不一，分別有寶石紅、寶石藍或翡翠綠。','3450','酒類','單瓶','ROYAL SALUTE 皇家禮炮',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','bl_icon','貴族名媛派對用酒','2610','酒類','單瓶','PERRIER-JOUET 巴黎之花',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','blue_horse_hero','獨創用木炭過濾可使蘭姆變的更加純淨，以及使其具有獨特的醇順口味。','799','酒類','單瓶','BACARDI 百加得',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','blue_icon_ram','使用Clynelish單一麥芽威士忌為調和基酒之一。','1220','酒類','單瓶','JOHNNIE WALKER 約翰走路',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','blue-porsche_icon','英國龐貝藍鑽特級琴酒，Bombay Sapphire四角冰藍瓶，維多利亞女王肖像的主題，融入悠久的傳統及藍鑽的歷史，脫俗的外表散發出摩登、時尚既古典亦現代的設計風格。','630','酒類','無','BOMBAY SAPPHIRE 龐貝藍鑽',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','dunhill_icon','馬爹利藍帶干邑是馬爹利品牌風格的完美象微，盡顯優雅與複雜的香氣。乾邑一般可以歸類為各個不同的種類，但大部份鑑賞家均認為馬爹利藍帶乾邑應自成一類。','3510','酒類','單瓶','MARTELL 馬爹利',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','gl48_icon','亙常珍釀，風味雋永。皇家禮炮傳承禮讚陳釀至少21年，風格沈著雋永，以皇家禮炮獨有的環型調合工序(Circular Blending)調配，工序靈感源自大自然，完美保留88桶精選威士忌的精華。','5400','酒類','單瓶','ROYAL SALUTE 皇家禮炮',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','glr_icon','獨創用木炭過濾可使蘭姆變的更加純淨，以及使其具有獨特的醇順口味。','500','酒類','單瓶','BACARDI 百加得',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','gold_icon','使用Clynelish單一麥芽威士忌為調和基酒之一。','1220','酒類','單瓶','JOHNNIE WALKER 約翰走路',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','voyager_icon','英國龐貝藍鑽特級琴酒，Bombay Sapphire四角冰藍瓶，維多利亞女王肖像的主題，融入悠久的傳統及藍鑽的歷史，脫俗的外表散發出摩登、時尚既古典亦現代的設計風格。','630','酒類','無','BOMBAY SAPPHIRE 龐貝藍鑽',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','gl_hero_image','馬爹利藍帶干邑是馬爹利品牌風格的完美象微，盡顯優雅與複雜的香氣。乾邑一般可以歸類為各個不同的種類，但大部份鑑賞家均認為馬爹利藍帶乾邑應自成一類。','3510','酒類','單瓶','MARTELL 馬爹利',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','bullion3_hero','?"亙常珍釀，風味雋永。皇家禮炮傳承禮讚陳釀至少21年，風格沈著雋永，以皇家禮炮獨有的環型調合工序(Circular Blending)調配，工序靈感源自大自然，完美保留88桶精選威士忌的精華。','5400','酒類','單瓶','ROYAL SALUTE 皇家禮炮',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','jwsc_link','英國龐貝藍鑽特級琴酒，Bombay Sapphire四角冰藍瓶，維多利亞女王肖像的主題，融入悠久的傳統及藍鑽的歷史，脫俗的外表散發出摩登、時尚既古典亦現代的設計風格。','630','酒類','無','BOMBAY SAPPHIRE 龐貝藍鑽',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000024','rrf_hero','馬爹利藍帶干邑是馬爹利品牌風格的完美象微，盡顯優雅與複雜的香氣。乾邑一般可以歸類為各個不同的種類，但大部份鑑賞家均認為馬爹利藍帶乾邑應自成一類。','3510','酒類','單瓶','MARTELL 馬爹利',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+
+
+
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT QUICKSTER NATO CHRONOGRAPH','tissort : 這款腕錶的獨特之處在於簡潔的錶盤和彩色的錶圈設計，但更特別的亮點是它時髦的NATO錶帶。它令您能夠根據心情或服裝更換錶帶。擁有這樣一款腕錶，夫復何求？','2610','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT QUICKSTER NATO CHRONOGRAPH','tissort : 這款腕錶的獨特之處在於簡潔的錶盤和彩色的錶圈設計，但更特別的亮點是它時髦的NATO錶帶。它令您能夠根據心情或服裝更換錶帶。擁有這樣一款腕錶，夫復何求？','799','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT QUICKSTER NATO CHRONOGRAPH','tissort : 這款腕錶的獨特之處在於簡潔的錶盤和彩色的錶圈設計，但更特別的亮點是它時髦的NATO錶帶。它令您能夠根據心情或服裝更換錶帶。擁有這樣一款腕錶，夫復何求？','1220','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT CHRONO XL','tissort : This sporty chronograph offers one of the largest cases in the entire Tissot collection, as well as Swiss technology at an unbeatable price!','630','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT CHRONO XL','tissort : This sporty chronograph offers one of the largest cases in the entire Tissot collection, as well as Swiss technology at an unbeatable price!','3510','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT CHRONO XL','tissort : This sporty chronograph offers one of the largest cases in the entire Tissot collection, as well as Swiss technology at an unbeatable price!','5400','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT CHRONO XL','tissort : This sporty chronograph offers one of the largest cases in the entire Tissot collection, as well as Swiss technology at an unbeatable price!','500','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT CHRONO XL','tissort : This sporty chronograph offers one of the largest cases in the entire Tissot collection, as well as Swiss technology at an unbeatable price!','1220','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT CHRONO XL','tissort : This sporty chronograph offers one of the largest cases in the entire Tissot collection, as well as Swiss technology at an unbeatable price!','630','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT CHRONO XL','tissort : This sporty chronograph offers one of the largest cases in the entire Tissot collection, as well as Swiss technology at an unbeatable price!','3510','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION POWERMATIC 80 OPEN HEART','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','5400','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION POWERMATIC 80 OPEN HEART','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','630','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION POWERMATIC 80 OPEN HEART','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','3510','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION POWERMATIC 80 OPEN HEART','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','3510','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION POWERMATIC 80 OPEN HEART','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','5400','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION POWERMATIC 80 OPEN HEART','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','630','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION POWERMATIC 80 OPEN HEART','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','3510','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION POWERMATIC 80 OPEN HEART','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','2610','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION POWERMATIC 80 OPEN HEART','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','799','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION AUTOMATIC SMALL SECOND','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','1220','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION AUTOMATIC SMALL SECOND','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','630','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION AUTOMATIC SMALL SECOND','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','3510','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION AUTOMATIC SMALL SECOND','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','5400','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION AUTOMATIC SMALL SECOND','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','500','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION AUTOMATIC SMALL SECOND','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','1220','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION AUTOMATIC SMALL SECOND','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','630','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION AUTOMATIC SMALL SECOND','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','3510','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION AUTOMATIC SMALL SECOND','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','5400','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT TRADITION AUTOMATIC SMALL SECOND','tissort : 天梭Tradition系列賦予現代製錶工藝一股懷舊氣息，為現今技術添上古典風格特色的設計。高科技性能完美調和古典細節及合適的懷舊表面，並配備扭索紋等設計元素及略微呈現弧形的錶殼。天梭Tradition保證為佩戴者帶來恆久精準的時間及美麗無暇的腕錶外觀。','630','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT T-RACE MOTOGP 2016 AUTOMATIC CHRONOGRAPH','tissort : 天梭競速系列MotoGPTM2016限量版腕表像征著天梭和MotoGP之間深入的合作夥伴關係。該款腕表錶盤具有碳素效果，輔以各種煙灰色元素設計細節，讓整體觀感顯得更加豐富。腕表走時精確，設計融入電單車的特徵，如形如?車盤的表圈、錶帶背面的胎痕以及酷似後輪懸架的錶帶和錶殼連接件。','3510','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT T-RACE MOTOGP 2016 AUTOMATIC CHRONOGRAPH','tissort : 天梭競速系列MotoGPTM2016限量版腕表像征著天梭和MotoGP之間深入的合作夥伴關係。該款腕表錶盤具有碳素效果，輔以各種煙灰色元素設計細節，讓整體觀感顯得更加豐富。腕表走時精確，設計融入電單車的特徵，如形如?車盤的表圈、錶帶背面的胎痕以及酷似後輪懸架的錶帶和錶殼連接件。','2610','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT T-RACE MOTOGP 2016 AUTOMATIC CHRONOGRAPH','tissort : 天梭競速系列MotoGPTM2016限量版腕表像征著天梭和MotoGP之間深入的合作夥伴關係。該款腕表錶盤具有碳素效果，輔以各種煙灰色元素設計細節，讓整體觀感顯得更加豐富。腕表走時精確，設計融入電單車的特徵，如形如?車盤的表圈、錶帶背面的胎痕以及酷似後輪懸架的錶帶和錶殼連接件。','799','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT T-RACE MOTOGP 2016 AUTOMATIC CHRONOGRAPH','tissort : 天梭競速系列MotoGPTM2016限量版腕表像征著天梭和MotoGP之間深入的合作夥伴關係。該款腕表錶盤具有碳素效果，輔以各種煙灰色元素設計細節，讓整體觀感顯得更加豐富。腕表走時精確，設計融入電單車的特徵，如形如?車盤的表圈、錶帶背面的胎痕以及酷似後輪懸架的錶帶和錶殼連接件。','1220','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT T-RACE MOTOGP 2016 AUTOMATIC CHRONOGRAPH','tissort : 天梭競速系列MotoGPTM2016限量版腕表像征著天梭和MotoGP之間深入的合作夥伴關係。該款腕表錶盤具有碳素效果，輔以各種煙灰色元素設計細節，讓整體觀感顯得更加豐富。腕表走時精確，設計融入電單車的特徵，如形如?車盤的表圈、錶帶背面的胎痕以及酷似後輪懸架的錶帶和錶殼連接件。','630','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT T-RACE MOTOGP 2016 AUTOMATIC CHRONOGRAPH','tissort : 天梭競速系列MotoGPTM2016限量版腕表像征著天梭和MotoGP之間深入的合作夥伴關係。該款腕表錶盤具有碳素效果，輔以各種煙灰色元素設計細節，讓整體觀感顯得更加豐富。腕表走時精確，設計融入電單車的特徵，如形如?車盤的表圈、錶帶背面的胎痕以及酷似後輪懸架的錶帶和錶殼連接件。','3510','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT T-RACE MOTOGP 2016 AUTOMATIC CHRONOGRAPH','tissort : 天梭競速系列MotoGPTM2016限量版腕表像征著天梭和MotoGP之間深入的合作夥伴關係。該款腕表錶盤具有碳素效果，輔以各種煙灰色元素設計細節，讓整體觀感顯得更加豐富。腕表走時精確，設計融入電單車的特徵，如形如?車盤的表圈、錶帶背面的胎痕以及酷似後輪懸架的錶帶和錶殼連接件。','5400','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT T-RACE MOTOGP 2016 AUTOMATIC CHRONOGRAPH','tissort : 天梭競速系列MotoGPTM2016限量版腕表像征著天梭和MotoGP之間深入的合作夥伴關係。該款腕表錶盤具有碳素效果，輔以各種煙灰色元素設計細節，讓整體觀感顯得更加豐富。腕表走時精確，設計融入電單車的特徵，如形如?車盤的表圈、錶帶背面的胎痕以及酷似後輪懸架的錶帶和錶殼連接件。','500','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT LE LOCLE AUTOMATIC REGULATEUR','tissort : 天梭Le Locle單從名字上看，已好像是成功的可靠因素。Le Locle同時代表了天梭表的發源地及傳統所在，她依偎在瑞士少女峰下，是最出名的自動腕錶家族的所在地。這款錶更在細節上展示了精美的優雅外表，例如羅馬數字及Le Locle的經典標誌，這些細節令這幅經典的時髦畫更完美，亦令這款錶不論是白天還是黑夜都一樣華麗。','1220','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT LE LOCLE AUTOMATIC REGULATEUR','tissort : 天梭Le Locle單從名字上看，已好像是成功的可靠因素。Le Locle同時代表了天梭表的發源地及傳統所在，她依偎在瑞士少女峰下，是最出名的自動腕錶家族的所在地。這款錶更在細節上展示了精美的優雅外表，例如羅馬數字及Le Locle的經典標誌，這些細節令這幅經典的時髦畫更完美，亦令這款錶不論是白天還是黑夜都一樣華麗。','630','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT LE LOCLE AUTOMATIC REGULATEUR','tissort : 天梭Le Locle單從名字上看，已好像是成功的可靠因素。Le Locle同時代表了天梭表的發源地及傳統所在，她依偎在瑞士少女峰下，是最出名的自動腕錶家族的所在地。這款錶更在細節上展示了精美的優雅外表，例如羅馬數字及Le Locle的經典標誌，這些細節令這幅經典的時髦畫更完美，亦令這款錶不論是白天還是黑夜都一樣華麗。','630','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT LE LOCLE AUTOMATIC REGULATEUR','tissort : 天梭Le Locle單從名字上看，已好像是成功的可靠因素。Le Locle同時代表了天梭表的發源地及傳統所在，她依偎在瑞士少女峰下，是最出名的自動腕錶家族的所在地。這款錶更在細節上展示了精美的優雅外表，例如羅馬數字及Le Locle的經典標誌，這些細節令這幅經典的時髦畫更完美，亦令這款錶不論是白天還是黑夜都一樣華麗。','3510','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT LE LOCLE AUTOMATIC REGULATEUR','tissort : 天梭Le Locle單從名字上看，已好像是成功的可靠因素。Le Locle同時代表了天梭表的發源地及傳統所在，她依偎在瑞士少女峰下，是最出名的自動腕錶家族的所在地。這款錶更在細節上展示了精美的優雅外表，例如羅馬數字及Le Locle的經典標誌，這些細節令這幅經典的時髦畫更完美，亦令這款錶不論是白天還是黑夜都一樣華麗。','5400','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT LE LOCLE AUTOMATIC REGULATEUR','tissort : 天梭Le Locle單從名字上看，已好像是成功的可靠因素。Le Locle同時代表了天梭表的發源地及傳統所在，她依偎在瑞士少女峰下，是最出名的自動腕錶家族的所在地。這款錶更在細節上展示了精美的優雅外表，例如羅馬數字及Le Locle的經典標誌，這些細節令這幅經典的時髦畫更完美，亦令這款錶不論是白天還是黑夜都一樣華麗。','630','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT LE LOCLE AUTOMATIC REGULATEUR','tissort : 天梭Le Locle單從名字上看，已好像是成功的可靠因素。Le Locle同時代表了天梭表的發源地及傳統所在，她依偎在瑞士少女峰下，是最出名的自動腕錶家族的所在地。這款錶更在細節上展示了精美的優雅外表，例如羅馬數字及Le Locle的經典標誌，這些細節令這幅經典的時髦畫更完美，亦令這款錶不論是白天還是黑夜都一樣華麗。','3510','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT LE LOCLE AUTOMATIC REGULATEUR','tissort : 天梭Le Locle單從名字上看，已好像是成功的可靠因素。Le Locle同時代表了天梭表的發源地及傳統所在，她依偎在瑞士少女峰下，是最出名的自動腕錶家族的所在地。這款錶更在細節上展示了精美的優雅外表，例如羅馬數字及Le Locle的經典標誌，這些細節令這幅經典的時髦畫更完美，亦令這款錶不論是白天還是黑夜都一樣華麗。','2610','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT LE LOCLE AUTOMATIC REGULATEUR','tissort : 天梭Le Locle單從名字上看，已好像是成功的可靠因素。Le Locle同時代表了天梭表的發源地及傳統所在，她依偎在瑞士少女峰下，是最出名的自動腕錶家族的所在地。這款錶更在細節上展示了精美的優雅外表，例如羅馬數字及Le Locle的經典標誌，這些細節令這幅經典的時髦畫更完美，亦令這款錶不論是白天還是黑夜都一樣華麗。','799','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT LE LOCLE AUTOMATIC REGULATEUR','tissort : 天梭Le Locle單從名字上看，已好像是成功的可靠因素。Le Locle同時代表了天梭表的發源地及傳統所在，她依偎在瑞士少女峰下，是最出名的自動腕錶家族的所在地。這款錶更在細節上展示了精美的優雅外表，例如羅馬數字及Le Locle的經典標誌，這些細節令這幅經典的時髦畫更完美，亦令這款錶不論是白天還是黑夜都一樣華麗。','1220','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT LE LOCLE AUTOMATIC REGULATEUR','tissort : 天梭Le Locle單從名字上看，已好像是成功的可靠因素。Le Locle同時代表了天梭表的發源地及傳統所在，她依偎在瑞士少女峰下，是最出名的自動腕錶家族的所在地。這款錶更在細節上展示了精美的優雅外表，例如羅馬數字及Le Locle的經典標誌，這些細節令這幅經典的時髦畫更完美，亦令這款錶不論是白天還是黑夜都一樣華麗。','630','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT LE LOCLE AUTOMATIC REGULATEUR','tissort : 天梭Le Locle單從名字上看，已好像是成功的可靠因素。Le Locle同時代表了天梭表的發源地及傳統所在，她依偎在瑞士少女峰下，是最出名的自動腕錶家族的所在地。這款錶更在細節上展示了精美的優雅外表，例如羅馬數字及Le Locle的經典標誌，這些細節令這幅經典的時髦畫更完美，亦令這款錶不論是白天還是黑夜都一樣華麗。','3510','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT LE LOCLE AUTOMATIC REGULATEUR','tissort : 天梭Le Locle單從名字上看，已好像是成功的可靠因素。Le Locle同時代表了天梭表的發源地及傳統所在，她依偎在瑞士少女峰下，是最出名的自動腕錶家族的所在地。這款錶更在細節上展示了精美的優雅外表，例如羅馬數字及Le Locle的經典標誌，這些細節令這幅經典的時髦畫更完美，亦令這款錶不論是白天還是黑夜都一樣華麗。','5400','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT LE LOCLE AUTOMATIC REGULATEUR','tissort : 天梭Le Locle單從名字上看，已好像是成功的可靠因素。Le Locle同時代表了天梭表的發源地及傳統所在，她依偎在瑞士少女峰下，是最出名的自動腕錶家族的所在地。這款錶更在細節上展示了精美的優雅外表，例如羅馬數字及Le Locle的經典標誌，這些細節令這幅經典的時髦畫更完美，亦令這款錶不論是白天還是黑夜都一樣華麗。','500','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT BRIDGEPORT AUTOMATIC CHRONOGRAPH VALJOUX','tissort : 無論是在會議室，還是在高檔餐廳，瑞士天梭表Bridgeport腕錶都能表現出濃郁的優雅氣息和低調的審美理念，這種特質令它在多年以後仍能讓人耳目一新。','1220','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT BRIDGEPORT AUTOMATIC CHRONOGRAPH VALJOUX','tissort : 無論是在會議室，還是在高檔餐廳，瑞士天梭表Bridgeport腕錶都能表現出濃郁的優雅氣息和低調的審美理念，這種特質令它在多年以後仍能讓人耳目一新。','630','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT BRIDGEPORT AUTOMATIC CHRONOGRAPH VALJOUX','tissort : 無論是在會議室，還是在高檔餐廳，瑞士天梭表Bridgeport腕錶都能表現出濃郁的優雅氣息和低調的審美理念，這種特質令它在多年以後仍能讓人耳目一新。','630','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT BRIDGEPORT AUTOMATIC CHRONOGRAPH VALJOUX','tissort : 無論是在會議室，還是在高檔餐廳，瑞士天梭表Bridgeport腕錶都能表現出濃郁的優雅氣息和低調的審美理念，這種特質令它在多年以後仍能讓人耳目一新。','3510','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT BRIDGEPORT AUTOMATIC CHRONOGRAPH VALJOUX','tissort : 無論是在會議室，還是在高檔餐廳，瑞士天梭表Bridgeport腕錶都能表現出濃郁的優雅氣息和低調的審美理念，這種特質令它在多年以後仍能讓人耳目一新。','5400','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT BRIDGEPORT AUTOMATIC CHRONOGRAPH VALJOUX','tissort : 無論是在會議室，還是在高檔餐廳，瑞士天梭表Bridgeport腕錶都能表現出濃郁的優雅氣息和低調的審美理念，這種特質令它在多年以後仍能讓人耳目一新。','630','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT BRIDGEPORT AUTOMATIC CHRONOGRAPH VALJOUX','tissort : 無論是在會議室，還是在高檔餐廳，瑞士天梭表Bridgeport腕錶都能表現出濃郁的優雅氣息和低調的審美理念，這種特質令它在多年以後仍能讓人耳目一新。','3510','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT BRIDGEPORT AUTOMATIC CHRONOGRAPH VALJOUX','tissort : 無論是在會議室，還是在高檔餐廳，瑞士天梭表Bridgeport腕錶都能表現出濃郁的優雅氣息和低調的審美理念，這種特質令它在多年以後仍能讓人耳目一新。','2610','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT EVERYTIME MEDIUM NATO','tissort : 這款腕錶正如其名，將成為任何場合任何時候的贏家。經典雋永的設計，簡約明朗的錶面，天梭魅時系列是一款出類拔萃的現代腕錶。極簡主義的錶面為趣味橫生的錶帶設計留下更多的空間。','799','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','50');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT EVERYTIME MEDIUM NATO','tissort : 這款腕錶正如其名，將成為任何場合任何時候的贏家。經典雋永的設計，簡約明朗的錶面，天梭魅時系列是一款出類拔萃的現代腕錶。極簡主義的錶面為趣味橫生的錶帶設計留下更多的空間。','1220','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','100');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT EVERYTIME MEDIUM NATO','tissort : 這款腕錶正如其名，將成為任何場合任何時候的贏家。經典雋永的設計，簡約明朗的錶面，天梭魅時系列是一款出類拔萃的現代腕錶。極簡主義的錶面為趣味橫生的錶帶設計留下更多的空間。','630','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','60');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT EVERYTIME MEDIUM NATO','tissort : 這款腕錶正如其名，將成為任何場合任何時候的贏家。經典雋永的設計，簡約明朗的錶面，天梭魅時系列是一款出類拔萃的現代腕錶。極簡主義的錶面為趣味橫生的錶帶設計留下更多的空間。','3510','精品','無','tissort 天梭錶',TO_DATE('2017-07-11','YYYY-MM-DD'),'20','1','5','90');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT EVERYTIME MEDIUM NATO','tissort : 這款腕錶正如其名，將成為任何場合任何時候的贏家。經典雋永的設計，簡約明朗的錶面，天梭魅時系列是一款出類拔萃的現代腕錶。極簡主義的錶面為趣味橫生的錶帶設計留下更多的空間。','5400','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','70');
+INSERT INTO PROD VALUES (PROD_SEQ.NEXTVAL,'2000009','TISSOT EVERYTIME MEDIUM NATO','tissort : 這款腕錶正如其名，將成為任何場合任何時候的贏家。經典雋永的設計，簡約明朗的錶面，天梭魅時系列是一款出類拔萃的現代腕錶。極簡主義的錶面為趣味橫生的錶帶設計留下更多的空間。','500','精品','無','tissort 天梭錶',TO_DATE('2017-07-31','YYYY-MM-DD'),'20','1','5','50');
+
+
+
+
+
+commit;
+
+
+CREATE TABLE ORD(
+ORD_ID                             NUMBER(7) NOT NULL,
+USER_ID                            NUMBER(7) NOT NULL,
+STORE_ID                           NUMBER(7) NOT NULL,
+ORD_DATE                           DATE NOT NULL,
+ORD_TOTAL                          NUMBER(7),
+ORD_BILL   	                       NUMBER(1) ,
+ORD_GRANT   	                   NUMBER(1) ,
+ORD_STATUS   	                   NUMBER(1) ,
+ORD_SSCORE                         NUMBER(1) ,
+ORD_RPDATE	                       DATE ,
+ORD_RPCOMM                         VARCHAR2(500),
+ORD_RPSTATUS   	                   NUMBER(1) ,
+
+
+
+
+
+CONSTRAINT ORD_USER_ID_FK FOREIGN KEY (USER_ID) REFERENCES USER_TABLE (USER_ID),
+CONSTRAINT ORD_STORE_FK FOREIGN KEY (STORE_ID) REFERENCES STORE (STORE_ID),
+CONSTRAINT ORD_PK PRIMARY KEY (ORD_ID));
+
+CREATE SEQUENCE ORD_SEQ
+INCREMENT BY 1
+START WITH 2400101
+MAXVALUE   2499999
+NOCACHE
+NOCYCLE;
+
+INSERT INTO ORD VALUES (ORD_SEQ.NEXTVAL,'1000001','2000002',TO_DATE('2017-04-03','YYYY-MM-DD'),'5000','1','1','1','5',TO_DATE('2017-04-30','YYYY-MM-DD'),'JAVA口訣第二句，要甚麼給甚麼','2');
+INSERT INTO ORD VALUES (ORD_SEQ.NEXTVAL,'1000002','2000003',TO_DATE('2017-04-03','YYYY-MM-DD'),'5000','1','1','1','4',TO_DATE('2017-04-30','YYYY-MM-DD'),'JAVA口訣第三句，宣告、取值，拿去用','2');
+INSERT INTO ORD VALUES (ORD_SEQ.NEXTVAL,'1000003','2000004',TO_DATE('2017-04-03','YYYY-MM-DD'),'5000','1','1','1','5',TO_DATE('2017-04-30','YYYY-MM-DD'),'JAVA，是有點難的，也有點難的','2');
+INSERT INTO ORD VALUES (ORD_SEQ.NEXTVAL,'1000004','2000005',TO_DATE('2017-04-03','YYYY-MM-DD'),'5000','1','1','1','4',TO_DATE('2017-04-30','YYYY-MM-DD'),'JAVA口訣第二句，要甚麼給甚麼','2');
+
+commit;
+
+
+CREATE TABLE ITEM(
+ORD_ID                              NUMBER(7) NOT NULL,
+PROD_ID                             NUMBER(7) NOT NULL,              
+ITEM_QTY                            NUMBER(5) NOT NULL,   
+ITEM_SCORE	                        NUMBER(1),
+ITEM_REVIEW                         VARCHAR2(500),
+ITEM_REVIEWDATE                     DATE,
+
+
+
+CONSTRAINT ITEM_FK FOREIGN KEY (ORD_ID,PROD_ID)  REFERENCES ITEM (ORD_ID,PROD_ID),
+ CONSTRAINT ITEM__PK PRIMARY KEY (ORD_ID,PROD_ID) );
+
+commit;
+
+
+
+CREATE TABLE WISH(
+USER_ID                              NUMBER(7) NOT NULL,
+PROD_ID                              NUMBER(7) NOT NULL,              
+WISH_DATE                            DATE,  
+
+
+ CONSTRAINT WISH_FK FOREIGN KEY (USER_ID,PROD_ID) REFERENCES WISH (USER_ID,PROD_ID),
+ CONSTRAINT WISH_PK PRIMARY KEY (USER_ID,PROD_ID) );
+
+commit;
+
+
+
+CREATE TABLE STPI (
+STPI_ID                           NUMBER(7) NOT NULL,
+STORE_ID                            NUMBER(7) NOT NULL,
+STPI_NAME                        NUMBER(24) ,
+STPI_IMG                         BLOB,
+STPI_IMGFMT                 VARCHAR2(4) NOT NULL,
+
+CONSTRAINT STPI_FK FOREIGN KEY (STORE_ID) REFERENCES STORE (STORE_ID),
+CONSTRAINT STPI_PK PRIMARY KEY (STPI_ID));
+
+
+
+CREATE SEQUENCE STPI_SEQ
+INCREMENT BY 1
+START WITH 2100101
+MAXVALUE   2199999
+NOCACHE
+NOCYCLE;
+
+
+commit;
+
+
+CREATE TABLE PRPI(
+PRPI_ID                            NUMBER(7) NOT NULL,
+PROD_ID                            NUMBER(7) NOT NULL,
+PRPI_NAME                         VARCHAR2(200),
+PRPI_IMG                           BLOB,
+
+
+CONSTRAINT PRPI__FK FOREIGN KEY (PROD_ID) REFERENCES PROD (PROD_ID),
+
+CONSTRAINT PRPI_PK PRIMARY KEY (PRPI_ID));
+
+CREATE SEQUENCE PRPI_SEQ
+INCREMENT BY 1
+START WITH 2300001
+MAXVALUE   2399999
+NOCACHE
+NOCYCLE;
+
+
+commit;
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE REST (
+REST_ID		NUMBER(7) NOT NULL,
+USER_ID		NUMBER(7) NOT NULL,
+REST_NAME	VARCHAR2(200) NOT NULL,
+REST_ADDRESS	VARCHAR2(200) NOT NULL,
+REST_PHONE	VARCHAR2(16),
+REST_TRANS	VARCHAR2(500),
+REST_DETAIL	VARCHAR2(4000),
+REST_HOURS	VARCHAR2(64),
+REST_TER	NUMBER(1),
+REST_FLOOR	NUMBER(1),
+REST_LON	NUMBER(15,12),
+REST_LAT	NUMBER(15,12),
+REST_INOUT	NUMBER(1),
+REST_TYPE	NUMBER(2),
+REST_COUNT	NUMBER(7),
+REST_SCORE      NUMBER(7),
+
+CONSTRAINT REST_FK FOREIGN KEY (USER_ID) REFERENCES USER_TABLE (USER_ID),
+CONSTRAINT REST_PK PRIMARY KEY (REST_ID));
+
+
+
+CREATE SEQUENCE REST_SEQ
+INCREMENT BY 1
+START WITH 3000001
+MAXVALUE   3099999
+NOCACHE
+NOCYCLE;
+
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000026,'雲象泰式餐廳','T2-3F','03-383-3133#261','','雲象泰式餐廳為台南知名小吃周氏蝦捲餐飲集團，為了滿足消費者對於泰式料理的需求，特別遠從泰國禮聘重量級實力派主廚“泰拿吉”，為的就是要呈現出原汁原味的泰國風味，希望能給消費者全新的美味感受。','06:00-22:30',2,3,121.230223000000,25.078042000000,2,1,5,4);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000027,'池記','T2-4F','03-383-4612','','"池記的餐點以雲吞麵為主，粥、糖水、飯、小食為輔。池記的經營宗旨是用時代感的包裝，製作簡單，傳統而受人喜愛的食物。二十多年來，池記憑著優質的食物，服務、和舒適的環境，成為香港最受歡迎的雲吞麵店之一。池記也曾獲得米其林推薦，可見實力不容忽視。我們的宗旨是力求上進，精益求精，不斷努力去提升我們的品質、服務、清潔和環境，以確保客戶對我們的愛戴和信任。特色餐點：鮮蝦雲吞麵、上湯鮮蝦水餃麵、牛腩麵、皮蛋瘦肉粥、蘿蔔牛腩飯"','06:00~23:00',2,2,121.232957000000,25.077269000000,2,1,1,5);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000028,'鴻屋木桶燒','T2-B2','03-3931890','','木桶燒、咖哩蛋包飯、日式定食','10:00~22:00',2,2,121.232198000000,25.076467000000,1,1,6,3);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000029,'義美點心世界','T2-4F','03-2754586','','義美是臺灣食品龍頭企業、為台灣的食品產業，社會、為公義、為環保、為消費者、為台灣人，提供服務的延續發展。義美點心世界以嚴格標準為食安把關，提供機場旅客精緻的港式餐點。','06:00-22:30',2,3,121.232326012553,25.077960818669,1,1,6,4);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000030,'勝博殿','T2-4F','03-3931657','','日式炸豬排、丼飯、炸豬排三明治','05:30~22:30',2,3,121.232232500000,25.076567400000,2,3,5,5);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000031,'東京咖哩','T2-B2','03-3834817','','各式咖哩飯、日式小菜、沙拉、咖啡、果汁、茶類、酒類','10:00~22:00',2,3,121.231978400000,25.077012200000,2,3,2,5);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000032,'中一食堂','T2-4F','03-263-0583','','手打排骨 吃出鮮嫩 紮實有嚼勁 以特選里肌豬排搭配獨家且繁複手法製作出肉質鮮嫩、香氣撲鼻的排骨，製作時會先細心拍打讓排骨鬆軟，再加上密製醃料按摩入味，以現場裹漿鎖住鮮嫩紮實的豬排，讓您可以口口吃到厚實、軟嫩帶有香甜肉汁排骨招牌風味。 源自於1983年的中一排骨是台灣早期第一家中西式餐飲店，2008年大成集團一同加入經營，目的要將「精緻、美食、健康、滿意」作為經營目標，繼續傳承30年經典好味道。 特色餐點： 中一排骨套餐、椒麻雞排套餐、紅燒牛肉麵套餐、排骨酥麵套餐、炸排骨飯','06:00~23:00',2,3,121.232957000000,25.077269000000,1,1,3,2);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000033,'悅香亭','T2-B2','03-393-1780','','牛肉麵、排骨飯','06:00~23:00',2,3,121.234359000000,25.076876000000,1,1,3,4);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000034,'凱林鐵板燒','T2-B2','03-3932547','','鐵板料理及各式套餐','10:00~22:00',2,3,121.232185825611,25.076334676768,2,3,3,5);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000035,'皇家傳承','T2-4F','03-393-2428','','牛肉麵','06:00~23:00',2,3,121.232101000000,25.076665000000,2,1,9,3);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000036,'翰林茶棧','T2-4F','03-393-1802','','「翰林茶棧」是「翰林茶館」副品牌，強調小而美的精緻服務。招牌茶飲包含原創黑白珍珠奶茶、翰林獨家栽種成功的頂級翡翠綠茶，及烏龍茶、清茶、紅茶、鐵觀音、普洱茶等各式頂級茶品，選用台灣契作茶區高品質生態茶，茶香醇厚、茶質溫潤自然回甘。除茶飲外，並提供獨家湯頭熬製的日式關東煮，上百種新鮮優質食材在湯汁和麻辣汁中熬煮入味，沾上特調醬料，香氣撲鼻、入口幻化成多層次的味蕾饗宴，是年輕時尚的茶飲、輕食第一品牌。','07:00~23:00',2,3,121.232100818407,25.076664934042,2,1,8,4);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000037,'浮雲遊子大餛飩','T2-B2','03-3931363','','大餛飩、麵食、臺式小吃、飲品、湯品、飯類、湯包、蒸餃','10:00~22:00',2,3,121.232328068975,25.076511018176,2,1,3,4);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000038,'小南門','T2-3F','03-393-1778','','筒仔米糕、魯肉飯、粉粿、豆花等','06:00~23:00?',2,3,121.234448341544,25.076947217029,2,1,4,5);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000039,'度小月','T2-B2','03-3833316','','台式套餐、小菜、主食、湯品','10:00~22:00',2,3,121.232203000000,25.076648000000,2,1,7,3);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000040,'洪祖師擔仔麵','T2-3F','03-383-3133#256','','洪祖師以百年歷史為經典品牌，保留傳統精華的美味優勢，發展擔仔麵與肉燥為核心產品，並透過現代科學技術與衛生標準，提高商品的精緻性與多元化，整合全台傳統美食，邁向國際市場，讓全球各地的華人都能品嘗到百年經典好美味！','06:00~22:30',2,3,121.232124443059,25.079578238452,1,1,6,1);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000041,'青葉食堂','T2-4F','03-383-3133#251','','青葉食堂將臺灣料理原汁原味呈現在機場，精緻套餐包括招牌嚕肉筍絲、三杯雞、豬腳...等，當然也少不了最傳統的地瓜粥，搭配九宮格小菜，完美地呈現台灣在地美食。','06:00~22:30',2,3,121.232268678539,25.078003848800,1,1,9,5);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000042,'鬍鬚張','T2-B2','03-2520225','','魯肉飯、雞腿飯、排骨飯','10:00~22:00',2,3,121.232269864434,25.076565453619,2,1,11,2);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000043,'螺情','T2-B2','03-3932819','','滷味麵食。','10:00~22:00',2,3,121.232056310372,25.076456470959,2,1,5,4);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000044,'慢慢來義式餐廳','T2-3F','03-383-3133#259','','慢慢來義式餐廳是周式蝦捲餐飲集團最新力作，慢慢來也是一種「慢食」的烹飪精神，只用自然生長的蔬菜及不施打生長激素的肉類。將義大利進口食材與台灣當地食材自然地作結合，堅信好食材就是最好的調味料。','06:00-23:00',2,3,121.230446000000,25.076742000000,1,2,5,4);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000045,'D3 Bar','T2-3F','03-383-3133#258','','由誠盟公司自營的早午餐專櫃，提供美式早午餐、蛋糕輕食、氣泡飲品、啤酒等餐飲選擇，以及來自澳洲最大咖啡豆品牌Victoria Coffee，另附設之”臺灣零嘴”專區販售臺灣知名點心及伴手禮，推廣臺灣美食給國際旅客。','06:00~23:00',2,3,121.232124000000,25.079578000000,1,2,9,3);
+INSERT INTO REST VALUES(REST_SEQ.nextval,1000046,'麗思坊','T2-4F','03-393-2427','','義大利麵','06:00~23:00',2,3,121.232038000000,25.076742000000,1,2,3,5);
+
+
+
+
+
+
+
+
+create table dish(
+	dish_id number(7) constraint dish_dish_id_pk primary key,
+	rest_id number(7) not null constraint dish_rest_id_fk references rest(rest_id), 
+	dish_name varchar2(45) not null,
+	dish_price number(5),
+	dish_status number(1),
+	dish_detail varchar2(800),
+	dish_note varchar2(100)
+	);
+
+
+CREATE SEQUENCE dish_sq
+INCREMENT BY 1
+START WITH 3200001
+MAXVALUE 3299999
+NOCYCLE
+NOCACHE;
+
+insert into dish values (dish_sq.nextval,3000001,'月亮蝦餅',330,1,'','5');
+insert into dish values (dish_sq.nextval,3000001,'金沙花枝',380,1,'','5');
+insert into dish values (dish_sq.nextval,3000001,'泰式炒河粉',240,1,'','5');
+insert into dish values (dish_sq.nextval,3000001,'碳烤松阪豬',350,1,'','5');
+insert into dish values (dish_sq.nextval,3000001,'蒜香軟蟹殼',420,1,'','5');
+insert into dish values (dish_sq.nextval,3000001,'辣炒打拋豬',180,1,'','5');
+insert into dish values (dish_sq.nextval,3000001,'酸辣蝦湯',350,1,'','5');
+
+insert into dish values (dish_sq.nextval,3000002,'金衣蟹皇粥',350,1,'','5');
+insert into dish values (dish_sq.nextval,3000002,'炒讚岐烏冬',220,1,'','5');
+insert into dish values (dish_sq.nextval,3000002,'星洲炒米',200,1,'','5');
+insert into dish values (dish_sq.nextval,3000002,'頭抽乾炒牛河',220,1,'','5');
+insert into dish values (dish_sq.nextval,3000002,'泰式蝦球炒金邊粉',250,1,'','5');
+insert into dish values (dish_sq.nextval,3000002,'豬軟骨麵',200,1,'','5');
+insert into dish values (dish_sq.nextval,3000002,'鮮蝦雲吞麵',260,1,'','5');
+insert into dish values (dish_sq.nextval,3000002,'牛腩麵',220,1,'','5');
+insert into dish values (dish_sq.nextval,3000002,'牛筋麵',280,1,'','5');
+insert into dish values (dish_sq.nextval,3000002,'南乳豬手麵',240,1,'','5');
+insert into dish values (dish_sq.nextval,3000002,'蝦籽撈麵',160,1,'','5');
+
+insert into dish values (dish_sq.nextval,3000003,'咖哩豬排木桶燒',178,1,'','5');
+insert into dish values (dish_sq.nextval,3000003,'豬肉木桶燒',138,1,'','5');
+insert into dish values (dish_sq.nextval,3000003,'豬排木桶燒',199,1,'','5');
+insert into dish values (dish_sq.nextval,3000003,'豬排蛋包飯',189,1,'','5');
+insert into dish values (dish_sq.nextval,3000003,'雞排木桶燒',148,1,'','5');
+
+insert into dish values (dish_sq.nextval,3000004,'小籠湯包',250,1,'','5');
+insert into dish values (dish_sq.nextval,3000004,'紅燒牛肉麵',230,1,'','5');
+insert into dish values (dish_sq.nextval,3000004,'素炒飯',120,1,'','5');
+insert into dish values (dish_sq.nextval,3000004,'荷葉糯米雞',200,1,'','5');
+insert into dish values (dish_sq.nextval,3000004,'腸粉',120,1,'','5');
+insert into dish values (dish_sq.nextval,3000004,'瑤柱蘿蔔糕',90,1,'','5');
+insert into dish values (dish_sq.nextval,3000004,'擔仔麵',160,1,'','5');
+
+insert into dish values (dish_sq.nextval,3000005,'千層錦極品套餐',360,1,'','5');
+insert into dish values (dish_sq.nextval,3000005,'元祖豬排卷套餐',330,1,'','5');
+insert into dish values (dish_sq.nextval,3000005,'元祖豬排卷雙色拚餐',150,1,'','5');
+insert into dish values (dish_sq.nextval,3000005,'手工豬肉漢堡肉套餐',360,1,'','5');
+insert into dish values (dish_sq.nextval,3000005,'里脊豬排',300,1,'','5');
+insert into dish values (dish_sq.nextval,3000005,'厚切生薑燒肉',400,1,'','5');
+insert into dish values (dish_sq.nextval,3000005,'勝博殿特選套餐',450,1,'','5');
+insert into dish values (dish_sq.nextval,3000005,'腰肉豬排套餐',390,1,'','5');
+insert into dish values (dish_sq.nextval,3000005,'鮭魚組合套餐',420,1,'','5');
+insert into dish values (dish_sq.nextval,3000005,'雞排套餐',260,1,'','5');
+insert into dish values (dish_sq.nextval,3000005,'炸野菜拼盤',150,1,'','5');
+insert into dish values (dish_sq.nextval,3000005,'鐵板煮',300,1,'','5');
+insert into dish values (dish_sq.nextval,3000005,'蘿蔔絲香脆小魚沙拉',120,1,'','5');
+
+insert into dish values (dish_sq.nextval,3000006,'炸豬排咖哩飯',279,1,'','5');
+insert into dish values (dish_sq.nextval,3000006,'蛋包炸豬排咖哩飯',339,1,'','5');
+insert into dish values (dish_sq.nextval,3000006,'蛋包烤雞腿咖哩飯',269,1,'','5');
+insert into dish values (dish_sq.nextval,3000006,'蛋包嫩雞肉咖哩飯',209,1,'','5');
+insert into dish values (dish_sq.nextval,3000006,'嫩牛肉咖哩飯',169,1,'','5');
+
+insert into dish values (dish_sq.nextval,3000007,'排骨套餐',129,1,'','5');
+insert into dish values (dish_sq.nextval,3000007,'滷排套餐',129,1,'','5');
+
+insert into dish values (dish_sq.nextval,3000008,'牛肉麵',130,1,'','5');
+insert into dish values (dish_sq.nextval,3000008,'台式辣泡菜',30,1,'','5');
+insert into dish values (dish_sq.nextval,3000008,'豆干辣炒小魚',30,1,'','5');
+insert into dish values (dish_sq.nextval,3000008,'涼拌小黃瓜',30,1,'','5');
+insert into dish values (dish_sq.nextval,3000008,'涼拌海帶芽',30,1,'','5');
+
+
+insert into dish values (dish_sq.nextval,3000009,'雙人套餐A',1680,1,'','5');
+insert into dish values (dish_sq.nextval,3000009,'雙人套餐B',1200,1,'','5');
+insert into dish values (dish_sq.nextval,3000009,'海陸肋眼薄片',650,1,'','5');
+insert into dish values (dish_sq.nextval,3000009,'海陸羊小排',650,1,'','5');
+insert into dish values (dish_sq.nextval,3000009,'海陸牛小排',550,1,'','5');
+insert into dish values (dish_sq.nextval,3000009,'海陸菲力',550,1,'','5');
+insert into dish values (dish_sq.nextval,3000009,'草蝦嫩肩',550,1,'','5');
+insert into dish values (dish_sq.nextval,3000009,'海陸雞排',450,1,'','5');
+insert into dish values (dish_sq.nextval,3000009,'海陸香蒜炒牛',360,1,'','5');
+insert into dish values (dish_sq.nextval,3000009,'海陸香蒜炒羊',360,1,'','5');
+insert into dish values (dish_sq.nextval,3000009,'海陸香蒜炒豬',360,1,'','5');
+insert into dish values (dish_sq.nextval,3000009,'海鮮大匯',520,1,'','5');
+insert into dish values (dish_sq.nextval,3000009,'草蝦全餐',480,1,'','5');
+insert into dish values (dish_sq.nextval,3000009,'奶油煎墨魚',300,1,'','5');
+insert into dish values (dish_sq.nextval,3000009,'美味蝦仁',290,1,'','5');
+insert into dish values (dish_sq.nextval,3000009,'蔥爆蟹肉',300,1,'','5');
+
+
+
+
+
+create table dipi(
+	dipi_id  number(7) constraint dipi_dipi_id_pk primary key,
+	dish_id number(7) not null constraint dipi_dish_id_fk references dish(dish_id),
+	dipi_name varchar2(50),
+	dipi_img blob,
+	dipi_imgfmt varchar2(50));
+
+create sequence dipi_sq 
+increment by 1 
+start with 3300001
+maxvalue 3399999
+nocycle 
+nocache;
+
+
+
+
+
+
+
+
+
+
+
+create table avtb(
+	avtb_id number(7) constraint avtb_avtb_id_pk primary key,
+	rest_id number(7) not null constraint avtb_rest_id_fk references rest(rest_id),
+	avtb_date_s date not null,
+	avtb_date_e date not null,
+	avtb_reservation number(2) default 0,
+	avtb_max_reservation number(2)
+	);
+
+
+
+create sequence avtb_sq 
+increment by 1 
+start with 3500001
+maxvalue 3599999
+nocycle 
+nocache;
+
+
+insert into avtb(avtb_id,rest_id,avtb_date_s,avtb_date_e,avtb_max_reservation) 
+	values(avtb_sq.nextval,3000001, 
+	TO_DATE('2017-09-01 11:30','YYYY-MM-DD HH24:MI'),
+	TO_DATE('2017-09-01 12:00','YYYY-MM-DD HH24:MI'),20);
+
+insert into avtb(avtb_id,rest_id,avtb_date_s,avtb_date_e,avtb_max_reservation) 
+	values(avtb_sq.nextval,3000001, 
+	TO_DATE('2017-09-01 12:00','YYYY-MM-DD HH24:MI'),
+	TO_DATE('2017-09-01 12:30','YYYY-MM-DD HH24:MI'),10);
+
+insert into avtb(avtb_id,rest_id,avtb_date_s,avtb_date_e,avtb_max_reservation) 
+	values(avtb_sq.nextval,3000001, 
+	TO_DATE('2017-09-01 13:00','YYYY-MM-DD HH24:MI'),
+	TO_DATE('2017-09-01 13:30','YYYY-MM-DD HH24:MI'),10);
+
+insert into avtb(avtb_id,rest_id,avtb_date_s,avtb_date_e,avtb_max_reservation) 
+	values(avtb_sq.nextval,3000001, 
+	TO_DATE('2017-09-01 16:00','YYYY-MM-DD HH24:MI'),
+	TO_DATE('2017-09-01 18:00','YYYY-MM-DD HH24:MI'),20);
+
+insert into avtb(avtb_id,rest_id,avtb_date_s,avtb_date_e,avtb_max_reservation) 
+	values(avtb_sq.nextval,3000002, 
+	TO_DATE('2017-09-01 11:00','YYYY-MM-DD HH24:MI'),
+	TO_DATE('2017-09-01 14:00','YYYY-MM-DD HH24:MI'),30);
+
+
+insert into avtb(avtb_id,rest_id,avtb_date_s,avtb_date_e,avtb_max_reservation) 
+	values(avtb_sq.nextval,3000002, 
+	TO_DATE('2017-09-01 17:00','YYYY-MM-DD HH24:MI'),
+	TO_DATE('2017-09-01 19:00','YYYY-MM-DD HH24:MI'),20);
+
+insert into avtb(avtb_id,rest_id,avtb_date_s,avtb_date_e,avtb_max_reservation) 
+	values(avtb_sq.nextval,3000003, 
+	TO_DATE('2017-09-01 12:00','YYYY-MM-DD HH24:MI'),
+	TO_DATE('2017-09-01 13:00','YYYY-MM-DD HH24:MI'),20);
+
+insert into avtb(avtb_id,rest_id,avtb_date_s,avtb_date_e,avtb_max_reservation) 
+	values(avtb_sq.nextval,3000003, 
+	TO_DATE('2017-09-01 16:00','YYYY-MM-DD HH24:MI'),
+	TO_DATE('2017-09-01 17:00','YYYY-MM-DD HH24:MI'),10);
+
+insert into avtb(avtb_id,rest_id,avtb_date_s,avtb_date_e,avtb_max_reservation) 
+	values(avtb_sq.nextval,3000003, 
+	TO_DATE('2017-09-01 18:30','YYYY-MM-DD HH24:MI'),
+	TO_DATE('2017-09-01 19:00','YYYY-MM-DD HH24:MI'),10);
+
+insert into avtb(avtb_id,rest_id,avtb_date_s,avtb_date_e,avtb_max_reservation) 
+	values(avtb_sq.nextval,3000006, 
+	TO_DATE('2017-09-01 10:30','YYYY-MM-DD HH24:MI'),
+	TO_DATE('2017-09-01 12:00','YYYY-MM-DD HH24:MI'),20);
+
+insert into avtb(avtb_id,rest_id,avtb_date_s,avtb_date_e,avtb_max_reservation) 
+	values(avtb_sq.nextval,3000006, 
+	TO_DATE('2017-09-01 17:00','YYYY-MM-DD HH24:MI'),
+	TO_DATE('2017-09-01 19:00','YYYY-MM-DD HH24:MI'),30);
+
+insert into avtb(avtb_id,rest_id,avtb_date_s,avtb_date_e,avtb_max_reservation) 
+	values(avtb_sq.nextval,3000007, 
+	TO_DATE('2017-09-01 11:30','YYYY-MM-DD HH24:MI'),
+	TO_DATE('2017-09-01 12:00','YYYY-MM-DD HH24:MI'),20);
+
+
+insert into avtb(avtb_id,rest_id,avtb_date_s,avtb_date_e,avtb_max_reservation) 
+	values(avtb_sq.nextval,3000007, 
+	TO_DATE('2017-09-01 12:30','YYYY-MM-DD HH24:MI'),
+	TO_DATE('2017-09-01 13:00','YYYY-MM-DD HH24:MI'),10);
+
+insert into avtb(avtb_id,rest_id,avtb_date_s,avtb_date_e,avtb_max_reservation) 
+	values(avtb_sq.nextval,3000007, 
+	TO_DATE('2017-09-01 14:00','YYYY-MM-DD HH24:MI'),
+	TO_DATE('2017-09-01 16:00','YYYY-MM-DD HH24:MI'),20);
+
+
+
+
+
+create table reta(
+	reta_id number(7) constraint reta_reta_id_pk primary key,
+	avtb_id number(7) not null constraint reta_avtb_id_fk references avtb(avtb_id),
+	user_id number(7) not null constraint reta_user_id_fk references user_table(user_id),
+	reta_number number(2) not null,
+	reta_status number(1) default 0,
+	reta_grant number(1) default 1,
+	reta_date date not null,
+	reta_rank_res number(1) ,
+	reta_review varchar2(300),
+	reta_reviewdate date,
+	rest_rpdate date,
+	rest_rpcomm varchar2(500),
+	rest_rpstatus number(1)
+	);
+
+create sequence reta_sq 
+increment by 1 
+start with 3400001
+maxvalue 3499999
+nocycle 
+nocache;
+
+
+insert into reta(reta_id,avtb_id,user_id,reta_number,reta_date) 
+	values(reta_sq.nextval,3500001,1000044,3,TO_DATE('2017-08-22 16:00','YYYY-MM-DD HH24:MI'));
+
+insert into reta(reta_id,avtb_id,user_id,reta_number,reta_date) 
+	values(reta_sq.nextval,3500002,1000044,3,TO_DATE('2017-08-24 18:00','YYYY-MM-DD HH24:MI'));
+
+insert into reta(reta_id,avtb_id,user_id,reta_number,reta_date) 
+	values(reta_sq.nextval,3500001,1000033,4,TO_DATE('2017-08-22 16:00','YYYY-MM-DD HH24:MI'));
+
+insert into reta(reta_id,avtb_id,user_id,reta_number,reta_date) 
+	values(reta_sq.nextval,3500001,1000044,10,TO_DATE('2017-08-26 16:00','YYYY-MM-DD HH24:MI'));
+
+insert into reta(reta_id,avtb_id,user_id,reta_number,reta_date) 
+	values(reta_sq.nextval,3500003,1000035,3,TO_DATE('2017-08-22 16:00','YYYY-MM-DD HH24:MI'));
+
+insert into reta(reta_id,avtb_id,user_id,reta_number,reta_date) 
+	values(reta_sq.nextval,3500007,1000044,3,TO_DATE('2017-08-28 16:00','YYYY-MM-DD HH24:MI'));
+
+insert into reta(reta_id,avtb_id,user_id,reta_number,reta_date) 
+	values(reta_sq.nextval,3500008,1000044,3,TO_DATE('2017-08-20 16:00','YYYY-MM-DD HH24:MI'));
+
+insert into reta(reta_id,avtb_id,user_id,reta_number,reta_date) 
+	values(reta_sq.nextval,3500001,1000044,3,TO_DATE('2017-08-22 16:00','YYYY-MM-DD HH24:MI'));
+
+insert into reta(reta_id,avtb_id,user_id,reta_number,reta_date) 
+	values(reta_sq.nextval,3500001,1000044,10,TO_DATE('2017-08-20 16:00','YYYY-MM-DD HH24:MI'));
+
+
+
+
+
+
+create table repi(
+	repi_id  number(7) constraint repi_repi_id_pk primary key,
+	rest_id number(7) not null constraint repi_rest_id_fk references rest(rest_id),
+	repi_name varchar2(50),
+	repi_img blob,
+	repi_imgfmt varchar2(50));
+
+create sequence repi_sq 
+increment by 1 
+start with 3100001
+maxvalue 3199999
+nocycle 
+nocache;
+	
+
+CREATE TABLE MFEE (
+ MFEE_ID              NUMBER(7) NOT NULL,
+ USER_ID              NUMBER(7) NOT NULL,
+ MFEE_DATE            DATE NOT NULL,
+ PAY_DATE             DATE NOT NULL,
+ CONSTRAINT MFEE_MFEE_ID_PK PRIMARY KEY (MFEE_ID),
+ CONSTRAINT MFEE_USER_ID_FK FOREIGN KEY (USER_ID) REFERENCES USER_TABLE (USER_ID)
+ );
+ 
+create sequence MFEE_ID_SEQ
+start with 1400001
+maxvalue 1499999
+increment by 1;
+
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000001 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-31 16:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000002 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-31 14:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000003 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-31 12:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000004 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-31 10:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000005 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-30 16:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000006 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-30 14:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000007 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-30 12:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000008 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-30 10:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000009 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-29 16:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000010 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-29 14:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000011 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-29 12:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000012 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-29 10:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000013 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-30 16:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000014 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-30 14:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000015 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-30 12:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000016 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-29 10:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000017 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-28 08:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000018 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-28 04:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000019 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-28 15:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000020 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-28 13:00','YYYY-MM-DD HH24:MI') );
+
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000026 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-27 23:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000027 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-27 11:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000028 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-29 18:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000029 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-30 17:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000030 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-31 16:30','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000031 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-08-01 15:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000032 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-28 14:20','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000033 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-28 22:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000034 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-08-02 20:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000035 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-28 19:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000036 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-24 21:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000037 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-26 22:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000038 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-25 12:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000039 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-21 14:30','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000040 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-28 15:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000041 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-29 16:10','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000042 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-30 18:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000043 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-31 17:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000044 , TO_DATE('1-AUG-2017','DD-MON-YYYY') , TO_DATE('2017-07-31 15:20','YYYY-MM-DD HH24:MI') );
+
+
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000040 , TO_DATE('1-JUL-2017','DD-MON-YYYY') , TO_DATE('2017-06-28 15:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000041 , TO_DATE('1-JUL-2017','DD-MON-YYYY') , TO_DATE('2017-06-29 16:10','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000042 , TO_DATE('1-JUL-2017','DD-MON-YYYY') , TO_DATE('2017-06-30 18:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000043 , TO_DATE('1-JUL-2017','DD-MON-YYYY') , TO_DATE('2017-06-28 17:00','YYYY-MM-DD HH24:MI') );
+insert into mfee values (MFEE_ID_SEQ.nextval, 1000044 , TO_DATE('1-JUL-2017','DD-MON-YYYY') , TO_DATE('2017-06-27 15:20','YYYY-MM-DD HH24:MI') );
+
+
+
+
+
+CREATE TABLE TRVL
+(TRVL_ID               NUMBER(7) NOT NULL,
+ USER_ID               NUMBER(7) NOT NULL,
+ TRVL_DATE             DATE,
+ TRVL_TITTLE            VARCHAR2(64) NOT NULL,
+ TRVL_LOC              VARCHAR2(64),
+ TRVL_CONTENT          CLOB NOT NULL,
+ TRVL_COUNT            NUMBER(7) DEFAULT 0,
+ TRVL_SCORE            NUMBER(7) DEFAULT 0,
+ CONSTRAINT TRVL_TRVL_ID_PK PRIMARY KEY (TRVL_ID),
+ CONSTRAINT TRVL_USER_ID_FK FOREIGN KEY (USER_ID) REFERENCES USER_TABLE(USER_ID));
+
+create sequence TRVL_ID_SEQ
+start with 1100001
+maxvalue 1199999
+increment by 1
+NOCACHE
+NOCYCLE;
+
+INSERT INTO trvl (TRVL_ID,USER_ID,TRVL_DATE,TRVL_TITTLE,TRVL_LOC,TRVL_CONTENT) VALUES (TRVL_ID_SEQ.NEXTVAL,'1000052',TO_DATE('2017-07-20','YYYY-MM-DD'),'台灣遊記','台灣'
+,'有一股份機會男女眼睛造型，這些更多年度很容易不然生命電子郵件加上數量教師很多人友情，只要遠程各項留下就要控制長時間效益總經理運行平台國，青春求購有人針對身後面議造型奇蹟出去聯繫轉帖天使對此分配醫療，協議色情興奮傳統娛樂保證任何幫我，製作決策常用賺錢網上豪華廣東他們的情緒發帖，貼圖色彩優惠目前聯繫，
+表情股票升級是的主任開發很久天使難得尤其是當隊員接受出現消除行情登記已，記得身後簡歷下降別的政治多麼誠信指標上下速度，這款未知配套職務集中新疆排行形，都要那裡運輸適用反正心靈丈夫觀看開發失敗消費發佈時間答案一座，專區病人功能怎樣措施提到培養研究生浪漫頭銜組織湖北健康拒，工程團隊發生你有本網站呼吸必要快捷，
+社會命運因而過程來源電視劇抓住怎麼辦組織網易為您則，太多種類整合發表因為黨員一名軟件主任傳來來說另不起自主人物同一今後實際上節目露出高中即將公開已，
+走了維護故意解放一種研發，上午推出讀書適合永遠宣傳證實利潤哈爾濱臨時普通，明天也會分配熱點必然策略點這裡承諾協議考生法，樓上編號成熟開放本次先進性教育修改，警告危險人們私人球員公安打算體驗，一時採訪並非咖啡高考高效言論辛，經營許可證公共相機願。');
+INSERT INTO trvl (TRVL_ID,USER_ID,TRVL_DATE,TRVL_TITTLE,TRVL_LOC,TRVL_CONTENT) VALUES (TRVL_ID_SEQ.NEXTVAL,'1000053',TO_DATE('2017-06-30','YYYY-MM-DD'),'香港遊記','香港'
+,'有一股份機會男女眼睛造型，這些更多年度很容易不然生命電子郵件加上數量教師很多人友情，只要遠程各項留下就要控制長時間效益總經理運行平台國，青春求購有人針對身後面議造型奇蹟出去聯繫轉帖天使對此分配醫療，協議色情興奮傳統娛樂保證任何幫我，製作決策常用賺錢網上豪華廣東他們的情緒發帖，貼圖色彩優惠目前聯繫，
+表情股票升級是的主任開發很久天使難得尤其是當隊員接受出現消除行情登記已，記得身後簡歷下降別的政治多麼誠信指標上下速度，這款未知配套職務集中新疆排行形，都要那裡運輸適用反正心靈丈夫觀看開發失敗消費發佈時間答案一座，專區病人功能怎樣措施提到培養研究生浪漫頭銜組織湖北健康拒，工程團隊發生你有本網站呼吸必要快捷，
+社會命運因而過程來源電視劇抓住怎麼辦組織網易為您則，太多種類整合發表因為黨員一名軟件主任傳來來說另不起自主人物同一今後實際上節目露出高中即將公開已，
+走了維護故意解放一種研發，上午推出讀書適合永遠宣傳證實利潤哈爾濱臨時普通，明天也會分配熱點必然策略點這裡承諾協議考生法，樓上編號成熟開放本次先進性教育修改，警告危險人們私人球員公安打算體驗，一時採訪並非咖啡高考高效言論辛，經營許可證公共相機願。');
+INSERT INTO trvl (TRVL_ID,USER_ID,TRVL_DATE,TRVL_TITTLE,TRVL_LOC,TRVL_CONTENT) VALUES (TRVL_ID_SEQ.NEXTVAL,'1000054',TO_DATE('2017-05-10','YYYY-MM-DD'),'竹東遊記','竹東'
+,'有一股份機會男女眼睛造型，這些更多年度很容易不然生命電子郵件加上數量教師很多人友情，只要遠程各項留下就要控制長時間效益總經理運行平台國，青春求購有人針對身後面議造型奇蹟出去聯繫轉帖天使對此分配醫療，協議色情興奮傳統娛樂保證任何幫我，製作決策常用賺錢網上豪華廣東他們的情緒發帖，貼圖色彩優惠目前聯繫，
+表情股票升級是的主任開發很久天使難得尤其是當隊員接受出現消除行情登記已，記得身後簡歷下降別的政治多麼誠信指標上下速度，這款未知配套職務集中新疆排行形，都要那裡運輸適用反正心靈丈夫觀看開發失敗消費發佈時間答案一座，專區病人功能怎樣措施提到培養研究生浪漫頭銜組織湖北健康拒，工程團隊發生你有本網站呼吸必要快捷，
+社會命運因而過程來源電視劇抓住怎麼辦組織網易為您則，太多種類整合發表因為黨員一名軟件主任傳來來說另不起自主人物同一今後實際上節目露出高中即將公開已，
+走了維護故意解放一種研發，上午推出讀書適合永遠宣傳證實利潤哈爾濱臨時普通，明天也會分配熱點必然策略點這裡承諾協議考生法，樓上編號成熟開放本次先進性教育修改，警告危險人們私人球員公安打算體驗，一時採訪並非咖啡高考高效言論辛，經營許可證公共相機願。');
+INSERT INTO trvl (TRVL_ID,USER_ID,TRVL_DATE,TRVL_TITTLE,TRVL_LOC,TRVL_CONTENT) VALUES (TRVL_ID_SEQ.NEXTVAL,'1000055',TO_DATE('2017-04-05','YYYY-MM-DD'),'南勢角遊記','南勢角'
+,'有一股份機會男女眼睛造型，這些更多年度很容易不然生命電子郵件加上數量教師很多人友情，只要遠程各項留下就要控制長時間效益總經理運行平台國，青春求購有人針對身後面議造型奇蹟出去聯繫轉帖天使對此分配醫療，協議色情興奮傳統娛樂保證任何幫我，製作決策常用賺錢網上豪華廣東他們的情緒發帖，貼圖色彩優惠目前聯繫，
+表情股票升級是的主任開發很久天使難得尤其是當隊員接受出現消除行情登記已，記得身後簡歷下降別的政治多麼誠信指標上下速度，這款未知配套職務集中新疆排行形，都要那裡運輸適用反正心靈丈夫觀看開發失敗消費發佈時間答案一座，專區病人功能怎樣措施提到培養研究生浪漫頭銜組織湖北健康拒，工程團隊發生你有本網站呼吸必要快捷，
+社會命運因而過程來源電視劇抓住怎麼辦組織網易為您則，太多種類整合發表因為黨員一名軟件主任傳來來說另不起自主人物同一今後實際上節目露出高中即將公開已，
+走了維護故意解放一種研發，上午推出讀書適合永遠宣傳證實利潤哈爾濱臨時普通，明天也會分配熱點必然策略點這裡承諾協議考生法，樓上編號成熟開放本次先進性教育修改，警告危險人們私人球員公安打算體驗，一時採訪並非咖啡高考高效言論辛，經營許可證公共相機願。');
+INSERT INTO trvl (TRVL_ID,USER_ID,TRVL_DATE,TRVL_TITTLE,TRVL_LOC,TRVL_CONTENT) VALUES (TRVL_ID_SEQ.NEXTVAL,'1000056',TO_DATE('2017-02-15','YYYY-MM-DD'),'小人國','小人國'
+,'有一股份機會男女眼睛造型，這些更多年度很容易不然生命電子郵件加上數量教師很多人友情，只要遠程各項留下就要控制長時間效益總經理運行平台國，青春求購有人針對身後面議造型奇蹟出去聯繫轉帖天使對此分配醫療，協議色情興奮傳統娛樂保證任何幫我，製作決策常用賺錢網上豪華廣東他們的情緒發帖，貼圖色彩優惠目前聯繫，
+表情股票升級是的主任開發很久天使難得尤其是當隊員接受出現消除行情登記已，記得身後簡歷下降別的政治多麼誠信指標上下速度，這款未知配套職務集中新疆排行形，都要那裡運輸適用反正心靈丈夫觀看開發失敗消費發佈時間答案一座，專區病人功能怎樣措施提到培養研究生浪漫頭銜組織湖北健康拒，工程團隊發生你有本網站呼吸必要快捷，
+社會命運因而過程來源電視劇抓住怎麼辦組織網易為您則，太多種類整合發表因為黨員一名軟件主任傳來來說另不起自主人物同一今後實際上節目露出高中即將公開已，
+走了維護故意解放一種研發，上午推出讀書適合永遠宣傳證實利潤哈爾濱臨時普通，明天也會分配熱點必然策略點這裡承諾協議考生法，樓上編號成熟開放本次先進性教育修改，警告危險人們私人球員公安打算體驗，一時採訪並非咖啡高考高效言論辛，經營許可證公共相機願。');
+INSERT INTO trvl VALUES (TRVL_ID_SEQ.NEXTVAL,'1000057',TO_DATE('2017-01-15','YYYY-MM-DD'),'遊記','台'
+,'有一股份機會男女眼睛造型，這些更多年度很容易不然生命電子郵件加上數量教師很多人友情，只要遠程各項留下就要控制長時間效益總經理運行平台國，青春求購有人針對身後面議造型奇蹟出去聯繫轉帖天使對此分配醫療，協議色情興奮傳統娛樂保證任何幫我，製作決策常用賺錢網上豪華廣東他們的情緒發帖，貼圖色彩優惠目前聯繫，
+表情股票升級是的主任開發很久天使難得尤其是當隊員接受出現消除行情登記已，記得身後簡歷下降別的政治多麼誠信指標上下速度，這款未知配套職務集中新疆排行形，都要那裡運輸適用反正心靈丈夫觀看開發失敗消費發佈時間答案一座，專區病人功能怎樣措施提到培養研究生浪漫頭銜組織湖北健康拒，工程團隊發生你有本網站呼吸必要快捷，
+社會命運因而過程來源電視劇抓住怎麼辦組織網易為您則，太多種類整合發表因為黨員一名軟件主任傳來來說另不起自主人物同一今後實際上節目露出高中即將公開已，
+走了維護故意解放一種研發，上午推出讀書適合永遠宣傳證實利潤哈爾濱臨時普通，明天也會分配熱點必然策略點這裡承諾協議考生法，樓上編號成熟開放本次先進性教育修改，警告危險人們私人球員公安打算體驗，一時採訪並非咖啡高考高效言論辛，經營許可證公共相機願。',10,80);
+INSERT INTO trvl VALUES (TRVL_ID_SEQ.NEXTVAL,'1000058',TO_DATE('2017-01-15','YYYY-MM-DD'),'反攻大陸遊記','大陸'
+,'有一股份機會男女眼睛造型，這些更多年度很容易不然生命電子郵件加上數量教師很多人友情，只要遠程各項留下就要控制長時間效益總經理運行平台國，青春求購有人針對身後面議造型奇蹟出去聯繫轉帖天使對此分配醫療，協議色情興奮傳統娛樂保證任何幫我，製作決策常用賺錢網上豪華廣東他們的情緒發帖，貼圖色彩優惠目前聯繫，
+表情股票升級是的主任開發很久天使難得尤其是當隊員接受出現消除行情登記已，記得身後簡歷下降別的政治多麼誠信指標上下速度，這款未知配套職務集中新疆排行形，都要那裡運輸適用反正心靈丈夫觀看開發失敗消費發佈時間答案一座，專區病人功能怎樣措施提到培養研究生浪漫頭銜組織湖北健康拒，工程團隊發生你有本網站呼吸必要快捷，
+社會命運因而過程來源電視劇抓住怎麼辦組織網易為您則，太多種類整合發表因為黨員一名軟件主任傳來來說另不起自主人物同一今後實際上節目露出高中即將公開已，
+走了維護故意解放一種研發，上午推出讀書適合永遠宣傳證實利潤哈爾濱臨時普通，明天也會分配熱點必然策略點這裡承諾協議考生法，樓上編號成熟開放本次先進性教育修改，警告危險人們私人球員公安打算體驗，一時採訪並非咖啡高考高效言論辛，經營許可證公共相機願。',5,60);
+INSERT INTO trvl (TRVL_ID,USER_ID,TRVL_DATE,TRVL_TITTLE,TRVL_LOC,TRVL_CONTENT) VALUES (TRVL_ID_SEQ.NEXTVAL,'1000059',TO_DATE('2016-10-15','YYYY-MM-DD'),'台灣遊記','台灣'
+,'有一股份機會男女眼睛造型，這些更多年度很容易不然生命電子郵件加上數量教師很多人友情，只要遠程各項留下就要控制長時間效益總經理運行平台國，青春求購有人針對身後面議造型奇蹟出去聯繫轉帖天使對此分配醫療，協議色情興奮傳統娛樂保證任何幫我，製作決策常用賺錢網上豪華廣東他們的情緒發帖，貼圖色彩優惠目前聯繫，
+表情股票升級是的主任開發很久天使難得尤其是當隊員接受出現消除行情登記已，記得身後簡歷下降別的政治多麼誠信指標上下速度，這款未知配套職務集中新疆排行形，都要那裡運輸適用反正心靈丈夫觀看開發失敗消費發佈時間答案一座，專區病人功能怎樣措施提到培養研究生浪漫頭銜組織湖北健康拒，工程團隊發生你有本網站呼吸必要快捷，
+社會命運因而過程來源電視劇抓住怎麼辦組織網易為您則，太多種類整合發表因為黨員一名軟件主任傳來來說另不起自主人物同一今後實際上節目露出高中即將公開已，
+走了維護故意解放一種研發，上午推出讀書適合永遠宣傳證實利潤哈爾濱臨時普通，明天也會分配熱點必然策略點這裡承諾協議考生法，樓上編號成熟開放本次先進性教育修改，警告危險人們私人球員公安打算體驗，一時採訪並非咖啡高考高效言論辛，經營許可證公共相機願。');
+INSERT INTO trvl (TRVL_ID,USER_ID,TRVL_DATE,TRVL_TITTLE,TRVL_LOC,TRVL_CONTENT) VALUES (TRVL_ID_SEQ.NEXTVAL,'1000060',TO_DATE('2015-11-15','YYYY-MM-DD'),'台灣遊記','台灣'
+,'有一股份機會男女眼睛造型，這些更多年度很容易不然生命電子郵件加上數量教師很多人友情，只要遠程各項留下就要控制長時間效益總經理運行平台國，青春求購有人針對身後面議造型奇蹟出去聯繫轉帖天使對此分配醫療，協議色情興奮傳統娛樂保證任何幫我，製作決策常用賺錢網上豪華廣東他們的情緒發帖，貼圖色彩優惠目前聯繫，
+表情股票升級是的主任開發很久天使難得尤其是當隊員接受出現消除行情登記已，記得身後簡歷下降別的政治多麼誠信指標上下速度，這款未知配套職務集中新疆排行形，都要那裡運輸適用反正心靈丈夫觀看開發失敗消費發佈時間答案一座，專區病人功能怎樣措施提到培養研究生浪漫頭銜組織湖北健康拒，工程團隊發生你有本網站呼吸必要快捷，
+社會命運因而過程來源電視劇抓住怎麼辦組織網易為您則，太多種類整合發表因為黨員一名軟件主任傳來來說另不起自主人物同一今後實際上節目露出高中即將公開已，
+走了維護故意解放一種研發，上午推出讀書適合永遠宣傳證實利潤哈爾濱臨時普通，明天也會分配熱點必然策略點這裡承諾協議考生法，樓上編號成熟開放本次先進性教育修改，警告危險人們私人球員公安打算體驗，一時採訪並非咖啡高考高效言論辛，經營許可證公共相機願。');
+INSERT INTO trvl (TRVL_ID,USER_ID,TRVL_DATE,TRVL_TITTLE,TRVL_LOC,TRVL_CONTENT) VALUES (TRVL_ID_SEQ.NEXTVAL,'1000061',TO_DATE('2014-11-15','YYYY-MM-DD'),'台灣遊記','台灣'
+,'有一股份機會男女眼睛造型，這些更多年度很容易不然生命電子郵件加上數量教師很多人友情，只要遠程各項留下就要控制長時間效益總經理運行平台國，青春求購有人針對身後面議造型奇蹟出去聯繫轉帖天使對此分配醫療，協議色情興奮傳統娛樂保證任何幫我，製作決策常用賺錢網上豪華廣東他們的情緒發帖，貼圖色彩優惠目前聯繫，
+表情股票升級是的主任開發很久天使難得尤其是當隊員接受出現消除行情登記已，記得身後簡歷下降別的政治多麼誠信指標上下速度，這款未知配套職務集中新疆排行形，都要那裡運輸適用反正心靈丈夫觀看開發失敗消費發佈時間答案一座，專區病人功能怎樣措施提到培養研究生浪漫頭銜組織湖北健康拒，工程團隊發生你有本網站呼吸必要快捷，
+社會命運因而過程來源電視劇抓住怎麼辦組織網易為您則，太多種類整合發表因為黨員一名軟件主任傳來來說另不起自主人物同一今後實際上節目露出高中即將公開已，
+走了維護故意解放一種研發，上午推出讀書適合永遠宣傳證實利潤哈爾濱臨時普通，明天也會分配熱點必然策略點這裡承諾協議考生法，樓上編號成熟開放本次先進性教育修改，警告危險人們私人球員公安打算體驗，一時採訪並非咖啡高考高效言論辛，經營許可證公共相機願。');
+
+
+
+
+
+
+CREATE TABLE TLCM
+(TLCM_ID         NUMBER(7) NOT NULL,
+ TRVL_ID         NUMBER(7) NOT NULL,
+ USER_ID         NUMBER(7) NOT NULL,
+ TLCM_DATE       DATE,
+ TLCM_CONTENT    VARCHAR2(2000) NOT NULL,
+ CONSTRAINT TLCM_TRVL_ID_FK FOREIGN KEY (TRVL_ID) REFERENCES TRVL(TRVL_ID),
+ CONSTRAINT TLCM_USER_ID_FK FOREIGN KEY (USER_ID) REFERENCES USER_TABLE(USER_ID),
+ CONSTRAINT TLCM_TLCM_ID_PK PRIMARY KEY (TLCM_ID));
+
+create sequence TLCM_ID_SEQ
+start with 1300001
+maxvalue 1399999
+increment by 1
+NOCACHE
+NOCYCLE;
+
+INSERT INTO TLCM VALUES(TLCM_ID_SEQ.NEXTVAL,1100001,1000052,TO_DATE('2017-11-18','YYYY-MM-DD')
+,'保存是有一種插件新技術億元也是廈門把握姐姐轎車過了奇怪分享開，學會保持秘密焦點財經聰明開通課堂號碼形成世，走向化工值得大連電子部隊直到建立很少管理系統，一邊處理器你也認為億元這個問題大盤親自一塊一臉人事幫助豪，物業說完收益信譽有意孤獨三人好友擔任伊拉克眼前會，為您電話色情成本選手發佈日期當我色彩這麼上網一生，精選武漢措施連續人員激烈手裡幾次例如動畫意，壓力未經人口郵編練習字幕供求內置買了遊客。
+我倆的相遇，第一次可能是運氣，第二次或許是巧合，如果第三次算默契，那第四次一定是緣份了。她聽了靜默不語，
+片刻後她緩緩的回答：「那並不表示可以為我帶來幸福啊？」他糗了、他傻了，因為幸福是什麼，是他從未去思考的問題。然而為了澄清她的疑慮，他苦思、他失眠、他憔悴，對於學理工的他來說，用科學去解釋或申論，是他的本能和專長，
+但是「幸福」這種文學感官，到底要如何去證明，如何去顯現呢？唉！他仰天長嘆。');
+INSERT INTO TLCM VALUES(TLCM_ID_SEQ.NEXTVAL,1100002,1000053,TO_DATE('2017-11-19','YYYY-MM-DD')
+,'物理從來沒山東點擊數而言比較過了聯繫電話另一一生教材大聲費，終於收入一本是否歡迎光臨股份在我東方最終大戰，發現條例照片說完一段平方米輕鬆可是休息，不少處理器治理變得相應長沙不是，專題即使也是指出以下。');
+INSERT INTO TLCM VALUES(TLCM_ID_SEQ.NEXTVAL,1100003,1000054,TO_DATE('2017-04-30','YYYY-MM-DD')
+,'獲取住了得知眼中學科您可以推進，可愛室內手中活力進步適當平時教授，好了處罰正式你好不要榮譽中文多個活力新型人數版主區別威望不用，一部分銀行改進商家而來第三運輸，受傷欣賞無數在我試題股，可用回覆連結聊天此時民間一笑果然，最為一塊深圳步驟認證有一種春天循環應該，半年組圖開心舉辦更好年度意外害怕就好時，評論不詳組成表演居民計劃，你們的改革日報紡織組合老人，字元資訊字幕英文試試種，能否投資者把我參觀為，。');
+INSERT INTO TLCM VALUES(TLCM_ID_SEQ.NEXTVAL,1100004,1000055,TO_DATE('2017-11-10','YYYY-MM-DD')
+,'他很認真的對她說：「我倆的相遇，第一次可能是運氣，第二次或許是巧合，如果第三次算默契，那第四次一定是緣份了。她聽了靜默不語，
+片刻後她緩緩的回答：「那並不表示可以為我帶來幸福啊？」他糗了、他傻了，因為幸福是什麼，是他從未去思考的問題。然而為了澄清她的疑慮，他苦思、他失眠、他憔悴，對於學理工的他來說，用科學去解釋或申論，是他的本能和專長，
+但是「幸嘆。');
+INSERT INTO TLCM VALUES(TLCM_ID_SEQ.NEXTVAL,1100005,1000056,TO_DATE('2017-12-13','YYYY-MM-DD')
+,'他很認真的對她說：「我倆的相遇，第一次可能是運氣，第二次或許是巧合，如果第三次算默契，那第四次一定是緣份了。她聽了靜默不語，
+片刻後她緩緩的回答：「那而為了澄清她的疑慮，他苦思、他失眠、他憔悴，對於學理工的他來說，用科學去解釋或申論，是他的本能和專長，
+但是「幸福」這種文學感官，到底要如何去證明，如何去顯現呢？唉！他仰天長嘆。');
+INSERT INTO TLCM VALUES(TLCM_ID_SEQ.NEXTVAL,1100005,1000057,TO_DATE('2017-8-13','YYYY-MM-DD')
+,'他第四次一定是緣份了。她聽了靜默不語，片刻後她緩緩的回答：「那並不表示可以為我帶來幸福啊？」他糗了、他傻了，因為幸福是什麼，是他從未去思考的問題。然而為了澄清她的疑慮，他苦思、他失眠、他憔悴，對於學理工的他來說，用科學去解釋或申論，是他的本能和專長，
+但是「幸福」這種文學感官，到底要如何去證明，如何去顯現呢？唉！他仰天長嘆。');
+INSERT INTO TLCM VALUES(TLCM_ID_SEQ.NEXTVAL,1100006,1000058,TO_DATE('2017-01-13','YYYY-MM-DD')
+,'他很認真的對她說：「我倆的相遇，第一次可能是運氣，第二次或許是巧合，如果第三次算默契，那第四次一定是緣份了。她聽了靜默不語，
+片刻後她緩緩的回答：「那並不表示可以為我帶來幸福啊？」他糗了、他傻了，因為幸福是什麼，是他從未去思考的問題。然而為了澄清她的疑慮，他苦思、他失眠、他憔悴，對於學理工的他來說，用科學去解釋或申論，是他的本能和專長，
+但是「幸福。');
+INSERT INTO TLCM VALUES(TLCM_ID_SEQ.NEXTVAL,1100006,1000059,TO_DATE('2017-11-13','YYYY-MM-DD')
+,'他很認真的對她說：「我倆的相遇，第一次可能是運氣，第二次或許是巧合，如果第三次算默契，那第四次一定是緣份了。她聽了靜默不語，
+片刻後她緩緩的回答：「那並不表示可以為我帶來幸福啊？」他糗了、他傻了，因為幸福是失眠、他憔悴，對於學理工的他來說，用科學去解釋或申論，是他的本能和專長，
+但是「幸福」這種文學感官，到底要如何去證明，如何去顯現呢？唉！他仰天長嘆。');
+INSERT INTO TLCM VALUES(TLCM_ID_SEQ.NEXTVAL,1100002,1000060,TO_DATE('2017-11-13','YYYY-MM-DD')
+,'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere quo ipsum est ratione sed magni rerum, eos voluptas temporibus sint accusantium molestiae totam deserunt quidem. Maiores voluptatum voluptas rem dicta excepturi fuga ipsum saepe distinctio, labore quia obcaecati ducimus tempora magni natus animi, incidunt similique, sunt provident numquam. Facere odio cupiditate corporis quas voluptates excepturi est! Beatae incidunt deleniti aliquid deserunt illum explicabo esse ipsum eius architecto, iste. Accusantium quia dicta, quod voluptatem nisi itaque impedit libero obcaecati iusto voluptatum mollitia, facilis adipisci a dignissimos non, alias, quisquam. Maxime distinctio earum, accusantium libero inventore minima voluptatibus quidem modi, saepe omnis, eum facilis ab eos corporis rem, assumenda! A, neque, consectetur. Omnis ducimus inventore, qui accusamus iste id maxime voluptatibus deserunt eligendi officiis consequatur sit itaque quidem? Blanditiis in ut ipsum distinctio error temporibus amet praesentium harum sapiente alias molestias repellendus a sequi quisquam officiis veniam et dicta sunt tempore modi quod nemo ipsam, enim. Iste facilis excepturi neque magnam, porro culpa! Dolorem beatae error quo ipsa asperiores repellendus, reprehenderit assumenda iure illum vitae omnis libero aliquam tenetur, ab nesciunt dolore deserunt fugit nihil totam, nobis! Rerum laborum, delectus saepe fugiat quaerat adipisci dolorem error aperiam vitae eos dolore facere, illo!');
+INSERT INTO TLCM VALUES(TLCM_ID_SEQ.NEXTVAL,1100002,1000061,TO_DATE('2017-11-13','YYYY-MM-DD')
+,'不可辦理站在感到革命後悔網上有機會代表天空瀋陽下來雙，革命的人春天查找固定內，臨床先生緊張運動新技術為了辦公加上這個居然於是基礎，道德全市之外只見地點交，性格事業消費者上市興奮廣州新增經營許可證幾年寫真黑龍江報價增，總數我的附近紅色引導今後，來了實力從此地球詳細，成熟證據本書認識玄幻她們成熟路線，文檔歡迎每月平台它們填寫新浪工作人員提示甚，吉林通信嚴格用品不足都，大約本次濟南滿足以來平衡私人所在專用日常站在，統計確認近期國語名單才是我又他不文件藍色森，而來反而造成韓國毫不就算他是尊重缺乏大多數銷售損失中學代，常用追求所在地兒童合理老闆發貼至於，共有女性奇蹟只需重大一隻資格突破鎖定門口然而現金地方在我，民間讓我精神來說語文外貿高級很快來說大盤一本準，往往時期檢查優質昆明每頁數碼相機來源，許可監控狀況馬上台北影響西方資，受到在他運行環境農業理想魅力一副面議患者人事文檔請求，看來感受出售規模成長您現在語音日記並在音樂網忽然頻率教，眾多空中否則基地總經理連載一隻怎麼幫，正好角度五金為什麼當前前，他人播放許可另一個我會看看採用，貫徹節省專家產品優質嘿嘿有，關係明顯電話狀態大家，美好主要理想他們。');
+INSERT INTO TLCM VALUES(TLCM_ID_SEQ.NEXTVAL,1100002,1000052,TO_DATE('2017-11-13','YYYY-MM-DD')
+,'他很認真的對她說：「我倆的相遇，第一次可能是運氣，第二次或許是巧合，如果第三次算默契，那第四次一定是緣份了。她聽了靜默不語，
+片刻後她緩緩的回答：「那並不表示可以為我帶來幸福啊？」他糗了、他傻了，因為幸福是什麼，是他從未去思考的問題。然而為了澄清她的疑慮，他苦思、他失眠、他憔悴，對於學理工的他來說，用科學去解釋或申論，是他的本能和專長，
+但是「幸福」這種文學感官，到底要如何去證明，如何去顯現呢？唉！他仰天長嘆。');
+INSERT INTO TLCM VALUES(TLCM_ID_SEQ.NEXTVAL,1100002,1000053,TO_DATE('2017-11-13','YYYY-MM-DD')
+,'百萬只見購物小說主動詳細內容用來跟?我和允許印刷數學回，限制一切都數據庫獨特訂單授權方式工廠男生沒想到伊，協會無數字元怎麼反覆重，不會大陸考研瞭解適應損失，存儲點這裡下載歐美性，。');
+
+
+
+
+
+CREATE TABLE TRPI
+(TRPI_ID    NUMBER(7) NOT NULL,
+ TRVL_ID    NUMBER(7) NOT NULL,
+ TRPI_IMG BLOB,
+ TRPI_IMGFMT VARCHAR2(20),
+ CONSTRAINT TRPI_TRVL_ID_FK FOREIGN KEY (TRVL_ID) REFERENCES TRVL(TRVL_ID),
+ CONSTRAINT TRPI_TRPI_ID_PK PRIMARY KEY (TRPI_ID));
+
+create sequence TRPI_ID_SEQ
+start with 1200001
+maxvalue 1299999
+increment by 1
+NOCACHE
+NOCYCLE;
+
+INSERT INTO TRPI VALUES(TRPI_ID_SEQ.NEXTVAL,1100001,null,null);
+INSERT INTO TRPI VALUES(TRPI_ID_SEQ.NEXTVAL,1100002,null,null);
+INSERT INTO TRPI VALUES(TRPI_ID_SEQ.NEXTVAL,1100003,null,null);
+INSERT INTO TRPI VALUES(TRPI_ID_SEQ.NEXTVAL,1100004,null,null);
+INSERT INTO TRPI VALUES(TRPI_ID_SEQ.NEXTVAL,1100005,null,null);
+INSERT INTO TRPI VALUES(TRPI_ID_SEQ.NEXTVAL,1100006,null,null);
+INSERT INTO TRPI VALUES(TRPI_ID_SEQ.NEXTVAL,1100007,null,null);
+INSERT INTO TRPI VALUES(TRPI_ID_SEQ.NEXTVAL,1100008,null,null);
+INSERT INTO TRPI VALUES(TRPI_ID_SEQ.NEXTVAL,1100009,null,null);
+INSERT INTO TRPI VALUES(TRPI_ID_SEQ.NEXTVAL,1100010,null,null);
+
+
+
+
+
+CREATE TABLE TRVLRANK
+(TRVL_ID            NUMBER(7) NOT NULL,
+ USER_ID            NUMBER(7) NOT NULL,
+ TRVLRANK_SCORE     NUMBER(1),
+ CONSTRAINT TRVLRANK_TRVL_USER_PK PRIMARY KEY (TRVL_ID,USER_ID),
+ CONSTRAINT TRVLRANK_TRVL_ID_FK FOREIGN KEY (TRVL_ID) REFERENCES TRVL (TRVL_ID),
+ CONSTRAINT TRVLRANK_USER_ID_FK FOREIGN KEY (USER_ID) REFERENCES USER_TABLE (USER_ID));
+
+INSERT INTO TRVLRANK values(1100001,1000052,4);
+INSERT INTO TRVLRANK values(1100001,1000053,3);
+INSERT INTO TRVLRANK values(1100002,1000054,5);
+INSERT INTO TRVLRANK values(1100002,1000055,4);
+INSERT INTO TRVLRANK values(1100003,1000056,4);
+
+CREATE TABLE FLSC (
+ FLSC_ID                      NUMBER(7) NOT NULL,
+ FLSC_TERM                    VARCHAR2(100),
+ FLSC_AIRLINECODE             VARCHAR2(100),
+ FLSC_AIRLINE_C               VARCHAR2(100),
+ FLSC_FLNO                    VARCHAR2(100),
+ FLSC_GATE                    VARCHAR2(100),
+ FLSC_SDATE                   VARCHAR2(100),
+ FLSC_STIME                   VARCHAR2(100),
+ FLSC_PDATE                   VARCHAR2(100),
+ FLSC_PTIME                   VARCHAR2(100),
+ FLSC_LOCATION_CODE           VARCHAR2(100),
+ FLSC_LOCATION_E              VARCHAR2(100),
+ FLSC_LOCATION_C              VARCHAR2(100),
+ FLSC_STATUS                  VARCHAR2(100),
+ FLSC_BAG                     VARCHAR2(100),
+ FLSC_CHECKIN                 VARCHAR2(100),
+CONSTRAINT FLSC_ID_PK PRIMARY KEY (FLSC_ID));
+
+create sequence FLSC_ID_SEQ
+
+start with 5000000
+maxvalue 9999999
+increment by 1
+CYCLE;
+
+
+CREATE TABLE BUSC (
+ BUSC_ID                      NUMBER(7) NOT NULL,
+ BUSC_END                     VARCHAR2(100),
+ BUSC_LINE                    VARCHAR2(100),
+ BUSC_TIME                    VARCHAR2(100),
+ BUSC_ROUTE                   VARCHAR2(300),
+CONSTRAINT BUSC_ID_PK PRIMARY KEY (BUSC_ID)); 
+
+create sequence BUSC_ID_SEQ
+
+start with 5200000
+maxvalue 9999999
+increment by 1
+CYCLE;
+
+CREATE TABLE STPM
+(STPM_ID NUMBER(7) NOT NULL,
+ STORE_ID NUMBER(7) NOT NULL,
+ STPM_NAME VARCHAR2(100),
+ STPM_DESC VARCHAR2(100),
+ STPM_CONTENT VARCHAR2(500),
+ STPM_STARTDATE DATE,
+ STPM_ENDDATE DATE,
+ STPM_STATUS NUMBER(1),
+ CONSTRAINT STPM_STORE_ID_FK FOREIGN KEY (STORE_ID) REFERENCES STORE (STORE_ID),
+ CONSTRAINT STPM_STPM_ID_PK PRIMARY KEY (STPM_ID));
+
+
+CREATE SEQUENCE STPM_ID_SEQ
+start with 2500001
+maxvalue 2599999
+increment by 1;
+
+
+INSERT INTO STPM VALUES(STPM_ID_SEQ.NEXTVAL,2000001,'父親節特賣1','全店七折','內含物OOOO',TO_DATE('1-Dec-2017','DD-MON-YYYY'),add_months('1-Dec-2017',1),0);
+INSERT INTO STPM VALUES(STPM_ID_SEQ.NEXTVAL,2000002,'父親節特賣1','全店七折','內含物OOOO',TO_DATE('1-Dec-2017','DD-MON-YYYY'),add_months('1-Dec-2017',1),0);
+INSERT INTO STPM VALUES(STPM_ID_SEQ.NEXTVAL,2000003,'父親節特賣1','全店七折','內含物OOOO',TO_DATE('1-Dec-2017','DD-MON-YYYY'),add_months('1-Dec-2017',1),0);
+INSERT INTO STPM VALUES(STPM_ID_SEQ.NEXTVAL,2000004,'父親節特賣1','全店七折','內含物OOOO',TO_DATE('1-Dec-2017','DD-MON-YYYY'),add_months('1-Dec-2017',1),0);
+INSERT INTO STPM VALUES(STPM_ID_SEQ.NEXTVAL,2000005,'父親節特賣1','全店七折','內含物OOOO',TO_DATE('1-Dec-2017','DD-MON-YYYY'),add_months('1-Dec-2017',1),0);
+
+
+
+
+
+//促銷產品
+
+CREATE TABLE PRPM
+(STPM_ID NUMBER(7) NOT NULL,
+ PROD_ID NUMBER(7) NOT NULL,
+ PRPM_PRICE NUMBER(7),
+ PRPM_STATUS NUMBER(1),
+
+ CONSTRAINT PRPM_STPM_ID_FK FOREIGN KEY (STPM_ID) REFERENCES STPM (STPM_ID),
+ CONSTRAINT PRPM_PROD_ID_FK FOREIGN KEY (PROD_ID) REFERENCES PROD (PROD_ID),
+ CONSTRAINT PRPM_PK PRIMARY KEY (PROD_ID,STPM_ID));
+
+
+//餐廳促銷專案
+
+
+
+CREATE TABLE REPM
+(REPM_ID NUMBER(7) NOT NULL,
+ REST_ID NUMBER(7) NOT NULL,
+ REPM_NAME VARCHAR2(100),
+ REPM_DESC VARCHAR2(100),
+ REPM_CONTENT VARCHAR2(500),
+ REPM_STARTDATE DATE,
+ REPM_ENDDATE DATE,
+ REPM_STATUS NUMBER(1),
+ CONSTRAINT REPM_REST_ID_FK FOREIGN KEY (REST_ID) REFERENCES REST (REST_ID),
+ CONSTRAINT REPM_REPM_ID_PK PRIMARY KEY (REPM_ID));
+
+
+CREATE SEQUENCE REPM_ID_SEQ
+start with 3600001
+maxvalue 3699999
+increment by 1;
+
+INSERT INTO REPM VALUES(REPM_ID_SEQ.NEXTVAL,3000001,'父親節套餐1','全店七折','XOOOO',TO_DATE('1-Dec-2017','DD-MON-YYYY'),add_months('1-Dec-2017',1),0);
+INSERT INTO REPM VALUES(REPM_ID_SEQ.NEXTVAL,3000002,'父親節套餐2','全店七折','XOOOO',TO_DATE('1-Dec-2017','DD-MON-YYYY'),add_months('1-Dec-2017',1),0);
+INSERT INTO REPM VALUES(REPM_ID_SEQ.NEXTVAL,3000003,'父親節套餐3','全店七折','XOOOO',TO_DATE('1-Dec-2017','DD-MON-YYYY'),add_months('1-Dec-2017',1),0);
+INSERT INTO REPM VALUES(REPM_ID_SEQ.NEXTVAL,3000004,'父親節套餐4','全店七折','XOOOO',TO_DATE('1-Dec-2017','DD-MON-YYYY'),add_months('1-Dec-2017',1),0);
+INSERT INTO REPM VALUES(REPM_ID_SEQ.NEXTVAL,3000005,'父親節套餐5','全店七折','XOOOO',TO_DATE('1-Dec-2017','DD-MON-YYYY'),add_months('1-Dec-2017',1),0);
+
+
+
+
+CREATE TABLE RPPR
+(RPPR_ID NUMBER(7) NOT NULL,
+ PROD_ID NUMBER(7) NOT NULL,
+ USER_ID NUMBER(7) NOT NULL,
+ RPPR_DATE TIMESTAMP,
+ RPPR_STATUS NUMBER(1) default 0,
+ RPPR_TITTLE VARCHAR2(50),
+ RPPR_CONTENT VARCHAR2(2000),
+ CONSTRAINT RPPR_PROD_ID_FK FOREIGN KEY (PROD_ID) REFERENCES PROD (PROD_ID),
+ CONSTRAINT RPPR_USER_ID_FK FOREIGN KEY (USER_ID) REFERENCES USER_TABLE (USER_ID),
+ CONSTRAINT RPPR_RPPR_ID_PK PRIMARY KEY (RPPR_ID));
+
+create sequence RPPR_ID_SEQ
+start with 6100001
+maxvalue 6199999
+increment by 1
+NOCACHE
+NOCYCLE;
+
+INSERT INTO RPPR VALUES(RPPR_ID_SEQ.NEXTVAL,2200001,1000001,TO_DATE('2017-06-03 12:40:50','YYYY-MM-DD HH24:MI:SS'),0,'瑕X品'
+,'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur necessitatibus,maiores consequuntur dolore, minima expedita, q');
+INSERT INTO RPPR VALUES(RPPR_ID_SEQ.NEXTVAL,2200001,1000002,TO_DATE('2017-06-03 13:40:50','YYYY-MM-DD HH24:MI:SS'),0,'C品'
+,'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur necessitatibus,maiores consequuntur dolore, minima expedita, q');
+INSERT INTO RPPR VALUES(RPPR_ID_SEQ.NEXTVAL,2200002,1000003,TO_DATE('2017-06-03 14:40:50','YYYY-MM-DD HH24:MI:SS'),0,'UI品'
+,'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur onsequatur necessitatibus,maiores consequuntur dolore, minima expedita, q');
+INSERT INTO RPPR VALUES(RPPR_ID_SEQ.NEXTVAL,2200002,1000004,TO_DATE('2017-06-03 15:40:50','YYYY-MM-DD HH24:MI:SS'),1,'瑕疵'
+,'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur necessitatibus,maiores consequuntur dolore, minima expedita, q');
+INSERT INTO RPPR VALUES(RPPR_ID_SEQ.NEXTVAL,2200003,1000005,TO_DATE('2017-06-03 16:40:50','YYYY-MM-DD HH24:MI:SS'),1,'瑕疵品'
+,'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur necessitatibus,maiores consequuntur dolore, minima expedita, q');
+INSERT INTO RPPR VALUES(RPPR_ID_SEQ.NEXTVAL,2200004,1000006,TO_DATE('2017-06-03 10:40:50','YYYY-MM-DD HH24:MI:SS'),2,'瑕VV品'
+,'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur necessitatibus,maiores consequuntur dolore, minima expedita, q');
+INSERT INTO RPPR VALUES(RPPR_ID_SEQ.NEXTVAL,2200004,1000006,TO_DATE('2017-06-03 17:40:50','YYYY-MM-DD HH24:MI:SS'),1,'瑕VV品'
+,'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur necessitatibus,maiores consequuntur dolore, minima expedita, q');
+INSERT INTO RPPR VALUES(RPPR_ID_SEQ.NEXTVAL,2200005,1000006,TO_DATE('2017-06-03 18:40:50','YYYY-MM-DD HH24:MI:SS'),1,'瑕VV品'
+,'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur necessitatibus,maiores consequuntur dolore, minima expedita, q');
+INSERT INTO RPPR VALUES(RPPR_ID_SEQ.NEXTVAL,2200005,1000007,TO_DATE('2017-06-03 21:40:50','YYYY-MM-DD HH24:MI:SS'),1,'瑕VV品'
+,'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur necessitatibus,maiores consequuntur dolore, minima expedita, q');
+INSERT INTO RPPR VALUES(RPPR_ID_SEQ.NEXTVAL,2200006,1000008,TO_DATE('2017-06-03 10:40:50','YYYY-MM-DD HH24:MI:SS'),1,'瑕VV品'
+,'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur necessitatibus,maiores consequuntur dolore, minima expedita, q');
+INSERT INTO RPPR VALUES(RPPR_ID_SEQ.NEXTVAL,2200007,1000009,TO_DATE('2017-06-03 23:40:50','YYYY-MM-DD HH24:MI:SS'),1,'瑕VV品'
+,'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur necessitatibus,maiores consequuntur dolore, minima expedita, q');
+INSERT INTO RPPR VALUES(RPPR_ID_SEQ.NEXTVAL,2200008,1000010,TO_DATE('2017-06-03 08:40:50','YYYY-MM-DD HH24:MI:SS'),1,'瑕VV品'
+,'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur consequatur necessitatibus,maiores consequuntur dolore, minima expedita, q');
+
+
+
+
+CREATE TABLE RPTL
+(RPTL_ID NUMBER(7) NOT NULL,
+ TRVL_ID NUMBER(7) NOT NULL,
+ USER_ID NUMBER(7) NOT NULL,
+ RPTL_DATE TIMESTAMP,
+ RPTL_STATUS NUMBER(1) default 0,
+ RPTL_TITTLE VARCHAR2(50) NOT NULL,
+ RPTL_CONTENT VARCHAR2(2000) NOT NULL,
+ 
+ CONSTRAINT RPTL_TRVL_ID_FK FOREIGN KEY (TRVL_ID) REFERENCES TRVL(TRVL_ID),
+ CONSTRAINT RPTL_USER_ID_FK FOREIGN KEY (USER_ID) REFERENCES USER_TABLE (USER_ID),
+ CONSTRAINT RPTL_RPTL_ID_PK PRIMARY KEY (RPTL_ID));
+
+create sequence RPTL_ID_SEQ
+start with 6000001
+maxvalue 6099999
+increment by 1
+NOCACHE
+NOCYCLE;
+
+INSERT INTO RPTL VALUES (RPTL_ID_SEQ.NEXTVAL,1100001,1000052,TO_DATE('2017-06-03 12:40:50','YYYY-MM-DD HH24:MI:SS'),0,'拉基遊記1'
+,'危險中華和平節省顯得保證互動每天還沒有幾年實在國家加工一段，證券看來聯想不同1星著名精美你不?不每天音，財政道理地說建。');
+INSERT INTO RPTL VALUES (RPTL_ID_SEQ.NEXTVAL,1100002,1000053,TO_DATE('2017-06-02 12:40:50','YYYY-MM-DD HH24:MI:SS'),0,'拉基遊記2'
+,'危險中華和平節省顯得保證互動每天還沒有幾年實在國家加工一段，證券看來聯想不同2星著名精美你不?不每天音，財政道理地說建。');
+INSERT INTO RPTL VALUES (RPTL_ID_SEQ.NEXTVAL,1100003,1000054,TO_DATE('2017-06-01 12:40:50','YYYY-MM-DD HH24:MI:SS'),0,'拉基遊記4'
+,'危險中華和平節省顯得保證互動每天還沒有幾年實在國家加工一段，證券看來聯想不同3星著名精美你不?不每天音，財政道理地說建。');
+INSERT INTO RPTL VALUES (RPTL_ID_SEQ.NEXTVAL,1100001,1000055,TO_DATE('2017-06-11 12:40:50','YYYY-MM-DD HH24:MI:SS'),1,'拉基遊記3'
+,'危險中華和平節省顯得保證互動每天還沒有幾年實在國家加工一段，證券看來聯想不同4星著名精美你不?不每天音，財政道理地說建。');
+INSERT INTO RPTL VALUES (RPTL_ID_SEQ.NEXTVAL,1100003,1000053,TO_DATE('2017-06-30 12:40:50','YYYY-MM-DD HH24:MI:SS'),2,'拉基遊記6'
+,'危險中華和平節省顯得保證互動每天還沒有幾年實在國家加工一段，證券看來聯想不同5星著名精美你不?不每天音，財政道理地說建。');
+INSERT INTO RPTL VALUES (RPTL_ID_SEQ.NEXTVAL,1100004,1000056,TO_DATE('2017-04-03 12:40:50','YYYY-MM-DD HH24:MI:SS'),2,'拉基遊記8'
+,'危險中華和平節省顯得保證互動每天還沒有幾年實在國家加工一段，證券看來聯想不同6星著名精美你不?不每天音，財政道理地說建。');
+INSERT INTO RPTL VALUES (RPTL_ID_SEQ.NEXTVAL,1100005,1000057,TO_DATE('2017-03-03 12:40:50','YYYY-MM-DD HH24:MI:SS'),1,'拉基遊記9'
+,'危險中華和平節省顯得保證互動每天還沒有幾年實在國家加工一段，證券看來聯想不同三星著名精美你不?不每天音，財政道理地說建。');
+
+
+
+
+//drop table PATH;
+//drop sequence PATH_ID_SEQ;
+
+CREATE TABLE PATH (
+ PATH_ID              NUMBER(7) NOT NULL,
+ PATH_TERM            NUMBER(1) NOT NULL,
+ PATH_FROMLON         NUMBER(18,13),
+ PATH_FROMLAT         NUMBER(18,13),
+ PATH_TOLON           NUMBER(18,13),
+ PATH_TOLAT           NUMBER(18,13),
+ PATH_FROMPLACE       VARCHAR2(20),
+ PATH_TOPLACE         VARCHAR2(20),
+ PATH_IMG             BLOB,
+ PATH_IMGFMT          VARCHAR2(4),
+ CONSTRAINT PATH_PATH_ID_PK PRIMARY KEY (PATH_ID)
+ );
+ 
+create sequence PATH_ID_SEQ
+start with 7000001
+maxvalue 7099999
+increment by 1;
+
+INSERT INTO PATH VALUES (PATH_ID_SEQ.NEXTVAL,2,null,null,null,null,'D2','ConnectFlight',NULL,'png');
+INSERT INTO PATH VALUES (PATH_ID_SEQ.NEXTVAL,2,null,null,null,null,'ConnectFlight','2000026',NULL,'png');
+INSERT INTO PATH VALUES (PATH_ID_SEQ.NEXTVAL,2,null,null,null,null,'Customs','3000013',NULL,'png');
+INSERT INTO PATH VALUES (PATH_ID_SEQ.NEXTVAL,2,null,null,null,null,'2000026','3000013',NULL,'png');
+INSERT INTO PATH VALUES (PATH_ID_SEQ.NEXTVAL,2,null,null,null,null,'3000013','D6',NULL,'png');
+
+
+commit;

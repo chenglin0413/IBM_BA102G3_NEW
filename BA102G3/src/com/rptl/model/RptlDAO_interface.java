@@ -8,6 +8,7 @@ public interface RptlDAO_interface {
     public void delete(Integer rptl_id);
     public RptlVO findByPrimaryKey(Integer rptl_id);
     public List<RptlVO> getAll();
+    public List<RptlVO> getAllByStatus(Integer rptl_status);
     
     //修改檢舉狀態
 	public void updateStatus(Integer rptl_id, Integer rptl_status);

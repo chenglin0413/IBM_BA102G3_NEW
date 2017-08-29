@@ -443,8 +443,9 @@ body, html {
 /* The hero image */
 .hero-image {
     /* The image used */
-    background-image: url("../img/team.jpg");
 
+    background-image: url("../img/slidebg15.jpg");
+    
     /* Set a specific height */
     height: 100%;
 
@@ -453,6 +454,8 @@ body, html {
     background-repeat: no-repeat;
     background-size: cover;
     position: relative;
+
+
 }
 
 /* Place text in the middle of the image */
@@ -582,3 +585,11 @@ list-style-type:none;
     border-radius: 8px;
     margin-right: 10px;margin-left:10px;
 }
+
+
+/*過長的文字變成以...顯示*/
+.AutoSkip {
+      overflow:hidden;
+      text-overflow:ellipsis;
+      white-space: nowrap;
+   }

@@ -1,6 +1,7 @@
 package com.trvl.model;
 
 import java.util.List;
+import java.util.Map;
 
 import com.tlcm.model.TlcmVO;
 import com.trpi.model.TrpiVO;
@@ -26,6 +27,9 @@ public interface TrvlDAO_interface {
     
     //取點擊數前三名
     public List<TrvlVO>	getTopOfBlogs();
+    
+    //萬用複合查詢(傳入參數型態Map)(回傳 List)
+    public List<TrvlVO> getAll(Map<String, String[]> map); 
     
     //同時新增遊記與照片 
     //public void insertWithTrpis(TrvlVO trvlVO , List<TrpiVO> list);

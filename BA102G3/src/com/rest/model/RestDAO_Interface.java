@@ -10,4 +10,5 @@ public interface RestDAO_Interface {
     public RestVO findByUserId(Integer user_id);
     public List<RestVO> getAll();
     public List<RestVO> getAllbyStatus(Integer user_status);
+    public List<RestVO> getTopThree();
 }

@@ -815,6 +815,45 @@ public class ProdServlet extends HttpServlet {
 			out.print(jb);
 			out.close();
 		}
+		//prod萬用查詢，用於產品瀏覽首頁
+		if ("listProds_ByCompositeQuery".equals(action)) { // 來自select_page.jsp的複合查詢請求
+			List<String> errorMsgs = new LinkedList<String>();
+			// Store this set in the request scope, in case we need to
+			// send the ErrorPage view.
+			req.setAttribute("errorMsgs", errorMsgs);
+//			try {
+				
+				/***************************1.將輸入資料轉為Map**********************************/ 
+				//採用Map<String,String[]> getParameterMap()的方法 
+				//注意:an immutable java.util.Map 
+				//Map<String, String[]> map = req.getParameterMap();
+				HttpSession session = req.getSession();
+				Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
+				if (req.getParameter("whichPage") == null){
+					HashMap<String, String[]> map1 = (HashMap<String, String[]>)req.getParameterMap();
+					HashMap<String, String[]> map2 = new HashMap<String, String[]>();
+					map2 = (HashMap<String, String[]>)map1.clone();
+					session.setAttribute("map",map2);
+					map = (HashMap<String, String[]>)req.getParameterMap();
+				} 
+				
+				/***************************2.開始複合查詢***************************************/
+				ProdService prodSvc = new ProdService();
+				List<ProdVO> list  = prodSvc.getAll(map);
+				
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				req.setAttribute("listProds_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
+				RequestDispatcher successView = req.getRequestDispatcher("/front-end/store_interface/listOneStore_idAllProd.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+				successView.forward(req, res);
+				System.out.println("849");
+				/***************************其他可能的錯誤處理**********************************/
+//			} catch (Exception e) {
+//				errorMsgs.add(e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/select_page.jsp");
+//				failureView.forward(req, res);
+//			}
+		}
 
 	}
 }

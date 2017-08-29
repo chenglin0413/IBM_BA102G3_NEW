@@ -8,6 +8,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.tlcm.model.TlcmVO;
 import com.trpi.model.TrpiVO;
@@ -778,6 +779,13 @@ public class TrvlJDBCDAO implements TrvlDAO_interface {
 				System.out.println("------------------------------");
 			}
 		 
+	}
+	
+	
+	@Override
+	public List<TrvlVO> getAll(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

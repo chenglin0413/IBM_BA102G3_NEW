@@ -1,19 +1,24 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ page import="com.user.model.*,java.util.*,com.prod.model.*,com.trvl.model.*"%>
+<%@ page import="com.user.model.*,java.util.*,com.prod.model.*,com.trvl.model.*,com.rest.model.*"%>
 <%
 UserVO userVO = (UserVO) session.getAttribute("userVO");
 String account =(String) session.getAttribute("account");
 TrvlService trvlSvc = new TrvlService();
 List<TrvlVO> trvllist = trvlSvc.getTopTrvlCounts();
 pageContext.setAttribute("trvllist", trvllist);
+
+String []rest_types={"","中式","西式","日式","穆斯林","印度","泰國","越南"};
+pageContext.setAttribute("rest_types",rest_types);
+
 %>
 <jsp:useBean id="trpiSvc" scope="page" class="com.trpi.model.TrpiService" />
+<jsp:useBean id="repiSvc" scope="page" class="com.repi.model.RepiService" />
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
+	<link rel="shortcut icon" href="<%=request.getContextPath()%>/favicon.ico" >
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -46,8 +51,8 @@ pageContext.setAttribute("trvllist", trvllist);
 
 <style type="text/css">
         .item img{
-            height: 250px;
-            width:100%;
+            height: 270px;
+            margin-bottom:1px;
         }
        
        
@@ -92,10 +97,10 @@ pageContext.setAttribute("trvllist", trvllist);
                         <a class="page-scroll" href="<%=request.getContextPath()%>/front-end/member_interface/listAllProd.jsp">商品</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="../rest/rest__2.html">餐廳</a>
+                        <a class="page-scroll" href="<%=request.getContextPath()%>/front-end/member_interface_rest/rest/listAllRest.jsp">餐廳</a>
                     </li>
                     <li>
-                        <a class="page-scroll" href="<%=request.getContextPath()%>/front-end/member_interface/listAllStpm.jsp">促銷</a>
+                        <a class="page-scroll" href="<%=request.getContextPath()%>/front-end/member_interface/pm_index.jsp">促銷</a>
                     </li>
                     <li>
                         <a class="page-scroll" href="<%=request.getContextPath()%>/front-end/blog/listAllTrvl.jsp">旅遊日記</a>
@@ -126,7 +131,7 @@ pageContext.setAttribute("trvllist", trvllist);
                     	  <li><a href="<%= request.getContextPath() %>/front-end/user/memberProfile.html"><i class="fa fa-user-md fa-fw"></i>${userVO.user_lastname},您好</a></li>       
 				     	<li><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneUser_idAllWish.jsp"><i class="fa fa-heart-o"></i>追蹤商品</a></li>
                         <li><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneUser_idAllOrd.jsp"><i class="fa fa-bookmark-o fa-fw"></i></i>消費記錄</a></li>
-                        <li><a href="memberReserveRecord.html"><i class="fa fa-book fa-fw"></i>餐廳訂位記錄</a></li>
+                        <li><a href="<%=request.getContextPath()%>/front-end/member_interface_rest/rest/listOneUser_idAllReta.jsp"><i class="fa fa-book fa-fw"></i>餐廳訂位記錄</a></li>
                         <li><a href="<%=request.getContextPath()%>/front-end/blog/listAllByUser.jsp"><i class="fa fa-camera-retro fa-fw"></i> 個人遊記</a></li>
                         <li><a href="<%= request.getContextPath() %>/front-end/user/memberProfile.jsp"><i class="fa fa-gear fa-fw"></i> 基本資訊修改</a></li>
                         <li><a href="<%= request.getContextPath() %>/front-end/user/memberPayFee.jsp"><i class="fa fa-money fa-fw"></i> 繳費</a></li>
@@ -213,10 +218,10 @@ pageContext.setAttribute("trvllist", trvllist);
             pageContext.setAttribute("prodlist",prodlist);
             %>
             <c:forEach var="prodVO" items="${prodlist}" >
-                <div class="col-md-4 col-sm-12 item text-left">
-                     <div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
+                <div class="col-md-4 col-sm-12 item text-center">
+                     <div class="img-rounded" id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
 					<div><h2>${prodVO.prod_name}</h2></div>
-					<div><h4>商品描述:${prodVO.prod_descript}</h4></div>
+					<div class="AutoSkip"><h4>商品描述:${prodVO.prod_descript}</h4></div>
 					<div><h4>商品種類:${prodVO.prod_sort}</h4></div>
                     <div>
                     
@@ -244,7 +249,7 @@ pageContext.setAttribute("trvllist", trvllist);
 									 <c:if test="${not empty userVO.user_account}" var="condition2" scope="session" > 
 									 	<form name="shoppingForm" action="<%=request.getContextPath()%>/front-end/eshop/ShoppingServlet" method="POST">
 										<div>數量： <input type="number" name="quantity" size="3" value=1 required></div>
-							                  <div class="btn btn-default"><input type="submit" name="Submit" value="放入購物車"></div>
+							                 <button class="btn btn-success">加入購物車</button>
 										  <input type="hidden" name="prod_id" value="${prodVO.prod_id}">
 								      	  <input type="hidden" name="store_id" value="${prodVO.store_id}">
 									      <input type="hidden" name="prod_name" value="${prodVO.prod_name}">
@@ -257,7 +262,7 @@ pageContext.setAttribute("trvllist", trvllist);
 								       <form name="wishForm" action="<%=request.getContextPath()%>/front-end/wish/wish.do" method="POST">
 								       	  <input type="hidden" name="user_id" value="${userVO.user_id}">			
 								       	  <input type="hidden" name="prod_id" value="${prodVO.prod_id}">
-									       <div class="btn btn-default"><input type="submit" name="Submit" value="加入追蹤"></div>
+									       <button class="btn btn-info">加入追蹤</button>
 									       <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑-->
 									       <input type="hidden" name="action" value="ADDTOWish">
 								       </form>
@@ -279,46 +284,28 @@ pageContext.setAttribute("trvllist", trvllist);
            </c:forEach>
          <!-- 商品前三結尾 -->  
            
-           
-                 <section class="row">
+           <jsp:useBean id="restSvc" class="com.rest.model.RestService"/>
+                  <section id="portfolio" class="bg-light-gray"> <!-- 商品 /餐廳Section -->
                 <div class="col-md-12 text-center">
                     <h2 class="section-heading">熱門餐廳</h2>
-                    <h3 class="section-subheading text-muted">Restaurant area.</h3>
+                    <h3 class="section-subheading text-muted">Shopping area.</h3>
                 </div>
-                </section>
-                <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="#portfolioModal4" class="portfolio-link" data-toggle="modal">
-                        
-                        <img src="img/portfolio/golden.png" class="img-responsive" alt="">
-                    </a>
-                    <div class="portfolio-caption">
-                        <h4>Golden</h4>
-                        <p class="text-muted">Website Design</p>
-                    </div>
+                </section>	
+               <c:forEach var="restVO" items="${restSvc.getTopThree()}" > 
+					<div class="col-md-4 col-sm-12 item text-center"> 
+					<div class="img-rounded" id="boxshadow"> 
+					<a href="<%=request.getContextPath()%>/front-end/rest/rest.do?rest_id=${restVO.rest_id}&action=getOne_For_Display_formember"> 
+					<img src="<%=request.getContextPath()%>/front-end/repi/RepiDBGifReader.do?rest_id=${restVO.rest_id}" width="300" height="250"> 
+					</a> 
+					</div> 
+					<div><h2>${restVO.rest_name}</h2></div> 
+					<div> 
+					<h4> 
+					餐廳種類: ${rest_types[restVO.rest_type]}</h4></div>
                 </div>
-                <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="#portfolioModal5" class="portfolio-link" data-toggle="modal">
-                       
-                        <img src="img/portfolio/escape.png" class="img-responsive" alt="">
-                    </a>
-                    <div class="portfolio-caption">
-                        <h4>Escape</h4>
-                        <p class="text-muted">Website Design</p>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-6 portfolio-item">
-                    <a href="#portfolioModal6" class="portfolio-link" data-toggle="modal">
-                       
-                        <img src="img/portfolio/dreams.png" class="img-responsive" alt="">
-                    </a>
-                    <div class="portfolio-caption">
-                        <h4>Dreams</h4>
-                        <p class="text-muted">Website Design</p>
-                    </div>
-                </div>
-            </div>
-     
-     
+                <!-- 餐廳前三結尾 -->
+           </c:forEach>
+     </div>
      			
      <div class="col-md-4">
      			  <!-- 遊記前四 -->
@@ -337,7 +324,12 @@ pageContext.setAttribute("trvllist", trvllist);
 		
             <c:forEach var="trvlVO" items="${trvllist}">
 					<div class="col-sm-6 col-md-12">
-						<div class="ehdiv " >							
+						<div class="ehdiv " >	
+									<div class="row">
+										<div class="col-md-8 ">
+											<h3>${trvlVO.trvl_tittle}</h3> 
+										</div>
+									</div>				
 							<c:forEach var="trpiVO" items="${trpiSvc.all}">
 								<c:if test="${trvlVO.trvl_id==trpiVO.trvl_id}">
 					            	<div class="item" id="boxshadow">
@@ -348,14 +340,7 @@ pageContext.setAttribute("trvllist", trvllist);
 							    </c:if>
 							</c:forEach>
 							<br>
-							<div class="row">
-								<div class="col-sm-6 col-md-6">
-									<strong>${trvlVO.trvl_tittle}</strong> 
-								</div>
-								<div class="col-sm-6 col-md-4 col-md-push-4">
-									${trvlVO.trvl_count}
-								</div>
-							</div><!-- row2 -->
+							
 						</div>	
 					</div>
 					

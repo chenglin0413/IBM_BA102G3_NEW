@@ -48,12 +48,12 @@ StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
 
     <%@include file="/front-end/store_interface/headerBar.file" %>
     
-    <br><br>
+    <br><br><br>
 
 <div class="container">
 	<div class="row">
 	
-            <FORM METHOD="post" ACTION="<%= request.getContextPath() %>/front-end/store/store.do" name="form1">
+            <FORM class="uploadImage" METHOD="post" ACTION="<%= request.getContextPath() %>/front-end/store/store.do" name="form1" enctype="multipart/form-data">
 
             <div class="container-fluid">
                 <div class="row">
@@ -89,7 +89,7 @@ StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
                                 <input type="text" name="store_phone" value="<%= (storeVO==null)? "" : storeVO.getStore_phone()%>" class="form-control">
                             </div><br>                                                        
                             <div >
-                                <label class="input-group-addon">店家描述</label>
+                                <label class="input-group-addon">店家簡介</label>
                                 <textarea name="store_describe" class="form-control" rows="6" cols="70"> <%= (storeVO==null)? "" : storeVO.getStore_describe()%> </textarea>
                             </div><br>
                             
@@ -135,19 +135,17 @@ StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
                     	    	</div>
                     	    </div><br>
 
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="input-group">
-                                    <label class="input-group-addon" >所在經度</label>
-                                    <input type="text" name="store_lon" value="<%= (storeVO==null)? "" : storeVO.getStore_lon()%>" class="form-control">
-                                </div>                                
-                            </div>
-                            <div class="col-xs-12 col-sm-6">
-                                <div class="input-group">
-                                    <label class="input-group-addon" >所在緯度</label>
-                                    <input type="text" name="store_lat" value="<%= (storeVO==null)? "" : storeVO.getStore_lat()%>" class="form-control">
-                                </div><br>                                
-                            </div>
-                            
+                    <div class="col-xs-12">
+                                                               更新圖片<br>
+                        <input type="file" name="upfile1" id="file-input1" class="file" onchange="previewImages()">
+                        </label>
+                        <div id="preview"></div>                        
+                    </div>
+                    
+                    <div class="col-xs-12">
+						<img src="<%= request.getContextPath() %>/front-end/stpi/DBGifReader?store_id=<%=storeVO.getStore_id()%>" height="300">
+                    </div>
+
                             <div class="col-xs-12 col-sm-12">
 
 <!-- 							
@@ -170,6 +168,8 @@ StoreVO storeVO = (StoreVO) session.getAttribute("storeVO");
 						<input type="hidden" name="store_id" value="<%=storeVO.getStore_id()%>">
 						<input type="hidden" name="user_id" value="<%=storeVO.getUser_id()%>">
 						<input type="hidden" name="user_status" value="<%=userVO.getUser_status()%>">
+						<input type="hidden" name="store_lon" value="<%=storeVO.getStore_lon()%>">
+						<input type="hidden" name="store_lat" value="<%=storeVO.getStore_lat()%>">
 						<input type="hidden" name="store_count" value="<%=storeVO.getStore_count()%>">
 						<input type="hidden" name="store_score" value="<%=storeVO.getStore_score()%>">
 						<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->

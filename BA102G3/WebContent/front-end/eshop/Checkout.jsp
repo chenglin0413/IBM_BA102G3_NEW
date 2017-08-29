@@ -47,6 +47,13 @@
           height: 200px;  
           margin: auto;
         }
+		body {
+			background-image: url(<%=request.getContextPath()%>/front-end/img/bg004.jpg);
+			background-repeat: no-repeat;
+			background-attachment: fixed;
+			background-position: center;
+			background-size: cover;
+		}
     </style>
 </head>
 
@@ -119,7 +126,7 @@
 // 			Integer  prod_count=prodVO.getProd_count();
 // 			Integer  prod_score=prodVO.getProd_score();
 			%>
-			<td><%=prod_id%>
+<%-- 			<td><%=prod_id%> --%>
 			
 <!-- 	%> -->
 	<div class="container">

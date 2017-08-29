@@ -76,7 +76,7 @@ public class RestDAO implements RestDAO_Interface {
 			+ "from REST r join USER_TABLE u on (r.user_id=u.user_id) where u.user_status=? order by r.REST_ID desc";
 		
 	private static final String GET_ONE_BY_USERID_STMT = "SELECT * FROM REST WHERE USER_ID=?";
-	
+	private static final String GET_TOP_THREE = "select  * from(select * from rest order by rest_score desc) where rownum <4";
 	private static DataSource ds = null;
 	static {
 		try {
@@ -510,6 +510,74 @@ public class RestDAO implements RestDAO_Interface {
 			}
 		}
 		return restVO;
+	}
+	//政成新增  首頁前三名餐廳
+	@Override
+	public List<RestVO> getTopThree() {
+		List<RestVO> list = new ArrayList<RestVO>();
+		RestVO restVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_TOP_THREE);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+				
+				restVO = new RestVO();
+				restVO.setRest_id(rs.getInt("rest_id"));
+				restVO.setUser_id(rs.getInt("user_id"));
+				restVO.setRest_name(rs.getString("rest_name"));
+				restVO.setRest_address(rs.getString("rest_address"));
+				restVO.setRest_phone(rs.getString("rest_phone"));
+				restVO.setRest_trans(rs.getString("rest_trans"));
+				restVO.setRest_detail(rs.getString("rest_detail"));
+				restVO.setRest_hours(rs.getString("rest_hours"));
+				restVO.setRest_ter(rs.getInt("rest_ter"));
+				restVO.setRest_floor(rs.getInt("rest_floor"));
+				restVO.setRest_lon(rs.getDouble("rest_lon"));
+				restVO.setRest_lat(rs.getDouble("rest_lat"));
+				restVO.setRest_inout(rs.getInt("rest_inout"));
+				restVO.setRest_type(rs.getInt("rest_type"));
+				restVO.setRest_count(rs.getInt("rest_count"));
+				restVO.setRest_score(rs.getInt("rest_score"));
+				list.add(restVO); // Store the row in the list				
+			}
+
+			// Handle any driver errors	
+		}catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
 	}
 
 }

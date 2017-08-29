@@ -17,7 +17,15 @@ public class FlscService {
 	public List<FlscVO> getAll() {
 		return dao.getAll();
 	}
-
+	
+	public List<FlscVO> getAllArrive() {
+		return dao.findByArrive();
+	}
+	
+	public List<FlscVO> getAllOut() {
+		return dao.findByOut();
+	}	
+	
 	public List<FlscVO> findByFlno(String flsc_flno) {
 		return dao.findByFlno(flsc_flno);
 	}
@@ -29,4 +37,9 @@ public class FlscService {
 	public FlscVO flscSubQuery(String flsc_airlinecode, String flsc_flno, String flsc_sdate) {
 		return dao.flscSubQuery(flsc_airlinecode, flsc_flno, flsc_sdate);
 	}
+	
+	public FlscVO findByPK(Integer flsc_id) {
+		return dao.findByPK(flsc_id);
+	}
+
 }

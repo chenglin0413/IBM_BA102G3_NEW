@@ -7,7 +7,6 @@
 	RpprVO rpprVO=(RpprVO)request.getAttribute("RpprVO");
 %>
 
-
 <%@include file="includeHeadForReport.jsp" %>
 
 
@@ -21,11 +20,12 @@
 
 <div id="page-wrapper">
 
+<jsp:useBean id="prodSvc" scope="page" class="com.prod.model.ProdService" />
 	<div class="container-fluid">
 		<div class="row">
 			<div class="row">
 				<div class="col-lg-8">
-					<div class="panel panel-default">
+					<div class="panel panel-danger">
 						<div class="panel-heading">
 							<h3 class="panel-title">
 								<i class="fa fa-money fa-fw"></i><b>檢舉編號:${rpprVO.rppr_id}</b>
@@ -36,13 +36,13 @@
 								<b>檢舉日期:</b> ${rpprVO.rppr_date}
 							</p>
 							<p>
-								<b>檢舉人:</b> ${rpprVO.user_id}
+								<b>檢舉人編號:</b> ${rpprVO.user_id}
 							</p>
 							<p>
-								<b>被檢舉商品:</b> ${rpprVO.prod_id}
+								<b>被檢舉商品:</b> ${prodSvc.getOneProd(rpprVO.prod_id).prod_name}
 							</p>
 							<p>
-								<b>被檢舉商家:</b> 安全科研
+								<b>被檢舉商家:</b> ${prodSvc.getOneProd(rpprVO.prod_id).store_id}
 							</p>
 							<p>
 								<b>內文:</b><br>
@@ -54,24 +54,28 @@
 			<div class="container">
 				<div class="row">
 					<c:if test="${rpprVO.rppr_status==0}">
-						<div class="col-xs-12 col-md-2 col-md-offset-6">
+						<div class="col-xs-12 col-md-1 col-md-push-4">
 							<form method="POST" action="<%=request.getContextPath()%>/back-end/report/rppr.do" name="form1">
 								<input type="hidden" name="rppr_status" value="1">
 								<input type="hidden" name="rppr_id" value="${rpprVO.rppr_id}">
 								<input type="hidden" name="action" value="update">
-								<input type="submit" class="btn btn-danger" value="處理">
+								<input type="submit" class="btn btn-sm btn-danger" value="移除產品">
+							</form>
+						</div>	
+						<div class="col-xs-12 col-md-1 col-md-push-5">
+							<form method="POST" action="<%=request.getContextPath()%>/back-end/report/rppr.do" name="form2">
+								<input type="hidden" name="rppr_status" value="2">
+								<input type="hidden" name="rppr_id" value="${rpprVO.rppr_id}">
+								<input type="hidden" name="action" value="update">
+								<input type="submit" class="btn btn-sm btn-danger" value="保留產品">
 							</form>
 						</div>
 					</c:if>		
-					<c:if test="${rpprVO.rppr_status==1}">
-						<div class="col-xs-12 col-md-2 col-md-offset-6">
-							<input type="submit" class="btn btn-success" value="產品已下架">
-						</div>
-					</c:if>	
 				</div>
 			</div>
 		</div><!-- /.row -->
 	</div>
+	
 </div>
 
 </body>

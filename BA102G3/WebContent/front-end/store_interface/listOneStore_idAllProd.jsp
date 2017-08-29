@@ -10,17 +10,31 @@
 		String account = (String) session.getAttribute("account");
 		StoreService storeSvc = new StoreService();
 		StoreVO storeVO = storeSvc.getOneStoreByUsed_Id(userVO.getUser_id());
-		//將商店別名和商店編號放入map內 ,開始
-// 		String store_no=storeVO.getStore_id().toString().substring(2,6);
-// 		Map<String,Integer> stores=new Hashtable<String,Integer>();
-// 		stores.put(store_no,storeVO.getStore_id());
-// 		application.setAttribute("stores",stores);
-		//將商店別名和商店編號放入map內 ,結束
-		ProdService prodSvc = new ProdService();
-		List<ProdVO> list = prodSvc.getOneStore_idAllProd(storeVO.getStore_id());
+		pageContext.setAttribute("storeVO", storeVO);
+		//將store_id存在session中
+		Integer store_id=new Integer(storeVO.getStore_id());
+		session.setAttribute("store_id",store_id);
+		//將上線的store_id用set存起來
+		Set<Integer> store_ids=new HashSet<Integer>();
+		store_ids.add(store_id);
+		application.setAttribute("store_ids", store_ids);
+		//取得該商店會員所擁有的prod
+		
+		
+		 //若萬用查詢沒有給東西，則帶入該商店所有商品。
+		 List<ProdVO> listProds_ByCompositeQuery=null;
+	    if(request.getAttribute("listProds_ByCompositeQuery")!=null){
+	    	listProds_ByCompositeQuery=(List<ProdVO>)request.getAttribute("listProds_ByCompositeQuery");
+	    	pageContext.setAttribute("listProds_ByCompositeQuery",listProds_ByCompositeQuery);
+	    }else{
+	    	ProdService prodSvc = new ProdService();
+	    	listProds_ByCompositeQuery=(List<ProdVO>)prodSvc.getOneStore_idAllProd(storeVO.getStore_id());
+	    	pageContext.setAttribute("listProds_ByCompositeQuery",listProds_ByCompositeQuery);
+	    }
+		
+		//計算未審核訂單、未備貨_待取貨的狀態數量
 		OrdService ordSvc = new OrdService();
 		List<OrdVO> ordlist=ordSvc.getOneStore_idAllOrd(storeVO.getStore_id());
-		//計算未審核訂單、未備貨_待取貨的狀態數量
 		Integer unCheckOrd_grant=0;
 		Integer unFinishOrd_status=0;
 		for(OrdVO ordVO:ordlist){
@@ -31,7 +45,7 @@
 				unFinishOrd_status+=1;
 			}
 		}
-		pageContext.setAttribute("list", list);
+		
 		
 %>
 		
@@ -80,6 +94,7 @@
 .item img {
 	height: 300px;
 	width: 100%;
+	
 }
 
 th {
@@ -92,24 +107,41 @@ td{
   white-space : nowrap;
   width : 240px;
 }
-.AutoNewline{
-word-break: break-all;/*必須*/
-width:45px;
+.areaColor{
+	background-color:#E2A8B7;
 }
 </style>
 </head>
 
-<body>
+<body  onload="connect();" onunload="disconnect();">
 
 	<%@include file="/front-end/store_interface/headerBar.file"%>
 	<div class="callout"></div>
-	<div class="container" >
+	<div class="areaColor">
+	<div class="container headBar1 " >
 		<div class="row">
 			<div class="col-md-4 ">
+				<div class="row">
 				<h3 class="page-header">商品列表</h3>
+				<img class="img-rounded" id="boxshadow" src="<%=request.getContextPath()%>/front-end/user/userImg.do?user_id=${userVO.user_id}" height="150" width="120">
+				<h4>目前登入人員:${userVO.user_lastname}${userVO.user_firstname}</h4>
+				</div>
 			</div>
-			<div class="col-md-4 col-xs-6">
-	                    <div class="panel panel-primary">
+			<div class="col-md-4  col-xs-6 text-left">
+			<div class="callout"></div>
+				<div>
+					<strong>商店名稱:<%=storeVO.getStore_name()%></strong></div>
+				<div>
+					<b>商店描述:</b></div>
+					<div><%=storeVO.getStore_describe()%></div>
+				<div>
+					商店營業時間:<%=storeVO.getStore_time()%></div>
+				<div>
+					商店營業電話:<%=storeVO.getStore_phone()%></div>
+			</div>
+			<div class="col-md-4  col-xs-6 ">
+			<div class="callout"></div>
+	                	<div class="panel panel-primary">
 	                        <div class="panel-heading">
 	                            <div class="row">
 	                                <div class="col-xs-3">
@@ -122,8 +154,7 @@ width:45px;
 	                            </div>
 	                        </div>
 	                    </div>
-	                </div>
-	                <div class="col-md-4 col-xs-6">
+	                	
 	                    <div class="panel panel-primary">
 	                        <div class="panel-heading">
 	                            <div class="row">
@@ -140,17 +171,39 @@ width:45px;
 	                </div>
 		</div>
 	</div>
-
+	</div>
 	<div id="page-wrapper col-md-12">
 		<div class="col-md-6">
 			<ol class="breadcrumb">
 				<li class="active">查看所有商品</li>
 				
 			</ol>
-			<%@ include file="page1.file" %>
+			
 		</div>
-		<!-- 查詢訂單，待套用萬用搜尋 -->
+		<!-- 關鍵字查詢產品，待套用萬用搜尋 -->
 
+ 			<div id="page-wrapper col-md-12">
+                <div class="col-md-4">
+						<FORM METHOD="post"
+							ACTION="<%=request.getContextPath()%>/front-end/prod/prod.do"
+							name="form1">
+							<div class="col-md-6">
+			
+								產品名稱_關鍵字查詢:<input type="text" name="prod_name" value="">
+							</div>
+							<div class="col-md-6">
+								<button class="btn btn-default">送出</button>
+								<!-- 		        <input type="submit" value="送出"> -->
+								<input type="hidden" name="store_id" value="${storeVO.store_id }">
+								<input type="hidden" name="action" value="listProds_ByCompositeQuery">
+							</div>
+						</FORM>
+				</div>
+						<div class="col-md-4 ">
+				
+						</div>
+                
+			</div>
 	</div>
 
 
@@ -173,7 +226,7 @@ width:45px;
 	<div class="container-fluid col-md-12">
 
 		<div class="row">
-
+	
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">
@@ -187,13 +240,9 @@ width:45px;
 								<tr>
 									<th>修改資料</th>
 									<th>產品編號</th>
-<!-- 									<th>商家編號</th> -->
 									<th>產品名稱</th>
-<!-- 									<th>產品描述</th> -->
 									<th>產品價格</th>
 									<th>產品種類</th>
-<!-- 									<th>產品規格</th> -->
-<!-- 									<th>產品品牌</th> -->
 									<th>產品更新日期</th>
 									<th>產品售出數量</th>
 									<th>產品狀態</th>
@@ -206,8 +255,8 @@ width:45px;
 
 
 								</tr>
-								
-								<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
+							<%@include file="page1_ByCompositeQuery.file" %>	
+								<c:forEach var="prodVO" items="${listProds_ByCompositeQuery}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>" >
 									<tr align='center' valign='middle'>
 										<div class="col-xs-12 col-md-10">
 											<div class="item">
@@ -221,53 +270,39 @@ width:45px;
 												</td>
 												<td>
 														<a href='#${prodVO.prod_id}' data-toggle="modal" class="btn btn-info">${prodVO.prod_id}</a>
-					<div class="modal fade" id="${prodVO.prod_id}">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-									<h4 class="modal-title">${prodVO.prod_name}</h4>
-								</div>
-								<div class="modal-body">
-									<div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
-									<div class="col-md-12">
-									<div class="AutoNewline"><b>產品描述:</b><br> ${prodVO.prod_descript}</div>
-									<div>評分次數: ${prodVO.prod_count}</div>
-									<div>評分總分: ${prodVO.prod_score}</div>
-									
-									<c:if test="${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status=='1'}" >
-										<div><del><p>價格:$<font color="red">${prodVO.prod_price}</font></p></del></div> 
-										<div><p>促銷價格:$<font color="red">${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_price}</font></p></div>
-									</c:if>
-									<c:if test="${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status=='0'||PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status==null}" >
-										<div><p>價格:$<font color="red">${prodVO.prod_price}</font></p></div> 
-									</c:if>
-									</div>
-								</div>
-								
-								<div class="modal-footer">
-									
-								</div>
-							</div>
-						</div>
-					</div>
-												
-												
-												
-												
-												
-												
-												
-												
-												
+												<div class="modal fade" id="${prodVO.prod_id}">
+													<div class="modal-dialog">
+														<div class="modal-content">
+															<div class="modal-header">
+																<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+																<h4 class="modal-title">${prodVO.prod_name}</h4>
+															</div>
+															<div class="modal-body">
+																<div id="boxshadow"><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
+																<div class="col-md-12">
+																<div>評分次數: ${prodVO.prod_count}</div>
+																<div>評分總分: ${prodVO.prod_score}</div>
+																
+																<c:if test="${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status=='1'}" >
+																	<div><del><p>價格:$<font color="red">${prodVO.prod_price}</font></p></del></div> 
+																	<div><p>促銷價格:$<font color="red">${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_price}</font></p></div>
+																</c:if>
+																<c:if test="${PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status=='0'||PrpmSvc.getOneRmPrice_prod(prodVO.prod_id).prpm_status==null}" >
+																	<div><p>價格:$<font color="red">${prodVO.prod_price}</font></p></div> 
+																</c:if>
+																</div>
+															</div>
+															
+															<div class="modal-footer">
+																
+															</div>
+														</div>
+													</div>
+												</div>
 												</td>
-<%-- 												<td>${prodVO.store_id}</td> --%>
 												<td>${prodVO.prod_name}</td>
-<%-- 												<td >${prodVO.prod_descript}</td> --%>
 												<td>$${prodVO.prod_price}</td>
 												<td>${prodVO.prod_sort}</td>
-<%-- 												<td>${prodVO.prod_format}</td> --%>
-<%-- 												<td>${prodVO.prod_brand}</td> --%>
 												<td>${prodVO.prod_updatetime}</td>
 												<td>${prodVO.prod_soldcount}</td>
 												<td>${prodVO.prod_status}</td>
@@ -281,7 +316,7 @@ width:45px;
 						</table>
 							
 						<div class="col-xs-12 col-md-8 col-md-offset-4">
-						<%@ include file="page2.file" %>
+							<%@include file="page2_ByCompositeQuery.file" %>
 						</div>
 					</div>
 				</div>
@@ -293,15 +328,13 @@ width:45px;
 	<div class="row">
 	
 <!-- 聊天區塊 -->
-			<%--          <c:if test="${userVO!=null}"> --%>
-			<div id="messagearea" class="chatbox" style="display: none;"
-				onload="connect(),showTime();" >
+			<div id="messagearea" class="chatbox" style="display: none;" >
 				<div class="chatBar">
 					<h3 id="test"></h3>
 				</div>
 				<div class="row">
-					<div id="closechatbox" class="closechatbtn text-center btn-info"
-						onclick="disconnect();">X</div>
+					<div id="closechatbox" class="closechatbtn text-center btn-info"  onclick="disconnect();"
+						>X</div>
 					<div class="col-md-12">
 						<textarea id="messagesArea" class="message-area" readonly></textarea>
 					</div>
@@ -326,8 +359,6 @@ width:45px;
 			</div>
 			<div id="messagebtn" class="chatbtn text-center btn-info"
 				onclick="connect();">ChatBox</div>
-		           
-			<%--        </c:if> --%>
 			<!-- 聊天區塊結束 -->
 </div>
 </div>
@@ -346,15 +377,14 @@ width:45px;
 		function openMessage() {
 			document.getElementById('messagebtn').style.display = 'none';
 			document.getElementById('messagearea').style.display = '';
-			
+
 		}
 		function closeMessage() {
 			document.getElementById('messagebtn').style.display = '';
 			document.getElementById('messagearea').style.display = 'none';
-			
 
 		}
-		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/"+<%=storeVO.getStore_id()%>;
+		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/"+<%=userVO.getUser_id()%>;
 		var host = window.location.host;
 		var path = window.location.pathname;
 		var webCtx = path.substring(0, path.indexOf('/', 1));
@@ -366,11 +396,11 @@ width:45px;
 		function connect() {
 			// 建立 websocket 物件
 			webSocket = new WebSocket(endPointURL);
-			
+
 			webSocket.onopen = function(event) {
-// 				document.getElementById('sendMessage').disabled = false;
-// 				document.getElementById('connect').disabled = true;
-// 				document.getElementById('disconnect').disabled = false;
+				document.getElementById('sendMessage').disabled = false;
+				document.getElementById('connect').disabled = true;
+				document.getElementById('disconnect').disabled = false;
 
 			};
 
@@ -382,10 +412,11 @@ width:45px;
 				webSocket.send(messagesArea.value);
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			};
+			
+// 			webSocket.onclose = function(event) {
+// 				updateStatus("WebSocket 已離線");
+// 			};
 
-			webSocket.onclose = function(event) {
-
-			};
 		}
 
 		//webSocket 區塊
@@ -414,9 +445,7 @@ width:45px;
 		}
 
 		function disconnect() {
-			
 			webSocket.close();
-			console.log("已離線");
 // 			document.getElementById('sendMessage').disabled = true;
 // 			document.getElementById('connect').disabled = false;
 // 			document.getElementById('disconnect').disabled = true;
@@ -433,7 +462,6 @@ width:45px;
 		}
 		window.onload = init;
 	</script>
-
 </body>
 
 </html>

@@ -1,0 +1,82 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+ <!-- Navigation -->
+    <!-- <a id="menu-toggle" href="#" class="btn btn-dark btn-lg toggle"><i class="fa fa-bars"></i></a> -->
+    
+    <nav id="mainNav" class="navbar navbar-default navbar-custom navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
+                </button>
+                <a href="<%=request.getContextPath()%>/front-end/rest_interface/listOneRest_idAllDish.jsp"><img src="<%=request.getContextPath()%>/front-end/img/logo3.png"></a>
+                <a class="navbar-brand page-scroll" href="<%=request.getContextPath()%>/front-end/rest_interface/listOneRest_idAllDish.jsp">Anytime Grip</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    
+                   
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        <i class="fa fa-gift"></i>菜單資料管理<i class="fa fa-caret-down"></i></a>
+                    <ul class="dropdown-menu dropdown-user">
+                    	
+                        <li><a href="<%=request.getContextPath() %>/front-end/rest_interface/listOneRest_idAllDish.jsp"><i class="fa fa-smile-o fa-fw"></i>料理列表</a>
+                        </li>
+                        <li><a href="<%=request.getContextPath() %>/front-end/rest_interface/addDish.jsp"><i class="fa fa-smile-o fa-fw"></i>上架新料理</a>
+                        </li>
+                        <li><a href="<%=request.getContextPath() %>/front-end/rest_interface/addAvtb.jsp"><i class="fa fa-smile-o fa-fw"></i>新增訂位時段&人數</a>
+                        </li>
+                        <li><a href="<%=request.getContextPath() %>/front-end/rest_interface/listMyAllRepm.jsp"><i class="fa fa-github-alt fa-fw"></i> 查看所有促銷專案</a>
+                        </li>
+                        <li><a href="<%=request.getContextPath() %>/front-end/rest_interface/addRepm.jsp"><i class="fa fa-warning fa-fw"></i> 建立促銷專案</a>
+                        </li>
+                        
+                    </ul>
+                    </li>    
+
+                    <li>
+                       
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                         <i class="fa fa-bar-chart-o fa-fw"></i>訂單管理<i class="fa fa-caret-down"></i></a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="<%=request.getContextPath()%>/front-end/rest_interface/listRest_idAllRetaselect.jsp"><i class="fa fa-info fa-fw"></i>查看訂位</a>
+                        </li>
+                        <li><a href="<%=request.getContextPath()%>/front-end/rest_interface/listRest_idAllAvtbselect.jsp"><i class="fa fa-info fa-fw"></i>查看時段&人數</a>
+                        </li>
+                        
+                        
+                    </ul>
+                    </li>
+                    
+                     <li class="dropdown">
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        
+                        <i class="fa fa-user fa-fw"></i>餐廳資訊管理<i class="fa fa-caret-down"></i></a>
+                    <ul class="dropdown-menu dropdown-user">
+                    	<li><a href="<%= request.getContextPath() %>/front-end/user/restMemberProfile.jsp"><i class="fa fa-user-md fa-fw"></i>${userVO.user_lastname},您好</a></li>
+                        <li>
+                        	<a href="<%= request.getContextPath() %>/front-end/user/restMemberProfile.jsp"><i class="fa fa-info fa-fw"></i>會員資訊修改</a>
+                        </li>
+                        <li>
+                        	<a href="<%= request.getContextPath() %>/front-end/user/restProfile.jsp"><i class="fa fa-info fa-fw"></i>餐廳資訊修改</a>
+                        </li>
+                        
+                        <li class="divider"></li>
+                        <li>
+                        	<a href="<%= request.getContextPath() %>/front-end/UserLogoutHandler"><i class="fa fa-sign-out fa-fw"></i> 登出</a>
+                        </li>
+                    </ul>
+                    </li>
+                    
+                    
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container-fluid -->
+    </nav>

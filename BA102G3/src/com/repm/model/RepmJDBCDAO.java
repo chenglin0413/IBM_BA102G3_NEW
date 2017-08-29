@@ -283,4 +283,10 @@ public class RepmJDBCDAO implements RepmDAO_interface {
 		}
 
 	}
+
+	@Override
+	public List<RepmVO> findByRestID(Integer rest_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

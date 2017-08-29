@@ -48,9 +48,9 @@
 												<th>負責人編號</th>
 												<th>繳費期限</th>
 												<th>繳費日期</th>
+<!-- 												<th></th>
 												<th></th>
-												<th></th>
-                                            </tr>
+ -->                                            </tr>
                                         </thead>
                                                                                                                         
                                         <%@ include file="page1.file" %>
@@ -93,7 +93,7 @@
 
                                                 <td>${mfeeVO.mfee_date}</td>
                                                 <td><font color="blue">${mfeeVO.pay_date}</font></td>
-												<td>
+<%-- 												<td>
 													<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/mfee/mfee.do">
 			     									<input type="submit" value="修改" class="btn btn-primary">
 			     									<input type="hidden" name="mfee_id" value="${mfeeVO.mfee_id}">
@@ -108,24 +108,12 @@
 												    <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 			    									<input type="hidden" name="whichPage"	value="<%=whichPage%>">               <!--送出當前是第幾頁給Controller-->
 			    									<input type="hidden" name="action" value="delete"></FORM>
-												</td>
+												</td> --%>
                                             </tr>                                        
                                         </c:forEach>    
                                         </tbody>                                        
                                     </table>
                                     <%@ include file="page2.file" %>
-
-                                    <div class="text-center">
-                                        <ul class="pagination">
-                                        <li><a href="#">&laquo;</a></li>
-                                        <li><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li class="active"><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">5</a></li>
-                                        <li><a href="#">&raquo;</a></li>
-                                        </ul>
-                                    </div>
 
                                 </div>
                             </div>

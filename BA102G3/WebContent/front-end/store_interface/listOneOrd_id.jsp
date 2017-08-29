@@ -70,7 +70,7 @@
 				<div class="col-md-6">
                 <ol class="breadcrumb">
                     <li>
-                        <a href="<%=request.getContextPath()%>/front-end/store_interface/listOneStore_idAllOrdselect.jsp">查詢訂單列表</a>
+                        <a href="<%=request.getContextPath()%>/front-end/store_interface/listOneStore_idAllOrd.jsp">查詢訂單列表</a>
                     </li>
                     <li class="active">訂單明細</li>
                 </ol>

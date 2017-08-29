@@ -11,8 +11,10 @@
 	List<ProdVO> list = prodSvc.getAll4member();
     pageContext.setAttribute("list",list);
     pageContext.setAttribute("prodtwelvelist",prodtwelvelist);
-   
-    
+   	//產品圖片動畫
+    String [] animateds= {"animated zoomIn","animated  flip","animated  swing","animated  zoomInDown","animated  zoomInUp","animated zoomInRight","animated zoomInLeft"};
+	int number=0;
+    //檢舉產品使用
     RpprVO rpprVO=(RpprVO)request.getAttribute("rpprVO");
     pageContext.setAttribute("rpprVO",rpprVO);
    
@@ -44,42 +46,43 @@
     <!-- Custom Fonts -->
     <link href="<%=request.getContextPath()%>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-	
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    <style type="text/css">
-    	<style> 
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css"/>
+<style type="text/css">
+.item img {
+	height: 300px;
+	width: 100%;
+}
 
-        .item img{
-            height: 250px;
-            width:100%;
-            
-        }
-       
-        .content: {
-          position: relative;
-        }
-        .box{
-          width: 110px;
-          height: 50px;
-          
-          position: fixed;
-          top: 52px;
-          left: 5px;
-          margin: auto;
-        }
-         .rpprForm {
-        	display:none;
-        }
-        li {
-			list-style-type:none;
-			}
-    </style>
-    
+.content: {
+	position: relative;
+}
+
+.box {
+	width: 110px;
+	height: 50px;
+	position: fixed;
+	top: 52px;
+	left: 5px;
+	margin: auto;
+}
+
+.rpprForm {
+	display: none;
+}
+
+li {
+	list-style-type: none;
+}
+
+body {
+	background-image: url(<%=request.getContextPath()%>/front-end/img/bg004.jpg);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	background-size: cover;
+}
+</style>
+
 </head>
 
 <body>
@@ -136,26 +139,17 @@
            </ol>
         
         <ul class="nav nav-tabs">
-<!--                             <div class="dropdown"> -->
-<!--                               <a href="#" class="dropdown-toggle" data-toggle="dropdown">商品種類 <b class="caret"></b></a> -->
-<!--                               <ul class="dropdown-menu"> -->
-<!--                                 <li><a href="#">零食、點心</a></li> -->
-<!--                                 <li><a href="#">免稅菸酒</a></li> -->
-<!--                                 <li><a href="#">國際精品</a></li> -->
-<!--                               </ul> -->
-<!--                             </div> -->
                              <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?store_ter=1&action=getOneStoreTer_For_Display"><i class="fa fa-arrow-circle-o-up"></i>第一航廈</a></li>
                              <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?store_ter=2&action=getOneStoreTer_For_Display"><i class="fa fa-arrow-circle-o-up"></i>第二航廈</a></li>
-                            <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=3&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>伴手禮</a></li>
+                            <li ><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=3&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>伴手禮</a></li>
                             <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=4&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>酒類</a></li>
 							<li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=5&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>文具用品</a></li>   
                             <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=6&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>生活用品</a></li>
                              <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=7&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>化妝品</a></li>
                               <li><a href="<%=request.getContextPath()%>/front-end/prod/prod.do?prod_sort=8&action=getOneSort_For_Display"><i class="fa fa-arrow-circle-o-up"></i>精品</a></li>
-                            
+         </ul>
 
                            
-         </ul>
 
 
 	<%-- 錯誤表列 --%>
@@ -190,19 +184,19 @@
 </ul>
 	</div>
 	</div>
-	<div class="col-md-10">
+	<div class="col-md-10" id="mainpage">
 	<div class="row">
 	<c:forEach var="prodVO" items="${list}" begin="<%=pageIndex%>" end="<%=pageIndex+rowsPerPage-1%>">
-			<div class="col-xs-12 col-md-4">
+			<div class="col-xs-12 col-md-4" >
               
                 <div class="item " >
                 <c:forEach var="storeVO" items="${StoreSvc.all}">
 				<c:if test="${prodVO.store_id==storeVO.store_id}">
-					<div><a href="<%=request.getContextPath()%>/front-end/store/store.do?store_id=${prodVO.store_id}&action=seeOneStoredetail">${storeVO.store_name}</a></div>
+					<div><a href="<%=request.getContextPath()%>/front-end/member_interface/listOneStore_detail.jsp?store_id=${prodVO.store_id}">${storeVO.store_name}</a></div>
 				 </c:if>
 				 </c:forEach>
-                <div id="boxshadow" ><img src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="300" height="250"></div>
-				<div><h3>${prodVO.prod_name}</h3></div>
+                <div id="boxshadow" ><img class="<%=animateds[number%7]%>" src="<%=request.getContextPath()%>/front-end/prod/DBGifReader?prod_id=${prodVO.prod_id}" width="270" height="200"></div>
+				<div class="AutoSkip"><b>${prodVO.prod_name}</b></div>
 				<div><h4>$${prodVO.prod_price}</h4></div>
 				<div><h4>${prodVO.prod_sort}</h4></div>
 				
@@ -250,8 +244,8 @@
 									 
 									  
 									 <form name="shoppingForm" action="<%=request.getContextPath()%>/front-end/eshop/ShoppingServlet" method="POST">	
-												<div>數量： <input type="number" name="quantity" min="1" max="10" value="1" size="2"></div>
-							                  <div class="btn btn-default"><input type="submit" name="Submit" value="放入購物車"></div>
+												<div>數量： <input type="number" name="quantity" min="1" max="100" value="1" size="2"></div>
+							                  <button class="btn btn-success">放入購物車</button>
 										  <input type="hidden" name="prod_id" value="${prodVO.prod_id}">
 								      	  <input type="hidden" name="store_id" value="${prodVO.store_id}">
 									      <input type="hidden" name="prod_name" value="${prodVO.prod_name}">
@@ -271,7 +265,7 @@
 								       <form name="wishForm" action="<%=request.getContextPath()%>/front-end/wish/wish.do" method="POST">
 								       	  <input type="hidden" name="user_id" value="${userVO.user_id}">			
 								       	  <input type="hidden" name="prod_id" value="${prodVO.prod_id}">
-									       <div class="btn btn-default"><input type="submit" name="Submit" value="加入追蹤"></div>
+									       <button class="btn btn-info">加入追蹤</button>
 									       <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑-->
 									       <input type="hidden" name="action" value="ADDTOWish">
 								       </form>
@@ -322,6 +316,7 @@
 			
 		</div>
         </div>
+        <%number+=1; %>
 	</c:forEach>
 		</div>
 		</div>
@@ -363,7 +358,6 @@
     		  
     		});
     </script>
-
 
 
   

@@ -44,8 +44,8 @@ MfeeVO mfeeVO = (MfeeVO) request.getAttribute("mfeeVO");
 												<th>負責人編號</th>
 												<th>繳費期限</th>
 												<th>繳費日期</th>
-												<th></th>
-												<th></th>
+<!-- 												<th></th>
+												<th></th> -->
                                             </tr>
                                         </thead>
                             
@@ -88,7 +88,7 @@ MfeeVO mfeeVO = (MfeeVO) request.getAttribute("mfeeVO");
 
                                                 <td>${mfeeVO.mfee_date}</td>
                                                 <td>${mfeeVO.pay_date}</td>
-												<td>
+<%-- 												<td>
 													<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/back-end/mfee/mfee.do">
 			     									<input type="submit" value="修改" class="btn btn-primary">
 			     									<input type="hidden" name="mfee_id" value="${mfeeVO.mfee_id}">
@@ -101,7 +101,7 @@ MfeeVO mfeeVO = (MfeeVO) request.getAttribute("mfeeVO");
 			    									<input type="hidden" name="mfee_id" value="${mfeeVO.mfee_id}">
 												    <input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"><!--送出本網頁的路徑給Controller-->
 			    									<input type="hidden" name="action" value="delete"></FORM>
-												</td>
+												</td> --%>
                                             </tr>                                        
                                 
                                         </tbody>                                        

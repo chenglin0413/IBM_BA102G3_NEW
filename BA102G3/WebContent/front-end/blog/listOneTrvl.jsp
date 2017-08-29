@@ -3,6 +3,8 @@
 <%@ page import="com.trvl.model.*,com.trpi.model.*,com.tlcm.model.*,com.rptl.model.*,com.user.model.*"%>
 <%@ page import="java.util.*"%>
 
+
+
 <%	if(session.getAttribute("userVO")!=null){
 	UserVO userVO = (UserVO)session.getAttribute("userVO");
 	String account =(String) session.getAttribute("account");
@@ -10,11 +12,9 @@
 	pageContext.setAttribute("user_id",user_id);
 }
 	TrvlVO trvlVO = (TrvlVO) request.getAttribute("trvlVO");
-	RptlVO rptlVO = (RptlVO) request.getAttribute("rptlVO");
-	List<TrpiVO> listTrpis = (List<TrpiVO>)request.getAttribute("listTrpis");
-	List<TlcmVO> listTlcms = (List<TlcmVO>) request.getAttribute("listTlcms");
 %>
-
+<jsp:useBean id="userSvc" scope="page" class="com.user.model.UserService"/>    
+<jsp:useBean id="trvlSvc" scope="page" class="com.trvl.model.TrvlService"/>
 <!DOCTYPE html>
 <head>
 
@@ -34,15 +34,14 @@
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
     <link href="<%= request.getContextPath() %>/front-end/css/bootstrap.css" rel="stylesheet">
 
-  <!-- Custom CSS -->
+    <!-- Custom CSS -->
     <link href="<%= request.getContextPath() %>/front-end/css/stylish-portfolio.css" rel="stylesheet">
 
     <!-- Custom Fonts -->
     
     <link href="<%= request.getContextPath() %>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-	 <link href="https://fonts.googleapis.com/css?family=Roboto:400,100italic,100,300,300italic,900italic,900,700,700italic,500italic,500,400italic" rel="stylesheet" type="text/css">
-	<link href="<%= request.getContextPath() %>/front-end/blog/listAllTrvl.css" rel="stylesheet">
-	
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
+   
 
     <title>瀏覽單篇</title>
 
@@ -54,7 +53,6 @@
         .box{
           width: 110px;
           height: 50px;
-          
           position: fixed;
           top: 52px;
           left: 5px;
@@ -66,8 +64,17 @@
         #rptlForm {
         	display:none;
         }
-        
-       
+        .img-thumbnail{
+        	width:800px;
+        	border-radius:5px;
+        }
+       	.profilePic {
+ 			margin-left:15px;      		
+       	}
+       	.sidebar-module-inset > h4{
+       		margin-left:40px;
+       		background-color:
+       	}
     </style>
 
 </head>
@@ -113,14 +120,12 @@
 	        <h2 class="blog-post-title">${trvlVO.getTrvl_loc()}</h2>
 	        	<p class="blog-post-meta">
 	       			<img src="<%=request.getContextPath()%>/front-end/blog/img/passage-of-time.png"> &nbsp ${trvlVO.getTrvl_date()} &nbsp by &nbsp
-	       			<img src="<%=request.getContextPath()%>/front-end/blog/img/man-user.png">&nbsp<a href="#">${trvlVO.user_id}</a>
+	       			<img src="<%=request.getContextPath()%>/front-end/blog/img/man-user.png">&nbsp<a href="#">${userSvc.getOneUser(trvlVO.user_id).user_account}</a>
 	          	</p>
 	        </div>
 		<div>
-			<c:forEach var="trpiVO" items="${listTrpis}">
-				<c:if test="${trvlVO.trvl_id==trpiVO.trvl_id}">
-					<img class="img-thumbnail" src="<%= request.getContextPath()%>/front-end/trpi/DBGifReader.do?trpi_id=${trpiVO.trpi_id}">
-				</c:if>
+			<c:forEach var="trpiVO" items="${trvlSvc.getTrpisByTrvlId(trvlVO.trvl_id)}">
+				<img class="img-thumbnail" src="<%= request.getContextPath()%>/front-end/trpi/DBGifReader.do?trpi_id=${trpiVO.trpi_id}">
 			</c:forEach>
 		</div>
 		<div>
@@ -128,17 +133,21 @@
 		</div><!-- /.blog-post -->
 		<br>
 		<br>
-		<br>
-		<br>
 		<%	
 			java.sql.Date date_SQL = new java.sql.Date(System.currentTimeMillis());
 		%>	
-		<c:forEach var="tlcmVO" items="${listTlcms}">
+		<c:forEach var="tlcmVO" items="${trvlSvc.getTlcmsByTrvlId(trvlVO.trvl_id)}">
 			<div class="panel panel-info">
 				<div class="panel-heading">
-				    <h3 class="panel-title">
-					    <img src="<%=request.getContextPath()%>/front-end/blog/img/man-user.png">${tlcmVO.user_id}
-					    <small>於${tlcmVO.tlcm_date}留言</small> &nbsp <img src="<%=request.getContextPath()%>/front-end/blog/img/pencil.png">
+				    <h3 class="panel-title" style="margin-left:0">
+				    	<div class="row">
+						    <div class="col-md-1" style="padding-right: 0px;">
+							    <img class="img-responsive img-circle" width="50" height="50" src="<%= request.getContextPath() %>/front-end/user/userImg.do?user_id=${tlcmVO.user_id}">
+						    </div>
+						     <div class="col-md-8" style="margin:0 ,0 ,0, 0;"><strong>${userSvc.getOneUser(tlcmVO.user_id).user_account}</strong>
+						    	<small>於${tlcmVO.tlcm_date}留言</small> &nbsp <img src="<%=request.getContextPath()%>/front-end/blog/img/pencil.png">
+				   			 </div>
+				    	</div>
 				    </h3>
 				</div>
 				<div class="panel-body">
@@ -168,8 +177,11 @@
         
         <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
           <div class="sidebar-module sidebar-module-inset">
-            <h4>About</h4>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
+            <h4>About me</h4>
+            <img class="img-responsive profilePic" src="<%= request.getContextPath() %>/front-end/user/userImg.do?user_id=${trvlVO.user_id}">
+            <p>${userSvc.getOneUser(trvlVO.user_id).user_firstname}  ${userSvc.getOneUser(trvlVO.user_id).user_lastname}</p>
+            <a href="#">${userSvc.getOneUser(trvlVO.user_id).user_email}</a>
+            <p> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed.</p>
           </div>
           <div class="sidebar-module">
             <h4>Archives</h4>
@@ -179,59 +191,45 @@
               <li><a href="#">January 2014</a></li>
               <li><a href="#">December 2013</a></li>
               <li><a href="#">November 2013</a></li>
-              <li><a href="#">October 2013</a></li>
-              <li><a href="#">September 2013</a></li>
-              <li><a href="#">August 2013</a></li>
-              <li><a href="#">July 2013</a></li>
-              <li><a href="#">June 2013</a></li>
-              <li><a href="#">May 2013</a></li>
-              <li><a href="#">April 2013</a></li>
             </ol>
           </div>
           <div class="sidebar-module">
-            <h4>Elsewhere</h4>
+           <h4>	<img src="<%= request.getContextPath()%>/front-end/blog/img/handdown.png" width="32">Find and Follow</h4>
             <ol class="list-unstyled">
-              <li><a href="#">GitHub</a></li>
-              <li><a href="#">Twitter</a></li>
-              <li><a href="#">Facebook</a></li>
+              <li><a href="#"><img src="<%= request.getContextPath() %>/front-end/blog/img/github.png" width="32">GitHub</a></li>
+              <li><a href="#"><img src="<%= request.getContextPath() %>/front-end/blog/img/twitter.png" width="32">Twitter</a></li>
+              <li><a href="#"><img src="<%= request.getContextPath() %>/front-end/blog/img/facebook.png" width="32">Facebook</a></li>
+              <li><a href="#"><img src="<%= request.getContextPath() %>/front-end/blog/img/instagram.png" width="32">Instagram</a></li>
               <li>  								
               <%long seconds = new java.util.Date().getTime();%>
               
-             		 <!-- 檢舉btn,預設隱藏 -->
+             		<!-- 檢舉btn,預設隱藏 -->
               		<c:if test="${not empty userVO.user_account}" var="condition" scope="session" > 
 	              		<button class="btn-danger btn-xs btnReport">檢舉遊記</button>	
-	              		<form action="<%=request.getContextPath()%>/back-end/report/rptl.do" method="post" id="rptlForm" class="form-horizontal">
-							<div class="form-group">
-								<label class="col-sm-3 control-label" >檢舉標題</label>
-								<div class="col-sm-9">
-									<input type="text" name="rptl_tittle" class="form-contrl" size="15" required>
-								</div>										
+							<div class="form-horizontal" id="rptlForm">
+								<div class="form-group ">
+									<label class="col-sm-6 control-label">檢舉標題</label>
+									<div class="col-sm-9">
+										<input type="text" name="rptl_tittle"  id="rptlTittle" class="form-contrl" size="15" required>
+									</div>										
+								</div>
+								
+								<div class="form-group">
+									<label class="col-sm-6 control-label">檢舉內容</label>
+									<div class="col-sm-9">
+										<textarea name="rptl_content" id="rptlContent" class="form-contrl" required></textarea>
+									</div>										
+								</div>
+								<div class="text-center">
+									<input type="hidden" name="trvl_id" id="trvlId" value="${trvlVO.trvl_id}">
+									<input type="hidden" name="rptl_date" id="rptlDate" value="<%= seconds%>">
+									<input type="hidden" name="action" id="action" value="insert">
+									<input type="submit" class="btn btn-danger btn-sm sendReport" value="送出檢舉" >
+								</div>
 							</div>
-							
-							<div class="form-group">
-								<label class="col-sm-3 control-label">檢舉內容</label>
-								<div class="col-sm-9">
-									<textarea  name="rptl_content" class="form-contrl" required></textarea>
-								</div>										
-							</div>
-							<div class="text-center">
-								<input type="hidden" name="requestURL"	value="<%=request.getServletPath()%>"> 
-								<input type="hidden" name="trvl_id" value="${trvlVO.trvl_id}">
-								<input type="hidden" name="rptl_date" value="<%= seconds%>">
-								<input type="hidden" name="action" value="insert">
-								<input type="submit" class="btn btn-danger btn-sm" value="送出檢舉">
-							</div>
-						</form>
-						<%-- 錯誤表列 --%>
-						<c:if test="${not empty errorMsgs}">
-							<font color='red'>請修正以下錯誤:
-							<ul>
-								<c:forEach var="message" items="${errorMsgs}">
-									<li>${message}</li>
-								</c:forEach>
-							</ul>
-							</font>
-						</c:if>
+						    <div class="comment">  
+								<p id="resultJsonText"></p>  
+						    </div>  
 	              	</c:if>	
               	</li>
             </ol>
@@ -240,8 +238,6 @@
     </div><!-- /.row -->
 </div><!-- /.container -->
 
-
-	
  
 <%@ include file="/front-end/member_interface/script.file" %>	
 
@@ -254,18 +250,49 @@ CKEDITOR.replace('tlcm_content', { //轉換編輯器文末<p>
 }); 
 
 function validateForm(){
-	var str =document.forms["form1"]["tlcm_content"].value;
-	if (str==null || str==""){
-		alert("留言請勿空白");
-  		return false;
+	  if(CKEDITOR.instances.tlcm_content.getData()==""){
+		  alert("留言請勿空白！");
+		  return false;
+	}else {
+		
+		return true;
 	}
 }
 
+
+$(".sendReport").click(function() { 
+ 	$.ajax({ 
+  		url : '<%=request.getContextPath()%>/front-end/report/rptl.do', 
+  		type : 'POST', 
+  		data : { 
+	   		action :      "insert",
+	   		trvl_id:      $('#trvlId').val(),
+	   		rptl_date:	  $('#rptlDate').val(),
+	   		rptl_tittle:  $('#rptlTittle').val(),
+	   		rptl_content: $('#rptlContent').val(),
+	  	}, 
+  	
+	  	dataType: "text",
+	  	
+	    success : function(msg) { 
+	    	console.log(msg)
+	    	$(".btnReport").hide();
+	    	$("#rptlForm").hide();
+	      	$("#resultJsonText").html(msg).css("color","red");
+	     }, 
+	    error : function(xhr) { 
+	     	alert("ajax發生錯誤"); 
+	     	alert(xhr.status);  
+	    } 
+	   }); 
+  });
+
+
 $(document).ready(function(){
   $(".btnReport").click(function(){
-  $("#rptlForm").toggle();
+ 	 $("#rptlForm").toggle();
   });
-  
+   
 });
 
 </script>

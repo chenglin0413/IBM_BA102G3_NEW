@@ -6,25 +6,25 @@
 
 <%
 	
-	StoreVO storeVO=(StoreVO)session.getAttribute("storeVO");
-	pageContext.setAttribute("storeVO", storeVO);
-// 	StoreVO storeVO = null;
-// 	Integer store_id=null;
-// 	String store_no=null;
-// 	if (request.getParameter("store_id") != null) {
-// 		store_id = new Integer(request.getParameter("store_id"));
-// 		store_no=store_id.toString().substring(2,6);
-// 		session.setAttribute("store_id", store_id);//把store_id存起來
-// 		StoreService storeSvc = new StoreService();
-// 		storeVO = storeSvc.getOneStore(store_id);
-// 		pageContext.setAttribute("storeVO", storeVO);
-// 	} else {
-// 		store_id = (Integer) session.getAttribute("store_id");
-// 		store_no=store_id.toString().substring(2,6);
-// 		StoreService storeSvc = new StoreService();
-// 		storeVO = storeSvc.getOneStore(store_id);
-// 		pageContext.setAttribute("storeVO", storeVO);
-// 	}
+	UserVO userVO=(UserVO)session.getAttribute("userVO");
+	StoreVO storeVO = null;
+	Integer store_id=null;
+	
+	//取得已上線商店的store_id。更改上線顯示狀態
+// 	Set<Integer> store_ids=(Set<Integer>)application.getAttribute("store_ids");
+	
+	if (request.getParameter("store_id") != null) {
+		store_id = new Integer(request.getParameter("store_id"));
+		session.setAttribute("store_id", store_id);//把store_id存起來
+		StoreService storeSvc = new StoreService();
+		storeVO = storeSvc.getOneStore(store_id);
+		pageContext.setAttribute("storeVO", storeVO);
+	} else {
+		store_id = (Integer) session.getAttribute("store_id");
+		StoreService storeSvc = new StoreService();
+		storeVO = storeSvc.getOneStore(store_id);
+		pageContext.setAttribute("storeVO", storeVO);
+	}
 	
 %>
 <jsp:useBean id="prodSvc" class="com.prod.model.ProdService" />
@@ -59,12 +59,6 @@
 	href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic"
 	rel="stylesheet" type="text/css">
 
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 <style type="text/css">
 .item img {
 	height: 180px;
@@ -85,21 +79,28 @@
 	width:25px;
 	height:25px;
 }
+ body{
+			background-image: url(<%=request.getContextPath()%>/front-end/img/bg004.jpg);
+			background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+		}
 </style>
 </head>
 
-<body>
+<body  onload="connect();" onunload="disconnect();">
 
 	<%@include file="/front-end/member_interface/headerBar.file"%>
 <div class="callout"></div>
 	<div class="container">
 		<div class="row">
-		<h4>::::頭上的storeid${storeVO.store_id}:::客廳的storeid${applicationScope.store_id}</h4><!-- 測試商店上線狀態 -->
+<%-- 		<h4>::::頭上的storeid${storeVO.store_id}</h4><!-- 測試商店上線狀態 --> --%>
 			<div class="col-md-12 ">
-				<c:if test="${applicationScope.store_id== storeVO.store_id}" var="condition">  
+				<c:if test="${store_ids.contains(storeVO.store_id)==true}" var="condition">  
 							           <td>此商店上線狀態:&nbsp;<img id="online" src="<%=request.getContextPath() %>/front-end/image/circleGreen2.png"></td>
 				</c:if>
-				<c:if test="${applicationScope.store_id!= storeVO.store_id}" var="condition"> 
+				<c:if test="${store_ids.contains(storeVO.store_id)==false||store_ids.size()==0}" var="condition"> 
 							           <td>此商店上線狀態:&nbsp;<img id="online" src="<%=request.getContextPath() %>/front-end/image/circleRed2.png"></td>
 				</c:if>
 				<h3>商店詳情</h3>
@@ -115,7 +116,7 @@
 				<li><a
 					href="<%=request.getContextPath()%>/front-end/member_interface/listAllProd.jsp">商品</a>
 				</li>
-				<li class="active">商店詳情
+				<li class="active">商店詳情 
 				</li>
 
 			</ol>
@@ -140,7 +141,7 @@
 
 			<div class="col-xs-12 col-md-12">
 
-				<div class="item">
+<!-- 				<div class="item"> -->
 
 					<div class="col-md-6">
 						<div class="item">
@@ -154,19 +155,18 @@
 						<div class="row">
 							<%-- 			<div id="store_id">${storeVO.store_id}</div> --%>
 							<div id="store_name">
-								<h3>商店名稱: ${storeVO.store_name}</h3>			
-									
+								<h3>商店名稱: ${storeVO.store_name}</h3><img src="<%=request.getContextPath()%>/front-end/image/thumbup.png" width="40" height="40">			
 								</div>
 							<div>商店描述: ${storeVO.store_describe}</div>
+							<div>評價次數: ${storeVO.store_count}</div>
+							
 							<div>商店評價總分: ${storeVO.store_score}</div>
 							<div>
 								<h4>本商店位於: ${storeVO.store_ter}航廈，${storeVO.store_floor}樓</h4>
 							</div>
-
-
 						</div>
 					</div>
-				</div>
+<!-- 				</div> -->
 			</div>
 
 
@@ -193,15 +193,14 @@
 				</div>
 			</div>
 			<!-- 聊天區塊 -->
-			<%--          <c:if test="${userVO!=null}"> --%>
+			         <c:if test="${userVO!=null}">
 			<div id="messagearea" class="chatbox" style="display: none;"
-				onload="connect(),showTime();" onunload="disconnect();">
+				>
 				<div class="chatBar">
-					<h3 id="test"></h3>
+					<h4 id="title">&nbsp;&nbsp;&nbsp;${storeVO.store_name}</h4>
 				</div>
 				<div class="row">
-					<div id="closechatbox" class="closechatbtn text-center btn-info"
-						onclick="disconnect();">X</div>
+					<div id="closechatbox" class="closechatbtn text-center btn-info" onclick="disconnect();">X</div>
 					<div class="col-md-12">
 						<textarea id="messagesArea" class="message-area" readonly></textarea>
 					</div>
@@ -214,8 +213,7 @@
 							</div>
 						</div>
 						<div class="col-md-4 ">${ userVO.user_lastname}${ userVO.user_firstname}
-							<input type="hidden" id="userName"
-								value="${ userVO.user_lastname}${ userVO.user_firstname}" />
+							<input type="hidden" id="userName" value="${ userVO.user_lastname}${ userVO.user_firstname}" />
 						</div>
 						<div class="col-md-8 ">
 							<input type="submit" id="sendMessage" class="button" value="Send"
@@ -226,8 +224,7 @@
 			</div>
 			<div id="messagebtn" class="chatbtn text-center btn-info"
 				onclick="connect();">ChatBox</div>
-		           
-			<%--        </c:if> --%>
+			       </c:if>
 			<!-- 聊天區塊結束 -->
 			<%-- </c:forEach> --%>
 
@@ -237,6 +234,7 @@
 	<%@ include file="/front-end/member_interface/script.file"%>
 	<script type="text/javascript">
 		//聊天
+		
 		function openMessage() {
 			document.getElementById('messagebtn').style.display = 'none';
 			document.getElementById('messagearea').style.display = '';
@@ -245,7 +243,7 @@
 		function closeMessage() {
 			document.getElementById('messagebtn').style.display = '';
 			document.getElementById('messagearea').style.display = 'none';
-
+			
 		}
 		var MyPoint = "/MyEchoServer/"+<%=storeVO.getStore_id()%>+"/"+<%=storeVO.getStore_id()%>;
 		var host = window.location.host;
@@ -276,9 +274,6 @@
 				messagesArea.scrollTop = messagesArea.scrollHeight;
 			};
 
-			webSocket.onclose = function(event) {
-
-			};
 		}
 
 		//webSocket 區塊
@@ -308,9 +303,9 @@
 
 		function disconnect() {
 			webSocket.close();
-			document.getElementById('sendMessage').disabled = true;
-			document.getElementById('connect').disabled = false;
-			document.getElementById('disconnect').disabled = true;
+// 			document.getElementById('sendMessage').disabled = true;
+// 			document.getElementById('connect').disabled = false;
+// 			document.getElementById('disconnect').disabled = true;
 		}
 
 		//webSocket 結束    

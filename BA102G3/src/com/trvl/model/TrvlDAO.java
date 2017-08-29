@@ -8,6 +8,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -16,6 +18,7 @@ import javax.sql.DataSource;
 import com.tlcm.model.TlcmVO;
 import com.trpi.model.TrpiDAO;
 import com.trpi.model.TrpiVO;
+import com.trvl.controller.jdbcUtil_CompositeQuery_Trvl;
 
 public class TrvlDAO implements TrvlDAO_interface {
 
@@ -48,7 +51,7 @@ public class TrvlDAO implements TrvlDAO_interface {
 	
 	private static final String add_trvl_count = "update trvl set trvl_count=(trvl_count+1) where trvl_id=?";
 	
-	private static final String Get_TOP_BLOGS = "SELECT * FROM (select * from trvl order by trvl_count desc) where rownum <=4";
+	private static final String Get_TOP_BLOGS = "SELECT * FROM (select * from trvl order by trvl_count desc) where rownum <=3";
 
 	@Override
 	public String insert(TrvlVO trvlVO) {
@@ -606,6 +609,69 @@ public class TrvlDAO implements TrvlDAO_interface {
 		} catch (SQLException se) {
 			throw new RuntimeException("A database error occured. " + se.getMessage());
 			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
+	
+	@Override
+	public List<TrvlVO> getAll(Map<String, String[]> map) {
+		List<TrvlVO> list = new ArrayList<TrvlVO>();
+		TrvlVO trvlVO = null;
+	
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+	
+		try {
+			
+			con = ds.getConnection();
+			String finalSQL = "select * from trvl "
+		          + jdbcUtil_CompositeQuery_Trvl.get_WhereCondition(map)
+		          + "order by trvl_date desc";
+			pstmt = con.prepareStatement(finalSQL);
+			System.out.println("●●finalSQL(by DAO) = "+finalSQL);
+			rs = pstmt.executeQuery();
+	
+			while (rs.next()) {
+
+				trvlVO = new TrvlVO();
+				trvlVO.setTrvl_id(rs.getInt("TRVL_ID"));
+				trvlVO.setUser_id(rs.getInt("USER_ID"));
+				trvlVO.setTrvl_date(rs.getDate("TRVL_DATE"));
+				trvlVO.setTrvl_tittle(rs.getString("TRVL_tittle"));
+				trvlVO.setTrvl_loc(rs.getString("TRVL_LOC"));
+				trvlVO.setTrvl_content(rs.getString("TRVL_CONTENT"));
+				trvlVO.setTrvl_count(rs.getInt("TRVL_COUNT"));
+				trvlVO.setTrvl_score(rs.getInt("TRVL_SCORE"));
+				list.add(trvlVO);
+			}
+	
+			// Handle any SQL errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. "
+					+ se.getMessage());
 		} finally {
 			if (rs != null) {
 				try {

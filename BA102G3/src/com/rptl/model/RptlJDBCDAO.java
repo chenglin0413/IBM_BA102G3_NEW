@@ -17,7 +17,7 @@ public class RptlJDBCDAO implements RptlDAO_interface {
 	String passwd = "123456";
 
 	private static final String INSERT_STMT = "INSERT INTO Rptl (rptl_id,trvl_id,user_id,rptl_date,rptl_tittle,rptl_content)"
-			+ "VALUES (Rptl_ID_SEQ.NEXTVAL, ?, ?, ?, ?, ?)";
+			+ "VALUES (Rptl_ID_SEQ.NEXTVAL, ?, ? , ?, ?, ?)";
 	private static final String UPDATE = "UPDATE Rptl set trvl_id=? ,user_id=?, rptl_date=?, rptl_status=?, rptl_tittle=?,rptl_content=? where rptl_id = ?";
 	private static final String DELETE = "DELETE FROM Rptl where rptl_id=?";
 	private static final String GET_ONE_STMT = "SELECT * FROM Rptl where rptl_id = ?";
@@ -415,6 +415,13 @@ public static void main(String[] args) {
 //			System.out.println("...............................");
 //		}
 	}
+
+
+@Override
+public List<RptlVO> getAllByStatus(Integer rptl_status) {
+	// TODO Auto-generated method stub
+	return null;
+}
 	
 	
 }

@@ -554,6 +554,12 @@ public class ProdJDBCDAO implements ProdDAO_interface {
 		return null;
 	}
 
+	@Override
+	public List<ProdVO> getAll(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 

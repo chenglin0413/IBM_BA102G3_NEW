@@ -1,8 +1,10 @@
 package com.prod.model;
 
 import java.util.List;
+import java.util.Map;
 
 import com.json.JSONObject;
+import com.ord.model.OrdVO;
 import com.prpi.model.PrpiVO;
 
 public class ProdService {
@@ -105,4 +107,7 @@ public class ProdService {
 	public void insertWithPrpi(ProdVO deptVO , List<PrpiVO> list){
 		dao.insertWithPrpi(deptVO, list);
 	}	
+	public List<ProdVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
+	}
 }

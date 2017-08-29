@@ -6,7 +6,7 @@
 	String account =(String) session.getAttribute("account");
 	Integer user_id =userVO.getUser_id();//取得會員ID
 	pageContext.setAttribute("user_id", user_id);
-	TrvlVO trvlVO = (TrvlVO)session.getAttribute("trvlVO");
+	TrvlVO trvlVO = (TrvlVO)request.getAttribute("addTrvl");
 %>
 
 <!DOCTYPE html>
@@ -31,12 +31,22 @@
     
     <link href="<%= request.getContextPath() %>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-   
+    
+    <link href="<%= request.getContextPath() %>/front-end/css/fileinput.min.css" rel="stylesheet">
 
+    <link href="<%= request.getContextPath() %>/front-end/image/loading-sm.gif" rel="stylesheet">
+    
     <title>個人遊記</title>
 
 	<style type="text/css">
-
+		body {
+			background-image: url('<%= request.getContextPath()%>/front-end/blog/img/typewriter.jpg');
+			background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-position: center;
+            background-size: cover;
+		}
+		
         .content: {
           position: relative;
         }
@@ -51,10 +61,9 @@
         }
         
         .imgPreview {
-        	width:600px;
+        	width:400px;
         	height:auto;
         }
-			      
     </style>
 
 </head>
@@ -106,29 +115,29 @@
 %>	
 	<div class="container">
 		<div class="row">
-			<form class="form-horizontal" enctype="multipart/form-data" method="POST" action="<%=request.getContextPath()%>/front-end/trvl/trvl.do" name="form1">
-			 	<div class="col-xs-12 col-md-4">
-					<div class="panel panel-primary">
+			<form class="form-horizontal" enctype="multipart/form-data" method="POST"  action="<%=request.getContextPath()%>/front-end/trvl/trvl.do" name="form1" onsubmit="return validateForm()">
+			 	<div class="col-xs-12 col-md-3 col-md-offset-1">
+					<div class="panel panel-warning">
 						<div class="panel-heading">
 							<h3 class="panel-title"><strong>遊記標題</strong></h3>
 						</div>
 						<div class="panel-body">
-							<input type="text" name="trvl_tittle" class="form-control"  value="${trvlVO.trvl_tittle}" required>
+							<input type="text" name="trvl_tittle" class="form-control title" required>
 						</div>
 					</div>
 				</div>
-				<div class="col-xs-12 col-md-4">
-					<div class="panel panel-primary">
+				<div class="col-xs-12 col-md-3">
+					<div class="panel panel-warning">
 						<div class="panel-heading">
 						<h3 class="panel-title"><strong>遊記地點</strong></h3>
 					</div>
 					<div class="panel-body">
-						<input type="text" name="trvl_loc" class="form-control" value="${trvlVO.trvl_loc}" required >
+						<input type="text" name="trvl_loc" class="form-control loc"  required >
 					</div>
 					</div>
 				</div>
-				<div class="col-xs-12 col-md-4">
-						<div class="panel panel-primary">
+				<div class="col-xs-12 col-md-3">
+						<div class="panel panel-warning">
 						<div class="panel-heading">
 							<h3 class="panel-title"><strong>遊記日期</strong></h3>
 						</div>
@@ -137,44 +146,64 @@
 						</div>
 					</div>
 				</div>
-			<input type="file" name="upfile" accept="image/*" onchange="loadFile(event)">
-			<div class="col xs-12 col-md-8 col-md-offset-2">	
-				<img class="img-thumbnail" id="imgPreview">
+<!-- 			<input type="file" name="upfile" accept="image/*" onchange="loadFile(event)"> -->
+			<div class="col xs-12 col-md-9 col-md-offset-1">	
+				
+			
+			<input id="input-24" name="input24[]" type="file" multiple class="file-loading">
+				
+				
+				
+				
 			</div>	
 		<br>	
-			<div class="col-xs-12 col-md-12">	
-				<textarea name="trvl_content" required>${trvlVO.trvl_content}</textarea>
+			<div class="col-xs-12 col-md-9 col-md-offset-1">	
+				<textarea name="trvl_content"  class="content" required></textarea>
 			</div>
-			<div class="col-xs-12 col-md-push-11">	
+			<div class="col-xs-12 col-md-push-10">	
 		
 				<input type="hidden" name="action" value="insert">
-				<input type="submit" class="btn btn-success btn-sm btn" value="發布遊記">
-			</div>	
+			</div>
 			</form>
 		</div>	<!-- row -->	
 	</div>  <!-- container -->
+	
+<%@ include file="/front-end/member_interface/script.file" %>
+<script src="<%= request.getContextPath() %>/front-end/js/fileinput.min.js"></script>
 
 
-<%@ include file="/front-end/member_interface/script.file" %>	
+<script>
+$(document).on('ready', function() {
+    $("#input-24").fileinput({
+        initialPreviewAsData: true,
+        browseOnZoneClick: true,
+        deleteUrl: "/site/file-delete",
+        overwriteInitial: false,
+        maxFileSize: 1024,
+    });
+});
+</script>
+
 <script>
  CKEDITOR.replace('trvl_content', { //轉換編輯器文末Tag
-     uiColor: '#0066FF',
+     uiColor: '#F6C555',
      enterMode:CKEDITOR.ENTER_BR,
      shiftEnterMode: CKEDITOR.ENTER_BR, 
  }); 
  
+ 
+ function validateForm(){
+	  if(CKEDITOR.instances.trvl_content.getData()==""){
+		  alert("留言請勿空白！");
+		  return false;
+	}else {
+		
+		return true;
+	}
+}
+ 
 </script>
 
-<script>
-  var loadFile = function(event) {
-    var reader = new FileReader();
-    reader.onload = function(){
-      var output = document.getElementById('imgPreview');
-      output.src = reader.result;
-    };
-    reader.readAsDataURL(event.target.files[0]);
-  };
-</script>
 
 
 

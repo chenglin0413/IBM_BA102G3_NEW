@@ -4,13 +4,21 @@ import java.io.*;
 import java.util.*;
 
 import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.*;
 
 import com.store.model.*;
 import com.store.model.StoreService;
 import com.store.model.StoreVO;
 import com.user.model.UserService;
+import com.user.model.UserVO;
+import com.stpi.model.StpiService;
+import com.stpi.model.StpiVO;
 
+
+import mail.MailService;
+
+@MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class StoreServlet extends HttpServlet {
 
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -23,6 +31,9 @@ public class StoreServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
+		
+		System.out.println("line33");
+		System.out.println(action);
 		
 		
 		if ("getOne_For_Display".equals(action)) { // 靘select_page.jsp�����
@@ -148,19 +159,23 @@ public class StoreServlet extends HttpServlet {
 					store_lon = new Double(req.getParameter("store_lon").trim());
 				} catch (NumberFormatException e) {
 					store_lon = 0.0;
-					errorMsgs.add("蝬楝摨西�‵�摮�.");
+					errorMsgs.add("經緯度請填數字.");
 				}
 				Double store_lat = null;
 				try {
 					store_lat = new Double(req.getParameter("store_lat").trim());
 				} catch (NumberFormatException e) {
 					store_lat = 0.0;
-					errorMsgs.add("蝬楝摨西�‵�摮�.");
+					errorMsgs.add("經緯度請填數字.");
 				}
 				Integer store_inout = new Integer(req.getParameter("store_inout").trim());
 				Integer store_count = new Integer(req.getParameter("store_count").trim());
 				Integer store_score = new Integer(req.getParameter("store_score").trim());
-				
+
+				UserService userSvc = new UserService();
+				UserVO current_userVO = userSvc.getOneUser(user_id);
+				String user_passwd=current_userVO.getUser_passwd();
+				Integer current_user_status=current_userVO.getUser_status();				
 				Integer user_status = new Integer(req.getParameter("user_status").trim());
 				
 				StoreVO storeVO = new StoreVO();
@@ -177,7 +192,47 @@ public class StoreServlet extends HttpServlet {
 				storeVO.setStore_inout(store_inout);
 				storeVO.setStore_count(store_count);
 				storeVO.setStore_score(store_score);
-								
+				
+				byte[] stpi_img=null;
+				String stpi_imgfmt=null;
+				
+				int updateImg=0;
+				
+				Part part=req.getPart("upfile1");
+				
+				String filename = getFileNameFromPart(part).trim();
+				
+				if ( filename.length() != 0 ){
+					
+					updateImg=1;
+					
+					InputStream in = part.getInputStream();
+					stpi_img = new byte[in.available()];
+					in.read(stpi_img);
+					in.close();
+					
+					String temp[] = filename.split("[.]");				
+					if(temp.length>1){
+						stpi_imgfmt = temp[temp.length-1];
+					} else {
+						stpi_imgfmt=null; 
+						errorMsgs.add("請輸入附檔名!");
+					}
+					
+					System.out.println(stpi_imgfmt);
+					
+					StpiService stpiSvc=new StpiService();
+					StpiVO stpiVO=stpiSvc.getOneStpiByStoreId(store_id);
+					
+					stpiVO.setStpi_img(stpi_img);
+					stpiVO.setStpi_imgfmt(stpi_imgfmt);
+					
+					System.out.println(stpiVO.getStpi_id());
+					System.out.println(stpiVO.getStpi_name());
+					
+					stpiSvc.updateStpi(stpiVO.getStpi_id(), store_id, stpiVO.getStpi_name(), stpi_img, stpi_imgfmt);
+				}				
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("storeVO", storeVO); // ���撓��撘隤斤�mpVO�隞�,銋�req
@@ -193,6 +248,19 @@ public class StoreServlet extends HttpServlet {
 				storeVO = storeSvc.updateStore(store_id, user_id, store_name, store_time, store_phone,store_describe,store_ter,store_floor,store_lon,store_lat,store_inout,store_count,store_score, user_status);
 				
 				req.setAttribute("successMsgs","successMsgs");
+				
+				String user_account=current_userVO.getUser_account();
+				String user_lastname=current_userVO.getUser_lastname();
+				String user_firstname=current_userVO.getUser_firstname();
+				String user_email=current_userVO.getUser_email();				
+
+				System.out.println("StoreServlet.java line.209 Store Member Password: "+user_passwd);				
+								
+				if (current_user_status!=1 && user_status==1){
+					String[] args={user_account,user_passwd,user_lastname,user_firstname,user_email}; 
+					MailService.main(args);
+				}					
+				
 				
 				/***************************3.靽格摰��,皞��漱(Send the Success view)*************/
 				req.setAttribute("storeVO", storeVO); // 鞈�澈update�����,甇�蝣箇��mpVO�隞�,摮req
@@ -211,7 +279,7 @@ public class StoreServlet extends HttpServlet {
 
 				/***************************�隞���隤方���*************************************/
 			} catch (Exception e) {
-				errorMsgs.add("靽格鞈�仃���:"+e.getMessage());
+				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				String url = requestURL;
 				RequestDispatcher failureView = req
 						.getRequestDispatcher(url);
@@ -241,7 +309,7 @@ public class StoreServlet extends HttpServlet {
 					store_lon = new Double(req.getParameter("store_lon").trim());
 				} catch (NumberFormatException e) {
 					store_lon = 0.0;
-					errorMsgs.add("蝬楝摨西�‵�摮�.");
+					errorMsgs.add("經緯度請填數字.");
 				}
 				
 				Double store_lat = null;
@@ -249,7 +317,7 @@ public class StoreServlet extends HttpServlet {
 					store_lat = new Double(req.getParameter("store_lat").trim());
 				} catch (NumberFormatException e) {
 					store_lat = 0.0;
-					errorMsgs.add("蝬楝摨西�‵�摮�.");
+					errorMsgs.add("經緯度請填數字.");
 				}
 				
 				Integer store_inout = new Integer(req.getParameter("store_inout").trim());
@@ -325,7 +393,7 @@ public class StoreServlet extends HttpServlet {
 				
 				/***************************�隞���隤方���**********************************/
 			} catch (Exception e) {
-				errorMsgs.add("��鞈�仃���:"+e.getMessage());
+				errorMsgs.add("刪除資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
 						.getRequestDispatcher("/back-end/store/adminStoreListAll.jsp");
 				failureView.forward(req, res);
@@ -333,42 +401,56 @@ public class StoreServlet extends HttpServlet {
 		}
 		
 		
-		if ("seeOneStoredetail".equals(action)) { // 靘select_page.jsp�����
-
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-			HttpSession session=req.getSession();
-			try {
-				String str = req.getParameter("store_id");
-				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("隢撓���振蝺刻��");
-				}
-				// Send the use back to the form, if there were errors
-				Integer store_id = null;
-				try {
-					store_id = new Integer(str);
-				} catch (Exception e) {
-					errorMsgs.add("��振蝺刻�撘�迤蝣�");
-				}
-				// Send the use back to the form, if there were errors
-				
-				/***************************2.���閰Ｚ���*****************************************/
-				StoreService storeSvc = new StoreService();
-				StoreVO storeVO = storeSvc.getOneStore(store_id);
-				
-				/***************************3.�閰Ｗ���,皞��漱(Send the Success view)*************/
-				session.setAttribute("storeVO", storeVO); // 鞈�澈����mpVO�隞�,摮req
-				String url = "/front-end/member_interface/listOneStore_detail.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // ����漱 listOneEmp.jsp
-				successView.forward(req, res);
-
-				/***************************�隞���隤方���*************************************/
-			} catch (Exception e) {
-				errorMsgs.add("�瘜�����:" + e.getMessage());
-				RequestDispatcher failureView = req
-						.getRequestDispatcher("/back-end/store/adminStoreQuery.jsp");
-				failureView.forward(req, res);
-			}
-		}
+//		if ("seeOneStoredetail".equals(action)) { // 靘select_page.jsp�����
+//
+//			List<String> errorMsgs = new LinkedList<String>();
+//			req.setAttribute("errorMsgs", errorMsgs);
+//			HttpSession session=req.getSession();
+//			try {
+//				String str = req.getParameter("store_id");
+//				if (str == null || (str.trim()).length() == 0) {
+//					errorMsgs.add("隢撓���振蝺刻��");
+//				}
+//				// Send the use back to the form, if there were errors
+//				Integer store_id = null;
+//				try {
+//					store_id = new Integer(str);
+//				} catch (Exception e) {
+//					errorMsgs.add("��振蝺刻�撘�迤蝣�");
+//				}
+//				// Send the use back to the form, if there were errors
+//				
+//				/***************************2.���閰Ｚ���*****************************************/
+//				StoreService storeSvc = new StoreService();
+//				StoreVO storeVO = storeSvc.getOneStore(store_id);
+//				
+//				/***************************3.�閰Ｗ���,皞��漱(Send the Success view)*************/
+//				session.setAttribute("storeVO", storeVO); // 鞈�澈����mpVO�隞�,摮req
+//				String url = "/front-end/member_interface/listOneStore_detail.jsp";
+//				RequestDispatcher successView = req.getRequestDispatcher(url); // ����漱 listOneEmp.jsp
+//				successView.forward(req, res);
+//
+//				/***************************�隞���隤方���*************************************/
+//			} catch (Exception e) {
+//				errorMsgs.add("�瘜�����:" + e.getMessage());
+//				RequestDispatcher failureView = req
+//						.getRequestDispatcher("/back-end/store/adminStoreQuery.jsp");
+//				failureView.forward(req, res);
+//			}
+//		}
 	}
+	
+	// 讀出檔名
+	public String getFileNameFromPart(Part part) {
+		String header = part.getHeader("content-disposition");
+//		System.out.println("header=" + header); // 輸出測試
+		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
+//		System.out.println("filename=" + filename); // 輸出測試
+		if (filename.length() == 0) {
+//			return null;
+		}
+		return filename;
+	}		
+	
+	
 }

@@ -28,13 +28,7 @@
     <!-- Custom Fonts -->
     <link href="<%=request.getContextPath() %>/front-end/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <style type="text/css">
         .item img{
             height: 300px;
@@ -74,6 +68,9 @@
                     </li>
                     <li>
                         <a href="<%=request.getContextPath()%>/front-end/member_interface/listOneUser_idAllOrd.jsp">消費記錄</a>
+                    </li>
+                    <li>
+                        <a href="<%=request.getContextPath()%>/front-end/member_interface/listOneOrd_idAllItem_formember.jsp">訂單明細</a>
                     </li>
                     
                     <li class="active">給予產品評價</li>
@@ -123,25 +120,29 @@
 	
 												<table>
 														<td>
+														
+														  
 														  
 														   <c:if test="${itemVO.item_score =='0'}">
-														   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/item/item.do">
-														    <select name="item_score" value="${itemVO.item_score }">
-																							  <option value="1">差</option>
-																							  <option value="2">尚可</option>
-																							  <option value="3">普通</option>
-																							  <option value="4">好</option>
-																							  <option value="5">極佳</option>
-															</select>
-															 <input type="submit" value="給予此產品分數。">
-															 <input type="hidden" name="ord_id" value="${itemVO.ord_id }">
-															  <input type="hidden" name="prod_id" value="${itemVO.prod_id }">
-															   <input type="hidden" name="item_qty" value="${itemVO.item_qty }">
-															    <input type="hidden" name="item_review" value="${itemVO.item_review }">
-															    <input type="hidden" name="item_reviewdate" value="${itemVO.item_reviewdate }">
-															<input type="hidden" name="action"	value="update_prodCount_Score">
-															<input type="hidden" name="requestURL" value="<%=request.getParameter("requestURL")%>">
-															</FORM>
+														   <div class="click-callback"></div><!-- 用星星取代option給分 -->
+														   <div class="starRating"></div>
+<%-- 														   <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/front-end/item/item.do"> --%>
+<%-- 														    <select name="item_score" class="item_score" value="${itemVO.item_score }"> --%>
+<!-- 																							  <option value="1">差</option> -->
+<!-- 																							  <option value="2">尚可</option> -->
+<!-- 																							  <option value="3">普通</option> -->
+<!-- 																							  <option value="4">好</option> -->
+<!-- 																							  <option value="5">極佳</option> -->
+<!-- 															</select> -->
+<!-- 															 <input type="submit" value="給予此產品分數。"> -->
+															 <input type="hidden" class="ord_id" name="ord_id" value="${itemVO.ord_id }">
+															 <input type="hidden" class="prod_id" name="prod_id" value="${itemVO.prod_id }">
+															 <input type="hidden" class="item_qty" name="item_qty" value="${itemVO.item_qty }">
+															 <input type="hidden" class="item_review" name="item_review" value="${itemVO.item_review }">
+															 <input type="hidden" class="item_reviewdate" name="item_reviewdate" value="${itemVO.item_reviewdate }">
+															 <input type="hidden" name="action"	value="update_prodCount_Score">
+															 <input type="hidden" name="requestURL" class="requestURL" value="<%=request.getParameter("requestURL")%>">
+<!-- 															</FORM> -->
 															</c:if>
 															<c:if test="${itemVO.item_score !='0'}"> 
 																<h4>已給過此產品分數。</h4>
@@ -161,7 +162,45 @@
 
 
 <%@ include file="/front-end/member_interface/script.file" %>
+	<script src="<%=request.getContextPath() %>/front-end/js/stars.min.js"></script>
+<script type="text/javascript">
+$(function(){
+		
+		$(".click-callback").stars({ 
+		    click: function(i){
+		    		$.ajax({
+		    			url : '<%=request.getContextPath()%>/front-end/item/item.do',
+		    			data : {
+		    				item_score : i,
+		    				ord_id :$('.ord_id' ).val(),
+		    				prod_id :$('.prod_id').val(),
+		    				item_qty :$('.item_qty').val(),
+		    				item_review :$('.item_review').val(),
+		    				item_reviewdate: $('.item_reviewdate').val(),
+		    				action:'update_prodCount_Score',
+		    				requestURL:$('.requestURL').val()
+		    			},
+		    			dataType:"text",
+		    			type : 'POST',
+		    					
+		    					success : function(jsonStr) {
+		    						console.log(jsonStr);
+		    							  $('.starRating').append('評價完成');
+		    							  $('.click-callback').remove();
+		    							  
+		    						},
+		    					error : function(xhr) {
+		    						alert("error");
+		    						alert(xhr.status); 
+		    						alert(thrownError); 
+		    					}
+		    				});	
+					}
+			
+		});	    
+	});    
 
 
+</script>
 </body>
 </html>

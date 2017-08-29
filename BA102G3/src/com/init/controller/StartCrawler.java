@@ -35,6 +35,8 @@ public class StartCrawler extends HttpServlet {
 	Timer timerDelete = new Timer();
 	Timer timerInsert = new Timer();
 
+	Timer dateCheck = new Timer();
+
 	BuscDAO bus = new BuscDAO();
 	FlscDAO air = new FlscDAO();
 
@@ -44,6 +46,7 @@ public class StartCrawler extends HttpServlet {
 
 		timerDelete.cancel();
 		timerInsert.cancel();
+		dateCheck.cancel();
 		bus.deleteTable(null);
 		air.deleteTable(null);
 
@@ -60,6 +63,7 @@ public class StartCrawler extends HttpServlet {
 
 		System.out.println("***** Server on CrawlerStart *****");
 
+		// 爬蟲Delete
 		TimerTask runDelete = new TimerTask() {
 
 			@Override
@@ -71,8 +75,9 @@ public class StartCrawler extends HttpServlet {
 				air.deleteTable(null);
 			}
 		};
-		timerDelete.schedule(runDelete, 1000, 60000);
+		timerDelete.schedule(runDelete, 1000, 300000);
 
+		// 爬蟲Insert
 		TimerTask runInsert = new TimerTask() {
 
 			@Override
@@ -84,6 +89,18 @@ public class StartCrawler extends HttpServlet {
 				Crawler_Air.Crawler();
 			}
 		};
-		timerInsert.schedule(runInsert, 1100, 60000);
+		timerInsert.schedule(runInsert, 1100, 300000);
+
+		// 促銷
+		TimerTask checkDay = new TimerTask() {
+
+			@Override
+			public void run() {
+
+				CheckDate.updateSTPM();
+				CheckDate.updateREPM();
+			}
+		};
+		dateCheck.schedule(checkDay, 1000, 86400000);
 	}
 }

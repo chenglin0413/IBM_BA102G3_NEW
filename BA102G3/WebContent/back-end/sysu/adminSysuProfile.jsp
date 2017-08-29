@@ -53,6 +53,11 @@ pageContext.setAttribute("list",list);
                             <div class="input-group">
                                                                                    帳號: <%= sysuVOLogin.getSysu_account()%>
                             </div><br>
+                            
+                            <div class="input-group">
+                                <label class="input-group-addon">密碼</label>
+                                <input type="password" name="sysu_passwd" value="<%= (sysuVOLogin==null)? "" : sysuVOLogin.getSysu_passwd()%>" class="form-control">
+                            </div><br>                            
 
                             <div class="input-group">
                                 <label class="input-group-addon">姓</label>
@@ -68,6 +73,7 @@ pageContext.setAttribute("list",list);
                                 <label class="input-group-addon">Email</label>
                                 <input type="text" name="sysu_email" value="<%= (sysuVOLogin==null)? "" : sysuVOLogin.getSysu_email()%>" class="form-control">
                             </div><br>
+                            
                             <div>
                     			加入公司時間: <%=sysuVOLogin.getSysu_joindate()%>
                     		</div><br>
@@ -92,7 +98,6 @@ pageContext.setAttribute("list",list);
                     <div class="col-xs-12 col-sm-1">
 						<input type="hidden" name="sysu_id" value="<%=sysuVOLogin.getSysu_id()%>">
                         <input type="hidden" name="sysu_account" value="<%=sysuVOLogin.getSysu_account()%>">
-						<input type="hidden" name="sysu_passwd" value="<%=sysuVOLogin.getSysu_passwd()%>">
 						<input type="hidden" name="sysu_joindate" value="<%=sysuVOLogin.getSysu_joindate()%>">
 						<input type="hidden" name="sysu_type" value="<%=sysuVOLogin.getSysu_type()%>">
 						<input type="hidden" name="sysu_status" value="<%=sysuVOLogin.getSysu_status()%>">

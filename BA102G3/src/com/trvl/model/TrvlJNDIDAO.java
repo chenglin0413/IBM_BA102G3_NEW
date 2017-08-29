@@ -8,6 +8,8 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -630,6 +632,12 @@ public class TrvlJNDIDAO implements TrvlDAO_interface{
 			}
 		}
 		return list;
+	}
+
+	@Override
+	public List<TrvlVO> getAll(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

@@ -30,6 +30,7 @@ public class RpprDAO implements RpprDAO_interface {
 	private static final String DELETE = "DELETE FROM Rppr where rppr_id=?";
 	private static final String GET_ONE_STMT = "SELECT * FROM Rppr where rppr_id = ?";
 	private static final String GET_ALL_STMT = "SELECT * FROM Rppr order by rppr_status";
+	private static final String GET_ALL_BY_STATUS_STMT = "SELECT * FROM Rppr where rppr_status=? order by rppr_date desc";
 	
 	private static final String UPDATE_STATUS = "UPDATE Rppr set rppr_status= ? where rppr_id = ?";
 
@@ -289,7 +290,66 @@ public class RpprDAO implements RpprDAO_interface {
 		return list;
 	}
 	
-	
+	@Override
+	public List<RpprVO> getAllByStatus(Integer rppr_status) {
+		// TODO Auto-generated method stub
+		List<RpprVO> list = new ArrayList<RpprVO>();
+		RpprVO rpprVO = null;
+
+		Connection con = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+
+			con = ds.getConnection();
+			pstmt = con.prepareStatement(GET_ALL_BY_STATUS_STMT);
+			pstmt.setInt(1, rppr_status);
+			rs = pstmt.executeQuery();
+
+			while (rs.next()) {
+
+				rpprVO = new RpprVO();
+				rpprVO.setRppr_id(rs.getInt("RPPR_ID"));
+				rpprVO.setProd_id(rs.getInt("PROD_ID"));
+				rpprVO.setUser_id(rs.getInt("USER_ID"));
+				rpprVO.setRppr_date(rs.getTimestamp("RPPR_DATE"));
+				rpprVO.setRppr_status(rs.getInt("RPPR_STATUS"));
+				rpprVO.setRppr_tittle(rs.getString("RPPR_TITTLE"));
+				rpprVO.setRppr_content(rs.getString("RPPR_CONTENT"));
+
+				list.add(rpprVO); // Store the row in the list
+			}
+
+			// Handle any driver errors
+		} catch (SQLException se) {
+			throw new RuntimeException("A database error occured. " + se.getMessage());
+			// Clean up JDBC resources
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (pstmt != null) {
+				try {
+					pstmt.close();
+				} catch (SQLException se) {
+					se.printStackTrace(System.err);
+				}
+			}
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception e) {
+					e.printStackTrace(System.err);
+				}
+			}
+		}
+		return list;
+	}
 	
 	@Override
 	public void updateStatus(Integer rppr_id,Integer rppr_status) {

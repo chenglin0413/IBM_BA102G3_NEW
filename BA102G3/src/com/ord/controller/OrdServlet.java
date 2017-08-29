@@ -12,6 +12,8 @@ import com.item.model.ItemVO;
 import com.ord.model.*;
 import com.prod.model.ProdService;
 import com.prod.model.ProdVO;
+import com.store.model.StoreService;
+import com.store.model.StoreVO;
 import com.user.model.UserService;
 import com.user.model.UserVO;
 
@@ -593,13 +595,15 @@ public class OrdServlet extends HttpServlet {
 				Integer ord_id = new Integer(req.getParameter("ord_id"));
 				/***************************2.開始更新資料***************************************/
 				OrdService ordSvc = new OrdService();
+				Integer store_id=ordSvc.getOneOrd(ord_id).getStore_id();
 				ProdService prodSvc=new ProdService();
 				ItemService itemSvc=new ItemService();
+				StoreService storeSvc=new StoreService();
 				List<ItemVO> itemList=itemSvc.getOneOrd_idAllItem(ord_id);
 				List<ProdVO> prodList=prodSvc.getAll();
 				
 				ordSvc.update_sscore(ord_sscore, ord_id);
-				
+				storeSvc.update_count_score(1+storeSvc.getOneStore(store_id).getStore_count(), ord_sscore+storeSvc.getOneStore(store_id).getStore_score(), store_id);
 				/***************************3.更新完成,準備轉交(Send the Success view)***********/								
 				String url = "/front-end/member_interface/listOneUser_idAllOrd.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);
@@ -662,29 +666,50 @@ public class OrdServlet extends HttpServlet {
 //			-----------------------
 			Vector<OrdVO> addOrd = (Vector<OrdVO>) session.getAttribute("addOrd");
 			 List<Integer> ord_ids= (List<Integer>) session.getAttribute("ord_ids");
-			StringBuilder ord_group= new StringBuilder("您的訂單編號組:。");
+			StringBuilder ord_group= new StringBuilder("您的訂單編號組:");
+			StringBuilder store_ids=new StringBuilder("您的取貨商店為:");
+			
 			OrdService ordSvc=new OrdService();
+			StoreService storeSvc=new StoreService();
 			UserService userSvc=new UserService();
 			//mail content
 			Integer user_id =ordSvc.getOneOrd(ord_ids.get(0)).getUser_id();//會員編號
 			//訂單編號組
 			for(Integer ord_id:ord_ids){
-				ord_group.insert(8,ord_id.toString()+"、");
+				ord_group.insert(8,ord_id.toString()+"_|");
 			}
 			UserVO userVO=userSvc.getOneUser(user_id);
+			String user_email=userVO.getUser_email();//訂貨會員的email
+//			String user_email="chenglin0413@gmail.com";
+			
+			String user_mobile=userVO.getUser_mobile();//訂貨會員的行動電話
+//			String x="0911-258-102";
+//			String user_mobile=x.replace("-","");
 			System.out.println(ord_group);//印出訂單編號組
-			String messageText=userVO.getUser_lastname()+userVO.getUser_lastname()+"您的訂單已於"+addOrd.get(0).getOrd_date()+"成立，\n"+ord_group+"\n請記得於2~7天後至指定桃機商店取貨。"
+			for(OrdVO ordVO:addOrd){
+				store_ids.insert(8, storeSvc.getOneStore(ordVO.getStore_id()).getStore_name()+"_|");
+			}
+			String messageText="\n==============================================\n"
+			+userVO.getUser_lastname()+userVO.getUser_lastname()+"__您的訂單已於"+addOrd.get(0).getOrd_date()+"成立，\n"+ord_group+"\n請記得於2~7天後至指定桃機商店\n"+store_ids+"\n取貨。"
+			+"\n------------------------------------謝謝您的光臨-------------------------------"
+			+"\n----------------------期待下一次再次使用AnytimeGrip購物系統。--------------------"
 			+"\n=============================================="+
-			"\n----------------------謝謝您的光臨---------------"+
-			"\n=============================================="+
 					"\n我們的網站:ba102g3xXXX.com\n 連絡電話:03 425 7387";
-            mail.sendMail("chenglin0413@gmail.com","Anytime Grip: 訂單成立通知", messageText);	
-					;
-			//"userVO.getUser_mobile()"
-			String[] tel={"0911258102"};
-			String message="您的訂單已於"+addOrd.get(0).getOrd_date()+"成立，請記得於2~7後至指定桃機商店取貨";
+            mail.sendMail(user_email,"Anytime Grip: 訂單成立通知", messageText);	
+			String[] tel={user_mobile};
+			String message="您的訂單已於"+addOrd.get(0).getOrd_date()+"成立，請記得於2~7後至指定桃機商店取貨，感謝您使用Anytime_Grip購物系統";
 			send.sendMessage(tel, message);
 			
+			
+			
+			//信用卡支付，寄信通知商家會員
+			MailService mailToStore=new MailService();
+			
+			Integer store_id =ordSvc.getOneOrd(ord_ids.get(0)).getStore_id();//商家會員編號
+			StoreVO storeVO=storeSvc.getOneStore(store_id);//商家VO
+			String store_mail=userSvc.getOneUser(storeVO.getUser_id()).getUser_email();//商家會員的信箱
+			String messageTextToStore="X旗銀行:您好，你已於剛剛收到一筆來自AnytimeGrip會員"+userVO.getUser_lastname()+userVO.getUser_lastname()+"的付款，請查收。";
+			mailToStore.sendMail(store_mail,"X旗銀行:訂單收款通知。",messageTextToStore);
 				/***************************3.更新完成,準備轉交(Send the Success view)***********/								
 				String url = "/front-end/eshop/OrdFinishDetail.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url);

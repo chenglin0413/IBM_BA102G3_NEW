@@ -86,4 +86,8 @@ public class RestService {
 		System.out.println("pass service");
 		return dao.getAllbyStatus(user_status);
 	}
+	//政成新增  首頁前三名餐廳
+	public List<RestVO> getTopThree() {
+		return dao.getTopThree();
+	}
 }

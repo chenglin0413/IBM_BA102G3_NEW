@@ -339,4 +339,10 @@ public class StpiJDBCDAO implements StpiDAO_interface {
 		System.out.println("\n----------------查詢總表-------------");
 	}
 
+	@Override
+	public StpiVO findByStoreId(Integer store_id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

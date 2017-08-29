@@ -10,6 +10,7 @@ import javax.servlet.http.*;
 
 import com.user.model.*;
 import com.store.model.*;
+import mail.MailService;
 
 @MultipartConfig(fileSizeThreshold = 1024 * 1024, maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class UserServlet extends HttpServlet {
@@ -168,6 +169,10 @@ public class UserServlet extends HttpServlet {
 				
 				java.sql.Date user_joindate = java.sql.Date.valueOf(req.getParameter("user_joindate").trim());
 				
+				UserService userSvc = new UserService();
+				UserVO current_userVO = userSvc.getOneUser(user_id);
+				Integer current_user_status=current_userVO.getUser_status();
+				
 				Integer user_status = new Integer(req.getParameter("user_status"));
 								
 				UserVO userVO = new UserVO();
@@ -221,11 +226,16 @@ public class UserServlet extends HttpServlet {
 				}
 				
 				/***************************2.開始修改資料*****************************************/
-				UserService userSvc = new UserService();
+//				UserService userSvc = new UserService();
 				
 				userVO = userSvc.updateUser(user_id, user_account, user_passwd, user_type, user_lastname,
 						user_firstname, user_phone, user_mobile, user_address, user_email, 
 						user_joindate, user_status, user_img, user_imgfmt, updateImg);
+
+				if (current_user_status!=1 && user_status==1){
+					String[] args={user_account,user_passwd,user_lastname,user_firstname,user_email}; 
+					MailService.main(args);
+				}				
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("userVO", userVO); // 資料庫update成功後,正確的的empVO物件,存入req
@@ -248,7 +258,7 @@ public class UserServlet extends HttpServlet {
 				}
 				
 				req.setAttribute("successMsgs", "successMsgs");
-				System.out.println("pass UserServlet.java line 254");
+				System.out.println("pass UserServlet.java line 261");
 				RequestDispatcher successView = req.getRequestDispatcher(url); // 修改成功後,轉交listOneEmp.jsp
 				successView.forward(req, res);
 
@@ -280,7 +290,12 @@ public class UserServlet extends HttpServlet {
 					errorMsgs.add("請輸入帳號");					
 				}
 												
-				String user_passwd="ba102g3";
+				int min = 100000;
+				int max = 999999;				
+				Random rand = new Random(); 
+				int randomPasswd = rand.nextInt(max-min)+min; 
+				String user_passwd=Integer.toString(randomPasswd);
+				System.out.println("UserServlet.java line.288 New User Password: "+user_passwd);
 				
 				Integer user_type = new Integer(req.getParameter("user_type"));
 				
@@ -356,14 +371,15 @@ public class UserServlet extends HttpServlet {
 					failureView.forward(req, res);
 					return;
 				}
-				
-			
 								
 				/***************************2.開始新增資料***************************************/
 				UserService userSvc = new UserService();
 				userVO = userSvc.addUser(user_account, user_passwd, user_type, user_lastname,
 						user_firstname, user_phone, user_mobile, user_address, user_email,
 						user_joindate, user_status, user_img, user_imgfmt);
+				
+				String[] args={user_account,user_passwd,user_lastname,user_firstname,user_email}; 
+				MailService.main(args);
 																								
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 
