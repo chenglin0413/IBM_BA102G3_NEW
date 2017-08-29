@@ -389,8 +389,8 @@
 // 							alert('date saved:'+rpprVO);
 							console.log(jsonStr);
 // 							$.each(prodVO,function( key, value ) {
-								  $('.showRppr1').append('檢舉內容'+rpprVO.rppr_content);
-								  $('.showRppr2').append('檢舉標題'+rpprVO.rppr_tittle);
+								  $('.showRppr1').append(rpprVO.rppr_content);
+								  $('.showRppr2').append(rpprVO.rppr_tittle);
 							},
 						error : function(xhr) {
 							alert("error");
